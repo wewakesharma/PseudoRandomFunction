@@ -31,6 +31,7 @@
 
 
 \section{Fully Distributive Evaluation Protocol}
+The key is structured as a vector in $\mathbb{Z}_2$
 
 
 The protocol is divided into three phases:
@@ -38,6 +39,12 @@ The protocol is divided into three phases:
 \subsection{Phase 1:} 
 Each server $S_{i}$ holds replicated additive shares of key $k_{i} \in \mathbb{Z}_{n}^{2}$ and $x_{i} \in \mathbb{Z}_{n}^{2}$ and computes h, which is the multiplication of key and input over $\mathbb{Z}_2$. This computation is performed locally. 
 \subsection{Phase 2:}
+
+\begin{enumerate}
+	\item Each server, at this point have locally computed their shares, which was the multiplication of two vectors.
+	\item Server 1 randomly chooses a value $c \in \mathbb{Z}_{3}^{m}$ and each bit of value is converted to it's 2-bit representation to form $c_{0} and c_{1}$ respectively. 
+	\item Meanwhile, Server 1 
+\end{enumerate}
 
 \subsection{Phase 3:}
 
