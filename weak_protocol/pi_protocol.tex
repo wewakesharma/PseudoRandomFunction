@@ -43,7 +43,9 @@ Each server $S_{i}$ holds replicated additive shares of key $k_{i} \in \mathbb{Z
 \begin{enumerate}
 	\item Each server, at this point have locally computed their shares, which was the multiplication of two vectors.
 	\item Server 1 randomly chooses a value $c \in \mathbb{Z}_{3}^{m}$ and each bit of value is converted to it's 2-bit representation to form $c_{0} and c_{1}$ respectively. 
-	\item Meanwhile, Server 1 
+	\item Meanwhile, Server 1, 2 and 3 runs sub-protocol for m instances(m is the length of additive share and also the value of c, which is with server 1.
+	\subitem For $1 \leq j \leq m$:
+	\subitem Each server $s_{i} , i \in {1,2,3}$ share their input $h_{i,j}$ [\,Note: $h_{i,j}$ is the input of server $s_{i}$ in $j^{th}$ iteration ]\,
 \end{enumerate}
 
 \subsection{Phase 3:}
