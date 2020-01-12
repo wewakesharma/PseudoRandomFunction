@@ -47,7 +47,10 @@ Each server $S_{i}$ holds replicated additive shares of key $k_{i} \in \mathbb{Z
 	\subitem For $1 \leq j \leq m$:
 	\subitem Each server $s_{i} , i \in {1,2,3}$ share their input $h_{i,j}$ [\,Note: $h_{i,j}$ is the input of server $s_{i}$ in $j^{th}$ iteration ]\,
 	\subitem Compute combined XOR of their input: $comb := h_{1} \oplus h_{2} \oplus h_{13}$
-	\subitem The next operation can 
+	\subitem Multiply one part of $c,(c_{0}),$ with comb and other part $(c_{1})$ with $\neg{comb}$ and XOR both the result, this forms $d_{0}$.
+	\subitem To compute $d_{1}$, XOR the $c_{0}$ and $\neg{c_{1}}$, and multiply the result with the XOR of secret share of the servers.
+	\subitem The final result $d = d_{0}, d_{1} \in \{ 0,1\}^{2}$ is converted back into $\mathbb{Z}_{3}$
+	\subitem At the end of this phase, Server 1 has $c \in \{0,1\}^m and $ Server 2 has received the output $d \in \mathbb{Z}_{3}$
 \end{enumerate}
 
 \subsection{Phase 3:}
