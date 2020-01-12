@@ -46,6 +46,8 @@ Each server $S_{i}$ holds replicated additive shares of key $k_{i} \in \mathbb{Z
 	\item Meanwhile, Server 1, 2 and 3 runs sub-protocol for m instances(m is the length of additive share and also the value of c, which is with server 1.
 	\subitem For $1 \leq j \leq m$:
 	\subitem Each server $s_{i} , i \in {1,2,3}$ share their input $h_{i,j}$ [\,Note: $h_{i,j}$ is the input of server $s_{i}$ in $j^{th}$ iteration ]\,
+	\subitem Compute combined XOR of their input: $comb := h_{1} \oplus h_{2} \oplus h_{13}$
+	\subitem The next operation can 
 \end{enumerate}
 
 \subsection{Phase 3:}
