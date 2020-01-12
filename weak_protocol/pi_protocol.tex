@@ -36,9 +36,9 @@ The key is structured as a vector in $\mathbb{Z}_2$
 
 The protocol is divided into three phases:
 
-\subsection{Phase 1:} 
+\subsection{Phase 1: NonInteractive computation of Additive share by each Server} 
 Each server $S_{i}$ holds replicated additive shares of key $k_{i} \in \mathbb{Z}_{n}^{2}$ and $x_{i} \in \mathbb{Z}_{n}^{2}$ and computes h, which is the multiplication of key and input over $\mathbb{Z}_2$. This computation is performed locally. 
-\subsection{Phase 2:}
+\subsection{Phase 2: Interactive computation of $\pi_{23}$ protocol}
 
 \begin{enumerate}
 	\item Each server, at this point have locally computed their shares, which was the multiplication of two vectors.
@@ -50,13 +50,25 @@ Each server $S_{i}$ holds replicated additive shares of key $k_{i} \in \mathbb{Z
 	\subitem Multiply one part of $c,(c_{0}),$ with comb and other part $(c_{1})$ with $\neg{comb}$ and XOR both the result, this forms $d_{0}$.
 	\subitem To compute $d_{1}$, XOR the $c_{0}$ and $\neg{c_{1}}$, and multiply the result with the XOR of secret share of the servers.
 	\subitem The final result $d = d_{0}, d_{1} \in \{ 0,1\}^{2}$ is converted back into $\mathbb{Z}_{3}$
-	\subitem At the end of this phase, Server 1 has $c \in \{0,1\}^m and $ Server 2 has received the output $d \in \mathbb{Z}_{3}$
+	\subitem At the end of this phase, Server 1 has $c \in \{0,1\}^m and $ Server 2 has received the output $d \in \mathbb{Z}_{3}$. The combination of values with Server one and two (i.e. c and d ) yields the additive mod 3 of the secret share of the inputs by the Servers. Mathematically $c + d = h_{1} + h_{2} + h_{3} (mod 3)$
 \end{enumerate}
 
-\subsection{Phase 3:}
-
+\subsection{Phase 3: Non Interactive evaluation of function map by Server 1 and Server 2}
+The Servers in possession of random value c and the interactively computed value d, apply $map_{G}$ function on their input and compute their share in $\mathbb{Z}_3$
 
  
 Explanation:
 
+The protocol consists of three phases. The middle phase is an interactive phase running a sub protocol $\pi_{2,3}$ which takes input from three servers, which is their additive secret share mod 2 and outputs two additive share mod 3 shared by two servers. The first and last phase are non-interactive, meaning, they can be computed locally. 
+
+
+Example:
+
+\begin{itemize}
+	\item Say at $j^{th}$ instance, $h_{1} = 1, h_{2} = 0, h_{3} = 1$ and server randomly chooses c = 2, so $c_{0} = 1, c_{1} = 0$
+	\item $comb = 0, and d_{0} = 0, d_{1} = 0$ as computed by formula given above. 
+	\item This satisfies the formula $c + d = h_{1} + h_{2} + h_{3} (mod 3)$, is true in this case.
+	\item Server one and two apply $map_{G}$ function on their value $c and d \in \mathbb{Z}_3$
+	
+\end{itemize}
 \end{document}
