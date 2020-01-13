@@ -16,7 +16,7 @@
 \textwidth 6.65in
 \linespread{1.2}
 
-\title{Weak PRF Protocol: Pseudocode}
+\title{Fully Distributive Evaluation Protocol: Pseudocode}
 \author{Vivek Sharma}
 \date{Jan 11, 2020}
 
@@ -31,11 +31,10 @@
 \maketitle
 
 
-\section{Fully Distributive Evaluation Protocol}
-The key is structured as a vector in $\mathbb{Z}_2$
+\section{Introduction}
+This document contains four parts. First part includes the introduction to the protocol. Second part contains the pseudocode for the protocol and sub protocol. Third part includes a dummy example at some imaginary $j^{th}$ iteration. The last part contains a list of questions regarding the protocol.
 
-
-The protocol is divided into three phases:
+The protocol is divided into three phases. The middle phase is an interactive phase running a sub protocol $\pi_{2,3}$ which takes input from three servers, which is their additive secret share mod 2, and outputs two additive share mod 3 shared by two servers. The first and last phase are non-interactive, meaning, they can be computed locally. 
 
 \subsection{Phase 1: NonInteractive computation of Additive share by each Server} 
 Each server $S_{i}$ holds replicated additive shares of key $k_{i} \in \mathbb{Z}_{n}^{2}$ and $x_{i} \in \mathbb{Z}_{n}^{2}$ and computes $h_{i} \in \mathbb{Z}_{2}^{m}$, which is the multiplication of key and input over $\mathbb{Z}_2$. This computation is performed locally. 
@@ -73,12 +72,8 @@ The Servers in possession of random value c and the interactively computed value
 	\item $comb := h_{1} \oplus h_{2} \oplus h_{3}$ //secret share of each server at $j^{th} iteration$
 	\item $d_{0} = c_{0} \cdot comb \oplus c_{1} \cdot \neg comb$
 	\item $d_{1} = c_{0} \oplus \neg c_{1} \cdot comb$
-	\item return $d_{0} and d_{1}$ //Server two obtains d by combining $d_{0} and d_{1}$
+	\item return $d_{0}$ and $d_{1}$ //Server two obtains d by combining $d_{0}$ and $d_{1}$
 \end{enumerate}
- 
-\section{Explanation:}
-
-The protocol consists of three phases. The middle phase is an interactive phase running a sub protocol $\pi_{2,3}$ which takes input from three servers, which is their additive secret share mod 2, and outputs two additive share mod 3 shared by two servers. The first and last phase are non-interactive, meaning, they can be computed locally. 
 
 
 \section{Example:}
@@ -86,8 +81,19 @@ The protocol consists of three phases. The middle phase is an interactive phase 
 \begin{itemize}
 	\item Say at $j^{th}$ instance, $h_{1} = 1, h_{2} = 0, h_{3} = 1$ and server randomly chooses c = 2, so $c_{0} = 1, c_{1} = 0$
 	\item $comb = 0, and d_{0} = 0, d_{1} = 0$ as computed by formula given above. 
-	\item This satisfies the formula $c + d = h_{1} + h_{2} + h_{3} (mod 3)$, is true in this case.
+	\item This satisfies the formula $c + d = h_{1} \oplus h_{2} \oplus h_{3}$ (mod 3), is true in this case.
 	\item Server one and two apply $map_{G}$ function on their value $c and d \in \mathbb{Z}_3$
 	
 \end{itemize}
+
+\section{Questions:}
+
+\begin{enumerate}
+	\item What is it for? The description says that it is for distributed PRF evaluation? What are the possible evaluation where the secret shared between three servers is then modified to be between two server.
+	\item Below Figure 1: Server $S_{i}$ knows $a_{j}$ and $b_{j}$ (which is $k_{i}$ and $x_{i}$), isn't it private key and private input of a user which must remain private. I can understand $h_{i}$ being shared, the other server won't be able to track back the value of k and x, but the concept of replicated secret sharing confuses me.
+	\item Does all the server compute subprotocol $\pi_{2,3}$, if yes, do they all get the random value c selected by Server one and the shares of other input $h_{i}$, and why do we need replicated secret sharing scheme if all we need is $h_{i}$
+	\item How does it happen that only server two obtains $c^{'}$ (or the value $d_{0}$ and $d_{1}$). We know that at the end, only two servers having the value of c and d can evaluate additive secret share mod 3 value. But why?
+	\item Is the $map_{G}$ function same as the one defined in weak PRF as a public matrix. There it is mentioned that the use of map function is to elongate the size of single dimensional output of PRF, is it true here too? Is it necessary in distributed PRF evaluation setting.
+\end{enumerate}
+
 \end{document}
