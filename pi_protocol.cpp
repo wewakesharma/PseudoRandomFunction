@@ -8,43 +8,60 @@
 
 #include <iostream>
 #include <vector>
+#include <bitset>
 #include <string>
+#include <chrono> 
+#include <ctime> 
+#include <cstdlib>//important include for the srand functions
+//#include <iomanip> //This include will take care of the setprecision
 using namespace std;
 
 int size;
 
-string key;
-string input_val;
+//string key;
+//string input_val;
 //vector<bitset<1>> d0, d1;
 
-vector<bitset<1>> K;
-vector<bitset<1>> X;
-vector<bitset<1>> H;
-vector<bitset<1>> C;
-vector<bitset<1>> D;
+vector<bitset<1> > K;
+vector<bitset<1> > X;
+vector<bitset<1> > H;
+vector<int> C;
+vector<bitset<1> > c;
+vector<int > D;
 
-vector<bitset<1>> k1;
-vector<bitset<1>> k2;
-vector<bitset<1>> k3;
+vector<bitset<1> > k1;
+vector<bitset<1> > k2;
+vector<bitset<1> > k3;
 
-vector<bitset<1>> x1;
-vector<bitset<1>> x2;
-vector<bitset<1>> x3;
+vector<bitset<1> > x1;
+vector<bitset<1> > x2;
+vector<bitset<1> > x3;
 
-vector<bitset<1>> h1;
-vector<bitset<1>> h2;
-vector<bitset<1>> h3;
+vector<bitset<1> > h1;
+vector<bitset<1> > h2;
+vector<bitset<1> > h3;
 
-
-
-void store_value(string k, string x)
+//Generate the value of K, randomly
+void generateInput()
 {
-    for (int i = 0; i < k.size(); i++)
+	srand(time(NULL));
+    for(int i = 0; i < size; i++)
     {
-        K.push_back(k[i] - '0');
-        X.push_back(x[i] - '0');
+        K.push_back(rand() & 1);
+        X.push_back(rand() & 1);
     }
 }
+//Generate the value of K, randomly
+/*void generateInput()
+{
+    srand(time(NULL));
+    for(int i = 0; i < size; i++)
+    {
+        X.push_back(rand() & 1);
+    }
+
+}
+*/
 
 void setshare()
 {
@@ -61,7 +78,7 @@ void setshare()
     }
     
     //X: Randomly selects the value of x1 and x2 and perform XOR with X to set the value of x3
-    srand(time(NULL));
+    //srand(time(NULL));
     for(int i = 0; i < size; i++)
     {
         x1.push_back(rand() & 1);
@@ -71,32 +88,45 @@ void setshare()
     {
         x3.push_back(X.at(i) ^ x1.at(i) ^ x2.at(i));
     }
-    //C: Generating a random c belonging to {0,1,2} and then converting it into 2-bit representation.
-    srand(time(NULL));
-    //cout<<endl<<"The random c generated"<<endl;
+    //C: Generating a random C belonging to {0,1,2} and then converting it into 2-bit representation.
     int a[2];
-    int temp;
-    for (int i = 0; i < size; i++)
+    int temp,t;
+    srand(time(NULL));
+    for(int i = 0; i < size; i++)
     {
-        temp = rand() % 3;//randomly generates the value of c.
-        //cout<<"temp "<<temp<<endl;
-        for(int j = 1; j >= 0; j--)
-        {
-            a[j] = temp % 2;
-            temp = temp / 2;
-        }
-        for(int k = 0; k < 2; k++)
-        {
-            C.push_back(a[k]);
-        }
-        //C.push_back(rand() & 1);
+    	temp = rand() % 3;
+    	C.push_back(temp);
+    	t = temp % 2;
+    	temp = temp / 2;
+    	c.push_back(temp % 2);
+    	c.push_back(t);
+    }
+
+    //Printing the value of C and corresponding c0 and c1. c0 and c1 are 2-bit binary representation of C.
+    cout<<"The value of c is ";
+    for(int i = 0; i < size; i++)
+    {
+    	cout<<C.at(i);
     }
 }
 
+/*In Main function if choice is set to Y or y, then the values are displayed or else they won't be displayed
+ and also the timings are not recorded*/
 void display_values()
 {
+	//Displaying the key and input
+    cout<<endl<<"The value of random input X is ";
+    for(int i = 0; i< size; i++)
+    {
+        cout<<X.at(i);
+    }
+    cout<<endl<<"The value of random key K is ";
+    for(int i = 0; i< size; i++)
+    {
+        cout<<K.at(i);
+    }
     //Displaying the values of k2,k3, and k3
-    cout<<"The value of k1 is ";
+    cout<<endl<<"The value of k1 is ";
     for (int i = 0; i < k1.size(); i++)
     {
         cout<<k1.at(i);
@@ -137,7 +167,9 @@ void display_values()
     cout<<endl;
 }
     
-//Each Server locally computing the value of h i
+/*Each Server locally computing the value of h i
+Using the formula given in the paper. Each server Si has xj and hj i!=j
+*/
 void S()
 {
     for(int i = 0; i < size; i++)
@@ -145,74 +177,107 @@ void S()
         h1.push_back((x2.at(i) & k3.at(i)) | (x3.at(i) & k2.at(i)) | (x2.at(i) & k2.at(i)));
         h2.push_back((x1.at(i) & k3.at(i)) | (x3.at(i) & k1.at(i)) | (x3.at(i) & k3.at(i)));
         h3.push_back((x1.at(i) & k2.at(i)) | (x2.at(i) & k1.at(i)) | (x1.at(i) & k1.at(i)));
+        H.push_back(h1.at(i) ^ h2.at(i) ^ h3.at(i));
     }
     cout<<endl<<"The h1 share value is ";
-    for(int i =0; i<size; i++)
+    for(int i = 0; i < size; i++)
     {
         cout<<h1.at(i);
     }
     cout<<endl<<"The h2 share value is ";
-    for(int i =0; i<size; i++)
+    for(int i = 0; i < size; i++)
     {
         cout<<h2.at(i);
     }
     cout<<endl<<"The h3 share value is ";
-    for(int i =0; i<size; i++)
+    for(int i = 0; i < size; i++)
     {
         cout<<h3.at(i);
     }
 }
 
-
+/*The subprotocol which runs exactly as shown in figure 1 in page 29 of dark crypto paper. 
+Server 1 randomly selects C and Server 2 computes D. Addition modulo 3 of C and D is same as the function
+*/
 void pi_23()
 {
-    vector<bitset<1>> d0, d1;
+    vector<bitset<1> > d0, d1;
     //vector<bitset<1>> comb;
-    vector<bitset<1>> num_const ;
+    vector<bitset<1> > num_const ;
     int d0_int,d1_int,d_int;
     num_const.push_back(1);
     num_const.push_back(2);
     int j = 0;
-    cout<<endl<<"Value of computed d is ";
+    //cout<<endl<<"Value of computed d is ";
     for(int i = 0; i < size; i++)
     {
         //comb.push_back(one.at(0) ^ h1.at(i) ^ h2.at(i) ^ h3.at(i));
         d0.push_back(
-                      (C.at(j) & (h1.at(i) ^ h2.at(i) ^ h3.at(i))) ^
-                      (C.at(j+1) & (num_const.at(0) ^ h1.at(i) ^ h2.at(i) ^ h3.at(i)))
+                      (c.at(j) & (h1.at(i) ^ h2.at(i) ^ h3.at(i))) ^
+                      (c.at(j+1) & (num_const.at(0) ^ H.at(i)))
                       );
         d1.push_back(
-                     (C.at(j) ^ num_const.at(0) ^ C.at(j+1)) &
-                     (h1.at(i) ^ h2.at(i) ^ h3.at(i)));
+                     (c.at(j) ^ num_const.at(0) ^ c.at(j+1)) &
+                     (H.at(i)));
         //cout<<endl<<"d0 "<<d0.at(i)<<" d1 "<<d1.at(i);
         d0_int = (int)d0.at(i).to_ulong();
         d1_int = (int)d1.at(i).to_ulong();
         //int d1_int = (int)d1.at(i);
         d_int = d0_int * 2 + d1_int;
-        cout<<d0.at(i)<<d1.at(i);
+        //cout<<d0.at(i)<<d1.at(i);
         D.push_back(d_int);
         j = j + 2;
+
     }
+    cout<<endl<<"The value of D is ";
+    for(int i = 0; i < size; i++)
+    {
+    	cout<<D.at(i);
+    }
+    cout<<endl;
 }
+
+/*The final step compares the addition modulo 3 of C and D with the secret share of input of three servers*/
+void verify_pi()
+{
+	int h_total = 0; 
+	int cd_total = 0;
+	int c_int ,d_int;
+	//std::vector<int> CD;
+	for(int i = 0; i < size; i++)
+	{
+		h_total = h_total + (int)H.at(i).to_ulong();
+		cd_total = cd_total + C.at(i) + D.at(i);
+	}
+	cout<<"map(H) is "<<(h_total % 3)<<endl;	
+	cout<<"map(C+D) is "<<(cd_total % 3)<<endl;
+}
+
 int main()
 {
+	char choice;
     cout<<"This code will perform pi protocol among three servers"<<endl;
     cout<<"Enter the size of array"<<endl;
-    cin>>size;//keep it three at this time
-    cout<<"Enter the key value k of length "<<size<<endl;
-    cin>>key;
-    cout<<"Enter the input value x of length "<<size<<endl;
-    cin>>input_val;
-    store_value(key,input_val);
+    cin>>size;
+    //generateKey();
+    cout<<"Do you want to display the values(y/n)";
+    cin>>choice;
+    chrono::time_point<std::chrono::system_clock> start, end; 
+    start = chrono::system_clock::now(); 
+    generateInput();
     setshare();
-    display_values();
-    //Server computing h values
-    S();
-    cout<<endl<<"Randomly generated value of c by Server 1 is ";
-    for(int i = 0; i < 2*size; i++)
+    if(choice == 'y' || choice == 'Y')
     {
-        cout<<C.at(i);
+    	display_values();
     }
+    S();
     pi_23();
+    verify_pi();
     cout<<endl;
+	end = chrono::system_clock::now();
+	chrono::duration<double> elapsed_seconds = end - start; 
+    time_t end_time = chrono::system_clock::to_time_t(end); 
+  
+    cout << "Finished at " << ctime(&end_time) 
+              << "elapsed time: " << elapsed_seconds.count() << "s\n"; 
 }
