@@ -255,6 +255,10 @@ void verify_pi()
 
 int main()
 {
+    int size;
+    cout << "hi";
+    cin>>size;
+    
 	char choice;
     cout<<"This code will perform pi protocol among three servers"<<endl;
     cout<<"Enter the size of array"<<endl;
