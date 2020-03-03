@@ -44,7 +44,7 @@ vector<bitset<1> > h3;
 //Generate the value of K, randomly
 void generateInput()
 {
-	srand(time(NULL));
+    srand(time(NULL));
     for(int i = 0; i < size; i++)
     {
         K.push_back(rand() & 1);
@@ -94,19 +94,19 @@ void setshare()
     srand(time(NULL));
     for(int i = 0; i < size; i++)
     {
-    	temp = rand() % 3;
-    	C.push_back(temp);
-    	t = temp % 2;
-    	temp = temp / 2;
-    	c.push_back(temp % 2);
-    	c.push_back(t);
+        temp = rand() % 3;
+        C.push_back(temp);
+        t = temp % 2;
+        temp = temp / 2;
+        c.push_back(temp % 2);
+        c.push_back(t);
     }
 
     //Printing the value of C and corresponding c0 and c1. c0 and c1 are 2-bit binary representation of C.
     cout<<"The value of c is ";
     for(int i = 0; i < size; i++)
     {
-    	cout<<C.at(i);
+        cout<<C.at(i);
     }
 }
 
@@ -114,7 +114,7 @@ void setshare()
  and also the timings are not recorded*/
 void display_values()
 {
-	//Displaying the key and input
+    //Displaying the key and input
     cout<<endl<<"The value of random input X is ";
     for(int i = 0; i< size; i++)
     {
@@ -231,7 +231,7 @@ void pi_23()
     cout<<endl<<"The value of D is ";
     for(int i = 0; i < size; i++)
     {
-    	cout<<D.at(i);
+        cout<<D.at(i);
     }
     cout<<endl;
 }
@@ -239,22 +239,22 @@ void pi_23()
 /*The final step compares the addition modulo 3 of C and D with the secret share of input of three servers*/
 void verify_pi()
 {
-	int h_total = 0; 
-	int cd_total = 0;
-	int c_int ,d_int;
-	//std::vector<int> CD;
-	for(int i = 0; i < size; i++)
-	{
-		h_total = h_total + (int)H.at(i).to_ulong();
-		cd_total = cd_total + C.at(i) + D.at(i);
-	}
-	cout<<"map(H) is "<<(h_total % 3)<<endl;	
-	cout<<"map(C+D) is "<<(cd_total % 3)<<endl;
+    int h_total = 0; 
+    int cd_total = 0;
+    int c_int ,d_int;
+    //std::vector<int> CD;
+    for(int i = 0; i < size; i++)
+    {
+        h_total = h_total + (int)H.at(i).to_ulong();
+        cd_total = cd_total + C.at(i) + D.at(i);
+    }
+    cout<<"map(H) is "<<(h_total % 3)<<endl;    
+    cout<<"map(C+D) is "<<(cd_total % 3)<<endl;
 }
 
 int main()
 {
-	char choice;
+    char choice;
     cout<<"This code will perform pi protocol among three servers"<<endl;
     cout<<"Enter the size of array"<<endl;
     cin>>size;
@@ -267,14 +267,14 @@ int main()
     setshare();
     if(choice == 'y' || choice == 'Y')
     {
-    	display_values();
+        display_values();
     }
     S();
     pi_23();
     verify_pi();
     cout<<endl;
-	end = chrono::system_clock::now();
-	chrono::duration<double> elapsed_seconds = end - start; 
+    end = chrono::system_clock::now();
+    chrono::duration<double> elapsed_seconds = end - start; 
     time_t end_time = chrono::system_clock::to_time_t(end); 
   
     cout << "Finished at " << ctime(&end_time) 
