@@ -174,9 +174,9 @@ void S()
 {
     for(int i = 0; i < size; i++)
     {
-        h1.push_back((x2.at(i) & k3.at(i)) | (x3.at(i) & k2.at(i)) | (x2.at(i) & k2.at(i)));
-        h2.push_back((x1.at(i) & k3.at(i)) | (x3.at(i) & k1.at(i)) | (x3.at(i) & k3.at(i)));
-        h3.push_back((x1.at(i) & k2.at(i)) | (x2.at(i) & k1.at(i)) | (x1.at(i) & k1.at(i)));
+        h1.push_back((x2.at(i) & k3.at(i)) ^ (x3.at(i) & k2.at(i)) ^ (x2.at(i) & k2.at(i)));
+        h2.push_back((x1.at(i) & k3.at(i)) ^ (x3.at(i) & k1.at(i)) ^ (x3.at(i) & k3.at(i)));
+        h3.push_back((x1.at(i) & k2.at(i)) ^ (x2.at(i) & k1.at(i)) ^ (x1.at(i) & k1.at(i)));
         H.push_back(h1.at(i) ^ h2.at(i) ^ h3.at(i));
     }
     cout<<endl<<"The h1 share value is ";
@@ -227,7 +227,6 @@ void pi_23()
         //cout<<d0.at(i)<<d1.at(i);
         D.push_back(d_int);
         j = j + 2;
-
     }
     cout<<endl<<"The value of D is ";
     for(int i = 0; i < size; i++)

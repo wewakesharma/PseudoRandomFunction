@@ -16,92 +16,21 @@
 using namespace std;
 
 int** secret_key;
-/*unsigned long generaterandom()//It will generate random numbers
+string input_str;
+int input[256];
+int lambda;
+int m = lambda;
+int n = lambda;
+int out_val;
+int total_bits = 1;
+void generateInput()
 {
-    srand(time(NULL));
-    unsigned long rand_num = rand();
-    cout<<"Original Random Number is "<<rand_num<<endl;
-    rand_num = rand_num;
-    return rand_num;
+	srand(time(NULL));
+    for(int i = 0; i < lambda; i++)
+    {
+        input[i] = rand() & 1;
+    }
 }
-
-
-void matrixCreation(unsigned long num,int row, int col)//This code is taken from geeksforgeeks
-{
-    int secret_key[row][col];
-    cout<<"The value of random number is "<<num<<endl;
-    int binaryNum[32];
-    int i = 0;
-    while (num > 0)
-    {
-        binaryNum[i] = num % 2;
-        num = num / 2;
-        i++;
-    }
-    cout<<"Value of i is "<<i<<endl;
-    for (int j = i - 1; j >= 0; j--)
-        cout<<binaryNum[j];
-    cout<<endl<<"Number of rows for the matrix is "<<row<<endl;
-    cout<<"Number of columns for the matrix is "<<col<<endl;
-    cout<<"Total Number of elements in matrix must be "<<(row*col)<<endl;
-    cout<<"Total Number of elements we have generated is "<<i<<endl;
-    if(i<(row*col))
-    {
-        cout<<"Sorry, the bits fell short to fill up your matrix, try increasing the size in generation"<<endl;
-    }
-    else//create the secret key matrix
-    {
-        int cnt = i-1;
-        for (int r = 0; r<row; r++)
-        {
-            for(int c = 0; c<col; c++)
-            {
-                secret_key[r][c] = binaryNum[cnt];
-                cnt--;
-                //if (i<0)
-                    //break;
-            }
-        }
-    }
-    //printing the secret key
-    cout<<"The secret key matrix A is "<<endl;
-    for(int r = 0;r<row;r++)
-    {
-        for(int c= 0;c<col;c++)
-        {
-            cout<<secret_key[r][c]<<"\t";
-        }
-        cout<<endl;
-    }
-    int x[4] = {0,1,1,0};
-    int y_bar[row];
-    //int sum = 0;
-    for(int i=0;i<row;i++)
-    {
-        int sum = 0;
-        for(int j=0;j<col;j++)
-        {
-            sum += ((secret_key[i][j])*x[j]);
-        }
-        y_bar[i] = sum;
-    }
-    for(int c=0;c<row;c++)
-    {
-        cout<<y_bar[c];
-    }
-    cout<<endl;
-    int y_bar_sum = 0;
-    for(int c=0;c<row;c++)
-    {
-        y_bar_sum += y_bar[c];
-    }
-    cout<<"The output of this weak PRF is "<<(y_bar_sum % 3)<<endl;
-}
-
-int truncate(int key, int len)//This function will truncate the length of any entity to a defined
-{
-    return 0;
-}*/
 
 
 //=============================================================================
@@ -198,15 +127,10 @@ int weak_prf(int** sk, int* inp, int l)
 }
 int main()
 {
-    string input_str;
-    int input[10];
-    int lambda;
+    
     cout<<"Enter a value for security parameter (lambda) "<<endl;
     cin>>lambda;
-    int m = lambda;
-    int n = lambda;
-    int out_val;
-    int total_bits = 1;
+    
     cout<<"Accordingly the value of m and n are chosen; m and n being of same length as that of lambda"<<endl;
     
     //Step 1: generating a random number and convert it into binary String.
@@ -223,7 +147,7 @@ int main()
     //cout<<"The generated matrix is"<<endl;
     int** secret_key = matrixCreation(m, n, binaryNum);
     //cout<<"Back to main function "<<endl;
-    cout<<"The secret key matrix is generated successfully"<<endl;
+    /*cout<<"The secret key matrix is generated successfully"<<endl;
     for(int x = 0; x < m ; x++)
     {
         for(int y = 0; y < n ; y++)
@@ -231,19 +155,7 @@ int main()
             cout<<secret_key[x][y]<<"\t";
         }
         cout<<endl;
-    }
-    cout<<"Enter the binary input of length "<<lambda<<" bit by bit"<<endl;
-    //cin>>input_str;
-    //cout<<input_str.length();
-    for(int c=0;c<4;c++)
-    {
-        cout<<"Input bit "<<(c+1);
-        cin>>input[c];
-    }
-    for(int c=0;c<4;c++)
-    {
-        cout<<input[c];
-    }
+    }*/
     weak_prf(secret_key,input,lambda);
     return 0;
 }
