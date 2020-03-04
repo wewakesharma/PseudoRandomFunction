@@ -217,8 +217,8 @@ void pi_23()
                       (c.at(j+1) & (num_const.at(0) ^ H.at(i)))
                       );
         d1.push_back(
-                     (c.at(j) ^ num_const.at(0) ^ c.at(j+1)) &
-                     (H.at(i)));
+                     (c.at(j) ^ (num_const.at(0) ^ c.at(j+1)) &
+                     (H.at(i))));
         //cout<<endl<<"d0 "<<d0.at(i)<<" d1 "<<d1.at(i);
         d0_int = (int)d0.at(i).to_ulong();
         d1_int = (int)d1.at(i).to_ulong();
@@ -242,11 +242,16 @@ void verify_pi()
     int h_total = 0; 
     int cd_total = 0;
     int c_int ,d_int;
+    int h_int, cd_int;
     //std::vector<int> CD;
     for(int i = 0; i < size; i++)
     {
-        h_total = h_total + (int)H.at(i).to_ulong();
-        cd_total = cd_total + C.at(i) + D.at(i);
+        h_int = (int)H.at(i).to_ulong();
+        cd_int = C.at(i) + D.at(i);
+        h_total = h_total + h_int;
+        cd_total = cd_total + cd_int;
+        cout<<"h "<<(h_int % 3)<<endl;
+        cout<<"c+d "<<(cd_int % 3)<<endl;
     }
     cout<<"map(H) is "<<(h_total % 3)<<endl;    
     cout<<"map(C+D) is "<<(cd_total % 3)<<endl;
