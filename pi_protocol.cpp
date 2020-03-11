@@ -257,6 +257,7 @@ int main()
     //cin>>choice;
     chrono::time_point<std::chrono::system_clock> start, end; 
     start = chrono::system_clock::now(); 
+    for(int i=0;i<1000;i++){
     generateInput();
     setshare();
     /*if(choice == 'y' || choice == 'Y')
@@ -267,6 +268,7 @@ int main()
     pi_23();
     verify_pi();
     cout<<endl;
+}
     end = chrono::system_clock::now();
     chrono::duration<double> elapsed_seconds = end - start; 
     time_t end_time = chrono::system_clock::to_time_t(end); 
