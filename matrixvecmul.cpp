@@ -41,11 +41,17 @@ void generate_toeplitz(){
 		}
 	}
 	//Filling lower part of toeplitz matrix
+	int cnt = base;
 	for(int i = 1; i < len; i++)
 	{
-		for(int j = 0; j < i;j++)
+		for(int j = 0; j < i; j++)
 		{
-			secret_key[i][j] = toep_values[base+j];
+			for(cnt = base; cnt > len; cnt--)
+			{
+				secret_key[i][j] = toep_values[cnt];
+				base++;
+			}
+			
 		}
 	}
 }
