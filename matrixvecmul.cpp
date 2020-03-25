@@ -48,11 +48,11 @@ void generate_toeplitz(){
 		{
 			for(cnt = base; cnt > len; cnt--)
 			{
-				secret_key[i][j] = toep_values[cnt];
-				base++;
+				secret_key[i][j] = toep_values[cnt];	
 			}
-			
+			base++;
 		}
+		
 	}
 }
 
