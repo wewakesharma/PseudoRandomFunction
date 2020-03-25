@@ -29,11 +29,21 @@ void generate_toeplitz(){
 
 	int append = len;
 	int base = len;
-	int k = 0;
+
 	//Filling up the top part of toeplitz matrix
 	for(int i = 0; i < len; i++)
 	{
-		k = 0;
+
+		for(int j = 0; j < i; j++)
+		{
+			for(int cnt = base; cnt > len; cnt--)
+			{
+				secret_key[i][j] = toep_values[cnt];	
+			}
+			base++;
+		}
+
+		int k = 0;
 		for(int j = i; j < len;j++)
 		{
 			secret_key[i][j] = toep_values[k];
@@ -41,19 +51,19 @@ void generate_toeplitz(){
 		}
 	}
 	//Filling lower part of toeplitz matrix
-	int cnt = base;
-	for(int i = 1; i < len; i++)
-	{
-		for(int j = 0; j < i; j++)
-		{
-			for(cnt = base; cnt > len; cnt--)
-			{
-				secret_key[i][j] = toep_values[cnt];	
-			}
-			base++;
-		}
+	// int cnt = base;
+	// for(int i = 1; i < len; i++)
+	// {
+	// 	for(int j = 0; j < i; j++)
+	// 	{
+	// 		for(cnt = base; cnt > len; cnt--)
+	// 		{
+	// 			secret_key[i][j] = toep_values[cnt];	
+	// 		}
+	// 		base++;
+	// 	}
 		
-	}
+	// }
 }
 
 
