@@ -6,22 +6,27 @@ int len, row, col;
 int secret_key[8][8];
 int input[8];
 int toep_values[15];
+//int temp_key[4];
+int temp_input[4];
 
 using namespace std;
 
+//This function will create the input vector randomly and store that value into the array named input.
 void generate_input()
 {
 	srand(time(NULL));
-    for(int i = 0; i < 8; i++)
+    for(int i = 0; i < len; i++)
     {
         input[i] = rand() & 1;
     }
 }
 
+
 void generate_toeplitz(){
 	//generating random number for toeplitz values. Toeplitz will have two parts base and append. base will be decreasing and append ptr
 	//will increase
 	srand(time(NULL));
+	//total number to be generated for a toeplitz matrix is (2*n - 1)
 	for(int i = 0; i < (2*len-1); i++)
 	{
 		toep_values[i] = rand() & 1;
@@ -29,42 +34,25 @@ void generate_toeplitz(){
 
 	int append = len;
 	int base = len;
-
+	int k = 0;
 	//Filling up the top part of toeplitz matrix
+	
 	for(int i = 0; i < len; i++)
 	{
-
-		for(int j = 0; j < i; j++)
-		{
-			for(int cnt = base; cnt > len; cnt--)
-			{
-				secret_key[i][j] = toep_values[cnt];	
-			}
-			base++;
-		}
-
+		//Filling up the upper triangular matrix
 		int k = 0;
 		for(int j = i; j < len;j++)
 		{
 			secret_key[i][j] = toep_values[k];
 			k++;
 		}
-	}
-	//Filling lower part of toeplitz matrix
-	// int cnt = base;
-	// for(int i = 1; i < len; i++)
-	// {
-	// 	for(int j = 0; j < i; j++)
-	// 	{
-	// 		for(cnt = base; cnt > len; cnt--)
-	// 		{
-	// 			secret_key[i][j] = toep_values[cnt];	
-	// 		}
-	// 		base++;
-	// 	}
-		
-	// }
-}
+
+		for(int j = 0; j < i+1; j++)
+		{
+			secret_key[i+1][j] = toep_values[(base-j)];
+		}
+		base++;
+	}	
 
 
 void display_values()
@@ -94,6 +82,52 @@ void display_values()
 }
 
 
+//NO NEED OF THIS FUNCTION
+void rotate_input(int *tk,int size)
+{
+	int temp;
+	temp = tk[size-1];
+	for(int i = (size-1); i > 0; i--)
+	{
+		tk[i] = tk[i-1];
+	}
+}
+
+void calculate()
+{
+	//int temp_input[4];
+	int temp_key[4];
+	int z1[4]={0,0,0,0};//FINAL ARRAY THAT WILL STORE Z1 VALUES. THESE ARE FIXED BECAUSE THW WORD PACK LENGTH IS FIXED AS 4.
+	int z2[4] = {0,0,0,0};//FINAL ARRAY THAT WILL STORE Z2 VALUES
+	//Calculating Z1.
+
+
+	//Transfering values from secret key to temp_key
+	for(int col = 0; col < len/2; col++)
+	{
+		for(int row = 0; row < len/2; row++)
+		{
+			//fill the temp_key
+			if(temp_input[row]==1)
+			{
+				z1[row] = z1[row] + secret_key[row][col];
+			}
+			
+			//temp_key[row] = secret_key[row][col];
+		}
+	}
+	
+
+	//Displaying the values of temp key
+	for(int i = 0; i < len/2; i++)
+	{
+		cout<<temp_key[i];
+	}
+
+	//Calculating Z2.
+}
+
+
 int main()
 {
 	std::cout<<"Enter the value of security parameter(length of your input)"<<std::endl;
@@ -101,5 +135,6 @@ int main()
 	generate_input();
 	generate_toeplitz();
 	display_values();
+	calculate();
 	return 0;
 }
