@@ -81,18 +81,6 @@ void display_values()
 	std::cout<<endl;
 }
 
-
-//NO NEED OF THIS FUNCTION
-void rotate_input(int *tk,int size)
-{
-	int temp;
-	temp = tk[size-1];
-	for(int i = (size-1); i > 0; i--)
-	{
-		tk[i] = tk[i-1];
-	}
-}
-
 void calculate()
 {
 	//int temp_input[4];
@@ -102,21 +90,29 @@ void calculate()
 	//Calculating Z1.
 
 
-	//Transfering values from secret key to temp_key
+	//Calculating Z1
 	for(int col = 0; col < len/2; col++)
 	{
-		for(int row = 0; row < len/2; row++)
+		if(input[(len/2) - col - 1] == 1)
 		{
-			//fill the temp_key
-			if(temp_input[row]==1)
+			for(int row = 0; row < len/2; row++)
 			{
 				z1[row] = z1[row] + secret_key[row][col];
 			}
-			
-			//temp_key[row] = secret_key[row][col];
 		}
 	}
 	
+	//Calculating Z2
+	for(int col = len/2; col < len; col++)
+	{
+		if(input[(len) - col - 1] == 1)
+		{
+			for(int row = len/2; row < len; row++)
+			{
+				z1[row] = z1[row] + secret_key[row][col];
+			}
+		}
+	}
 
 	//Displaying the values of temp key
 	for(int i = 0; i < len/2; i++)
@@ -124,7 +120,7 @@ void calculate()
 		cout<<temp_key[i];
 	}
 
-	//Calculating Z2.
+	
 }
 
 
