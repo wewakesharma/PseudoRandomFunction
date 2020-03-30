@@ -50,7 +50,7 @@ int weak_prf()
     cout<<endl<<"Rewriting the output as 0/1 value ";
     for(int f=0;f<lambda;f++)
     {
-        cout<<out[f];
+        //cout<<out[f];
         final_sum += out[f];
     }
     cout<<endl<<"The final output of the weak PRF (after applying additive mod 3 is "<<(final_sum % 3)<<endl;
@@ -63,7 +63,21 @@ int main()
 	cin>>lambda;
 	rows = lambda;
 	columns = lambda;
-	generateInput();
-	matrixCreation();
-	weak_prf();
+	chrono::time_point<std::chrono::system_clock> start, end; 
+    start = chrono::system_clock::now(); 
+    for(int i=0;i<10;i++)
+    {
+		generateInput();
+		for(int j=0;j<100;j++) 
+		{
+			matrixCreation();
+			weak_prf();
+		}	
+	}
+	end = chrono::system_clock::now();
+    chrono::duration<double> elapsed_seconds = end - start; 
+    time_t end_time = chrono::system_clock::to_time_t(end); 
+  
+    cout << "Finished at " << ctime(&end_time) 
+              << "elapsed time: " << elapsed_seconds.count() << "s\n";
 }
