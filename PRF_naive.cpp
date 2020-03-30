@@ -66,16 +66,4 @@ int main()
 	generateInput();
 	matrixCreation();
 	weak_prf();
-	//Print the matrix
-	/*cout<<"The matrix you have input is:\n";
-	for(int i=0;i<rows;i++)
-	{
-		for(int j=0;j<columns;j++)
-			cout<<secret_key[i][j]<<"\t";	//tab between each element
-		cout<<"\n";						//new row
-	}
-	
-	//for(int i=0;i<rows;i++)
-	//	delete[] secret_key[i];				//c++ can delete up to 1 dimensional vectors
-	*/
 }
