@@ -3,10 +3,10 @@
 #include<cmath>
 
 //std::bitset<8> input;
-int len, row, col;
-int secret_key[8][8];
-int input[8];
-int toep_values[15];
+int len, row, col; //len is the value of security parameter, also the dimension of matrix. row and col are also same, they can be removed
+int secret_key[256][256];
+int input[256];
+int toep_values[512];
 int packed_key[25];
 int temp_input[4];
 int pack_size = 4;
@@ -61,7 +61,7 @@ void generate_toeplitz()
 void display_values()
 {
 	cout<<"The input generated is "<<std::endl;
-	for(int i = 0; i < 8; i++)
+	for(int i = 0; i < len; i++)
 	{
 		std::cout<<input[i];
 	}
@@ -183,6 +183,12 @@ void compute()
 	cout<<"Z2 is "<<z2<<endl;
 
 }
+
+//Step 1: Generate random input and store it in input array.
+//Step 2: Generate 2n-1 bits and store it toep_values array. 
+//Step 3: Create a nxn toeplitz matrix. This step can be bypassed since we no longer need the bits in matrix but packed in a word.
+//Step 4: pack() function will pack four bits into one.
+//Step 5: compute() function will calculate the value of z1 and z2.
 int main()
 {
 	std::cout<<"Enter the value of security parameter(length of your input)"<<std::endl;
@@ -190,8 +196,7 @@ int main()
 	generate_input();
 	generate_toeplitz();
 	display_values();
-	//calculate();
-	pack();
-	compute();
+	//pack();
+	//compute();
 	return 0;
 }
