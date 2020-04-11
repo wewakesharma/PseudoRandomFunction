@@ -1,5 +1,6 @@
 #include<iostream>
 #include<bitset>
+#include<cmath>
 
 //std::bitset<8> input;
 int len, row, col;
@@ -83,7 +84,7 @@ void display_values()
 	std::cout<<endl;
 }
 
-void calculate()
+/*void calculate()
 {
 	//int temp_input[4];
 	int temp_key[4];
@@ -128,27 +129,23 @@ void compute()
 	int temp;
 	
 
-}
+}*/
 
 void pack()//packing the bit in secret key.
 {
-	int temp;
-	int k[];
+	//int temp;
+	int k[10];
 	int pack_size = 4;
-	for(int col = 0; col < len; col++)
+	string str;
+	for(int col = 0; col < 2*len; col++)
 	{
-		for(int row = 0;row < len/pack_size; row=row+pack_size)
+		//int i=0;
+		for(int row = 0;row <= pack_size; row=row+pack_size)
 		{
-			int temp = secret_key[row][col]*1000 + secret_key[row+1][col]*100 + secret_key[row+2][col]*10 + secret_key[row+3][col]
+			int temp = secret_key[row][col]*pow(2,3) + secret_key[row+1][col]*pow(2,2) + secret_key[row+2][col]*pow(2,1) + secret_key[row+3][col];
+			cout<<temp<<endl;
 		}
-	}
-
-
-
-
-	for(int row = 0; row < len; row++)
-	{
-		
+		row = 0;
 	}
 }
 
@@ -160,7 +157,8 @@ int main()
 	generate_input();
 	generate_toeplitz();
 	display_values();
-	compute();
+	//compute();
 	//calculate();
+	pack();
 	return 0;
 }
