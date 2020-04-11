@@ -22,7 +22,8 @@ void generate_input()
 }
 
 
-void generate_toeplitz(){
+void generate_toeplitz()
+{
 	//generating random number for toeplitz values. Toeplitz will have two parts base and append. base will be decreasing and append ptr
 	//will increase
 	srand(time(NULL));
@@ -53,7 +54,7 @@ void generate_toeplitz(){
 		}
 		base++;
 	}	
-
+}
 
 void display_values()
 {
@@ -85,8 +86,7 @@ void calculate()
 {
 	//int temp_input[4];
 	int temp_key[4];
-	int z1[4]={0,0,0,0};//FINAL ARRAY THAT WILL STORE Z1 VALUES. THESE ARE FIXED BECAUSE THW WORD PACK LENGTH IS FIXED AS 4.
-	int z2[4] = {0,0,0,0};//FINAL ARRAY THAT WILL STORE Z2 VALUES
+
 	//Calculating Z1.
 
 
@@ -119,8 +119,14 @@ void calculate()
 	{
 		cout<<temp_key[i];
 	}
+}
 
+void compute()
+{
+	int pack_size = 4;
+	int temp;
 	
+
 }
 
 
@@ -131,6 +137,7 @@ int main()
 	generate_input();
 	generate_toeplitz();
 	display_values();
-	calculate();
+	compute();
+	//calculate();
 	return 0;
 }
