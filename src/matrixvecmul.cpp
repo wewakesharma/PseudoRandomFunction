@@ -6,6 +6,7 @@ int len, row, col;
 int secret_key[8][8];
 int input[8];
 int toep_values[15];
+int pack_key[8][8];
 //int temp_key[4];
 int temp_input[4];
 
@@ -123,10 +124,32 @@ void calculate()
 
 void compute()
 {
-	int pack_size = 4;
+	//int pack_size = 4;
 	int temp;
 	
 
+}
+
+void pack()//packing the bit in secret key.
+{
+	int temp;
+	int k[];
+	int pack_size = 4;
+	for(int col = 0; col < len; col++)
+	{
+		for(int row = 0;row < len/pack_size; row=row+pack_size)
+		{
+			int temp = secret_key[row][col]*1000 + secret_key[row+1][col]*100 + secret_key[row+2][col]*10 + secret_key[row+3][col]
+		}
+	}
+
+
+
+
+	for(int row = 0; row < len; row++)
+	{
+		
+	}
 }
 
 
