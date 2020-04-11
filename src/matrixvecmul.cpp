@@ -7,9 +7,9 @@ int len, row, col;
 int secret_key[8][8];
 int input[8];
 int toep_values[15];
-int pack_key[8][8];
-//int temp_key[4];
+int packed_key[25];
 int temp_input[4];
+int pack_size = 4;
 
 using namespace std;
 
@@ -132,24 +132,57 @@ void compute()
 }*/
 
 void pack()//packing the bit in secret key.
-{
-	//int temp;
-	int k[10];
-	int pack_size = 4;
-	string str;
-	for(int col = 0; col < 2*len; col++)
+{	
+	int i = 0;
+	for(int col = 0; col < len; col++)
 	{
-		//int i=0;
 		for(int row = 0;row <= pack_size; row=row+pack_size)
 		{
 			int temp = secret_key[row][col]*pow(2,3) + secret_key[row+1][col]*pow(2,2) + secret_key[row+2][col]*pow(2,1) + secret_key[row+3][col];
-			cout<<temp<<endl;
+			packed_key[i] = temp;
+			i++;
 		}
 		row = 0;
 	}
 }
 
+void compute()
+{
+	int z1 = 0;
+	int z2 = 0;
+	int temp;
+	int d;
+	//compute z1
+	for(int i = 0; i < len/pack_size; i++)
+	{
+		for(int j = 0; j < pack_size; j++)
+		{
+			d = 4*i;
+			z1 = ((input[d+j] * packed_key[8*i + 6]) ^ 
+			(input[d+j] * packed_key[8*i + 4]) ^
+				(input[d+j] * packed_key[8*i + 2]) ^
+					(input[d+j] * packed_key[8*i]));
 
+		}
+	}
+	cout<<"Z1 is "<<z1<<endl;
+
+	//compute z2
+	for(int i = 0; i < len/pack_size; i++)
+	{
+		for(int j = 0; j < pack_size; j++)
+		{
+			d = 4*i;
+			z2 = ((input[d+j] * packed_key[8*i + 7]) ^ 
+			(input[d+j] * packed_key[8*i + 5]) ^
+				(input[d+j] * packed_key[8*i + 3]) ^
+					(input[d+j] * packed_key[8*i + 1]));
+
+		}
+	}
+	cout<<"Z2 is "<<z2<<endl;
+
+}
 int main()
 {
 	std::cout<<"Enter the value of security parameter(length of your input)"<<std::endl;
@@ -157,8 +190,8 @@ int main()
 	generate_input();
 	generate_toeplitz();
 	display_values();
-	//compute();
 	//calculate();
 	pack();
+	compute();
 	return 0;
 }
