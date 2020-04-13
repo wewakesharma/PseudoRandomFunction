@@ -1,15 +1,21 @@
 #include<iostream>
 #include<bitset>
 #include<cmath>
+#include <chrono> 
+#include <ctime> 
+#include <cstdlib>
 
 //std::bitset<8> input;
 int len, row, col; //len is the value of security parameter, also the dimension of matrix. row and col are also same, they can be removed
 int secret_key[256][256];
 int input[256];
-int toep_values[512];
-int packed_key[25];
+int toep_values[512];//Contains bits 
+int packed_key[256];
 int temp_input[4];
-int pack_size = 4;
+int pack_size = 64;//word size
+unsigned long int z_final[4];//to store the final product values
+
+unsigned long int packed_int = 0;
 
 using namespace std;
 
@@ -84,6 +90,7 @@ void display_values()
 	std::cout<<endl;
 }
 
+//This code needs to be removed. Waiting for final confirmation
 /*void calculate()
 {
 	//int temp_input[4];
@@ -134,19 +141,36 @@ void compute()
 void pack()//packing the bit in secret key.
 {	
 	int i = 0;
-	for(int col = 0; col < len; col++)
+	//long temp = 0;
+	int k;
+	for(int col = 0; col < len; col++)//for each column
 	{
-		for(int row = 0;row <= pack_size; row=row+pack_size)
+		for(int row = 0;row < len; row=row+pack_size)//a pack of 64 bit as a single word
 		{
-			int temp = secret_key[row][col]*pow(2,3) + secret_key[row+1][col]*pow(2,2) + secret_key[row+2][col]*pow(2,1) + secret_key[row+3][col];
-			packed_key[i] = temp;
+			k = 0;
+			packed_int = 0;
+			for(int j = pack_size-1; j >= 0; j--)
+			{
+				packed_int = packed_int + secret_key[row+k][col]*pow(2,j);
+				k++;
+			}
+			//cout<<packed_int<<endl;
+			//int temp = secret_key[row][col]*pow(2,3) + secret_key[row+1][col]*pow(2,2) + secret_key[row+2][col]*pow(2,1) + secret_key[row+3][col];
+			packed_key[i] = packed_int;
 			i++;
 		}
 		row = 0;
 	}
+
+	//The following code needs to be removed. Waiting for final confirmation
+	//cout<<"Value of i "<<i<<endl;
+	/*for(int i=0;i<2*len;i++)
+	{
+		cout<<packed_key[i]<<endl;
+	}*/
 }
 
-void compute()
+/*void compute()
 {
 	int z1 = 0;
 	int z2 = 0;
@@ -162,7 +186,6 @@ void compute()
 			(input[d+j] * packed_key[8*i + 4]) ^
 				(input[d+j] * packed_key[8*i + 2]) ^
 					(input[d+j] * packed_key[8*i]));
-
 		}
 	}
 	cout<<"Z1 is "<<z1<<endl;
@@ -177,11 +200,22 @@ void compute()
 			(input[d+j] * packed_key[8*i + 5]) ^
 				(input[d+j] * packed_key[8*i + 3]) ^
 					(input[d+j] * packed_key[8*i + 1]));
-
 		}
 	}
 	cout<<"Z2 is "<<z2<<endl;
+}*/
 
+void compute()
+{
+	for(int i=0; i < len/pack_size; i++)
+	{
+		z_final[i] = 0;
+		for(int j = 0; j < len; j++)
+		{
+			z_final[i] = z_final[i] ^ (input[j] * packed_key[4*j+i]);
+		}
+		//cout<<"Value of z"<<i<<" is "<<z_final[i]<<endl;
+	}
 }
 
 //Step 1: Generate random input and store it in input array.
@@ -193,10 +227,24 @@ int main()
 {
 	std::cout<<"Enter the value of security parameter(length of your input)"<<std::endl;
 	std::cin>>len;
-	generate_input();
-	generate_toeplitz();
-	display_values();
-	//pack();
-	//compute();
+	chrono::time_point<std::chrono::system_clock> start, end; 
+    start = chrono::system_clock::now(); 
+    for(int i=0;i<10;i++)
+    {
+    	generate_input();
+    	for(int j=0;j<100;j++)
+    	{
+    		generate_toeplitz();
+			//display_values();
+			pack();
+			compute();
+    	}
+    }
+	end = chrono::system_clock::now();
+    chrono::duration<double> elapsed_seconds = end - start; 
+    time_t end_time = chrono::system_clock::to_time_t(end); 
+  
+    cout << "Finished at " << ctime(&end_time) 
+              << "elapsed time: " << elapsed_seconds.count() << "s\n";
 	return 0;
 }

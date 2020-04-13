@@ -2,7 +2,7 @@
 #include<bitset>
 
 //std::bitset<8> input;
-int len, row, col;
+int len, row, col;//for now take 256
 int secret_key[8][8];
 int input[8];
 int toep_values[15];
