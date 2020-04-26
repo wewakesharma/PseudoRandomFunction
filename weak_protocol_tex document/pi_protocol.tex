@@ -1,0 +1,99 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amscd, amsthm, amsfonts}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{authblk}
+\usepackage{datetime}
+
+\oddsidemargin 0pt
+\evensidemargin 0pt
+\marginparwidth 40pt
+\marginparsep 10pt
+\topmargin -20pt
+\headsep 10pt
+\textheight 8.7in
+\textwidth 6.65in
+\linespread{1.2}
+
+\title{Fully Distributive Evaluation Protocol: Pseudocode}
+\author{Vivek Sharma}
+\date{Jan 11, 2020}
+
+\newcommand{\rr}{\mathbb{R}}
+
+\newcommand{\al}{\alpha}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\aff}{aff}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+This document contains four parts. First part includes the introduction to the protocol. Second part contains the pseudocode for the protocol and sub protocol. Third part includes a dummy example at some imaginary $j^{th}$ iteration. The last part contains a list of questions regarding the protocol.
+
+The protocol is divided into three phases. The middle phase is an interactive phase running a sub protocol $\pi_{2,3}$ which takes input from three servers, which is their additive secret share mod 2, and outputs two additive share mod 3 shared by two servers. The first and last phase are non-interactive, meaning, they can be computed locally. 
+
+\subsection{Phase 1: NonInteractive computation of Additive share by each Server} 
+Each server $S_{i}$ holds replicated additive shares of key $k_{i} \in \mathbb{Z}_{n}^{2}$ and $x_{i} \in \mathbb{Z}_{n}^{2}$ and computes $h_{i} \in \mathbb{Z}_{2}^{m}$, which is the multiplication of key and input over $\mathbb{Z}_2$. This computation is performed locally. 
+\subsection{Phase 2: Interactive computation of $\pi_{23}$ protocol}
+
+\begin{enumerate}
+	\item Each server, at this point have locally computed their shares, which was the multiplication of two vectors.
+	\item Server 1 randomly chooses a value $c \in \mathbb{Z}_{3}^{m}$ and each bit of value is converted to it's 2-bit representation to form $c_{0}$ and $c_{1}$ respectively. 
+	\item Meanwhile, Server 1, 2 and 3 runs sub-protocol for m instances(m is the length of additive share and also the value of c, which is with server 1.
+	\subitem For $1 \leq j \leq m$:
+	\subitem Each server $s_{i} , i \in {1,2,3}$ share their input $h_{i,j}$ [\,Note: $h_{i,j}$ is the input of server $s_{i}$ in $j^{th}$ iteration ]\,
+	\subitem Compute combined XOR of their input: $comb := h_{1} \oplus h_{2} \oplus h_{3}$
+	\subitem Multiply one part of c$(c_{0}),$ with comb and other part $(c_{1})$ with $\neg{comb}$ and XOR both the result, this forms $d_{0}$.
+	\subitem To compute $d_{1}$, XOR the $c_{0}$ and $\neg{c_{1}}$, and multiply the result with the XOR of secret share of the servers.
+	\subitem The final result $d = d_{0}, d_{1} \in \{ 0,1\}^{2}$ is converted back into $\mathbb{Z}_{3}$
+	\subitem At the end of this phase, Server 1 has $c \in \{0,1\}^m$ and Server 2 has received the output $d \in \mathbb{Z}_{3}$. The combination of values with Server one and two (i.e. c and d ) yields the additive mod 3 of the secret share of the inputs by the Servers. Mathematically $c + d = h_{1} + h_{2} + h_{3} (mod 3)$
+\end{enumerate}
+
+\subsection{Phase 3: Non Interactive evaluation of function map by Server 1 and Server 2}
+The Servers in possession of random value c and the interactively computed value d, apply $map_{G}$ function on their input and compute their share in $\mathbb{Z}_3$. Note: This $map_{G}$ is guessed to be the additive mod G function, we saw at the implementation of weak PRF.
+
+\section{Pseudocode}
+
+\subsection{piprotocol():}
+\begin{enumerate}
+	\item Server $S_{i}$ : $h_{i}  := k \cdot x  $ (mod 2) $\in \mathbb{Z}_{2}^{m}$. //matrix vector multiplication
+	\item $S_{1}$ : Selects c $\xleftarrow{\text{R}} \mathbb{Z}_{3}^{m}$. //randomly selected from the field.
+	\item for $1 \leq j \leq m$: //length of c and $h_{i}$
+	\item \quad Server $S_{i}$ : $\pi_{2,3}$($c_{0}, c_{1}, h_{1}, h_{2}, h_{3}$) //All servers run parallel instances of the protocol
+	\item $S_{1}$: $\sum_{1 \leq n \leq m} c_{n} $ (mod G) and $S_{2}$: $\sum_{1 \leq n \leq m} d_{n} $ (mod G)
+\end{enumerate}
+
+\subsection{$\pi_{2,3}$($c_{0}, c_{1}, h_{1}, h_{2}, h_{3}$):}
+\begin{enumerate}
+	\item $comb := h_{1} \oplus h_{2} \oplus h_{3}$ //secret share of each server at $j^{th} iteration$
+	\item $d_{0} = c_{0} \cdot comb \oplus c_{1} \cdot \neg comb$
+	\item $d_{1} = c_{0} \oplus \neg c_{1} \cdot comb$
+	\item return $d_{0}$ and $d_{1}$ //Server two obtains d by combining $d_{0}$ and $d_{1}$
+\end{enumerate}
+
+
+\section{Example:}
+
+\begin{itemize}
+	\item Say at $j^{th}$ instance, $h_{1} = 1, h_{2} = 0, h_{3} = 1$ and server randomly chooses c = 2, so $c_{0} = 1, c_{1} = 0$
+	\item $comb = 0, and d_{0} = 0, d_{1} = 0$ as computed by formula given above. 
+	\item This satisfies the formula $c + d = h_{1} \oplus h_{2} \oplus h_{3}$ (mod 3), is true in this case.
+	\item Server one and two apply $map_{G}$ function on their value $c and d \in \mathbb{Z}_3$
+	
+\end{itemize}
+
+\section{Questions:}
+
+\begin{enumerate}
+	\item What is it for? The description says that it is for distributed PRF evaluation? What are the possible evaluation where the secret shared between three servers is then modified to be between two server.
+	\item Below Figure 1: Server $S_{i}$ knows $a_{j}$ and $b_{j}$ (which is $k_{i}$ and $x_{i}$), isn't it private key and private input of a user which must remain private. I can understand $h_{i}$ being shared, the other server won't be able to track back the value of k and x, but the concept of replicated secret sharing confuses me.
+	\item Does all the server compute subprotocol $\pi_{2,3}$, if yes, do they all get the random value c selected by Server one and the shares of other input $h_{i}$, and why do we need replicated secret sharing scheme if all we need is $h_{i}$
+	\item How does it happen that only server two obtains $c^{'}$ (or the value $d_{0}$ and $d_{1}$). We know that at the end, only two servers having the value of c and d can evaluate additive secret share mod 3 value. But why?
+	\item Is the $map_{G}$ function same as the one defined in weak PRF as a public matrix. There it is mentioned that the use of map function is to elongate the size of single dimensional output of PRF, is it true here too? Is it necessary in distributed PRF evaluation setting.
+\end{enumerate}
+
+\end{document}

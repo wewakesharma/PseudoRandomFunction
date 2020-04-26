@@ -1,0 +1,59 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amscd, amsthm, amsfonts}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{authblk}
+\usepackage{datetime}
+
+\oddsidemargin 0pt
+\evensidemargin 0pt
+\marginparwidth 40pt
+\marginparsep 10pt
+\topmargin -20pt
+\headsep 10pt
+\textheight 8.7in
+\textwidth 6.65in
+\linespread{1.2}
+
+\title{Fully Distributive Evaluation Protocol: Code}
+\author{Vivek Sharma}
+\date{Jan 11, 2020}
+
+\newcommand{\rr}{\mathbb{R}}
+
+\newcommand{\al}{\alpha}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\aff}{aff}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Code: Basic}
+
+
+
+\subsection{First Step:} 
+
+Server $S_{1}$ holds $x_{2}, k_{2}, x_{3}, k_{3}$ and computes $h_{1} = x_{2} \cdot k_{3} + x_{3} \cdot k_{2} + x_{2} \cdot k_{2}$\\
+Server $S_{2}$ holds $x_{1}, k_{1}, x_{3}, k_{3}$ and computes $h_{2} = x_{1} \cdot k_{3} + x_{3} \cdot k_{1} + x_{3} \cdot k_{3}$\\
+Server $S_{3}$ holds $x_{1}, k_{1}, x_{2}, k_{2}$ and computes $h_{3} = x_{1} \cdot k_{2} + x_{2} \cdot k_{1} + x_{1} \cdot k_{1}$\\
+
+\subsection{Phase 2: Interactive computation of $\pi_{23}$ protocol}
+
+\begin{enumerate}
+	\item Each server, at this point have locally computed their shares, which was the multiplication of two vectors.
+	\item Server 1 randomly chooses a value $c \in \mathbb{Z}_{3}^{m}$ and each bit of value is converted to it's 2-bit representation to form $c_{0}$ and $c_{1}$ respectively. 
+	\item Meanwhile, Server 1, 2 and 3 runs sub-protocol for m instances(m is the length of additive share and also the value of c, which is with server 1.
+	\subitem For $1 \leq j \leq m$:
+	\subitem Each server $s_{i} , i \in {1,2,3}$ share their input $h_{i,j}$ [\,Note: $h_{i,j}$ is the input of server $s_{i}$ in $j^{th}$ iteration ]\,
+	\subitem Compute combined XOR of their input: $comb := h_{1} \oplus h_{2} \oplus h_{3}$
+	\subitem Multiply one part of c$(c_{0}),$ with comb and other part $(c_{1})$ with $\neg{comb}$ and XOR both the result, this forms $d_{0}$.
+	\subitem To compute $d_{1}$, XOR the $c_{0}$ and $\neg{c_{1}}$, and multiply the result with the XOR of secret share of the servers.
+	\subitem The final result $d = d_{0}, d_{1} \in \{ 0,1\}^{2}$ is converted back into $\mathbb{Z}_{3}$
+	\subitem At the end of this phase, Server 1 has $c \in \{0,1\}^m$ and Server 2 has received the output $d \in \mathbb{Z}_{3}$. The combination of values with Server one and two (i.e. c and d ) yields the additive mod 3 of the secret share of the inputs by the Servers. Mathematically $c + d = h_{1} + h_{2} + h_{3} (mod 3)$
+\end{enumerate}
+
+\end{document}
