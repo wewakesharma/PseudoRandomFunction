@@ -101,12 +101,22 @@ int main()
         mod3_value = compute(key,input, z_final);  
     }*/
 
-    for(int i=0;i<1000;i++)//This loop took 5.61 seconds
+    /*for(int i=0;i<1000;i++)//This loop took 5.61 seconds
     {
         generate_input(input,generator);
         for(int j=0;j<1000;j++)
         {
             generate_rand_key(key, generator);
+            mod3_value = compute(key,input, z_final);
+        }   
+    }*/
+
+    for(int i=0;i<1000;i++)//This loop took 5.61 seconds
+    {
+        generate_rand_key(key, generator);
+        for(int j=0;j<1000;j++)
+        {
+            generate_input(input,generator);
             mod3_value = compute(key,input, z_final);
         }   
     }
