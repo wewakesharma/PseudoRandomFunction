@@ -13,9 +13,9 @@ using namespace std;
 void generate_input(bool input[256], std::mt19937 &generator)
 {
     //srand(time(NULL));
-    for(int i = 0; i < 256; i++)
+    for(int i = 0; i < 4; i++)
     {
-        input[i] = generator() & 1;
+        input[i] = generator();
     }
 }
 
@@ -43,7 +43,7 @@ int bitCount(unsigned long int z_final[4])
         n = z_final[z_count];
         while(n) 
         {
-            bit_counter += n % 2;
+            bit_counter += n & 1;
             n >>= 1;
         }
     }
@@ -92,24 +92,6 @@ int main()
     unsigned long int z_final[4];
     
     start = chrono::system_clock::now(); 
-
-
-    /*for(int i=0;i<1000000;i++)//This loop took 10.24 seconds
-    {
-        generate_input(input,generator);
-        generate_rand_key(key, generator);
-        mod3_value = compute(key,input, z_final);  
-    }*/
-
-    /*for(int i=0;i<1000;i++)//This loop took 5.61 seconds
-    {
-        generate_input(input,generator);
-        for(int j=0;j<1000;j++)
-        {
-            generate_rand_key(key, generator);
-            mod3_value = compute(key,input, z_final);
-        }   
-    }*/
 
     for(int i=0;i<1000;i++)//This loop took 5.35 seconds
     {
