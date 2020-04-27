@@ -106,7 +106,8 @@ int main()
     chrono::duration<double> elapsed_seconds = end - start; 
     time_t end_time = chrono::system_clock::to_time_t(end); 
   
-    //cout<<endl<<"Value of z is "<< z_final << "\n";
+    cout<<endl<<"Value of z is "<< z_final << "\n";
+   cout<<endl<<"Value of the PRF is "<< mod3_value << "\n";
 
     cout << "Finished at " << ctime(&end_time) 
               << "elapsed time for 1M runs:  " << elapsed_seconds.count() << "  s\n";
