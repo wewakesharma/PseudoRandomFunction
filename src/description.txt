@@ -1,0 +1,7 @@
+Description of files in /src folder
+
+1. generate_key.cpp: Generates key using the mt19937 generator.
+
+2. matrixvecmul.cpp: Perform the matrix vector multiplication. This code was written in March and april 2020. The corresponding output file is m. It is the first implementation of matrix vector computation. It can scale upto 256 bits. Individual bits are stored in int array and packed into integer of word 64 bits.
+
+3.optmatvec.cpp: It is the optimized version of matrix vector multiplication. The main function can be computed 1M times in around 600 ms. Bitwise operation is used and finally the mod-3 value is calculated.
