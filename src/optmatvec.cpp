@@ -36,11 +36,6 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
 
 int bitCount(unsigned long int z_final[4]) 
 {
-    //writing all value of z_final
-    for(int i=0;i<4;i++)
-    {
-        cout<<z_final[i]<<endl;
-    }
     int bit_counter = 0;
     for(int z_count = 0; z_count < 4; z_count++)
     {
@@ -72,7 +67,7 @@ void compute(uint64_t key[4][256], bool input[256], unsigned long int z_final[4]
     
     }
     total_bit_count = bitCount(z_final);
-    total_bit_count%3;
+    cout<<total_bit_count%3<<endl;
 }
 
 
@@ -88,18 +83,24 @@ int main()
     unsigned seed = 7;            // std::chrono::system_clock::now().time_since_epoch().count();
 
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
-    generate_rand_key(key, generator);
-    generate_input(input,generator);
+    //generate_rand_key(key, generator);
+    //generate_input(input,generator);
 
     chrono::time_point<std::chrono::system_clock> start, end; 
     unsigned long int z_final[4];
     
     start = chrono::system_clock::now(); 
 
-    for(int i=0;i<1000000;i++)
+    //for(int i=0;i<1000000;i++)
+    //{
+    for(int i=0;i<100;i++)
     {
-    
-        compute(key,input, z_final);
+        generate_input(input,generator);
+        for(int j=0;j<1000;j++)
+        {
+            generate_rand_key(key, generator);
+            compute(key,input, z_final);
+        }   
     }
 
     
