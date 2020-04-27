@@ -6,9 +6,6 @@
 #include <ctime> 
 #include <cstdlib>
 
-unsigned long int n;
-int total_bit_count;
-//unsigned long int z_final[4];//to store the final product values
 
 using namespace std;
 
@@ -34,26 +31,30 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
     }
 }
 
+/*bitCount(): counts the number of '1-bit' in z_final arrays and sends it back to compute() to calculate mod-3 value.
+z_final is converted into decimal from unsigned long int and bit_counter stores the number of 1 in it.*/
+
 int bitCount(unsigned long int z_final[4]) 
 {
+	unsigned long int n;
     int bit_counter = 0;
     for(int z_count = 0; z_count < 4; z_count++)
     {
         n = z_final[z_count];
-        //compute total number of 1-bits in z_final
         while(n) 
         {
             bit_counter += n % 2;
             n >>= 1;
         }
-        //perform mod-3 on it
     }
     return bit_counter;
  }
 
-void compute(uint64_t key[4][256], bool input[256], unsigned long int z_final[4])
+/*compute(): takes 2-d array key, 1-d array input and stores their product in z_final.
+Calls the procedure bitCount() which sends the total number of bits and it computes its mod-3 value*/
+int compute(uint64_t key[4][256], bool input[256], unsigned long int z_final[4])
 {
-
+	int total_bit_count = 0;
     for(int i=0; i < 4; i++)
     {
         z_final[i] = 0;
@@ -67,7 +68,7 @@ void compute(uint64_t key[4][256], bool input[256], unsigned long int z_final[4]
     
     }
     total_bit_count = bitCount(z_final);
-    cout<<total_bit_count%3<<endl;
+    return (total_bit_count%3);
 }
 
 
@@ -81,6 +82,7 @@ int main()
     uint64_t key[4][256];
     bool input[256];
     unsigned seed = 7;            // std::chrono::system_clock::now().time_since_epoch().count();
+    int mod3_value;
 
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
     //generate_rand_key(key, generator);
@@ -99,12 +101,9 @@ int main()
         for(int j=0;j<1000;j++)
         {
             generate_rand_key(key, generator);
-            compute(key,input, z_final);
+            mod3_value = compute(key,input, z_final);
         }   
     }
-
-    
-
     end = chrono::system_clock::now();
     chrono::duration<double> elapsed_seconds = end - start; 
     time_t end_time = chrono::system_clock::to_time_t(end); 
