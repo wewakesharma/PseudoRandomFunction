@@ -9,8 +9,8 @@
 
 using namespace std;
 
-//This function will create the input vector randomly and store that value into the array named input.
-void generate_input(bool input[256], std::mt19937 &generator)
+//This function will create the input vector of size 4(packed) randomly and store that value into the array named input.
+void generate_input(bool input[4], std::mt19937 &generator)
 {
     //srand(time(NULL));
     for(int i = 0; i < 4; i++)
@@ -19,7 +19,7 @@ void generate_input(bool input[256], std::mt19937 &generator)
     }
 }
 
-//This function will create the input vector randomly and store that value into the array named input.
+//This function will create the key matrix of size 4X256 randomly and store that value into the 2D-array named key.
 void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
 {
     for (int i = 0; i < 4; i++)
@@ -31,6 +31,17 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
     }
 }
 
+//Output of matrix vector multiplication will be multiplied by 81X256 sized randomly generated matrix in Z3.
+void generate_rand_matrix(uint64_t rand_matrix[81][256], std::mt19937 &generator)
+{
+    for (int i = 0; i < 81; i++)
+    {
+        for (int j = 0; j < 256; j++)
+        {
+            rand_matrix[i][j] = generator();
+        }
+    }
+}
 
 
 /*bitCount(): counts the number of '1-bit' in z_final arrays and sends it back to compute() to calculate mod-3 value.
