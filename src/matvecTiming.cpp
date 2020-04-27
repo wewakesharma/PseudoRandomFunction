@@ -84,9 +84,6 @@ int main()
     cout << "Finished at " << ctime(&end_time) 
               << "elapsed time for 1M runs:  " << elapsed_seconds.count() << "  s\n";
               
-              
-
-
 
 	return 0;
 }
