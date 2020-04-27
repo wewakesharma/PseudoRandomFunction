@@ -93,9 +93,15 @@ int main()
     
     start = chrono::system_clock::now(); 
 
-    //for(int i=0;i<1000000;i++)
-    //{
-    for(int i=0;i<100;i++)
+
+    /*for(int i=0;i<1000000;i++)//This loop took 10.24 seconds
+    {
+        generate_input(input,generator);
+        generate_rand_key(key, generator);
+        mod3_value = compute(key,input, z_final);  
+    }*/
+
+    for(int i=0;i<1000;i++)//This loop took 5.61 seconds
     {
         generate_input(input,generator);
         for(int j=0;j<1000;j++)
