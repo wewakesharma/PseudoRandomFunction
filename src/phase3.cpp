@@ -7,7 +7,7 @@
 #include <cstdlib>
 
 //To-DO list
-//1. Generate a 81 X 256 size matrix in Z3.
+//1. Generate a 81 X 256 size matrix in Z3. Since this matrix will be public, use toeplitz to generate this matrix
 //2. Multiply this matrix with a 256 bit matrix we get from earlier phase(question is, Is this in Z2 or Z3?)
 
 
@@ -25,7 +25,8 @@ void generate_input(bool input[256], std::mt19937 &generator)
     }
 }
 
-//This function will create the key matrix of size 4X256 randomly and store that value into the 2D-array named key.
+
+//Generate toeplitz matrix of size 81X256. Total bits needs to be generated is 256+80 = 336 bits.
 void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
 {
     for (int i = 0; i < 4; i++)
