@@ -6,14 +6,20 @@
 #include <ctime> 
 #include <cstdlib>
 
+//To-DO list
+//1. Generate a 81 X 256 size matrix in Z3.
+//2. Multiply this matrix with a 256 bit matrix we get from earlier phase(question is, Is this in Z2 or Z3?)
+
+
+
 
 using namespace std;
 
-//This function will create the input vector of size 4(packed) randomly and store that value into the array named input.
-void generate_input(bool input[4], std::mt19937 &generator)
+//For now, consider this as 256 bit we received at the end of phase 2 when we unpacked 4 words, each of 64 bit size.
+void generate_input(bool input[256], std::mt19937 &generator)
 {
     //srand(time(NULL));
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 256; i++)
     {
         input[i] = generator();
     }
@@ -97,6 +103,7 @@ int compute(uint64_t key[4][256], bool input[256], unsigned long int z_final[4])
 int main()
 {
     uint64_t key[4][256];
+    uint64_t rand_matrix[4][256];
     bool input[256];
     unsigned seed = 7;            // std::chrono::system_clock::now().time_since_epoch().count();
     int mod3_value;
@@ -104,6 +111,8 @@ int main()
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
     //generate_rand_key(key, generator);
     //generate_input(input,generator);
+    generate_rand_matrix(rand_matrix,generator);
+
 
     chrono::time_point<std::chrono::system_clock> start, end; 
     unsigned long int z_final[4];
