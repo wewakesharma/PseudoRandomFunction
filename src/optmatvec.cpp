@@ -10,7 +10,7 @@
 using namespace std;
 
 //This function will create the input vector randomly and store that value into the array named input.
-void generate_input(bool input[256], std::mt19937 &generator)
+void generate_input(bool input[4], std::mt19937 &generator)
 {
     //srand(time(NULL));
     for(int i = 0; i < 4; i++)
