@@ -20,11 +20,11 @@ void generate_input(bool input[4], std::mt19937 &generator)
 }
 
 //This function will create the input vector randomly and store that value into the array named input.
-void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
+void generate_rand_key(uint64_t key[4][4], std::mt19937 &generator)
 {
     for (int i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 256; j++)
+        for (int j = 0; j < 4; j++)
         {
             key[i][j] = generator();
         }
