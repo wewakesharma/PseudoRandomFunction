@@ -18,29 +18,44 @@ Step 5: resutant is a 81 bit vector.
 
 using namespace std;
 
-void generate_input(bool input[4], std::mt19937 &generator)
+void generate_input(bool input[16], std::mt19937 &generator)
 {
     //srand(time(NULL));
     for(int i = 0; i < 4; i++)
     {
-        input[i] = generator();
+        input[i] = generator() & 1;
     }
+    //print input
+    cout<<endl<<"The input value generated is ";
+    for(int i = 0; i < 4; i++)
+    {
+        cout<<input[i];
+    }
+
 }
 
-void generate_rand_key(uint64_t key[4][4], std::mt19937 &generator)
+void generate_rand_key(uint64_t key[4][16], std::mt19937 &generator)
 {
     for (int i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < 16; j++)
         {
             key[i][j] = generator();
+        }
+    }
+    cout<<endl<<"The secret key generated is ";
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 16; j++)
+        {
+            cout<<key[i][j]<<endl;
         }
     }
 }
 int main()
 {
     uint64_t key[4][16];
-    bool input[256];
+    bool input[16];
     unsigned seed = 7;            // std::chrono::system_clock::now().time_since_epoch().count();
     int mod3_value;
 
@@ -51,8 +66,8 @@ int main()
     unsigned long int z_final[4];
     generate_rand_key(key, generator);
     generate_input(input,generator);
-    mod3_value = compute(key,input, z_final);  
-    cout<<endl<<"Value of z is "<< z_final << "\n";
-    cout<<endl<<"Value of the PRF is "<< mod3_value << "\n";
+    //mod3_value = compute(key,input, z_final);  
+    //cout<<endl<<"Value of z is "<< z_final << "\n";
+    //cout<<endl<<"Value of the PRF is "<< mod3_value << "\n";
     return 0;
 }
