@@ -18,54 +18,48 @@ Step 5: resutant is a 81 bit vector.
 
 using namespace std;
 
-void generate_input(bool input[16], std::mt19937 &generator)
-{
-    //srand(time(NULL));
-    for(int i = 0; i < 4; i++)
-    {
-        input[i] = generator() & 1;
-    }
-    //print input
-    cout<<endl<<"The input value generated is ";
-    for(int i = 0; i < 4; i++)
-    {
-        cout<<input[i];
-    }
-
-}
-
-void generate_rand_key(uint64_t key[4][16], std::mt19937 &generator)
-{
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 16; j++)
-        {
-            key[i][j] = generator();
-        }
-    }
-    cout<<endl<<"The secret key generated is ";
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 16; j++)
-        {
-            cout<<key[i][j]<<endl;
-        }
-    }
-}
+uint64_t bit_multiply(uint64_t a, uint64_t b) 
+{ 
+    int res = 0;  // initialize result 
+  
+    // While second number doesn't become 1 
+    //we know the number of bits in integer, loop can run for fixed amount of number.
+    while (b > 0) 
+    { 
+         // If second number becomes odd, add the first number to result 
+         if (b & 1) 
+             res = res + a; 
+  
+         // Double the first number and halve the second number 
+         a = a << 1; 
+         b = b >> 1; 
+     } 
+     return res; 
+} 
 int main()
 {
-    uint64_t key[4][16];
-    bool input[16];
+    uint64_t key;
+    uint64_t input;
+    uint64_t result;
     unsigned seed = 7;            // std::chrono::system_clock::now().time_since_epoch().count();
-    int mod3_value;
+    
 
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
     //generate_rand_key(key, generator);
     //generate_input(input,generator);
 
-    unsigned long int z_final[4];
-    generate_rand_key(key, generator);
-    generate_input(input,generator);
+    //unsigned long int z_final[4];
+    input = generator()&0xff;
+    cout<<input<<endl;
+    std::bitset<32> x(input);
+    cout<<x<<endl;
+    //cout<<(x<<2)<<endl;
+    key = generator()&0xff;
+    cout<<key<<endl;
+    result = bit_multiply(input, key);
+    cout<<"Bitwise multiplication of key and input is "<<result<<endl;
+    std::bitset<64> res_bit(result);
+    cout<<res_bit<<endl;
     //mod3_value = compute(key,input, z_final);  
     //cout<<endl<<"Value of z is "<< z_final << "\n";
     //cout<<endl<<"Value of the PRF is "<< mod3_value << "\n";
