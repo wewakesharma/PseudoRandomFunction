@@ -7,7 +7,7 @@
 #include <cstdlib>
 
 //To-DO list
-//1. Generate a 81 X 256 size matrix in Z3. Since this matrix will be public, use toeplitz to generate this matrix
+//1. Generate a 81 X 128 size matrix in Z3. Later it can be expanded to 81 X 256 matrix in Z2. 
 //2. Multiply this matrix with a 256 bit matrix we get from earlier phase(question is, Is this in Z2 or Z3?)
 
 
@@ -16,12 +16,17 @@
 using namespace std;
 
 //For now, consider this as 256 bit we received at the end of phase 2 when we unpacked 4 words, each of 64 bit size.
-void generate_input(bool input[256], std::mt19937 &generator)
+void generate_input(int input[256], std::mt19937 &generator)
 {
     //srand(time(NULL));
     for(int i = 0; i < 256; i++)
     {
-        input[i] = generator();
+        input[i] = generator()%3;
+    }
+    //Output the input generated
+    cout<<endl<<"Input generated"<<endl;
+    for(int i = 0; i < 256; i++){
+        cout<<input[i];
     }
 }
 
@@ -105,26 +110,24 @@ int main()
 {
     uint64_t key[4][256];
     uint64_t rand_matrix[4][256];
-    bool input[256];
+    int input[256];
     unsigned seed = 7;            // std::chrono::system_clock::now().time_since_epoch().count();
     int mod3_value;
 
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
     //generate_rand_key(key, generator);
-    //generate_input(input,generator);
-    generate_rand_matrix(rand_matrix,generator);
+    generate_input(input,generator);
+    //generate_rand_matrix(rand_matrix,generator);
 
 
-    chrono::time_point<std::chrono::system_clock> start, end; 
+    //chrono::time_point<std::chrono::system_clock> start, end; 
     unsigned long int z_final[4];
     
-    start = chrono::system_clock::now(); 
+    /*start = chrono::system_clock::now(); 
 
-    for(int i=0;i<1000;i++)//This loop took 5.35 seconds
-    {
+    for(int i=0;i<1000;i++)//This loop took 5.35 seconds{
         generate_rand_key(key, generator);
-        for(int j=0;j<1000;j++)
-        {
+        for(int j=0;j<1000;j++){
             generate_input(input,generator);
             mod3_value = compute(key,input, z_final);
         }   
@@ -133,11 +136,11 @@ int main()
     chrono::duration<double> elapsed_seconds = end - start; 
     time_t end_time = chrono::system_clock::to_time_t(end); 
   
-    //cout<<endl<<"Value of z is "<< z_final << "\n";
+    cout<<endl<<"Value of z is "<< z_final << "\n";
    cout<<endl<<"Value of the PRF is "<< mod3_value << "\n";
 
     cout << "Finished at " << ctime(&end_time) 
-              << "elapsed time for 1M runs:  " << elapsed_seconds.count() << "  s\n";
+              << "elapsed time for 1M runs:  " << elapsed_seconds.count() << "  s\n";*/
 
     return 0;
 }
