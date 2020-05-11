@@ -16,12 +16,12 @@
 using namespace std;
 
 //For now, consider this as 256 bit we received at the end of phase 2 when we unpacked 4 words, each of 64 bit size.
-void generate_input(int input[256], std::mt19937 &generator)
+void generate_z3_input(int input[256], std::mt19937 &generator)
 {
     //srand(time(NULL));
     for(int i = 0; i < 256; i++)
     {
-        input[i] = generator()%3;
+        input[i] = generator() & 1;
     }
     //Output the input generated
     cout<<endl<<"Input generated"<<endl;
@@ -31,27 +31,28 @@ void generate_input(int input[256], std::mt19937 &generator)
 }
 
 
-//Generate toeplitz matrix of size 81X256. Total bits needs to be generated is 256+80 = 336 bits.
-void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
+//81X128 sized randomly generated matrix in Z3 converted to 81 X 256 in Z2.
+void generate_rand_matrix(int rand_matrix[81][256], std::mt19937 &generator)
 {
-    for (int i = 0; i < 4; i++)
+    int temp;
+    for (int i = 0; i < 81; i++)
     {
-        for (int j = 0; j < 256; j++)
+        for (int j = 0; j < 128; j++)
         {
-            key[i][j] = generator();
+            std::bitset<2> x(generator() % 3);
+            rand_matrix[i][2*j] = x[1];
+            rand_matrix[i][2*j+1] = x[0];
         }
     }
-}
-
-//Output of matrix vector multiplication will be multiplied by 81X256 sized randomly generated matrix in Z3.
-void generate_rand_matrix(uint64_t rand_matrix[81][256], std::mt19937 &generator)
-{
+    cout<<endl<<"Displaying contents of random matrix"<<endl;
     for (int i = 0; i < 81; i++)
     {
         for (int j = 0; j < 256; j++)
         {
-            rand_matrix[i][j] = generator();
+            cout<<rand_matrix[i][j];
+            cout<<' ';
         }
+        cout<<endl;
     }
 }
 
@@ -59,24 +60,10 @@ void generate_rand_matrix(uint64_t rand_matrix[81][256], std::mt19937 &generator
 /*bitCount(): counts the number of '1-bit' in z_final arrays and sends it back to compute() to calculate mod-3 value.
 z_final is converted into decimal from unsigned long int and bit_counter stores the number of 1 in it.*/
 
-int bitCount(unsigned long int z_final[4]) 
-{
-	unsigned long int n;
-    int bit_counter = 0;
-    for(int z_count = 0; z_count < 4; z_count++)
-    {
-        n = z_final[z_count];
-        while(n) 
-        {
-            bit_counter += n & 1;
-            n >>= 1;
-        }
-    }
-    return bit_counter;
- }
+
 
 /*compute(): takes 2-d array key, 1-d array input and stores their product in z_final.
-Calls the procedure bitCount() which sends the total number of bits and it computes its mod-3 value*/
+Calls the procedure bitCount() which sends the total number of bits and it computes its mod-3 value
 int compute(uint64_t key[4][256], bool input[256], unsigned long int z_final[4])
 {
     //Declare and define the array that will store 81 bit PRF output value
@@ -98,7 +85,7 @@ int compute(uint64_t key[4][256], bool input[256], unsigned long int z_final[4])
     }
     total_bit_count = bitCount(z_final);
     return (total_bit_count%3);
-}
+}*/
 
 
 
@@ -109,15 +96,15 @@ int compute(uint64_t key[4][256], bool input[256], unsigned long int z_final[4])
 int main()
 {
     uint64_t key[4][256];
-    uint64_t rand_matrix[4][256];
+    int rand_matrix[81][256];
     int input[256];
     unsigned seed = 7;            // std::chrono::system_clock::now().time_since_epoch().count();
     int mod3_value;
 
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
     //generate_rand_key(key, generator);
-    generate_input(input,generator);
-    //generate_rand_matrix(rand_matrix,generator);
+    generate_z3_input(input,generator);
+    generate_rand_matrix(rand_matrix,generator);
 
 
     //chrono::time_point<std::chrono::system_clock> start, end; 
