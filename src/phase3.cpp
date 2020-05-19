@@ -10,9 +10,6 @@
 //1. Generate a 81 X 128 size matrix in Z3. Later it can be expanded to 81 X 256 matrix in Z2. 
 //2. Multiply this matrix with a 256 bit matrix we get from earlier phase(question is, Is this in Z2 or Z3?)
 
-
-
-
 using namespace std;
 
 //For now, consider this as 256 bit we received at the end of phase 2 when we unpacked 4 words, each of 64 bit size.
@@ -29,7 +26,6 @@ void generate_z3_input(int input[256], std::mt19937 &generator)
         cout<<input[i];
     }
 }
-
 
 //81X128 sized randomly generated matrix in Z3 converted to 81 X 256 in Z2.
 void generate_rand_matrix(int rand_matrix[81][256], std::mt19937 &generator)

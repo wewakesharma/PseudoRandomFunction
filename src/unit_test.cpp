@@ -16,9 +16,33 @@ Step 5: resutant is a 81 bit vector.
 #include <cstdlib>
 
 
+
 using namespace std;
 
-uint64_t bit_multiply(uint64_t a, uint64_t b) 
+void generate_input_naive(int input[256], std::mt19937 &generator)
+{
+    //srand(time(NULL));
+    for(int i = 0; i < 16; i++)
+    {
+        input[i] = generator() &1;
+    }
+}
+
+//This function will create the input vector randomly and store that value into the array named input.
+void generate_key_naive(int key[16][16], std::mt19937 &generator)
+{
+    for (int i = 0; i < 16; i++)
+    {
+        for (int j = 0; j < 16; j++)
+        {
+            key[i][j] = generator() & 1;
+        }
+    }
+}
+
+
+
+uint64_t bit_multiply(uint64_t a, uint64_t b) //russian peasant method
 { 
     int res = 0;  // initialize result 
   
@@ -34,32 +58,31 @@ uint64_t bit_multiply(uint64_t a, uint64_t b)
          a = a << 1; 
          b = b >> 1; 
      } 
-     return res; 
+     return res
 } 
 int main()
 {
     uint64_t key;
     uint64_t input;
     uint64_t result;
-    unsigned seed = 7;            // std::chrono::system_clock::now().time_since_epoch().count();
+    unsigned seed = 5;            // std::chrono::system_clock::now().time_since_epoch().count();
     
 
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
-    //generate_rand_key(key, generator);
-    //generate_input(input,generator);
 
-    //unsigned long int z_final[4];
-    input = generator()&0xff;
+    input = generator()&0xffff;
     cout<<input<<endl;
-    std::bitset<32> x(input);
-    cout<<x<<endl;
+    std::bitset<32> input_bits(input);
+    cout<<input_bits<<endl;
     //cout<<(x<<2)<<endl;
-    key = generator()&0xff;
+    key = generator()&0xffff;
     cout<<key<<endl;
+    std::bitset<32> key_bits(key);
+    cout<<key_bits<<endl;
     result = bit_multiply(input, key);
     cout<<"Bitwise multiplication of key and input is "<<result<<endl;
-    std::bitset<64> res_bit(result);
-    cout<<res_bit<<endl;
+    //std::bitset<64> res_bit(result);
+    //cout<<res_bit<<endl;
     //mod3_value = compute(key,input, z_final);  
     //cout<<endl<<"Value of z is "<< z_final << "\n";
     //cout<<endl<<"Value of the PRF is "<< mod3_value << "\n";

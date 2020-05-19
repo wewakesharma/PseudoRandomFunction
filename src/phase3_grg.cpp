@@ -8,7 +8,7 @@
 
 
 //To-DO list
-//1. Generate a 81 X 256 size matrix in Z3. Since this matrix will be public, use toeplitz to generate this matrix
+//1. Generate a 81 X 256 size matrix in Z3.
 //2. Multiply this matrix with a 256 bit matrix we get from earlier phase(question is, Is this in Z2 or Z3?)
 
 
