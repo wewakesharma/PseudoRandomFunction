@@ -27,7 +27,7 @@ void generate_input(uint64_t input[4], std::mt19937 &generator)
 /*
  * Generate the random key matrix, which is 256x256
  */
-void generate_rand_key(uint64_t key[4][16], std::mt19937 &generator)
+void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
 {
     for (int i = 0; i < 4; i++)
     {
@@ -37,9 +37,16 @@ void generate_rand_key(uint64_t key[4][16], std::mt19937 &generator)
         }
     }
 }
-void mat_vec_multiplication(uint64_t input[4], uint64_t key[4][256])
+void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], uint64_t out[256])
 {
-	
+	cout<<"The multiplication value is "<<endl;
+    for(int j=0;j<256;j++)
+    {
+    	for(int i=0; i<4;i++)
+    	{
+    		(input[i] & key[i][j]);
+    	}
+    }
 }
 /*
  * Generate a Z_3 randomizing matrix which is 81X256. This will result in a 128-bit entropy.
@@ -57,7 +64,7 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
     int nBitsFound=0;
 
     for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 16; j++) {
+        for (int j = 0; j < 256; j++) {
             while (nBitsFound < wLen)  //we need two words for each word in the two MSB and LSB matrices we are filling
             {
                 uint64_t wGen = generator();
@@ -79,10 +86,9 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
     //Diplaying the content of randMat1
     for(int i=0;i<2;i++)
     {
-        for(int j=0;j<16;j++)
+        for(int j=0;j<256;j++)
         {
-            cout<<randMat1[i][j]<<cout;
-            //cout<<randMat2[i][j];
+            cout<<randMat1[i][j]<<"\t"<<randMat2[i][j]<<endl;
         }
         cout<<endl;
     }
@@ -90,7 +96,7 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
 
 
 
-void compute(uint64_t key[4][16], uint64_t input[4], uint64_t z_final[4])
+void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
 {
     for(int i=0; i < 4; i++) {
         z_final[i] = 0; // initialize the accumulator to zero
@@ -159,6 +165,7 @@ int main()
 	uint64_t key[4][256];
 	uint64_t randMat1[2][256], randMat2[2][256];
     uint64_t input[4];
+    uint64_t out[256];
     uint64_t outM[2];
     uint64_t outL[2];
 
@@ -167,9 +174,9 @@ int main()
 	generate_rand_key(key, generator);
 
 	//we generate two random matrices, one holds the first bit and one the second bit
-	//generate_rand_matrix(randMat1, randMat2, generator);
+	generate_rand_matrix(randMat1, randMat2, generator);
     generate_input(input,generator);
-    mat_vec_multiplication(input, key);
+    mat_vec_mult(input, key, out);
     //uint64_t output[4];
     //char p2output[256];
 
