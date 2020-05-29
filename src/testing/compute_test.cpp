@@ -39,17 +39,29 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
 }
 void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], uint64_t out[256])
 {
-	cout<<"The multiplication value is "<<endl;
+	int count =0;
+	//cout<<"The multiplication value is "<<endl;
     for(int j=0;j<256;j++)
     {
+    	out[j]=0;
+    	uint64_t temp;
     	int total_one_bit = 0;
+    	uint64_t result=0;
     	for(int i=0; i<4;i++)
     	{
-    		uint64_t res = (input[i] & key[i][j]);//Taking product of ith input with key (i,j)
-    		std::bitset<64> x(res);
-    		cout<<x.count()<<endl;
+    		result = result | (input[i] & key[i][j]);//Taking product of ith input with key (i,j) and cumulative store in result
+    		//std::bitset<64> x(res);
+    		//cout<<res<<endl;
+    		
+    		//cout<<x.count()<<endl;
     	}
+    	//cout<<result<<endl;
+    	count++;
+    	out[j] = result;//save it in output array for 81 X 256 matrix multiplication.
+    	cout<<out[j]<<endl;
+    	//cout<<count;
     }
+    //cout<<count;//print the size of output array
 }
 /*
  * Generate a Z_3 randomizing matrix which is 81X256. This will result in a 128-bit entropy.
@@ -177,7 +189,7 @@ int main()
 	generate_rand_key(key, generator);
 
 	//we generate two random matrices, one holds the first bit and one the second bit
-	generate_rand_matrix(randMat1, randMat2, generator);
+	//generate_rand_matrix(randMat1, randMat2, generator);
     generate_input(input,generator);
     mat_vec_mult(input, key, out);
     //uint64_t output[4];
