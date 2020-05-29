@@ -17,9 +17,10 @@ using namespace std;
  */
 void generate_input(uint64_t input[4], std::mt19937 &generator)
 {
+    //srand(time(NULL));
     for(int i = 0; i < 4; i++)
     {
-        //Call the generator that generate a 64-bit word each time
+        //Call the generator that generate a 64-but word each time
         input[i] = generator();
     }
 }
@@ -45,7 +46,7 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
 
 /*
  * Generate two random matrices - one with the MSB's and one with the LSB's
- * since the resulting matrix is 81X256, we need 2x256 words
+ * since the resuoting matrix is 81X256, we need 2x256 words
  *
  */
 void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)
@@ -65,8 +66,8 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
                     if (~((bit1 == 1) & (bit2 == 1)))
                     {
-                        randMat1[i][j] |= bit1 >> k;
-                        randMat2[i][j] |= bit2 >> (k + 1);
+                        randMat1[i][j] |= (bit1 << k);
+                        randMat2[i][j] |= (bit2 << (k + 1));
                         nBitsFound++;
                     }
                 }
