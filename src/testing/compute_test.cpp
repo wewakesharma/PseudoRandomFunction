@@ -6,7 +6,7 @@
 #include <ctime> 
 #include <cstdlib>
 
-int wLen = 4;
+int wLen = 64;
 
 //unsigned long int z_final[4];//to store the final product values
 
@@ -39,14 +39,29 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
 }
 void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], uint64_t out[256])
 {
-	cout<<"The multiplication value is "<<endl;
+	int count =0;
+	//cout<<"The multiplication value is "<<endl;
     for(int j=0;j<256;j++)
     {
+    	out[j]=0;
+    	uint64_t temp;
+    	int total_one_bit = 0;
+    	uint64_t result=0;
     	for(int i=0; i<4;i++)
     	{
-    		(input[i] & key[i][j]);
+    		result = result | (input[i] & key[i][j]);//Taking product of ith input with key (i,j) and cumulative store in result
+    		//std::bitset<64> x(res);
+    		//cout<<res<<endl;
+    		
+    		//cout<<x.count()<<endl;
     	}
+    	//cout<<result<<endl;
+    	count++;
+    	out[j] = result;//save it in output array for 81 X 256 matrix multiplication.
+    	cout<<out[j]<<endl;
+    	//cout<<count;
     }
+    //cout<<count;//print the size of output array
 }
 /*
  * Generate a Z_3 randomizing matrix which is 81X256. This will result in a 128-bit entropy.
@@ -102,16 +117,16 @@ void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
         z_final[i] = 0; // initialize the accumulator to zero
     }
 
-	for(int i=0; i < 4; i++)
+	for(int i=0; i < 4; i++)//traverse through the input(4 words)
 	{
-        uint64_t x = input[i];
-		for(int j = 0; j < wLen; j++)
+        uint64_t x = input[i]; //takes each word of input
+		for(int j = 0; j < wLen; j++)//traverse through each bit of each input
 		{
             uint64_t y = -((x>>j) & 1);
 
             for (int k = 0; k < 4; k++) {
-                uint64_t z = key[k][j+wLen*i];
-                z_final[k] ^= (z & y);
+                uint64_t z = key[k][j+wLen*i];//Take each key from the key matrix. row by row
+                z_final[k] ^= (z & y);//bitwise AND with the y.
             }
 		}
 	}
@@ -174,7 +189,7 @@ int main()
 	generate_rand_key(key, generator);
 
 	//we generate two random matrices, one holds the first bit and one the second bit
-	generate_rand_matrix(randMat1, randMat2, generator);
+	//generate_rand_matrix(randMat1, randMat2, generator);
     generate_input(input,generator);
     mat_vec_mult(input, key, out);
     //uint64_t output[4];
