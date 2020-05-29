@@ -6,7 +6,7 @@
 #include <ctime> 
 #include <cstdlib>
 
-int wLen = 4;
+int wLen = 64;
 
 //unsigned long int z_final[4];//to store the final product values
 
@@ -42,9 +42,12 @@ void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], uint64_t out[256])
 	cout<<"The multiplication value is "<<endl;
     for(int j=0;j<256;j++)
     {
+    	int total_one_bit = 0;
     	for(int i=0; i<4;i++)
     	{
-    		(input[i] & key[i][j]);
+    		uint64_t res = (input[i] & key[i][j]);//Taking product of ith input with key (i,j)
+    		std::bitset<64> x(res);
+    		cout<<x.count()<<endl;
     	}
     }
 }
@@ -102,16 +105,16 @@ void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
         z_final[i] = 0; // initialize the accumulator to zero
     }
 
-	for(int i=0; i < 4; i++)
+	for(int i=0; i < 4; i++)//traverse through the input(4 words)
 	{
-        uint64_t x = input[i];
-		for(int j = 0; j < wLen; j++)
+        uint64_t x = input[i]; //takes each word of input
+		for(int j = 0; j < wLen; j++)//traverse through each bit of each input
 		{
             uint64_t y = -((x>>j) & 1);
 
             for (int k = 0; k < 4; k++) {
-                uint64_t z = key[k][j+wLen*i];
-                z_final[k] ^= (z & y);
+                uint64_t z = key[k][j+wLen*i];//Take each key from the key matrix. row by row
+                z_final[k] ^= (z & y);//bitwise AND with the y.
             }
 		}
 	}
