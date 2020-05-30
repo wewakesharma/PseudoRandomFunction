@@ -56,9 +56,11 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
 
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 256; j++) {
+            nBitsFound = 0;
             while (nBitsFound < wLen)  //we need two words for each word in the two MSB and LSB matrices we are filling
             {
                 uint64_t wGen = generator();
+                //k is the index within the wGen
                 for (int k = 0; k < wLen; k = k + 2) {
                     int bit1 = (wGen >> k) & 1;
                     int bit2 = (wGen >> (k + 1)) & 1;
@@ -69,9 +71,11 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                         randMat1[i][j] |= (bit1 << k);
                         randMat2[i][j] |= (bit2 << (k + 1));
                         nBitsFound++;
+
                     }
                 }
             }
+
         }
     }
 }
