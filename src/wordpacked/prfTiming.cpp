@@ -105,8 +105,9 @@ void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
 
 void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint64_t msb2, uint64_t lsb2)
 {
-    outL = ((~msb1) & (~msb2) &  (lsb1 ^ lsb2)) | (msb1 & msb2 & (~lsb1) & (~lsb2)); //covers, 00 additions
-    outM ^= ((msb1 ^ msb2) & lsb1 & lsb2) | ((~msb1) & (~msb2) & lsb1 & lsb2);
+
+    outM = ((msb1 ^ msb2) & (~lsb1) & (~lsb2)) | ((~msb1) & (~msb2) & lsb1 & lsb2);
+    outL = ((~msb1) & (~msb2) &  (lsb1 ^ lsb2)) | (msb1 & msb2 & (~lsb1) & (~lsb2));
 }
 
 void unpackOutput(uint64_t output[4], char p2output[256])
