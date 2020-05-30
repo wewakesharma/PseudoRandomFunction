@@ -73,7 +73,7 @@ void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], uint64_t out[256])
  * since the resulting matrix is 81X256, we need 2x256 words
  *
  */
-void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)
+void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)//generate 81 x 256 random matrix
 {
     int rInt = 0;
     int nBitsFound=0;
@@ -90,15 +90,16 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
                     if (~((bit1 == 1) & (bit2 == 1)))
                     {
-                        randMat1[i][j] |= bit1 >> k;
-                        randMat2[i][j] |= bit2 >> (k + 1);
+                        randMat1[i][j] |= bit1 << k;
+                        randMat2[i][j] |= bit2 << (k + 1);
                         nBitsFound++;
                     }
                 }
             }
         }
     }
-    //Diplaying the content of randMat1
+    //Diplaying the content of 
+    cout<<"Displaying the content of random matrix"<<endl;
     for(int i=0;i<2;i++)
     {
         for(int j=0;j<256;j++)
@@ -109,9 +110,12 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
     }
 }
 
+/*void phase3()
+{
 
+}*/
 
-void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
+void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])//compute() is equivalent to matvecmultiplication
 {
     for(int i=0; i < 4; i++) {
         z_final[i] = 0; // initialize the accumulator to zero
@@ -189,9 +193,9 @@ int main()
 	generate_rand_key(key, generator);
 
 	//we generate two random matrices, one holds the first bit and one the second bit
-	//generate_rand_matrix(randMat1, randMat2, generator);
+	generate_rand_matrix(randMat1, randMat2, generator);
     generate_input(input,generator);
-    mat_vec_mult(input, key, out);
+    //mat_vec_mult(input, key, out);
     //uint64_t output[4];
     //char p2output[256];
 
