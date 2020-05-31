@@ -172,7 +172,7 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 
     //go over the input bits, one by one
 
-    for (int i1 = 0; i1 < 4; i1++)
+    for (int i1 = 0; i1 < 4; i1++){
         for (int i2 = 0; i2 < 64; i2++)
         {
             uint64_t bit = -((in[i1] >> i2 ) & 1 ); //the input bit, replicated either all=0 or all=1
@@ -185,6 +185,7 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
             }
 
         }
+    }
 
 }
 
@@ -196,7 +197,7 @@ int main()
 	uint64_t key[4][256];
 	uint64_t randMat1[2][256], randMat2[2][256];
     uint64_t input[4];
-    uint64_t out[256];
+    uint64_t out[256];//variable used for naive testing, represents output of phase 1
     uint64_t outM[2];
     uint64_t outL[2];
 
@@ -214,9 +215,7 @@ int main()
     //unpackOutput(output,p2output); // useless operation that should not be here
     // This is where the mod2->mod3 protocol should be
     multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
-    }
 
-    chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - start;
   
     cout<<endl<<"output msb,lsb is "<< outM << ',' << outL << endl;
 
