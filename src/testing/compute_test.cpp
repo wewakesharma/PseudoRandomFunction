@@ -6,6 +6,9 @@
 #include <ctime> 
 #include <cstdlib>
 
+//Questions:
+//How do i compare the output from mat_vec_mult() and compute(), one gives 256 bit output and other a 4 word output
+
 int wLen = 64;
 
 //unsigned long int z_final[4];//to store the final product values
@@ -56,7 +59,7 @@ void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], uint64_t out[256])
     		//cout<<x.count()<<endl;
     	}
     	//cout<<result<<endl;
-    	count++;
+    	//count++;
     	out[j] = result;//save it in output array for 81 X 256 matrix multiplication.
     	cout<<out[j]<<endl;
     	//cout<<count;
@@ -73,16 +76,18 @@ void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], uint64_t out[256])
  * since the resulting matrix is 81X256, we need 2x256 words
  *
  */
-void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)//generate 81 x 256 random matrix
+void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)
 {
     int rInt = 0;
     int nBitsFound=0;
 
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 256; j++) {
+            nBitsFound = 0;
             while (nBitsFound < wLen)  //we need two words for each word in the two MSB and LSB matrices we are filling
             {
                 uint64_t wGen = generator();
+                //k is the index within the wGen
                 for (int k = 0; k < wLen; k = k + 2) {
                     int bit1 = (wGen >> k) & 1;
                     int bit2 = (wGen >> (k + 1)) & 1;
@@ -90,14 +95,17 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
                     if (~((bit1 == 1) & (bit2 == 1)))
                     {
-                        randMat1[i][j] |= bit1 << k;
-                        randMat2[i][j] |= bit2 << (k + 1);
+                        randMat1[i][j] |= (bit1 << k);
+                        randMat2[i][j] |= (bit2 << (k + 1));
                         nBitsFound++;
+
                     }
                 }
             }
+
         }
     }
+
     //Diplaying the content of 
     cout<<"Displaying the content of random matrix"<<endl;
     for(int i=0;i<2;i++)
@@ -134,6 +142,10 @@ void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])//comp
             }
 		}
 	}
+    for(int i =0;i<4;i++)
+    {
+        cout<<z_final[i];
+    }
 }
 
 void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint64_t msb2, uint64_t lsb2)
@@ -198,22 +210,16 @@ int main()
     //mat_vec_mult(input, key, out);
     //uint64_t output[4];
     //char p2output[256];
-
-    /*chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
-
-    for(int i=0;i<1000000;i++){
-    
-        compute(key,input, output); // matrix-vector multiply mod 2
-        unpackOutput(output,p2output); // useless operation that should not be here
-        // This is where the mod2->mod3 protocol should be
-        multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
+    //compute(key,input, output); // matrix-vector multiply mod 2
+    //unpackOutput(output,p2output); // useless operation that should not be here
+    // This is where the mod2->mod3 protocol should be
+    multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
     }
 
     chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - start;
   
     cout<<endl<<"output msb,lsb is "<< outM << ',' << outL << endl;
 
-    cout << "elapsed time for 1M runs:  " << elapsed_seconds.count() << "  s\n";*/
 
 	return 0;
 }
