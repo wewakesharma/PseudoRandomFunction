@@ -119,7 +119,7 @@ void unpackOutput(uint64_t output[4], char p2output[256])
 {
     for (int j = 0; j < 4; j++) {
         for (int i = 0; i < wLen; i++) {
-            p2output[i] = ((output[i] >> j) & 1);
+            p2output[i+j*wLen] = ((output[i] >> j) & 1);
         }
     }
 }
