@@ -6,8 +6,6 @@
 #include <ctime> 
 #include <cstdlib>
 
-//Questions:
-//How do i compare the output from mat_vec_mult() and compute(), one gives 256 bit output and other a 4 word output
 
 int wLen = 64;
 
