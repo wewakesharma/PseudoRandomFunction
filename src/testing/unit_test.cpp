@@ -43,7 +43,7 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
  */
 void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)
 {
-
+	int temp_var;
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 256; j++) {
@@ -84,14 +84,51 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
 }
 void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][256])
 {
-	int z3_bit;
-    int bit_msb;
-    int bit_lsb;
-    uint64_t msb_word, lsb_word;
+	int z3_bit; //bits from lsb and msb are extracted and combined as a z3 bit.
+    int bit_msb; //bit from each word of msb matrix i.e. randMat1
+    int bit_lsb; //bit from each word lsb matrix i.e. randMat2
+    uint64_t msb_word, lsb_word; //extracting each word of the 
+    int current_row = 0;
+
     int cnt = 0;
     int row_limit = 81;
+
     //check the size of matrix msbs
-    for(int i = 0; i<2;i++)
+    for(int col_count = 0; col_count < 256; col_count++)
+    {
+    	for(int row_count = 0; row_count < 2; row_count++)
+    	{
+    		msb_word = msbs[row_count][col_count];
+            lsb_word = lsbs[row_count][col_count];
+            for(int word_count = 0; word_count < wLen; word_count++)
+            {
+            	bit_msb = ((msb_word>>word_count) & 1);
+            	bit_lsb = ((lsb_word>>word_count) & 1);
+            	z3_bit = ((bit_msb << 1) | bit_lsb);
+            	cout<<z3_bit;
+            	current_row = wLen*row_count + word_count;
+            	if(current_row < 81)
+            	{
+            		z3_mat[current_row][col_count] = z3_bit;
+            	}
+            	else
+            		break;
+            }
+    	}
+    }
+    /*displaying the z3_mat
+    for(int i =0; i< 4; i++)
+    {
+    	for(int j = 0; j< 4; j++)
+    	{
+    		cout<<z3_mat[i][j];
+    	}
+    	cout<<endl;
+    }*/
+
+
+
+    /*for(int i = 0; i<2;i++)
     {
         for(int j = 0; j < 256; j++)
         {
@@ -99,12 +136,12 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][2
             lsb_word = lsbs[i][j];
             for(int word_cnt = 0; word_cnt < wLen; word_cnt++)
             {
-                int temp = 0;
                 bit_msb = (msb_word>>word_cnt) & 1;
                 bit_lsb = (lsb_word>>word_cnt) & 1;
                 //cout<<bit_msb<<"\t"<<bit_lsb<<endl;
                 z3_bit = (bit_msb<<1 | bit_lsb);
                 cout<<z3_bit<<endl;
+                z3_mat[][]
             }
         }
         //z3_mat[j*][](msb_word>>k) & 1;
@@ -119,7 +156,7 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][2
             lsb_word = lsbs[j][i];
             cout<<endl<<msb_word<<"\t"<<lsb_word<<endl;
         }
-    }
+    }*/
 }
 
 //word-packed version of phase 1
@@ -309,13 +346,15 @@ int main()
     unsigned seed = 7;   
 
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
-    generate_rand_matrix(randMat1, randMat2, generator);
-    generate_rand_key(key, generator);
+    
     generate_input(input,generator);
-    //mat_assemble(randMat1, randMat2, z3_mat);
-    mat_vec_mult(input, key, out);
-    compute(key,input, output); // matrix-vector multiply mod 2
-    final_test(output,out);//compares the output of two different approaches
+    generate_rand_key(key, generator);
+    generate_rand_matrix(randMat1, randMat2, generator);
+    
+    mat_assemble(randMat1, randMat2, z3_mat);
+    //mat_vec_mult(input, key, out);
+    //compute(key,input, output); // matrix-vector multiply mod 2
+    //final_test(output,out);//compares the output of two different approaches
     
     //unpackOutput(output,p2output); // useless operation that should not be here
     //multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
