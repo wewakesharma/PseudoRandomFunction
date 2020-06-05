@@ -22,7 +22,7 @@ void generate_input(uint64_t input[4], std::mt19937 &generator)
 {
     for(int i = 0; i < 4; i++)
     {
-        input[i] = generator();
+        input[i] = generator();//generating random word of integer
     }
 }
 
@@ -44,7 +44,7 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
     {
         for (int j = 0; j < 256; j++)
         {
-            key[i][j] = generator();
+            key[i][j] = generator();//generate 4 x 256 key matrix
         }
     }
 }
@@ -55,7 +55,7 @@ void generate_debug_key(uint64_t key[4][256])
     {
         for (int j = 0; j < 256; j++)
         {
-            key[i][j] = 255;
+            key[i][j] = 255; // all the values in this key matrix is 255 which translates to 0x0000000001111111
         }
     }
 }
@@ -66,18 +66,18 @@ void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], int out[256])
     //create a key matrix
     //do bit by bit calculation
 
-    uint64_t keyMatrix[256][256];
-    uint64_t inputVector [256];
+    uint64_t keyMatrix[256][256]; //temporary storage to unpack and store the packed key
+    uint64_t inputVector [256]; //storage to unpack and store the rendomly generated input
 
     for (int iRow = 0; iRow< 256; iRow++)
     {
-        uint64_t iWord = floor(iRow/wLen);
-        uint64_t iBit = iRow%wLen;
-        uint64_t inputWord = input[iWord];
-        uint64_t tempVar = inputWord >> (iBit);
+        uint64_t iWord = floor(iRow/wLen); //iWord is the section(word) of input we are in; can be int to save memory
+        uint64_t iBit = iRow%wLen; //values from 0 to 63; can be an int to save memory
+        uint64_t inputWord = input[iWord];  //choose the word of the input
+        uint64_t tempVar = inputWord >> (iBit); //right shift input word by specific positions
         if (iRow==32)
             cout << tempVar << "\n";
-        inputVector[iRow] = (inputWord >> (iBit)) & 1;
+        inputVector[iRow] = (inputWord >> (iBit)) & 1; //save the bits in it in input vector
     }
 
 
@@ -152,6 +152,7 @@ void compute_debug(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
 */
 void final_test(uint64_t z_final[4], int out[256])
 {
+    int flag = 1; //the outputs do not match
 	int pack_temp_out[256];
 	int cnt=0;
     for(int i = 0; i < 4; i++)
@@ -184,10 +185,16 @@ void final_test(uint64_t z_final[4], int out[256])
         {
             cout<<endl<<"The bit at position "<<i<<" doesn't match"<<endl;
             cout<<endl<<"Exiting the testing phase"<<endl;
+            flag = 0;
             break;
         }
-        cout<<endl<<"The outputs matched, the function is correct"<<endl; //prints if the break statement is not executed
     }
+    if(flag == 0)
+    {
+        cout<<endl<<"The outputs didn't matched, the function is not correct"<<endl; //prints if the break statement is not executed
+    }
+    else
+        cout<<endl<<"The function is working fine"<<endl;
 }
 
 
