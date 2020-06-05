@@ -92,11 +92,18 @@ void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], int out[256])
  */
 void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)
 {
+<<<<<<< HEAD
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
     for (int i = 0; i < 2; i++) 
     {
         for (int j = 0; j < 256; j++) 
         {
+=======
+
+    //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 256; j++) {
+>>>>>>> 46d8f83ba6cd375b25d5de64464f6525d6404394
             int nBitsGenerated = 0;
             while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
             {
@@ -108,9 +115,14 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     int bit2 = (wGen >> (k + 1)) & 1;
 
                     //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
+<<<<<<< HEAD
                     if (!((bit1 == 1) & (bit2  == 1)))
                     {
                     	cout<<bit1<<"\t"<<bit2<<endl;
+=======
+                    if (~((bit1 == 1) & (bit2 == 1)))
+                    {
+>>>>>>> 46d8f83ba6cd375b25d5de64464f6525d6404394
                         //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
                         randMat1[i][j] |= (bit1 << nBitsGenerated);
                         randMat2[i][j] |= (bit2 << nBitsGenerated);
@@ -124,6 +136,7 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
 
         }
     }
+<<<<<<< HEAD
     /*check if the randmat1 and randmat2 have two consecutive 1 in their word.
     for(int i = 0; i < 2; i++)
     {
@@ -135,11 +148,14 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
     		}
     	}
     }*/
+=======
+>>>>>>> 46d8f83ba6cd375b25d5de64464f6525d6404394
 }
 
 //function to create a 81 x 256 matrix in Z3
 void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][256])
 {
+<<<<<<< HEAD
 	//convert msbs and lsbs from 2x256 to 81x256
 	int z3_bit;
     int bit_msb;
@@ -168,6 +184,21 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][2
         //z3_mat[j*][](msb_word>>k) & 1;
         //z3_mat[]
         //cout<<endl<<msb_word<<"\t"<<lsb_word<<endl;
+=======
+    int bit_msb;
+    int bit_lsb;
+    uint64_t msb_word, lsb_word;
+
+    for(int i = 0; i<256;i++)
+    {
+        for(int j = 0;j<2;j++)
+        {
+            msb_word = msbs[j][i];
+            lsb_word = lsbs[j][i];
+            cout<<endl<<msb_word<<"\t"<<lsb_word<<endl;
+            
+        }
+>>>>>>> 46d8f83ba6cd375b25d5de64464f6525d6404394
     }
 }
 
@@ -321,12 +352,21 @@ int main()
 	generate_rand_key(key, generator);
     generate_input(input,generator);
 
+<<<<<<< HEAD
     //mat_vec_mult(input, key, out);
     //compute(key,input, output); // matrix-vector multiply mod 2
     //final_test(output,out);//compares the output of two different approaches
     
     //unpackOutput(output,p2output); // useless operation that should not be here
     //multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
+=======
+    mat_vec_mult(input, key, out);
+    compute(key,input, output); // matrix-vector multiply mod 2
+    final_test(output,out);//compares the output of two different approaches
+    
+    //unpackOutput(output,p2output); // useless operation that should not be here
+    multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
+>>>>>>> 46d8f83ba6cd375b25d5de64464f6525d6404394
     //mat_assemble(randMat1, randMat2, z3_mat);
 
 
