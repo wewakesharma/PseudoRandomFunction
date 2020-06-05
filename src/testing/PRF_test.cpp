@@ -22,8 +22,6 @@ void generate_input(uint64_t input[4], std::mt19937 &generator)
         input[i] = generator();
     }
 }
-
-
 /*
  * Generate the random key matrix, which is 256x256
  */
@@ -37,7 +35,6 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
         }
     }
 }
-
 //naive version of phase 1
 void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], int out[256])
 {
@@ -81,7 +78,6 @@ void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], int out[256])
         out[iRow] = (row_total%2);
     }
 }
-
 //============word packed version of the second phase (vector and randomization matrix multiplication)====
 /*
  * Generate two random matrices - one with the MSB's and one with the LSB's
@@ -92,14 +88,11 @@ void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], int out[256])
  */
 void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)
 {
-
-
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
     for (int i = 0; i < 2; i++) 
     {
         for (int j = 0; j < 256; j++) 
         {
-
             int nBitsGenerated = 0;
             while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
             {
@@ -128,7 +121,6 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
 
         }
     }
-
     /*check if the randmat1 and randmat2 have two consecutive 1 in their word.
     for(int i = 0; i < 2; i++)
     {
@@ -140,14 +132,10 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
             }
         }
     }*/
-=======
-
 }
-
 //function to create a 81 x 256 matrix in Z3
 void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][256])
 {
-
     //convert msbs and lsbs from 2x256 to 81x256
     int z3_bit;
     int bit_msb;
@@ -156,7 +144,6 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][2
     int cnt = 0;
     int row_limit = 81;
     //check the size of matrix msbs
-
     for(int i = 0; i<2;i++)
     {
         for(int j = 0; j < 256; j++)
@@ -176,8 +163,6 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][2
         //z3_mat[j*][](msb_word>>k) & 1;
         //z3_mat[]
         //cout<<endl<<msb_word<<"\t"<<lsb_word<<endl;
-  
-
     for(int i = 0; i<256;i++)
     {
         for(int j = 0;j<2;j++)
@@ -185,34 +170,30 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][2
             msb_word = msbs[j][i];
             lsb_word = lsbs[j][i];
             cout<<endl<<msb_word<<"\t"<<lsb_word<<endl;
-            
         }
     }
 }
-
-
 //word-packed version of phase 1
-void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])//compute() is equivalent to matvecmultiplication
+void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
 {
     for(int i=0; i < 4; i++) {
         z_final[i] = 0; // initialize the accumulator to zero
     }
 
-    for(int i=0; i < 4; i++)//traverse through the input(4 words)
+    for(int i=0; i < 4; i++)
     {
-        uint64_t x = input[i]; //takes each word of input
-        for(int j = 0; j < wLen; j++)//traverse through each bit of each input
+        uint64_t x = input[i];
+        for(int j = 0; j < wLen; j++)
         {
             uint64_t y = -((x>>j) & 1);
 
             for (int k = 0; k < 4; k++) {
-                uint64_t z = key[k][j+(wLen*i)]; //Take each key from the key matrix. row by row
-                z_final[k] ^= (z & y);//bitwise AND with the y.
+                uint64_t z = key[k][j+wLen*i];
+                z_final[k] ^= (z & y);
             }
         }
     }
 }
-
 //===Method deprecated=========
 void addMod3Alternative(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint64_t msb2, uint64_t lsb2)
 {
@@ -221,7 +202,6 @@ void addMod3Alternative(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t 
     outL = ((~msb1) & (~msb2) &  (lsb1 ^ lsb2)) | (msb1 & msb2 & (~lsb1) & (~lsb2));
 }
 //=============================
-
 //Perform Addition modulo 3
 void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint64_t msb2, uint64_t lsb2)
 {
@@ -230,7 +210,6 @@ void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint6
     outM = (lsb1 | lsb2 ) ^ T;
     outL = (msb1 | msb2 ) ^ T;
 }
-
 void unpackOutput(uint64_t output[4], char p2output[256])
 {
     for (int j = 0; j < 4; j++) {
@@ -239,7 +218,6 @@ void unpackOutput(uint64_t output[4], char p2output[256])
         }
     }
 }
-
 /*
  * multiply modulo 3
  */
@@ -263,7 +241,6 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 
         }
 }
-
 /*
 * The function compares the output of unpacked version and output of naive implementation
 */
@@ -294,7 +271,6 @@ void final_test(uint64_t z_final[4], int out[256])
     }
     cout<<"P_count is "<<p_count<<endl;
     cout<<"out count is "<<out_count<<endl; //Printing out the count of set bits of out and pack_temp_out*/
-    
     //comparing out and pack_temp_out
     for(int i=0;i<256;i++)
     {
@@ -332,14 +308,11 @@ int main()
     uint64_t outM[2];
     uint64_t outL[2];
     int z3_mat[81][256];
-    
     unsigned seed = 7;    
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
-
     generate_rand_matrix(randMat1, randMat2, generator);
     generate_rand_key(key, generator);
     generate_input(input,generator);
-
     //mat_vec_mult(input, key, out);
     //compute(key,input, output); // matrix-vector multiply mod 2
     //final_test(output,out);//compares the output of two different approaches
@@ -348,13 +321,11 @@ int main()
     //multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
 
     //mat_vec_mult(input, key, out);
-    //compute(key,input, output); // matrix-vector multiply mod 2
+    compute(key,input, output); // matrix-vector multiply mod 2
     //final_test(output,out);//compares the output of two different approaches
     
     //unpackOutput(output,p2output); // useless operation that should not be here
     //multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
     //mat_assemble(randMat1, randMat2, z3_mat);
-
-
     return 0;
 }
