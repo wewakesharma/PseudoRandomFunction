@@ -63,6 +63,14 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                 uint64_t wGen = generator();
                 //k is the index within the wGen, which holds a random 64 bit word
                 for (int k = 0; k < wLen; k = k + 2) {
+
+                    //if we already have 81 rows, the rest of the items in this column are set to 0
+                    if ((i*wLen+k) >= 81) {
+                        randMat1[i][j]=0;  //initialize to 0 - we do not need any more items
+                        randMat2[i][j]=0;  //initialize to 0 - we do not need any more items
+                        continue; //go to the next item
+                    }
+
                     //examine each two bits and make sure they are not 11
                     int bit1 = (wGen >> k) & 1;
                     int bit2 = (wGen >> (k + 1)) & 1;
