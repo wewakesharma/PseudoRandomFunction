@@ -81,6 +81,21 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
 
         }
     }
+    //displaying what is inside randMat1 and randMat2
+    int x,y;
+    for(int i = 0; i< 2; i++)
+    {
+    	for(int j = 0; j<256; j++)
+    	{
+    		for(int k =0;k<64;k++)
+    		{
+    			x = ((randMat1[i][j] >> k) & 1);
+    			y = ((randMat2[i][j] >> k) & 1);
+    			cout<<(( x<<1) | y)<<"\t";
+    		}
+    	}
+    	cout<<endl;
+    }
 }
 void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][256])
 {
@@ -351,7 +366,7 @@ int main()
     generate_rand_key(key, generator);
     generate_rand_matrix(randMat1, randMat2, generator);
     
-    mat_assemble(randMat1, randMat2, z3_mat);
+    //mat_assemble(randMat1, randMat2, z3_mat);
     //mat_vec_mult(input, key, out);
     //compute(key,input, output); // matrix-vector multiply mod 2
     //final_test(output,out);//compares the output of two different approaches
