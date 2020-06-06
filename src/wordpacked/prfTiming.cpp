@@ -73,8 +73,8 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     }
 
                     //examine each two bits and make sure they are not 11
-                    int bit1 = (wGen >> k) & 1;
-                    int bit2 = (wGen >> (k + 1)) & 1;
+                    uint64_t bit1 = (wGen >> k) & 1;
+                    uint64_t bit2 = (wGen >> (k + 1)) & 1;
 
                     //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
                     if (~((bit1 == 1) & (bit2 == 1)))
