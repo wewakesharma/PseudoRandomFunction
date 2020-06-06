@@ -325,7 +325,7 @@ int main()
 
     //call once for testing purposes
     multMod3(outM, outL, randMat1, randMat2, input); // matrix-vector multiply mod 3
-    InnerProdMul(output, randMatZ3, input);
+    InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
 
     char p2output[256];
 
