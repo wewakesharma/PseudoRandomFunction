@@ -51,7 +51,7 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
  * in any of the matching MSB's and LSB's
  *
  */
-void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], int randMatZ3[128][256], std::mt19937 &generator)
+void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], uint64_t randMatZ3[128][256], std::mt19937 &generator)
 {
 
 
@@ -147,15 +147,17 @@ void unpackOutput(uint64_t output[4], char p2output[256])
  * Therefore, the maximum value of the computation can be 512
  * Therefore, each value will be packed into 9 bits total, where the 7 of them will have the value 0
  */
-/*
+/*   cout << "sending 12x256, 128x256 words" << endl;
  *
  */
-void packWords(uint64_t randPackedWords[12][256] ,int randMatZ3[128][256]){
+void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[128][256]){
+
+ //   cout << "expecting 12x256, 128x256 words" << endl;
     int acc = 0;
     int inWordStart = 0; //index into the beginning of the next word in the column
 
     for (int jCol = 0; jCol < 256; jCol++) {
-        for (int joutWordIndex = 0; joutWordIndex <= 12; joutWordIndex++) { //we will have 12 output words
+        for (int joutWordIndex = 0; joutWordIndex < 12; joutWordIndex++) { //we will have 12 output words
             acc = 0;
             for (int i = 0; i < 7; i++) {
                 if (inWordStart + i >= 81)
@@ -187,6 +189,10 @@ void extractMatrixOutputWords(uint64_t uOutPacked[12][256], uint64_t uInUnpacked
     }
 }
 
+/*
+ *
+ *  cout << "expecting  12X256, 4, 12 words" << endl;
+ */
 void MultPackedMatIn(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec[12])
 {
 
@@ -205,79 +211,34 @@ void MultPackedMatIn(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec[
                 //uint64_t product = bit * inMat[i][(j1*wLen)+j2];
                 uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
                 outVec[i] += product;
-
             }
         }
     }
 }
 
-void InnerProdMul(uint64_t outVec[84], int randMatZ3[128][256], uint64_t in[4]) {
+/*
+ *
+ *
+ */
+void InnerProdMul(uint64_t outVec[12], uint64_t randMatZ3[128][256], uint64_t in[4]) {
+
     uint64_t randPackedWords[12][256];
+
+  //  cout << "sending 12x256, 128x256 words" << endl;
     packWords(randPackedWords,randMatZ3);
 
-    uint64_t randUnpackedWords[81][256];
-    extractMatrixOutputWords(randPackedWords, randUnpackedWords); //for debugging purposes
+   // uint64_t randUnpackedWords[84][256];
+  //  extractMatrixOutputWords(randPackedWords, randUnpackedWords); //for debugging purposes
 
     //multiply the words here
+ //   cout << "sending  12X256, 4, 12 words" << endl;
     MultPackedMatIn(randPackedWords,in,  outVec);
 
     //compare taht the extracted words are equal to the previous matrix
 
 }
 
-void InnerProdMulPrev(uint64_t uOut[84], int randMatZ3[128][256], uint64_t in[4]) {
-//pack the random matrix
-    uint64_t randPackedWords[12][256];
 
-    //packing the elements into the pre-packaged matrix
-    for (int jCol = 0; jCol < 256; jCol++) {
-        //each 9 bits is packed into one word, so we have 7 variables per word.
-        // since we have a total of 81 rows in the original randomization matrix, we get 12 rows in the packed matrix
-        for (int i = 0; i < 12; i++)
-        {
-            int accumulator=0;
-
-            for (int kNum=0; kNum<7; kNum++) {
-                //Each element in the random matrix is shuffled by 9 bits and added to the accumulator
-                accumulator += (  randMatZ3[kNum+i*7][jCol]<<(9*kNum) )  &(511);
-            }
-            randPackedWords[i][jCol] =accumulator;
-        }
-    }
-
-    uint64_t inBits[256];
-
-    //unpack in into the bits
-    for (int i = 0; i < wLen; i++)
-    {
-        for (int j = 0; j < 4; j++) {
-            //shuffle each input word element one by one and save into the next element in the input bits array
-            inBits[i + (j * wLen)] = (in[j] << i)&1;
-        }
-    }
-
-    uint64_t uOutpacked[12];
-
-    //multiply the randomized words with the input bits
-    for (int  i= 0; i < 12; i++) {
-        int accumulator=0;
-        for (int j = 0; j < 256; j++){
-            accumulator += randPackedWords[i][j] * inBits[j];
-        }
-        uOutpacked[i]=accumulator;
-
-    }
-
-    //unpack the output array and save into a bit-by-bit array uOut, so the result can be compared later
-    for (int iOutWord = 0; iOutWord < 12; iOutWord++){
-
-        for (int jNum=0; jNum<7; jNum++) {
-            uOut[iOutWord * 7 + jNum] = uOutpacked[iOutWord] << (9 * jNum);
-        }
-    }
-
-    //fill each
-}
 
 void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t in[4])
 {
@@ -309,11 +270,11 @@ int main()
 	uint64_t key[4][256];
     //randMat1 holds the LSB's, randMat2 holds the MSB's of the randomization matrix
 	uint64_t randMat1[2][256], randMat2[2][256];
-	int randMatZ3[128][256]; //randMatZ3 holds the Z3 elements
+    uint64_t randMatZ3[128][256]; //randMatZ3 holds the Z3 elements
     uint64_t input[4];
     uint64_t outM[2];
     uint64_t outL[2];
-    uint64_t output[84];
+    uint64_t output[12];
 
     unsigned seed = 7;    // std::chrono::system_clock::now().time_since_epoch().count();
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
@@ -325,7 +286,7 @@ int main()
 
     //call once for testing purposes
     multMod3(outM, outL, randMat1, randMat2, input); // matrix-vector multiply mod 3
-    InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
+ //   InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
 
     char p2output[256];
 
@@ -354,12 +315,12 @@ int main()
         compute(key,input, output); // matrix-vector multiply mod 2
         unpackOutput(output,p2output); // useless operation that should not be here
         // This is where the mod2->mod3 protocol should be
+
+
         InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
     }
 
     elapsed_seconds = chrono::system_clock::now() - start;
-
-    cout<<endl<<"output msb,lsb is "<< outM << ',' << outL << endl;
 
     cout << "elapsed time for 1M runs for integer packing:  " << elapsed_seconds.count() << "  s\n";
 
