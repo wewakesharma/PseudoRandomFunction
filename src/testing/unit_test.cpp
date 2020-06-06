@@ -86,16 +86,16 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
     }
     //displaying what is inside randMat1 and randMat2
     int x,y;
-    cout<<"Displaying the contents of randMat1 and randMat2 : after storing";
-    for(int i = 0; i< 2; i++)
+    cout<<"Displaying the contents of randMat1 and randMat2, after storing"<<endl;
+    for(int i = 0; i < 2; i++)
     {
-    	for(int j = 0; j<256; j++)
+    	for(int j = 0; j < 256; j++)
     	{
-    		for(int k =0;k<64;k++)
+    		for(int k = 0; k < 64; k++)
     		{
     			x = ((randMat1[i][j] >> k) & 1);
     			y = ((randMat2[i][j] >> k) & 1);
-    			cout<<x<<"\t"<<y<<"\t"<<(( x<<1) | y)<<"\t";
+    			cout<<x<<"\t"<<y<<"\t"<<(( x<<1) | y)<<endl;
     		}
     	}
     	cout<<endl;
