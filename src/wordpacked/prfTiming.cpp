@@ -345,5 +345,23 @@ int main()
 
     cout << "elapsed time for 1M runs:  " << elapsed_seconds.count() << "  s\n";
 
+    //compare timing with the other multiplciation
+
+    start = chrono::system_clock::now();
+
+    for(int i=0;i<1000000;i++){
+
+        compute(key,input, output); // matrix-vector multiply mod 2
+        unpackOutput(output,p2output); // useless operation that should not be here
+        // This is where the mod2->mod3 protocol should be
+        InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
+    }
+
+    elapsed_seconds = chrono::system_clock::now() - start;
+
+    cout<<endl<<"output msb,lsb is "<< outM << ',' << outL << endl;
+
+    cout << "elapsed time for 1M runs for integer packing:  " << elapsed_seconds.count() << "  s\n";
+
 	return 0;
 }
