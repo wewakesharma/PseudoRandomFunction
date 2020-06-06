@@ -51,8 +51,9 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
  * in any of the matching MSB's and LSB's
  *
  */
-void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)
+void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], int randMatZ3[128][256], std::mt19937 &generator)
 {
+
 
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
     for (int i = 0; i < 2; i++) {
@@ -76,11 +77,12 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     int bit2 = (wGen >> (k + 1)) & 1;
 
                     //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
-                    if (!((bit1 == 1) & (bit2 == 1)))
+                    if (~((bit1 == 1) & (bit2 == 1)))
                     {
                         //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
                         randMat1[i][j] |= (bit1 << nBitsGenerated);
                         randMat2[i][j] |= (bit2 << nBitsGenerated);
+                        randMatZ3[nBitsGenerated+i*wLen][j]=(bit1<<1 | bit2);
                         nBitsGenerated++;
                         //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
                         if (nBitsGenerated == wLen)
@@ -92,8 +94,6 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
         }
     }
 }
-
-
 
 void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
 {
@@ -109,7 +109,7 @@ void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
             uint64_t y = -((x>>j) & 1);
 
             for (int k = 0; k < 4; k++) {
-                uint64_t z = key[k][j+wLen*i];
+                uint64_t z = key[k][j+(wLen*i)];
                 z_final[k] ^= (z & y);
             }
 		}
@@ -141,8 +141,144 @@ void unpackOutput(uint64_t output[4], char p2output[256])
 }
 
 /*
- * multiply modulo 3
+ * Pack the original Z_3 values into words where each word includes 7 original values
+ * we originally multiply a Z_3 matrix of width 256 with possible values 0,1,2 with a
+ * vinary vector of size 256 with possible values of 0,1
+ * Therefore, the maximum value of the computation can be 512
+ * Therefore, each value will be packed into 9 bits total, where the 7 of them will have the value 0
  */
+/*
+ *
+ */
+void packWords(uint64_t randPackedWords[12][256] ,int randMatZ3[128][256]){
+    int acc = 0;
+    int inWordStart = 0; //index into the beginning of the next word in the column
+
+    for (int jCol = 0; jCol < 256; jCol++) {
+        for (int joutWordIndex = 0; joutWordIndex <= 12; joutWordIndex++) { //we will have 12 output words
+            acc = 0;
+            for (int i = 0; i < 7; i++) {
+                if (inWordStart + i >= 81)
+                    break;
+                acc = (acc << 9) + randMatZ3[inWordStart + i][jCol];
+            }
+            inWordStart += 7;
+            randPackedWords[joutWordIndex][jCol] = acc;
+        }
+    }
+}
+
+/*
+ * randPackedWords has words packed in columns - each word contains 7 values, each value is up to 512
+ *
+ */
+void extractMatrixOutputWords(uint64_t uOutPacked[12][256], uint64_t uInUnpacked[81][256])
+{
+    for (int iCol = 0; iCol < 256; iCol++) {
+        for (int iRow = 0; iRow < 12; iRow++) {
+            uint64_t in = uInUnpacked[iRow][iCol];
+            for (int iIndinCol = 7*iRow+6; iIndinCol >= 7*iRow; iIndinCol--) {
+                if (iIndinCol >=81)
+                    break;
+                uOutPacked[iIndinCol][iCol] = (in & 0X1FF) % 3;
+                in >>=9;
+            }
+        }
+    }
+}
+
+void MultPackedMatIn(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec[12])
+{
+
+    for (int i = 0; i < 12; i++)
+    {
+        outVec[i] = 0;
+        for (int j1 = 0; j1 < 4; j1++)
+        {
+            uint64_t tmp = inVec[j1];
+            for (int j2 = 0; j2 < wLen; j2++)
+            {
+                uint64_t bit = tmp & 1;
+
+                tmp >>= 1;
+                //alternative way, but may be slower
+                //uint64_t product = bit * inMat[i][(j1*wLen)+j2];
+                uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
+                outVec[i] += product;
+
+            }
+        }
+    }
+}
+
+void InnerProdMul(uint64_t outVec[84], int randMatZ3[128][256], uint64_t in[4]) {
+    uint64_t randPackedWords[12][256];
+    packWords(randPackedWords,randMatZ3);
+
+    uint64_t randUnpackedWords[81][256];
+    extractMatrixOutputWords(randPackedWords, randUnpackedWords); //for debugging purposes
+
+    //multiply the words here
+    MultPackedMatIn(randPackedWords,in,  outVec);
+
+    //compare taht the extracted words are equal to the previous matrix
+
+}
+
+void InnerProdMulPrev(uint64_t uOut[84], int randMatZ3[128][256], uint64_t in[4]) {
+//pack the random matrix
+    uint64_t randPackedWords[12][256];
+
+    //packing the elements into the pre-packaged matrix
+    for (int jCol = 0; jCol < 256; jCol++) {
+        //each 9 bits is packed into one word, so we have 7 variables per word.
+        // since we have a total of 81 rows in the original randomization matrix, we get 12 rows in the packed matrix
+        for (int i = 0; i < 12; i++)
+        {
+            int accumulator=0;
+
+            for (int kNum=0; kNum<7; kNum++) {
+                //Each element in the random matrix is shuffled by 9 bits and added to the accumulator
+                accumulator += (  randMatZ3[kNum+i*7][jCol]<<(9*kNum) )  &(511);
+            }
+            randPackedWords[i][jCol] =accumulator;
+        }
+    }
+
+    uint64_t inBits[256];
+
+    //unpack in into the bits
+    for (int i = 0; i < wLen; i++)
+    {
+        for (int j = 0; j < 4; j++) {
+            //shuffle each input word element one by one and save into the next element in the input bits array
+            inBits[i + (j * wLen)] = (in[j] << i)&1;
+        }
+    }
+
+    uint64_t uOutpacked[12];
+
+    //multiply the randomized words with the input bits
+    for (int  i= 0; i < 12; i++) {
+        int accumulator=0;
+        for (int j = 0; j < 256; j++){
+            accumulator += randPackedWords[i][j] * inBits[j];
+        }
+        uOutpacked[i]=accumulator;
+
+    }
+
+    //unpack the output array and save into a bit-by-bit array uOut, so the result can be compared later
+    for (int iOutWord = 0; iOutWord < 12; iOutWord++){
+
+        for (int jNum=0; jNum<7; jNum++) {
+            uOut[iOutWord * 7 + jNum] = uOutpacked[iOutWord] << (9 * jNum);
+        }
+    }
+
+    //fill each
+}
+
 void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t in[4])
 {
     uint64_t msb[2], lsb[2];
@@ -171,20 +307,26 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 int main()
 {
 	uint64_t key[4][256];
+    //randMat1 holds the LSB's, randMat2 holds the MSB's of the randomization matrix
 	uint64_t randMat1[2][256], randMat2[2][256];
+	int randMatZ3[128][256]; //randMatZ3 holds the Z3 elements
     uint64_t input[4];
     uint64_t outM[2];
     uint64_t outL[2];
+    uint64_t output[84];
 
     unsigned seed = 7;    // std::chrono::system_clock::now().time_since_epoch().count();
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
 	generate_rand_key(key, generator);
 
 	//we generate two random matrices, one holds the first bit and one the second bit
-	generate_rand_matrix(randMat1, randMat2, generator);
+	generate_rand_matrix(randMat1, randMat2, randMatZ3, generator);
     generate_input(input,generator);
 
-    uint64_t output[4];
+    //call once for testing purposes
+    multMod3(outM, outL, randMat1, randMat2, input); // matrix-vector multiply mod 3
+    InnerProdMul(output, randMatZ3, input);
+
     char p2output[256];
 
     chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
