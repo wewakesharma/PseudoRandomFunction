@@ -43,7 +43,8 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
  */
 void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)
 {
-	int temp_var;
+	uint64_t temp_var;
+	int cnt = 0;
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 256; j++) {
@@ -62,14 +63,12 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     }
 
                     //examine each two bits and make sure they are not 11
-                    int bit1 = (wGen >> k) & 1;
-                    int bit2 = (wGen >> (k + 1)) & 1;
+                  	uint64_t bit1 = (wGen >> k) & 1;
+                    uint64_t bit2 = (wGen >> (k + 1)) & 1;
 
                     //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
                     if (!((bit1 == 1) & (bit2 == 1)))
                     {
-                    	//cout<<bit1<<"\t"<<bit2<<((bit1<<1) | bit2)<<endl;
-
                         //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
                         randMat1[i][j] |= (bit1 << nBitsGenerated);
                         randMat2[i][j] |= (bit2 << nBitsGenerated);
@@ -80,13 +79,20 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     }
                 }
             }
-            cout<<endl;
 
         }
     }
+    cout<<endl<<"The total number of z3 elements is "<<cnt;
     //displaying what is inside randMat1 and randMat2
-    int x,y;
+    uint64_t x,y;
+    //bitset<64> tempx,tempy;
     cout<<"Displaying the contents of randMat1 and randMat2, after storing"<<endl;
+    //tempx = 
+    std::bitset<64> tempx(randMat1[0][168]);
+    std::bitset<64> tempy(randMat2[0][168]);
+    cout<<endl<<"Value of x and y in bitset"<<endl;
+    cout<<tempx<<endl;
+    cout<<tempy<<endl;
     for(int i = 0; i < 2; i++)
     {
     	for(int j = 0; j < 256; j++)
@@ -95,7 +101,8 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
     		{
     			x = ((randMat1[i][j] >> k) & 1);
     			y = ((randMat2[i][j] >> k) & 1);
-    			cout<<x<<"\t"<<y<<"\t"<<(( x<<1) | y)<<endl;
+    			temp_var = (( x<<1) | y);
+    			//cout<<temp_var;
     		}
     	}
     	cout<<endl;
@@ -360,7 +367,7 @@ int main()
     uint64_t randMat1[2][256], randMat2[2][256];
     uint64_t outM[2];
     uint64_t outL[2];
-    int z3_mat[81][256];
+    uint64_t z3_mat[81][256];
 
     unsigned seed = 7;   
 
