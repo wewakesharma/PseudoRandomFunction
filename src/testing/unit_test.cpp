@@ -43,12 +43,14 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
  */
 void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], std::mt19937 &generator)
 {
-	uint64_t temp_var;
+	uint64_t temp_mat1, temp_mat2, temp_var;
 	int cnt = 0;
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 256; j++) {
             int nBitsGenerated = 0;
+            temp_mat1 = 0;
+            temp_mat2 = 0;
             while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
             {
                 uint64_t wGen = generator();
@@ -70,8 +72,8 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     if (!((bit1 == 1) & (bit2 == 1)))
                     {
                         //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
-                        randMat1[i][j] |= (bit1 << nBitsGenerated);
-                        randMat2[i][j] |= (bit2 << nBitsGenerated);
+                        temp_mat1 |= (bit1 << nBitsGenerated);
+                        temp_mat2 |= (bit2 << nBitsGenerated);
                         nBitsGenerated++;
                         //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
                         if (nBitsGenerated == wLen)
@@ -79,20 +81,20 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     }
                 }
             }
-
+            randMat1[i][j] = temp_mat1;
+            randMat2[i][j] = temp_mat2;
         }
     }
-    cout<<endl<<"The total number of z3 elements is "<<cnt;
     //displaying what is inside randMat1 and randMat2
     uint64_t x,y;
     //bitset<64> tempx,tempy;
     cout<<"Displaying the contents of randMat1 and randMat2, after storing"<<endl;
-    //tempx = 
-    std::bitset<64> tempx(randMat1[0][168]);
-    std::bitset<64> tempy(randMat2[0][168]);
-    cout<<endl<<"Value of x and y in bitset"<<endl;
-    cout<<tempx<<endl;
-    cout<<tempy<<endl;
+    /*Printing the element of matrix in bitset format(debug)
+    *std::bitset<64> tempx(randMat1[0][168]);
+    *std::bitset<64> tempy(randMat2[0][168]);
+    *cout<<endl<<"Value of x and y in bitset"<<endl;
+    *cout<<tempx<<endl;
+    *cout<<tempy<<endl;*/
     for(int i = 0; i < 2; i++)
     {
     	for(int j = 0; j < 256; j++)
@@ -101,21 +103,25 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
     		{
     			x = ((randMat1[i][j] >> k) & 1);
     			y = ((randMat2[i][j] >> k) & 1);
-    			temp_var = (( x<<1) | y);
-    			//cout<<temp_var;
+    			temp_var = (( x<<1) | y<<0 );
+
+    			/*cout<<temp_var;
+    			if(temp_var == 3)
+    				cout<<endl<<"error";*/
     		}
     	}
     	cout<<endl;
     }
 }
-void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][256])
-{
-	int z3_bit; //bits from lsb and msb are extracted and combined as a z3 bit.
-    int bit_msb; //bit from each word of msb matrix i.e. randMat1
-    int bit_lsb; //bit from each word lsb matrix i.e. randMat2
-    uint64_t msb_word, lsb_word; //extracting each word of the 
-    int current_row = 0;
 
+void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t z3_mat[81][256])
+{
+	uint64_t msb_word, lsb_word; //extracting each word
+   	uint64_t msb_bit; //bit from each word of msb matrix i.e. randMat1
+    uint64_t lsb_bit; //bit from each word lsb matrix i.e. randMat2
+    uint64_t z3_bit; //bits from lsb and msb are extracted and combined as a z3 bit.
+    
+    int current_row = 0;
     int cnt = 0;
     int row_limit = 81;
 
@@ -128,17 +134,17 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], int z3_mat[81][2
             lsb_word = lsbs[row_count][col_count];
             for(int word_count = 0; word_count < wLen; word_count++)
             {
-            	bit_msb = ((msb_word>>word_count) & 1);
-            	bit_lsb = ((lsb_word>>word_count) & 1);
-            	z3_bit = ((bit_msb << 1) | bit_lsb);
+            	msb_bit = ((msb_word>>word_count) & 1);
+            	lsb_bit = ((lsb_word>>word_count) & 1);
+            	z3_bit = ((msb_bit << 1) | (lsb_bit <<0)) ;
             	cout<<z3_bit;
-            	current_row = wLen*row_count + word_count;
+            	/*current_row = wLen*row_count + word_count;
             	if(current_row < 81)
             	{
             		z3_mat[current_row][col_count] = z3_bit;
             	}
             	else
-            		break;
+            		break;*/
             }
     	}
     }
@@ -377,7 +383,7 @@ int main()
     generate_rand_key(key, generator);
     generate_rand_matrix(randMat1, randMat2, generator);
     
-    //mat_assemble(randMat1, randMat2, z3_mat);
+    mat_assemble(randMat1, randMat2, z3_mat);
     //mat_vec_mult(input, key, out);
     //compute(key,input, output); // matrix-vector multiply mod 2
     //final_test(output,out);//compares the output of two different approaches
