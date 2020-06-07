@@ -8,6 +8,7 @@
 
 int wLen = 64;
 
+
 //unsigned long int z_final[4];//to store the final product values
 
 using namespace std;
@@ -61,16 +62,16 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
             int nBitsGenerated = 0;
             while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
             {
+                if ((i*wLen+nBitsGenerated) >= 81) {
+                    break; //go to the next item
+                }
+
                 uint64_t wGen = generator();
                 //k is the index within the wGen, which holds a random 64 bit word
                 for (int k = 0; k < wLen; k = k + 2) {
 
                     //if we already have 81 rows, the rest of the items in this column are set to 0
-                    if ((i*wLen+k) >= 81) {
-                        randMat1[i][j]=0;  //initialize to 0 - we do not need any more items
-                        randMat2[i][j]=0;  //initialize to 0 - we do not need any more items
-                        continue; //go to the next item
-                    }
+
 
                     //examine each two bits and make sure they are not 11
                     uint64_t bit1 = (wGen >> k) & 1;
@@ -189,6 +190,30 @@ void extractMatrixOutputWords(uint64_t uOutPacked[12][256], uint64_t uInUnpacked
     }
 }
 
+
+void MultPackedMatIn2(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec[12])
+{
+    for (int i = 0; i < 12; i++) {
+        outVec[i] = 0;
+    }
+
+    for (int j1 = 0; j1 < 4; j1++)
+    {
+        //uint64_t tmp = inVec[j1];  //take each word in the input vector
+        for (int j2 = 0; j2 < wLen; j2++)
+        {
+            uint64_t bit = -((inVec[j1] >> j2) & 1);
+
+            for (int i = 0; i < 12; i++) {
+                //this seems to be slower than the first alternative
+                //uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
+                outVec[i] += bit & inMat[i][j1*wLen+j2];
+                }
+            }
+        }
+
+}
+
 /*
  *
  *  cout << "expecting  12X256, 4, 12 words" << endl;
@@ -201,15 +226,16 @@ void MultPackedMatIn(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec[
         outVec[i] = 0;
         for (int j1 = 0; j1 < 4; j1++)
         {
-            uint64_t tmp = inVec[j1];
+            uint64_t tmp = inVec[j1];  //take each word in the input vector
             for (int j2 = 0; j2 < wLen; j2++)
             {
                 uint64_t bit = tmp & 1;
 
-                tmp >>= 1;
+                tmp >>= 1;    //take the next bit in this word
                 //alternative way, but may be slower
-                //uint64_t product = bit * inMat[i][(j1*wLen)+j2];
-                uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
+                uint64_t product = bit * inMat[i][(j1*wLen)+j2];
+                //this seems to be slower than the first alternative
+                //uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
                 outVec[i] += product;
             }
         }
@@ -220,6 +246,25 @@ void MultPackedMatIn(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec[
  *
  *
  */
+
+void InnerProdMul2(uint64_t outVec[12], uint64_t randMatZ3[128][256], uint64_t in[4]) {
+
+    uint64_t randPackedWords[12][256];
+
+    //  cout << "sending 12x256, 128x256 words" << endl;
+    packWords(randPackedWords,randMatZ3);
+
+    // uint64_t randUnpackedWords[84][256];
+    //  extractMatrixOutputWords(randPackedWords, randUnpackedWords); //for debugging purposes
+
+    //multiply the words here
+    //   cout << "sending  12X256, 4, 12 words" << endl;
+    MultPackedMatIn2(randPackedWords,in,  outVec);
+
+    //compare taht the extracted words are equal to the previous matrix
+
+}
+
 void InnerProdMul(uint64_t outVec[12], uint64_t randMatZ3[128][256], uint64_t in[4]) {
 
     uint64_t randPackedWords[12][256];
@@ -265,16 +310,28 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 //Step 1: Generate random input and store it in input array.
 //Step 2: Generate 1024 uint64 numbers and store it in 4X256 size.
 //Step 3: compute() function will calculate the value of zi's
-int main()
-{
-	uint64_t key[4][256];
+int main(int argc,char* argv[] ) {
+    uint64_t key[4][256];
     //randMat1 holds the LSB's, randMat2 holds the MSB's of the randomization matrix
-	uint64_t randMat1[2][256], randMat2[2][256];
+    uint64_t randMat1[2][256], randMat2[2][256];
     uint64_t randMatZ3[128][256]; //randMatZ3 holds the Z3 elements
     uint64_t input[4];
     uint64_t outM[2];
     uint64_t outL[2];
     uint64_t output[12];
+
+    int stepsToRun;
+
+    if (argc > 1) {
+        char *p;
+        stepsToRun = strtol(argv[1], &p, 10);
+    }
+    else
+        stepsToRun=3;
+
+  //  cout << "Please enter the number of steps to run    : ";
+  //  cin >> stepsToRun;
+    cout << "The number of phases to run you entered is " << stepsToRun << endl;
 
     unsigned seed = 7;    // std::chrono::system_clock::now().time_since_epoch().count();
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
@@ -286,25 +343,35 @@ int main()
 
     //call once for testing purposes
     multMod3(outM, outL, randMat1, randMat2, input); // matrix-vector multiply mod 3
- //   InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
+    InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
+    InnerProdMul2(output, randMatZ3, input);  //multiply with integer packing
+
+    //need to compare here both outputs and check that they are equal
 
     char p2output[256];
+
+    //chrono::duration<double> elapsed_seconds1 ;
+    //chrono::duration<double> elapsed_seconds2 ;
+    //chrono::duration<double> elapsed_seconds3 ;
 
     chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
 
     for(int i=0;i<1000000;i++){
     
         compute(key,input, output); // matrix-vector multiply mod 2
-        unpackOutput(output,p2output); // useless operation that should not be here
+
+        if (stepsToRun>=2)
+            unpackOutput(output,p2output); // useless operation that should not be here
         // This is where the mod2->mod3 protocol should be
-        multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
+        if (stepsToRun>=3)
+            multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
     }
 
     chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - start;
-  
-    cout<<endl<<"output msb,lsb is "<< outM << ',' << outL << endl;
 
-    cout << "elapsed time for 1M runs:  " << elapsed_seconds.count() << "  s\n";
+    cout<<endl<<"output of first, second phase is "<< output << ',' << p2output << endl;
+    cout<<endl<<"output msb,lsb is "<< outM << ',' << outL << endl;
+    cout << endl<< "elapsed time for 1M runs:  " << elapsed_seconds.count() << "  s\n";
 
     //compare timing with the other multiplciation
 
@@ -315,14 +382,28 @@ int main()
         compute(key,input, output); // matrix-vector multiply mod 2
         unpackOutput(output,p2output); // useless operation that should not be here
         // This is where the mod2->mod3 protocol should be
-
-
         InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
     }
 
     elapsed_seconds = chrono::system_clock::now() - start;
 
+    cout<<endl<<"output is "<< output[0] << endl;
     cout << "elapsed time for 1M runs for integer packing:  " << elapsed_seconds.count() << "  s\n";
+
+    start = chrono::system_clock::now();
+
+    for(int i=0;i<1000000;i++){
+
+        compute(key,input, output); // matrix-vector multiply mod 2
+        unpackOutput(output,p2output); // useless operation that should not be here
+        // This is where the mod2->mod3 protocol should be
+        InnerProdMul2(output, randMatZ3, input);  //multiply with integer packing
+    }
+
+    elapsed_seconds = chrono::system_clock::now() - start;
+
+    cout<<endl<<"output is "<< output[0] << endl;
+    cout << "elapsed time for 1M runs for integer packing2:  " << elapsed_seconds.count() << "  s\n";
 
 	return 0;
 }
