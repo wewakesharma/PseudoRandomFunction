@@ -128,6 +128,7 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t z3_mat[
     //check the size of matrix msbs
     for(int col_count = 0; col_count < 256; col_count++)
     {
+    	current_row = 0;
     	for(int row_count = 0; row_count < 2; row_count++)
     	{
     		msb_word = msbs[row_count][col_count];
@@ -137,26 +138,24 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t z3_mat[
             	msb_bit = ((msb_word>>word_count) & 1);
             	lsb_bit = ((lsb_word>>word_count) & 1);
             	z3_bit = ((msb_bit << 1) | (lsb_bit <<0)) ;
-            	cout<<z3_bit;
-            	/*current_row = wLen*row_count + word_count;
+            	//cout<<z3_bit;
+            	current_row = wLen*row_count + word_count;
             	if(current_row < 81)
-            	{
             		z3_mat[current_row][col_count] = z3_bit;
-            	}
             	else
-            		break;*/
+            		break;
             }
     	}
     }
-    /*displaying the z3_mat
-    for(int i =0; i< 4; i++)
+    //displaying the z3_mat
+    for(int i =0; i< 81; i++)
     {
-    	for(int j = 0; j< 4; j++)
+    	for(int j = 0; j< 256; j++)
     	{
     		cout<<z3_mat[i][j];
     	}
     	cout<<endl;
-    }*/
+    }
 
 
 
