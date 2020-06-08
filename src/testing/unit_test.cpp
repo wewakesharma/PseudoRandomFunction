@@ -255,7 +255,7 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 /*
 * The function compares the output of unpacked version and output of naive implementation- phase 1 testing
 */
-void final_test(uint64_t z_final[4], uint64_t out[256])
+void phase1_test(uint64_t z_final[4], uint64_t out[256])
 {
     bool flag = 0;// comparing out and pack_temp_out
     int pack_temp_out[256];
@@ -352,7 +352,7 @@ int main()
     compute(key,input, output); // matrix-vector multiply mod 2
     //unpackOutput(output,p2output); // useless operation that should not be here
     mat_vec_mult(input, key, out);
-    final_test(output,out);//compares the output of two different approaches
+    phase1_test(output,out);//compares the output of two different approaches
     cout<<"==========Phase 1 testing complete=========="<<endl;
 
     //Phase 3
