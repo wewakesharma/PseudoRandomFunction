@@ -81,39 +81,16 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     }
                 }
             }
-            randMat1[i][j] = temp_mat1;
+            randMat1[i][j] = temp_mat1; //to remove element 3 to appear in the matrices
             randMat2[i][j] = temp_mat2;
         }
     }
-    //displaying what is inside randMat1 and randMat2
-    uint64_t x,y;
-    //bitset<64> tempx,tempy;
-    cout<<"Displaying the contents of randMat1 and randMat2, after storing"<<endl;
-    /*Printing the element of matrix in bitset format(debug)
-    *std::bitset<64> tempx(randMat1[0][168]);
-    *std::bitset<64> tempy(randMat2[0][168]);
-    *cout<<endl<<"Value of x and y in bitset"<<endl;
-    *cout<<tempx<<endl;
-    *cout<<tempy<<endl;*/
-    for(int i = 0; i < 2; i++)
-    {
-    	for(int j = 0; j < 256; j++)
-    	{
-    		for(int k = 0; k < 64; k++)
-    		{
-    			x = ((randMat1[i][j] >> k) & 1);
-    			y = ((randMat2[i][j] >> k) & 1);
-    			temp_var = (( x<<1) | y<<0 );
-
-    			/*cout<<temp_var;
-    			if(temp_var == 3)
-    				cout<<endl<<"error";*/
-    		}
-    	}
-    	cout<<endl;
-    }
 }
 
+/*
+*Stands for matrix assembly, this will take two matrices and combine their bits to form a single valued z3 element
+*this element will be stored in z3_mat which will be used in testing phase 3.
+*/
 void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t z3_mat[81][256])
 {
 	uint64_t msb_word, lsb_word; //extracting each word
@@ -125,7 +102,6 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t z3_mat[
     int cnt = 0;
     int row_limit = 81;
 
-    //check the size of matrix msbs
     for(int col_count = 0; col_count < 256; col_count++)
     {
     	current_row = 0;
@@ -147,51 +123,9 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t z3_mat[
             }
     	}
     }
-    //displaying the z3_mat
-    for(int i =0; i< 81; i++)
-    {
-    	for(int j = 0; j< 256; j++)
-    	{
-    		cout<<z3_mat[i][j];
-    	}
-    	cout<<endl;
-    }
-
-
-
-    /*for(int i = 0; i<2;i++)
-    {
-        for(int j = 0; j < 256; j++)
-        {
-            msb_word = msbs[i][j];
-            lsb_word = lsbs[i][j];
-            for(int word_cnt = 0; word_cnt < wLen; word_cnt++)
-            {
-                bit_msb = (msb_word>>word_cnt) & 1;
-                bit_lsb = (lsb_word>>word_cnt) & 1;
-                //cout<<bit_msb<<"\t"<<bit_lsb<<endl;
-                z3_bit = (bit_msb<<1 | bit_lsb);
-                cout<<z3_bit<<endl;
-                z3_mat[][]
-            }
-        }
-        //z3_mat[j*][](msb_word>>k) & 1;
-        //z3_mat[]
-        //cout<<endl<<msb_word<<"\t"<<lsb_word<<endl;
-    }
-    for(int i = 0; i<256;i++)
-    {
-        for(int j = 0;j<2;j++)
-        {
-            msb_word = msbs[j][i];
-            lsb_word = lsbs[j][i];
-            cout<<endl<<msb_word<<"\t"<<lsb_word<<endl;
-        }
-    }*/
 }
 
 //word-packed version of phase 1
-
 void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
 {
     for(int i=0; i < 4; i++) 
@@ -215,8 +149,8 @@ void compute(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
 	}
 }
 
-//naive version of phase 1
-void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], int out[256])
+//Naive version of phase 1
+void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], uint64_t out[256])
 {
     //create a key matrix
     //do bit by bit calculation
@@ -257,6 +191,13 @@ void mat_vec_mult(uint64_t input[4], uint64_t key[4][256], int out[256])
         }
         out[iRow] = (row_total%2);
     }
+    //printing the output for naive testing of phase 1
+    /*cout<<endl<<"Output of phase 1 using naive method"<<endl;
+    for(int count = 0; count < 256; count++)
+    {
+    	cout<<out[count];
+    }*/
+    cout<<endl;
 }
 
 //Perform Addition modulo 3
@@ -266,6 +207,9 @@ void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint6
 
     outM = (lsb1 | lsb2 ) ^ T;
     outL = (msb1 | msb2 ) ^ T;
+    cout<<endl<<"Output of phase 3"<<endl;
+    cout<<outM<<endl;
+    cout<<outL<<endl;
 }
 void unpackOutput(uint64_t output[4], char p2output[256])
 {
@@ -276,6 +220,7 @@ void unpackOutput(uint64_t output[4], char p2output[256])
             p2output[i+j*wLen] = ((output[i] >> j) & 1);
         }
     }
+    //printing the output of phase 1 using word packing method
 }
 
 /*
@@ -284,7 +229,7 @@ void unpackOutput(uint64_t output[4], char p2output[256])
 void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t in[4])
 {
     uint64_t msb[2], lsb[2];
-
+    int iter_count = 0;
     //go over the input bits, one by one
 
     for (int i1 = 0; i1 < 4; i1++)
@@ -298,17 +243,19 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
                 msb[j] = msbs[j][64*i1+i2] & bit;
                 lsb[j] = lsbs[j][64*i1+i2] & bit;  //multiply by current bit
                 addMod3(outM[j],outL[j],outM[j],outL[j],msb[j],lsb[j]); //add mod 3 to acumulator
+                iter_count++;
             }
 
         }
     }
+    cout<<endl<<"Iter count is "<<iter_count<<endl;
         
 }
 
 /*
-* The function compares the output of unpacked version and output of naive implementation
+* The function compares the output of unpacked version and output of naive implementation- phase 1 testing
 */
-void final_test(uint64_t z_final[4], int out[256])
+void final_test(uint64_t z_final[4], uint64_t out[256])
 {
     bool flag = 0;// comparing out and pack_temp_out
     int pack_temp_out[256];
@@ -320,22 +267,13 @@ void final_test(uint64_t z_final[4], int out[256])
             pack_temp_out[64*i+j] = ((z_final[i] >> j) & 1); //4 packed int are converted to 256 z2 bits.
         }
     }
-    int p_count = 0; //count of set bits in pack_temp_out
-    int out_count = 0;  //count of set bits in naive output
-    /*for(int i = 0; i < 256; i++)
+    //printing the output of wordpacked version
+    /*cout<<endl<<"Output of phase 1 using word packing"<<endl;
+    for(int count = 0; count < 256; count++)
     {
-        cout<<pack_temp_out[i]<<"\t"<<out[i]<<endl;// printing the two outputs index by index
-        Apart from comparing out and pack_temp_out, we also count the number of set bits
-        if(pack_temp_out[i] == 1) 
-            p_count++;
-        if(out[i] == 1)
-            out_count++;
-        if ((pack_temp_out[i] != out[i]))
-            cout << "error in bit " <<  i << endl;
-    }
-    cout<<"P_count is "<<p_count<<endl;
-    cout<<"out count is "<<out_count<<endl; //Printing out the count of set bits of out and pack_temp_out*/
-    //comparing out and pack_temp_out
+    	cout<<pack_temp_out[count];
+    }*/
+
     for(int i=0;i<256;i++)
     {
         if(out[i] != pack_temp_out[i]) //If the bits don't match, break the loop. The function is not 100% correct  now since we have bit arrangement issues.
@@ -347,12 +285,36 @@ void final_test(uint64_t z_final[4], int out[256])
         }
     }
     if(flag == 1)
-        cout<<cout<<endl<<"The outputs out and pack_temp_out didn't match, the function is not correct"<<endl; //prints if the break statement is not executed
+        cout<<cout<<endl<<"The outputs out and pack_temp_out DID NOT match, the function is not correct ==========> ERROR"<<endl; //prints if the break statement is not executed
     else
-        cout<<endl<<"Everything's good"<<endl;
+        cout<<endl<<"Output of naive and word-packed version MATCHED ==========> O.K."<<endl;
 }
     
+//compute the product of 81x256 z3 matrix with 256 bit output vector of phase 1
+void phase3_naive(uint64_t out[256], uint64_t z3_mat[81][256], uint64_t phase3_out[81])
+{
+	int prod;
+	int sum_of_product = 0;
+	for(int row_count = 0; row_count < 81; row_count++)
+	{
+		for(int col_count = 0; col_count < 256; col_count++)
+		{
+			sum_of_product += (out[col_count] * z3_mat[row_count][col_count]);
+		}
+		phase3_out[row_count] = (sum_of_product % 3);
+	}
+	//displaying the output for phase3_out
+	for(int count = 0; count < 81; count++)
+	{
+		cout<<phase3_out[count];
+	}
+	cout<<endl;
+}
 
+void phase3_test()
+{
+	cout<<"In Progress";
+}
 
 //Step 1: Generate random input and store it in input array.
 //Step 2: Generate 1024 uint64 numbers and store it in 4X256 size.
@@ -366,29 +328,38 @@ int main()
     uint64_t input[4];
     uint64_t output[4];
     int unpacked_input[256];
-    int out[256];  //variable used for naive testing, represents output of phase 1
+    uint64_t out[256];  //output of phase 1(naive)
     char p2output[256];
-    //========== Phase 2==================
+    //========== Phase 2/3==================
     uint64_t randMat1[2][256], randMat2[2][256];
     uint64_t outM[2];
     uint64_t outL[2];
     uint64_t z3_mat[81][256];
+    uint64_t phase3_out[81];
 
     unsigned seed = 7;   
 
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
     
+    //Input Generation
     generate_input(input,generator);
     generate_rand_key(key, generator);
     generate_rand_matrix(randMat1, randMat2, generator);
+    cout<<endl<<"Random input generated ==========>   O.K."<<endl;
     
-    mat_assemble(randMat1, randMat2, z3_mat);
-    //mat_vec_mult(input, key, out);
-    //compute(key,input, output); // matrix-vector multiply mod 2
-    //final_test(output,out);//compares the output of two different approaches
-    
+    //Phase 1
+    cout<<"Initializing unit testing for phase 1 ==========>   O.K."<<endl;
+    compute(key,input, output); // matrix-vector multiply mod 2
     //unpackOutput(output,p2output); // useless operation that should not be here
+    mat_vec_mult(input, key, out);
+    final_test(output,out);//compares the output of two different approaches
+    cout<<"==========Phase 1 testing complete=========="<<endl;
+
+    //Phase 3
+    cout<<"Initializing unit testing for phase 3 ==========>   O.K."<<endl;
+    mat_assemble(randMat1, randMat2, z3_mat);
     //multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
+    phase3_naive(out, z3_mat, phase3_out);
 
     
     return 0;
