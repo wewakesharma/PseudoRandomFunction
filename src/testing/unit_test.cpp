@@ -46,8 +46,10 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
 	uint64_t temp_mat1, temp_mat2, temp_var;
 	int cnt = 0;
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 256; j++) {
+    for (int i = 0; i < 2; i++) 
+    {
+        for (int j = 0; j < 256; j++) 
+        {
             int nBitsGenerated = 0;
             temp_mat1 = 0;
             temp_mat2 = 0;
@@ -55,15 +57,17 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
             {
                 uint64_t wGen = generator();
                 //k is the index within the wGen, which holds a random 64 bit word
-                for (int k = 0; k < wLen; k = k + 2) {
+                for (int k = 0; k < wLen; k = k + 2) 
+                {
 
                     //if we already have 81 rows, the rest of the items in this column are set to 0
-                    if ((i*wLen+k) >= 81) {
+                    /*if ((i*wLen+k) >= 81) {
                         randMat1[i][j]=0;  //initialize to 0 - we do not need any more items
                         randMat2[i][j]=0;  //initialize to 0 - we do not need any more items
                         continue; //go to the next item
-                    }
-
+                    }*/
+                    //elements will be 0 when row = 1; k>=17, it will be zero.
+                    
                     //examine each two bits and make sure they are not 11
                   	uint64_t bit1 = (wGen >> k) & 1;
                     uint64_t bit2 = (wGen >> (k + 1)) & 1;
@@ -71,19 +75,43 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
                     if (!((bit1 == 1) & (bit2 == 1)))
                     {
-                        //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
-                        temp_mat1 |= (bit1 << nBitsGenerated);
-                        temp_mat2 |= (bit2 << nBitsGenerated);
-                        nBitsGenerated++;
-                        //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
-                        if (nBitsGenerated == wLen)
+                            //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
+                            temp_mat1 |= (bit1 << nBitsGenerated);
+                            temp_mat2 |= (bit2 << nBitsGenerated);
+                            nBitsGenerated++;
+                            //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
+                            if (nBitsGenerated == wLen)
                             break;
                     }
+
                 }
             }
             randMat1[i][j] = temp_mat1; //to remove element 3 to appear in the matrices
             randMat2[i][j] = temp_mat2;
         }
+            
+    }
+    //Set all bits to zero after 16th bit
+    uint64_t fetch_16 = 0x000000000000FFFF;
+    for(int col_count=0; col_count < 256; col_count++)
+    {
+        randMat1[1][col_count] &= fetch_16;
+        randMat2[1][col_count] &= fetch_16;
+    }
+    //printing randmat1 and randmat2
+    for(int i = 0; i < 2; i++)
+    {
+        cout<<"Row number "<<i<<endl;
+        for(int j = 0; j < 256; j++)
+        {
+            cout<<"Column number "<<j<<endl;
+            for(int k =0; k < 64; k++)
+            {
+                cout<<((randMat1[i][j]>>k) & 1);
+            }
+            cout<<endl<<endl;
+        }
+        cout<<endl<<"==========================================";
     }
 }
 
@@ -246,10 +274,11 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 
         }
     }
-    //printing the value of outM and outL
-    //cout<<endl<<"The value of outM is "<<outM<<endl;
-    //cout<<endl<<"The value of outL is "<<outL<<endl;
     cout<<endl<<"The z3 bit from wordpacked method is "<<endl;
+    int count_one, count_two, count_zero;
+    count_zero = 0;
+    count_two = 0;
+    count_one = 0;
     for(int row_count = 0; row_count < 2; row_count++)
     {
         for(int word_count = 0; word_count < wLen; word_count++)
@@ -258,9 +287,18 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
             bit_lsb = ((outL[row_count]>>word_count) & 1);
             z3_bit = ((bit_msb<<1) | bit_lsb);
             cout<<z3_bit;
+            if(z3_bit == 0)
+                count_zero++;
+            else if(z3_bit == 1)
+                count_one++;
+            else if(z3_bit == 2)
+                count_two++;
+            
         }
     }
-    
+    cout<<endl<<"Count of zero "<<count_zero<<endl;
+    cout<<endl<<"Count of one "<<count_one<<endl;
+    cout<<endl<<"Count of two "<<count_two<<endl;
         
 }
 
@@ -305,6 +343,10 @@ void phase1_test(uint64_t z_final[4], uint64_t out[256])
 //compute the product of 81x256 z3 matrix with 256 bit output vector of phase 1
 void phase3_naive(uint64_t out[256], uint64_t z3_mat[81][256], uint64_t phase3_out[81])
 {
+    int count_one, count_two, count_zero;
+    count_zero = 0;
+    count_two = 0;
+    count_one = 0;
 	int prod;
 	int sum_of_product = 0;
 	for(int row_count = 0; row_count < 81; row_count++)
@@ -320,8 +362,17 @@ void phase3_naive(uint64_t out[256], uint64_t z3_mat[81][256], uint64_t phase3_o
 	for(int count = 0; count < 81; count++)
 	{
 		cout<<phase3_out[count];
+        if(phase3_out[count] == 0)
+            count_zero++;
+        else if(phase3_out[count] == 1)
+            count_one++;
+        else if(phase3_out[count] == 2)
+            count_two++;
 	}
 	cout<<endl;
+    cout<<endl<<"Count of zero "<<count_zero<<endl;
+    cout<<endl<<"Count of one "<<count_one<<endl;
+    cout<<endl<<"Count of two "<<count_two<<endl;
 }
 
 void phase3_test()
@@ -358,7 +409,7 @@ int main()
     generate_input(input,generator);
     generate_rand_key(key, generator);
     generate_rand_matrix(randMat1, randMat2, generator);
-    cout<<endl<<"Random input generated ==========>   O.K."<<endl;
+    /*cout<<endl<<"Random input generated ==========>   O.K."<<endl;
     
     //Phase 1
     cout<<"Initializing unit testing for phase 1 ==========>   O.K."<<endl;
@@ -372,7 +423,7 @@ int main()
     cout<<"Initializing unit testing for phase 3 ==========>   O.K."<<endl;
     mat_assemble(randMat1, randMat2, z3_mat);
     multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
-    phase3_naive(out, z3_mat, phase3_out);
+    phase3_naive(out, z3_mat, phase3_out);*/
     
     return 0;
 }
