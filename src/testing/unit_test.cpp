@@ -225,6 +225,7 @@ void unpackOutput(uint64_t output[4], char p2output[256])
  */
 void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t in[4])
 {
+    uint64_t bit_msb, bit_lsb, z3_bit;
     uint64_t msb[2], lsb[2];
     int iter_count = 0;
     //go over the input bits, one by one
@@ -243,6 +244,20 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
                 //iter_count++;
             }
 
+        }
+    }
+    //printing the value of outM and outL
+    //cout<<endl<<"The value of outM is "<<outM<<endl;
+    //cout<<endl<<"The value of outL is "<<outL<<endl;
+    cout<<endl<<"The z3 bit from wordpacked method is "<<endl;
+    for(int row_count = 0; row_count < 2; row_count++)
+    {
+        for(int word_count = 0; word_count < wLen; word_count++)
+        {
+            bit_msb = ((outM[row_count]>>word_count) & 1);
+            bit_lsb = ((outL[row_count]>>word_count) & 1);
+            z3_bit = ((bit_msb<<1) | bit_lsb);
+            cout<<z3_bit;
         }
     }
     
@@ -301,6 +316,7 @@ void phase3_naive(uint64_t out[256], uint64_t z3_mat[81][256], uint64_t phase3_o
 		phase3_out[row_count] = (sum_of_product % 3);
 	}
 	//displaying the output for phase3_out
+    cout<<endl<<"The output of z3 using naive method is "<<endl;
 	for(int count = 0; count < 81; count++)
 	{
 		cout<<phase3_out[count];
@@ -355,7 +371,7 @@ int main()
     //Phase 3
     cout<<"Initializing unit testing for phase 3 ==========>   O.K."<<endl;
     mat_assemble(randMat1, randMat2, z3_mat);
-    //multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
+    multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
     phase3_naive(out, z3_mat, phase3_out);
     
     return 0;
