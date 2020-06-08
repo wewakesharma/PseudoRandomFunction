@@ -207,9 +207,6 @@ void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint6
 
     outM = (lsb1 | lsb2 ) ^ T;
     outL = (msb1 | msb2 ) ^ T;
-    cout<<endl<<"Output of phase 3"<<endl;
-    cout<<outM<<endl;
-    cout<<outL<<endl;
 }
 void unpackOutput(uint64_t output[4], char p2output[256])
 {
@@ -232,9 +229,9 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
     int iter_count = 0;
     //go over the input bits, one by one
 
-    for (int i1 = 0; i1 < 4; i1++)
+    for (int i1 = 0; i1 < 4; i1++) //inputs
     {
-    	for (int i2 = 0; i2 < 64; i2++)
+    	for (int i2 = 0; i2 < 64; i2++) //word size of each input
         {
             uint64_t bit = -((in[i1] >> i2 ) & 1 ); //the input bit, replicated either all=0 or all=1
 
@@ -248,7 +245,7 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 
         }
     }
-    cout<<endl<<"Iter count is "<<iter_count<<endl;
+    
         
 }
 
@@ -285,7 +282,7 @@ void phase1_test(uint64_t z_final[4], uint64_t out[256])
         }
     }
     if(flag == 1)
-        cout<<cout<<endl<<"The outputs out and pack_temp_out DID NOT match, the function is not correct ==========> ERROR"<<endl; //prints if the break statement is not executed
+        cout<<endl<<"The outputs out and pack_temp_out DID NOT match, the function is not correct ==========> ERROR"<<endl; //prints if the break statement is not executed
     else
         cout<<endl<<"Output of naive and word-packed version MATCHED ==========> O.K."<<endl;
 }
@@ -360,7 +357,6 @@ int main()
     mat_assemble(randMat1, randMat2, z3_mat);
     //multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
     phase3_naive(out, z3_mat, phase3_out);
-
     
     return 0;
 }
