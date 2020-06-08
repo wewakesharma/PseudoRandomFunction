@@ -243,7 +243,7 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
                 msb[j] = msbs[j][64*i1+i2] & bit;
                 lsb[j] = lsbs[j][64*i1+i2] & bit;  //multiply by current bit
                 addMod3(outM[j],outL[j],outM[j],outL[j],msb[j],lsb[j]); //add mod 3 to acumulator
-                iter_count++;
+                //iter_count++;
             }
 
         }
