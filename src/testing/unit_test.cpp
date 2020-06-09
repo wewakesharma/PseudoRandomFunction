@@ -384,9 +384,9 @@ void phase3_naive(uint64_t out[256], uint64_t z3_mat[81][256], uint64_t phase3_o
     count_two = 0;
     count_one = 0;*/
 	int prod;
-	int sum_of_product = 0;
 	for(int row_count = 0; row_count < 81; row_count++)
 	{
+        int sum_of_product = 0;
 		for(int col_count = 0; col_count < 256; col_count++)
 		{
 			sum_of_product += (out[col_count] * z3_mat[row_count][col_count]);
@@ -426,6 +426,8 @@ void phase3_test(uint64_t phase3_out[81], uint64_t p3_out[81])//compares p3_out(
             naive_1++;
         if(p3_out[row_count] == 1)
             packed_1++;
+        if (phase3_out[row_count]!=p3_out[row_count])
+            cout << "something is wrong in bit " << row_count << endl;
     }
     cout<<endl<<"Total number of ones in naive is "<<naive_1<<endl;
     cout<<endl<<"Total number of ones in packed is "<<packed_1<<endl;
