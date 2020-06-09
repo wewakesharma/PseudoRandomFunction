@@ -91,15 +91,15 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
         }
             
     }
-    //Set all bits to zero after 16th bit
-    uint64_t fetch_16 = 0x000000000000FFFF;
+    //Set all bits to zero after 17th bit
+    uint64_t fetch_16 = 0x000000000001FFFF;
     for(int col_count=0; col_count < 256; col_count++)
     {
         randMat1[1][col_count] &= fetch_16;
         randMat2[1][col_count] &= fetch_16;
     }
     //printing randmat1 and randmat2
-    for(int i = 0; i < 2; i++)
+    /*for(int i = 0; i < 2; i++)
     {
         cout<<"Row number "<<i<<endl;
         for(int j = 0; j < 256; j++)
@@ -107,17 +107,27 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
             cout<<"Column number "<<j<<endl;
             for(int k =0; k < 64; k++)
             {
-                cout<<((randMat1[i][j]>>k) & 1);
+                cout<<((randMat2[i][j]>>k) & 1);
             }
             cout<<endl<<endl;
         }
         cout<<endl<<"==========================================";
     }
+    for(int i = 0; i < 2; i++)
+    {
+        cout<<"Row number "<<i<<endl;
+        for(int j = 0; j < 256; j++)
+        {
+            cout<<randMat2[i][j];
+            cout<<endl;
+        }
+        cout<<endl<<"==========================================";
+    }*/
 }
 
 /*
 *Stands for matrix assembly, this will take two matrices and combine their bits to form a single valued z3 element
-*this element will be stored in z3_mat which will be used in testing phase 3.
+*this element will be stored in z3_mat which will be used in testing phase 3. The size of this matrix will be 81 x 256
 */
 void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t z3_mat[81][256])
 {
@@ -130,7 +140,28 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t z3_mat[
     int cnt = 0;
     int row_limit = 81;
 
-    for(int col_count = 0; col_count < 256; col_count++)
+    for(int row_count = 0; row_count < 2; row_count++)
+    {
+        current_row = 0;
+        for(int col_count = 0; col_count < 256; col_count++)
+        {
+            msb_word = msbs[row_count][col_count];
+            lsb_word = lsbs[row_count][col_count];
+            for(int word_count = 0; word_count < wLen; word_count++)
+            {
+                msb_bit = ((msb_word>>word_count) & 1);
+                lsb_bit = ((lsb_word>>word_count) & 1);
+                z3_bit = ((msb_bit << 1) | (lsb_bit <<0)) ;
+                //cout<<z3_bit;
+                current_row = wLen*row_count + word_count;
+                if(current_row < row_limit)
+                    z3_mat[current_row][col_count] = z3_bit;
+            }
+        }
+    }
+
+    //expanding it row wise
+    /*for(int col_count = 0; col_count < 256; col_count++)
     {
     	current_row = 0;
     	for(int row_count = 0; row_count < 2; row_count++)
@@ -150,7 +181,7 @@ void mat_assemble(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t z3_mat[
             		break;
             }
     	}
-    }
+    }*/
 }
 
 //word-packed version of phase 1
@@ -251,11 +282,11 @@ void unpackOutput(uint64_t output[4], char p2output[256])
 /*
  * multiply modulo 3
  */
-void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t in[4])
+void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t in[4], uint64_t p3_out[81])
 {
     uint64_t bit_msb, bit_lsb, z3_bit;
     uint64_t msb[2], lsb[2];
-    int iter_count = 0;
+    int row_limit = 81;
     //go over the input bits, one by one
 
     for (int i1 = 0; i1 < 4; i1++) //inputs
@@ -275,30 +306,35 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
         }
     }
     cout<<endl<<"The z3 bit from wordpacked method is "<<endl;
-    int count_one, count_two, count_zero;
+    /*int count_one, count_two, count_zero;
     count_zero = 0;
     count_two = 0;
-    count_one = 0;
+    count_one = 0;*/
     for(int row_count = 0; row_count < 2; row_count++)
     {
         for(int word_count = 0; word_count < wLen; word_count++)
         {
-            bit_msb = ((outM[row_count]>>word_count) & 1);
-            bit_lsb = ((outL[row_count]>>word_count) & 1);
-            z3_bit = ((bit_msb<<1) | bit_lsb);
-            cout<<z3_bit;
-            if(z3_bit == 0)
+            if(row_count*wLen+word_count < row_limit)
+            {
+                bit_msb = ((outM[row_count]>>word_count) & 1);
+                bit_lsb = ((outL[row_count]>>word_count) & 1);
+                z3_bit = ((bit_msb<<1) | bit_lsb);
+                p3_out[row_count*wLen+word_count] = z3_bit;
+            }
+            
+
+            /*if(z3_bit == 0)
                 count_zero++;
             else if(z3_bit == 1)
                 count_one++;
             else if(z3_bit == 2)
-                count_two++;
+                count_two++;*/
             
         }
     }
-    cout<<endl<<"Count of zero "<<count_zero<<endl;
+    /*cout<<endl<<"Count of zero "<<count_zero<<endl;
     cout<<endl<<"Count of one "<<count_one<<endl;
-    cout<<endl<<"Count of two "<<count_two<<endl;
+    cout<<endl<<"Count of two "<<count_two<<endl;*/
         
 }
 
@@ -341,12 +377,12 @@ void phase1_test(uint64_t z_final[4], uint64_t out[256])
 }
     
 //compute the product of 81x256 z3 matrix with 256 bit output vector of phase 1
-void phase3_naive(uint64_t out[256], uint64_t z3_mat[81][256], uint64_t phase3_out[81])
+void phase3_naive(uint64_t out[256], uint64_t z3_mat[81][256], uint64_t phase3_out[81])//naive version of phase 3
 {
-    int count_one, count_two, count_zero;
+    /*int count_one, count_two, count_zero;
     count_zero = 0;
     count_two = 0;
-    count_one = 0;
+    count_one = 0;*/
 	int prod;
 	int sum_of_product = 0;
 	for(int row_count = 0; row_count < 81; row_count++)
@@ -358,7 +394,7 @@ void phase3_naive(uint64_t out[256], uint64_t z3_mat[81][256], uint64_t phase3_o
 		phase3_out[row_count] = (sum_of_product % 3);
 	}
 	//displaying the output for phase3_out
-    cout<<endl<<"The output of z3 using naive method is "<<endl;
+    /*cout<<endl<<"The output of z3 using naive method is "<<endl;
 	for(int count = 0; count < 81; count++)
 	{
 		cout<<phase3_out[count];
@@ -372,12 +408,27 @@ void phase3_naive(uint64_t out[256], uint64_t z3_mat[81][256], uint64_t phase3_o
 	cout<<endl;
     cout<<endl<<"Count of zero "<<count_zero<<endl;
     cout<<endl<<"Count of one "<<count_one<<endl;
-    cout<<endl<<"Count of two "<<count_two<<endl;
+    cout<<endl<<"Count of two "<<count_two<<endl;*/
 }
 
-void phase3_test()
+void phase3_test(uint64_t phase3_out[81], uint64_t p3_out[81])//compares p3_out(wordpacked) and phase3_out(naive)
 {
-	cout<<"In Progress";
+    int naive_1 = 0;
+    int packed_1 = 0;
+	//Print both the outputs and compare.
+    int row_limit = 81;
+    cout<<endl<<"Printing naive phase 3 output"<<endl;
+    cout<<"Phase3 naive"<<"\t"<<"Phase 3 packed"<<endl;
+    for(int row_count = 0; row_count < row_limit; row_count++)
+    {
+        cout<<phase3_out[row_count]<<"\t"<<p3_out[row_count]<<endl;
+        if(phase3_out[row_count] ==1)
+            naive_1++;
+        if(p3_out[row_count] == 1)
+            packed_1++;
+    }
+    cout<<endl<<"Total number of ones in naive is "<<naive_1<<endl;
+    cout<<endl<<"Total number of ones in packed is "<<packed_1<<endl;
 }
 
 //Step 1: Generate random input and store it in input array.
@@ -400,6 +451,7 @@ int main()
     uint64_t outL[2];
     uint64_t z3_mat[81][256];
     uint64_t phase3_out[81];
+    uint64_t p3_out[81];//packed version output
 
     unsigned seed = 7;   
 
@@ -409,7 +461,7 @@ int main()
     generate_input(input,generator);
     generate_rand_key(key, generator);
     generate_rand_matrix(randMat1, randMat2, generator);
-    /*cout<<endl<<"Random input generated ==========>   O.K."<<endl;
+    cout<<endl<<"Random input generated ==========>   O.K."<<endl;
     
     //Phase 1
     cout<<"Initializing unit testing for phase 1 ==========>   O.K."<<endl;
@@ -422,8 +474,8 @@ int main()
     //Phase 3
     cout<<"Initializing unit testing for phase 3 ==========>   O.K."<<endl;
     mat_assemble(randMat1, randMat2, z3_mat);
-    multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
-    phase3_naive(out, z3_mat, phase3_out);*/
-    
+    multMod3(outM, outL, randMat1, randMat2, output, p3_out); // matrix-vector multiply mod 3
+    phase3_naive(out, z3_mat, phase3_out);
+    phase3_test(phase3_out, p3_out);
     return 0;
 }
