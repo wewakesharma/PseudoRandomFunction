@@ -213,7 +213,151 @@ void unpackOutput(uint64_t output[4], char p2output[256])
         }
     }
 }
+//============================================
+/*
+ * Pack the original Z_3 values into words where each word includes 7 original values
+ * we originally multiply a Z_3 matrix of width 256 with possible values 0,1,2 with a
+ * vinary vector of size 256 with possible values of 0,1
+ * Therefore, the maximum value of the computation can be 512
+ * Therefore, each value will be packed into 9 bits total, where the 7 of them will have the value 0
+ */
+/*   cout << "sending 12x256, 128x256 words" << endl;
+ *
+ */
+void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[128][256]){
 
+ //   cout << "expecting 12x256, 128x256 words" << endl;
+    int acc = 0;
+    int inWordStart = 0; //index into the beginning of the next word in the column
+
+    for (int jCol = 0; jCol < 256; jCol++) {
+        for (int joutWordIndex = 0; joutWordIndex < 12; joutWordIndex++) { //we will have 12 output words
+            acc = 0;
+            for (int i = 0; i < 7; i++) {
+                if (inWordStart + i >= 81)
+                    break;
+                acc = (acc << 9) + randMatZ3[inWordStart + i][jCol];
+            }
+            inWordStart += 7;
+            randPackedWords[joutWordIndex][jCol] = acc;
+        }
+    }
+}
+
+/*
+ * randPackedWords has words packed in columns - each word contains 7 values, each value is up to 512
+ *
+ */
+void extractMatrixOutputWords(uint64_t uOutPacked[12][256], uint64_t uInUnpacked[81][256])
+{
+    for (int iCol = 0; iCol < 256; iCol++) {
+        for (int iRow = 0; iRow < 12; iRow++) {
+            uint64_t in = uInUnpacked[iRow][iCol];
+            for (int iIndinCol = 7*iRow+6; iIndinCol >= 7*iRow; iIndinCol--) {
+                if (iIndinCol >=81)
+                    break;
+                uOutPacked[iIndinCol][iCol] = (in & 0X1FF) % 3;
+                in >>=9;
+            }
+        }
+    }
+}
+
+
+void MultPackedMatIn2(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec[12])
+{
+    for (int i = 0; i < 12; i++) {
+        outVec[i] = 0;
+    }
+
+    for (int j1 = 0; j1 < 4; j1++)
+    {
+        //uint64_t tmp = inVec[j1];  //take each word in the input vector
+        for (int j2 = 0; j2 < wLen; j2++)
+        {
+            uint64_t bit = -((inVec[j1] >> j2) & 1);
+
+            for (int i = 0; i < 12; i++) {
+                //this seems to be slower than the first alternative
+                //uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
+                outVec[i] += bit & inMat[i][j1*wLen+j2];
+                }
+            }
+        }
+
+}
+
+/*
+ *
+ *  cout << "expecting  12X256, 4, 12 words" << endl;
+ */
+void MultPackedMatIn(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec[12])
+{
+
+    for (int i = 0; i < 12; i++)
+    {
+        outVec[i] = 0;
+        for (int j1 = 0; j1 < 4; j1++)
+        {
+            uint64_t tmp = inVec[j1];  //take each word in the input vector
+            for (int j2 = 0; j2 < wLen; j2++)
+            {
+                uint64_t bit = tmp & 1;
+
+                tmp >>= 1;    //take the next bit in this word
+                //alternative way, but may be slower
+                uint64_t product = bit * inMat[i][(j1*wLen)+j2];
+                //this seems to be slower than the first alternative
+                //uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
+                outVec[i] += product;
+            }
+        }
+    }
+}
+
+/*
+ *
+ *
+ */
+
+void InnerProdMul2(uint64_t outVec[12], uint64_t randMatZ3[128][256], uint64_t in[4]) {
+
+    uint64_t randPackedWords[12][256];
+
+    //  cout << "sending 12x256, 128x256 words" << endl;
+    packWords(randPackedWords,randMatZ3);
+
+    // uint64_t randUnpackedWords[84][256];
+    //  extractMatrixOutputWords(randPackedWords, randUnpackedWords); //for debugging purposes
+
+    //multiply the words here
+    //   cout << "sending  12X256, 4, 12 words" << endl;
+    MultPackedMatIn2(randPackedWords,in,  outVec);
+
+    //compare taht the extracted words are equal to the previous matrix
+
+}
+
+void InnerProdMul(uint64_t outVec[12], uint64_t randMatZ3[128][256], uint64_t in[4]) {
+
+    uint64_t randPackedWords[12][256];
+
+  //  cout << "sending 12x256, 128x256 words" << endl;
+    packWords(randPackedWords,randMatZ3);
+
+   // uint64_t randUnpackedWords[84][256];
+  //  extractMatrixOutputWords(randPackedWords, randUnpackedWords); //for debugging purposes
+
+    //multiply the words here
+ //   cout << "sending  12X256, 4, 12 words" << endl;
+    MultPackedMatIn(randPackedWords,in,  outVec);
+
+    //compare taht the extracted words are equal to the previous matrix
+
+}
+
+
+//==========================================
 /*
  * Computes phase 3 using wordpacking as shown in the repo, in /Documents/Wordpacking-Example2.pdf. The output is stored in p3_out(81 bits in Z3)
  */
@@ -374,6 +518,10 @@ int main()
     phase3_naive(out, z3_mat, phase3_out);
     phase3_test(phase3_out, p3_out);
     cout<<"==========Phase 3 testing complete=========="<<endl;
+
+    //Phase 3 using integer packing
+    InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
+    InnerProdMul2(output, randMatZ3, input);  //multiply with integer packing
 
     return 0;
 }
