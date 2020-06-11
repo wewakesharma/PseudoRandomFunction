@@ -318,7 +318,8 @@ int main(int argc,char* argv[] ) {
     uint64_t input[4];
     uint64_t outM[2];
     uint64_t outL[2];
-    uint64_t output[12];
+    uint64_t output_p1[12];
+    uint64_t output_p3[12];
 
     int stepsToRun;
 
@@ -343,8 +344,8 @@ int main(int argc,char* argv[] ) {
 
     //call once for testing purposes
     multMod3(outM, outL, randMat1, randMat2, input); // matrix-vector multiply mod 3
-    InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
-    InnerProdMul2(output, randMatZ3, input);  //multiply with integer packing
+    InnerProdMul(output_p1, randMatZ3, input);  //multiply with integer packing
+    InnerProdMul2(output_p1, randMatZ3, input);  //multiply with integer packing
 
     //need to compare here both outputs and check that they are equal
 
@@ -358,18 +359,18 @@ int main(int argc,char* argv[] ) {
 
     for(int i=0;i<1000000;i++){
     
-        compute(key,input, output); // matrix-vector multiply mod 2
+        compute(key,input, output_p1); // matrix-vector multiply mod 2
 
         if (stepsToRun>=2)
-            unpackOutput(output,p2output); // useless operation that should not be here
+            unpackOutput(output_p1,p2output); // useless operation that should not be here
         // This is where the mod2->mod3 protocol should be
         if (stepsToRun>=3)
-            multMod3(outM, outL, randMat1, randMat2, output); // matrix-vector multiply mod 3
+            multMod3(outM, outL, randMat1, randMat2, output_p1); // output phase 1 = input phase 3matrix-vector multiply mod 3
     }
 
     chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - start;
 
-    cout<<endl<<"output of first, second phase is "<< output << ',' << p2output << endl;
+    cout<<endl<<"output of first, second phase is "<< output_p1 << ',' << p2output << endl;
     cout<<endl<<"output msb,lsb is "<< outM << ',' << outL << endl;
     cout << endl<< "elapsed time for 1M runs:  " << elapsed_seconds.count() << "  s\n";
 
@@ -379,30 +380,30 @@ int main(int argc,char* argv[] ) {
 
     for(int i=0;i<1000000;i++){
 
-        compute(key,input, output); // matrix-vector multiply mod 2
-        unpackOutput(output,p2output); // useless operation that should not be here
+        //compute(key,input, output_p1); // matrix-vector multiply mod 2
+        //unpackOutput(output_p1,p2output); // useless operation that should not be here
         // This is where the mod2->mod3 protocol should be
-        InnerProdMul(output, randMatZ3, input);  //multiply with integer packing
+        InnerProdMul(output_p3, randMatZ3, input);  //multiply with integer packing, output p1 = input p3
     }
 
     elapsed_seconds = chrono::system_clock::now() - start;
 
-    cout<<endl<<"output is "<< output[0] << endl;
+    cout<<endl<<"output is "<< output_p1[0] << endl;
     cout << "elapsed time for 1M runs for integer packing:  " << elapsed_seconds.count() << "  s\n";
 
     start = chrono::system_clock::now();
 
     for(int i=0;i<1000000;i++){
 
-        compute(key,input, output); // matrix-vector multiply mod 2
-        unpackOutput(output,p2output); // useless operation that should not be here
+       // compute(key,input, output_p1); // matrix-vector multiply mod 2
+        //unpackOutput(output_p1,p2output); // useless operation that should not be here
         // This is where the mod2->mod3 protocol should be
-        InnerProdMul2(output, randMatZ3, input);  //multiply with integer packing
+        InnerProdMul2(output_p3, randMatZ3, input);  //multiply with integer packing, output p1 = input p3
     }
 
     elapsed_seconds = chrono::system_clock::now() - start;
 
-    cout<<endl<<"output is "<< output[0] << endl;
+    cout<<endl<<"output is "<< output_p1[0] << endl;
     cout << "elapsed time for 1M runs for integer packing2:  " << elapsed_seconds.count() << "  s\n";
 
 	return 0;
