@@ -7,7 +7,7 @@
 #include <chrono> 
 #include <ctime> 
 #include <cstdlib>
-#include "weak23PRF.h"
+#include "weak23prf.h"
 
 using namespace std;
 
