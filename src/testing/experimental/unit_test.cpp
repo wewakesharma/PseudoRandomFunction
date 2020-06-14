@@ -45,5 +45,14 @@ int main(int argc,char* argv[] )
     mat_vec_mult(input, key, out);
     phase1_test(output,out);//compares the output of two different approaches
     cout<<"==========Phase 1 testing complete=========="<<endl<<endl;
+
+    //Phase 3
+    cout<<"Initializing unit testing for phase 3 ==========>   O.K."<<endl;
+    mat_assemble(randMat1, randMat2, z3_mat);
+    multMod3(outM, outL, randMat1, randMat2, output, p3_out); // matrix-vector multiply mod 3
+    phase3_naive(out, z3_mat, phase3_out);
+    phase3_test(phase3_out, p3_out);
+    cout<<"==========Phase 3 testing complete=========="<<endl;
+    
 	return 0;
 }

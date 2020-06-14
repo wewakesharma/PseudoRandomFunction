@@ -188,3 +188,129 @@ void phase1_test(uint64_t (&z_final)[4], uint64_t (&out)[256])
         cout<<"Output of naive and word-packed version  in phase 1 MATCHED ==========> O.K."<<endl;
 }
 
+/*
+*Stands for matrix assembly, this will take two matrices and combine their bits to form a single valued z3 element
+*this element will be stored in z3_mat which will be used in testing phase 3. The size of this matrix will be 81 x 256
+*/
+void mat_assemble(uint64_t (&msbs)[2][256], uint64_t (&lsbs)[2][256], uint64_t (&z3_mat)[81][256])
+{
+    uint64_t msb_word, lsb_word; //extracting each word
+    uint64_t msb_bit; //bit from each word of msb matrix i.e. randMat1
+    uint64_t lsb_bit; //bit from each word lsb matrix i.e. randMat2
+    uint64_t z3_bit; //bits from lsb and msb are extracted and combined as a z3 bit.
+    
+    int current_row = 0;
+    int cnt = 0;
+    int row_limit = 81;
+
+    for(int row_count = 0; row_count < 2; row_count++)
+    {
+        current_row = 0;
+        for(int col_count = 0; col_count < 256; col_count++)
+        {
+            msb_word = msbs[row_count][col_count];
+            lsb_word = lsbs[row_count][col_count];
+            for(int word_count = 0; word_count < wLen; word_count++)
+            {
+                msb_bit = ((msb_word>>word_count) & 1);
+                lsb_bit = ((lsb_word>>word_count) & 1);
+                z3_bit = ((msb_bit << 1) | (lsb_bit <<0)) ;
+                //cout<<z3_bit;
+                current_row = wLen*row_count + word_count;
+                if(current_row < row_limit)
+                    z3_mat[current_row][col_count] = z3_bit;
+            }
+        }
+    }
+}
+
+//Perform Addition modulo 3
+void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint64_t msb2, uint64_t lsb2)
+{
+    uint64_t T = (lsb1 | msb2) ^ (lsb2 | msb1);
+
+    outM = (lsb1 | lsb2 ) ^ T;
+    outL = (msb1 | msb2 ) ^ T;
+}
+
+/*
+ * Computes phase 3 using wordpacking as shown in the repo, in /Documents/Wordpacking-Example2.pdf. The output is stored in p3_out(81 bits in Z3)
+ */
+void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t (&msbs)[2][256], uint64_t (&lsbs)[2][256], uint64_t in[4], uint64_t p3_out[81])
+{
+    uint64_t bit_msb, bit_lsb, z3_bit;
+    uint64_t msb[2], lsb[2];
+    int row_limit = 81;
+    //go over the input bits, one by one
+
+    for (int i1 = 0; i1 < 4; i1++) //inputs
+    {
+        for (int i2 = 0; i2 < 64; i2++) //word size of each input
+        {
+            uint64_t bit = -((in[i1] >> i2 ) & 1 ); //the input bit, replicated either all=0 or all=1
+
+            for (int j = 0; j < 2; j++) //each column has 81 rows, so need 2 64-bit words
+            {
+                msb[j] = msbs[j][64*i1+i2] & bit;
+                lsb[j] = lsbs[j][64*i1+i2] & bit;  //multiply by current bit
+                addMod3(outM[j],outL[j],outM[j],outL[j],msb[j],lsb[j]); //add mod 3 to acumulator
+                //iter_count++;
+            }
+
+        }
+    }
+    //The 81 z3 bits from wordpacked method
+    for(int row_count = 0; row_count < 2; row_count++)
+    {
+        for(int word_count = 0; word_count < wLen; word_count++)
+        {
+            if(row_count*wLen+word_count < row_limit)
+            {
+                bit_msb = ((outM[row_count]>>word_count) & 1); //extracting bit from OUTM
+                bit_lsb = ((outL[row_count]>>word_count) & 1);//extracting bit from OUTL
+                z3_bit = ((bit_msb<<1) | bit_lsb); //combining the bits to form a z3 element
+                p3_out[row_count*wLen+word_count] = z3_bit;
+            }
+        }
+    }     
+}
+
+/*
+*compute the product of 81x256 z3 matrix with 256 bit output vector of phase 1
+*/
+void phase3_naive(uint64_t out[256], uint64_t (&z3_mat)[81][256], uint64_t phase3_out[81])//naive version of phase 3
+{
+    int prod;
+    for(int row_count = 0; row_count < 81; row_count++)
+    {
+        int sum_of_product = 0;
+        for(int col_count = 0; col_count < 256; col_count++)
+        {
+            sum_of_product += (out[col_count] * z3_mat[row_count][col_count]);
+        }
+        phase3_out[row_count] = (sum_of_product % 3);
+    }
+}
+
+/*
+* Compare the output of multMod3 and phase3_naive and tests the correctness of phase3 computation
+*/
+void phase3_test(uint64_t phase3_out[81], uint64_t p3_out[81])//compares p3_out(wordpacked) and phase3_out(naive)
+{
+    bool phase3_flag = 0;// 0 stands from successful matching
+    int row_limit = 81; //number of rows required in final output
+    for(int row_count = 0; row_count < row_limit; row_count++)
+    {
+        if (phase3_out[row_count]!=p3_out[row_count])
+        {
+            cout << "Something is wrong in index " << row_count << endl;
+            cout<<endl<<"!!!-Exiting the testing phase-!!!"<<endl;
+            phase3_flag = 1;
+            break;
+        }  
+    }
+    if(phase3_flag == 1)
+        cout<<"The computational outputs using naive and wordpacking DID NOT match, the function is NOT correct ==========> ERROR"<<endl; //prints if the break statement is not executed
+    else
+        cout<<"Output of naive and word-packed version in phase 3 MATCHED ==========> O.K."<<endl;
+}
