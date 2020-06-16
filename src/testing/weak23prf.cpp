@@ -80,7 +80,7 @@ void generate_rand_matrix(uint64_t (&randMat1)[2][256], uint64_t (&randMat2)[2][
             
     }
     //Set all bits to zero after 17th bit
-    uint64_t fetch_16 = 0x000000000001FFFF;
+    uint64_t fetch_16 = 0x1FFFF;
     for(int col_count=0; col_count < 256; col_count++)
     {
         randMat1[1][col_count] &= fetch_16;
