@@ -318,7 +318,7 @@ int main(int argc,char* argv[] ) {
     uint64_t input[4];
     uint64_t outM[2];
     uint64_t outL[2];
-    uint64_t output_p1[12];
+    uint64_t output_p1[4];
     uint64_t output_p3[12];
 
     int stepsToRun;
@@ -344,8 +344,8 @@ int main(int argc,char* argv[] ) {
 
     //call once for testing purposes
     multMod3(outM, outL, randMat1, randMat2, input); // matrix-vector multiply mod 3
-    InnerProdMul(output_p1, randMatZ3, input);  //multiply with integer packing
-    InnerProdMul2(output_p1, randMatZ3, input);  //multiply with integer packing
+    InnerProdMul(output_p3, randMatZ3, input);  //multiply with integer packing
+    InnerProdMul2(output_p3, randMatZ3, input);  //multiply with integer packing
 
     //need to compare here both outputs and check that they are equal
 
