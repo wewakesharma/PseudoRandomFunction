@@ -57,12 +57,18 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
 
 
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 256; j++) {
+    for (int jCol = 0; jCol < 256; jCol++) {
+        //go over the columns
+        for (int iRow = 0; iRow < 2; iRow++) {
+            //fill the numbers for each row
+
+            randMat1[iRow][jCol]=0;
+            randMat2[iRow][jCol]=0;
+
             int nBitsGenerated = 0;
             while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
             {
-                if ((i*wLen+nBitsGenerated) >= 81) {
+                if ((iRow*wLen+nBitsGenerated) >= 81) {
                     break; //go to the next item
                 }
 
@@ -72,7 +78,6 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
 
                     //if we already have 81 rows, the rest of the items in this column are set to 0
 
-
                     //examine each two bits and make sure they are not 11
                     uint64_t bit1 = (wGen >> k) & 1;
                     uint64_t bit2 = (wGen >> (k + 1)) & 1;
@@ -81,16 +86,19 @@ void generate_rand_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], 
                     if (~((bit1 == 1) & (bit2 == 1)))
                     {
                         //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
-                        randMat1[i][j] |= (bit1 << nBitsGenerated);
-                        randMat2[i][j] |= (bit2 << nBitsGenerated);
-                        randMatZ3[nBitsGenerated+i*wLen][j]=(bit1<<1 | bit2);
+                        randMat1[iRow][jCol] |= (bit1 << nBitsGenerated);
+                        randMat2[iRow][jCol] |= (bit2 << nBitsGenerated);
+                        randMatZ3[nBitsGenerated+iRow*wLen][jCol]=(bit1<<1 | bit2);
                         nBitsGenerated++;
                         //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
-                        if (nBitsGenerated == wLen)
-                            break;
+                        if ((nBitsGenerated == wLen) || (iRow*wLen+nBitsGenerated) == 81) {
+                            break; //go to the next item
+                        }
                     }
                 }
             }
+
+            
 
         }
     }
