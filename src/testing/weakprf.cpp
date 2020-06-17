@@ -320,7 +320,7 @@ void phase3_test(uint64_t (&naive_out_p3)[81], uint64_t (&p3_out)[81])//compares
 void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[81][256]){
 
  //   cout << "expecting 12x256, 128x256 words" << endl;
-    int acc = 0;
+    uint64_t acc = 0;
     int inWordStart = 0; //index into the beginning of the next word in the column
 
     for (int jCol = 0; jCol < 256; jCol++) {
