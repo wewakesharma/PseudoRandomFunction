@@ -16,7 +16,7 @@ using namespace std;
 /*
  * Generate 4 words of random data into the input array.
  */
-void generate_input(uint64_t input[4], std::mt19937 &generator)
+void generate_rand_input(uint64_t input[4], std::mt19937 &generator)
 {
     //srand(time(NULL));
     for(int i = 0; i < 4; i++)
@@ -162,7 +162,7 @@ void unpackOutput(uint64_t output[4], char p2output[256])
 void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[128][256]){
 
  //   cout << "expecting 12x256, 128x256 words" << endl;
-    int acc = 0;
+    uint64_t acc = 0;
     int inWordStart = 0; //index into the beginning of the next word in the column
 
     for (int jCol = 0; jCol < 256; jCol++) {
@@ -315,6 +315,9 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 
 }
 
+
+
+
 //Step 1: Generate random input and store it in input array.
 //Step 2: Generate 1024 uint64 numbers and store it in 4X256 size.
 //Step 3: compute() function will calculate the value of zi's
@@ -348,12 +351,18 @@ int main(int argc,char* argv[] ) {
 
 	//we generate two random matrices, one holds the first bit and one the second bit
 	generate_rand_matrix(randMat1, randMat2, randMatZ3, generator);
-    generate_input(input,generator);
+    generate_rand_input(input,generator);
 
     //call once for testing purposes
-    multMod3(outM, outL, randMat1, randMat2, input); // matrix-vector multiply mod 3
-    InnerProdMul(output_p3, randMatZ3, input);  //multiply with integer packing
-    InnerProdMul2(output_p3, randMatZ3, input);  //multiply with integer packing
+    compute(key,input, output_p1); // matrix-vector multiply mod 2
+
+    uint64_t c[4], d[4];
+
+    multMod3(outM, outL, randMat1, randMat2, output_p1); // matrix-vector multiply mod 3
+
+
+    InnerProdMul(output_p3, randMatZ3, output_p1);  //multiply with integer packing
+    InnerProdMul2(output_p3, randMatZ3, output_p1);  //multiply with integer packing
 
     //need to compare here both outputs and check that they are equal
 
@@ -388,10 +397,10 @@ int main(int argc,char* argv[] ) {
 
     for(int i=0;i<1000000;i++){
 
-        //compute(key,input, output_p1); // matrix-vector multiply mod 2
+        compute(key,input, output_p1); // matrix-vector multiply mod 2
         //unpackOutput(output_p1,p2output); // useless operation that should not be here
         // This is where the mod2->mod3 protocol should be
-        InnerProdMul(output_p3, randMatZ3, input);  //multiply with integer packing, output p1 = input p3
+        InnerProdMul(output_p3, randMatZ3, output_p1);  //multiply with integer packing, output p1 = input p3
     }
 
     elapsed_seconds = chrono::system_clock::now() - start;
@@ -403,10 +412,10 @@ int main(int argc,char* argv[] ) {
 
     for(int i=0;i<1000000;i++){
 
-       // compute(key,input, output_p1); // matrix-vector multiply mod 2
+        compute(key,input, output_p1); // matrix-vector multiply mod 2
         //unpackOutput(output_p1,p2output); // useless operation that should not be here
         // This is where the mod2->mod3 protocol should be
-        InnerProdMul2(output_p3, randMatZ3, input);  //multiply with integer packing, output p1 = input p3
+        InnerProdMul2(output_p3, randMatZ3, output_p1);  //multiply with integer packing, output p1 = input p3
     }
 
     elapsed_seconds = chrono::system_clock::now() - start;
