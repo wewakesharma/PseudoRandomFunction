@@ -7,7 +7,7 @@
 #include <chrono> 
 #include <ctime> 
 #include <cstdlib>
-#include "weak23prf.h"
+#include "weakprf.h"
 
 using namespace std;
 
@@ -16,28 +16,27 @@ int main(int argc,char* argv[] )
 	//===========General===============
     int choice; //choice for choosing the type of testing required
     //========Phase 1====================
-    uint64_t key[4][256];
-    uint64_t input[4];
-    uint64_t output[4];
+    uint64_t key[4][256];//generated using generate_rand_key
+    uint64_t input[4]; //generate_input
+    uint64_t output[4]; //packed version output of phase 1
     int unpacked_input[256];
-    uint64_t out[256];  //output of phase 1(naive)
+    uint64_t naive_out_p1[256];  //output of phase 1(naive)- testing
     char p2output[256];
     //========== Phase 2/3==================
     uint64_t randMat1[2][256], randMat2[2][256];
+    uint64_t randMatZ3[81][256]; //randMatZ3 holds the Z3 elements
     uint64_t outM[2];
     uint64_t outL[2];
     uint64_t z3_mat[81][256];
-    uint64_t phase3_out[81];
-    uint64_t p3_out[81];//packed version output
-    //======additional for method 2 multiplication=====
-    uint64_t randMatZ3[128][256];
-    uint64_t output_p1[12];
+    uint64_t naive_out_p3[81];
+    uint64_t p3_out[81];//packed version output of phase 3
+    //PRF alternate method
     uint64_t output_p3[12];
 
     unsigned seed = 7;    // std::chrono::system_clock::now().time_since_epoch().count();
     std::mt19937 generator(seed);
     //Input generation
-    generate_input(input, generator, 4); //passes the address of input, generator and size of input array to the function in head.cpp
+    generate_input(input, generator); //passes the address of input, generator and size of input array to the function in head.cpp
     generate_rand_key(key, generator);
 	generate_rand_matrix(randMat1, randMat2, randMatZ3, generator);
 	cout<<endl<<"Random input generated ==========>   O.K."<<endl;
@@ -46,22 +45,23 @@ int main(int argc,char* argv[] )
     cout<<"Initializing unit testing for phase 1 ==========>   O.K."<<endl;
     compute(key,input, output); // matrix-vector multiply mod 2
     //unpackOutput(output,p2output); // useless operation that should not be here
-    mat_vec_mult(input, key, out);
-    phase1_test(output,out);//compares the output of two different approaches
+    mat_vec_mult(input, key, naive_out_p1);
+    phase1_test(output,naive_out_p1);//compares the output of two different approaches
     cout<<"==========Phase 1 testing complete=========="<<endl<<endl;
 
     //Phase 3
     cout<<"Initializing unit testing for phase 3 ==========>   O.K."<<endl;
-    mat_assemble(randMat1, randMat2, z3_mat);
-    multMod3(outM, outL, randMat1, randMat2, input, p3_out); // matrix-vector multiply mod 3
-    phase3_naive(out, z3_mat, phase3_out);
-    phase3_test(phase3_out, p3_out);
+    multMod3(outM, outL, randMat1, randMat2, output, p3_out); // matrix-vector multiply mod 3
+    phase3_naive(naive_out_p1, randMatZ3, naive_out_p3);
+    phase3_test(naive_out_p3, p3_out);
     cout<<"==========Phase 3 testing complete=========="<<endl;
 
-    //Phase3 method 2 testing
-    cout<<"Initializing unit testing for phase 3 using INTEGER packing ==========>   O.K."<<endl;
-    InnerProdMul(output_p1, randMatZ3, input);
-    InnerProdMul2(output_p1, randMatZ3, input);
+    //PRF alternate method
+    cout<<"Initializing unit testing for alternate methods: InnerProdMul ==========>   O.K."<<endl;
+    InnerProdMul(output_p3, randMatZ3, output);
+    //InnerProdMul2(output_p3, randMatZ3, output); //Output of phase 1 and random matrix are the input.
     
-	return 0;
+    //Printing z3 values from it.
+
+return 0;
 }
