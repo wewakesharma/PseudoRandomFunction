@@ -375,11 +375,11 @@ void InnerProdMul(uint64_t (&outVec)[12], uint64_t (&randMatZ3)[81][256], uint64
     MultPackedMatIn(randPackedWords,in,  outVec);
 
     //compare taht the extracted words are equal to the previous matrix
-    cout<<endl<<"Printing the value for outVec"<<endl;
+    /*cout<<endl<<"Printing the value for outVec"<<endl;
     for(int i = 0;i<12;i++)
     {
         cout<<outVec[i]<<endl;
-    }
+    }*/
 }
 
 
