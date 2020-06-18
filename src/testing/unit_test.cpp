@@ -58,7 +58,8 @@ int main(int argc,char* argv[] )
 
     //PRF alternate method
     cout<<"Initializing unit testing for phase 3 ==========>   O.K."<<endl;
-    InnerProdMul(output_p3, randMatZ3, input);
-
+    InnerProdMul(output_p3, randMatZ3, output);
+    //InnerProdMul2(output_p3, randMatZ3, output);
+    InnerProdMul_test(output_p3,p3_out);
 return 0;
 }

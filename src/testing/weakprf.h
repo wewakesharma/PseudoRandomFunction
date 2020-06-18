@@ -21,6 +21,6 @@ void phase3_naive(uint64_t (&naive_out_p1)[256], uint64_t (&randMatZ3)[81][256],
 void phase3_test(uint64_t (&naive_out_p3)[81], uint64_t (&p3_out)[81]);
 
 //PRF alternate method testing
-void InnerProdMul(uint64_t (&outVec)[12], uint64_t (&randMatZ3)[81][256], uint64_t (&in)[4]);
-
+void InnerProdMul(uint64_t (&outVec)[12], uint64_t (&randMatZ3)[81][256], uint64_t (&output)[4]);
+void InnerProdMul_test(uint64_t (&outVec)[12],uint64_t (&p3_out)[81]);
 #endif
