@@ -163,9 +163,9 @@ void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[128][256]){
 
  //   cout << "expecting 12x256, 128x256 words" << endl;
     uint64_t acc = 0;
-    int inWordStart = 0; //index into the beginning of the next word in the column
 
     for (int jCol = 0; jCol < 256; jCol++) {
+        int inWordStart=0; //index into the beginning of the next word in the column
         for (int joutWordIndex = 0; joutWordIndex < 12; joutWordIndex++) { //we will have 12 output words
             acc = 0;
             for (int i = 0; i < 7; i++) {
