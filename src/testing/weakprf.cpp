@@ -328,7 +328,7 @@ void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[81][256])
             acc = 0;
             for (int i = 0; i < 7; i++) 
             {
-                cout<<acc;
+                //cout<<acc<<endl;
                 if (inWordStart + i >= 81)
                     break;
                 acc = (acc << 9) + randMatZ3[inWordStart + i][jCol];
@@ -363,8 +363,9 @@ void unpackWords(uint64_t unpacked_bits[81], uint64_t outVec[12])
         {
             if(pos < 81)
             {
-                z3_ext = word & 3;
-                word >>= 9;
+                z3_ext = word>>(value_pos*9) & 3;
+                /*z3_ext = word & 3;
+                word >>= 9;*/
                 unpacked_bits[pos] = z3_ext;
                 pos++;
             }
