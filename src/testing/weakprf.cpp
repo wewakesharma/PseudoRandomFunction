@@ -320,19 +320,31 @@ void phase3_test(uint64_t (&naive_out_p3)[81], uint64_t (&p3_out)[81])//compares
 void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[81][256])
 {
     uint64_t acc = 0;
+    uint64_t debug_acc = 0;
     for (int jCol = 0; jCol < 256; jCol++) 
     {
         int inWordStart=0; //index into the beginning of the next word in the column
         for (int joutWordIndex = 0; joutWordIndex < 12; joutWordIndex++) 
         { //we will have 12 output words
             acc = 0;
+            //debug_acc = 0;
             for (int i = 0; i < 7; i++) 
             {
                 //cout<<acc<<endl;
                 if (inWordStart + i >= 81)
                     break;
-                acc = (acc << 9) + randMatZ3[inWordStart + i][jCol];
+                //cout<<endl<<"Previous acc: "<<acc<<endl;
+                //cout<<"Entering the value (+)"<<(randMatZ3[inWordStart + i][jCol] & 3)<<endl;
+                acc = (acc << 9) + (randMatZ3[inWordStart + i][jCol]);
+                //cout<<"New acc: "<<acc<<endl;
+                //cout<<"============"<<endl;
+                //cout<<" Extracted value: (-) "<<(debug_acc&3)<<endl;
+                //debug_acc = debug_acc>>9;
+                //cout<<"Debug_acc: "<<debug_acc<<endl<<endl;
             }
+            //cout<<"acc: "<<acc<<endl;
+            //cout<<"debug_acc: "<<debug_acc<<endl;
+            //cout<<"===*==*==*=="<<endl;
             inWordStart += 7;
             randPackedWords[joutWordIndex][jCol] = acc;
         }
@@ -351,25 +363,23 @@ void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[81][256])
 void unpackWords(uint64_t unpacked_bits[81], uint64_t outVec[12])
 {
     //Just display the extracted values
-    uint64_t z3_ext;
+    uint64_t z3_ext = 0;
     uint64_t row_word, word;
     int pos = 0;
     cout<<endl<<"Printing extracted z3 value"<<endl;
     for(int word_pointer = 0; word_pointer < 12; word_pointer++)
     {
         row_word = outVec[word_pointer];
-        word = row_word;
+        word = row_word; //was earlier used for debugging purpose//TODO: remove it later
         for(int value_pos = 0; value_pos < 7; value_pos++)
         {
             if(pos < 81)
             {
-                z3_ext = word>>(value_pos*9) & 3;
-                /*z3_ext = word & 3;
-                word >>= 9;*/
-                unpacked_bits[pos] = z3_ext;
+                z3_ext = word & 3;
+                word >>= 9;
                 pos++;
-            }
-                        
+                cout<<z3_ext;
+            }              
         }
     }
     cout<<endl<<"Total number of extracted z3 value is "<<pos<<endl;
@@ -448,10 +458,9 @@ void InnerProdMul_test(uint64_t (&outVec)[12], uint64_t (&p3_out)[81])
     uint64_t unpacked_bits[81];
     unpackWords(unpacked_bits, outVec);
     //comparing 
-    cout<<"unpacked bits \t p3_out"<<endl;
-    for(int i = 0; i < 81; i++)
-    {
-        cout<<unpacked_bits[i]<<"\t"<<p3_out[i]<<endl;
-    }
+    /*cout<<"unpacked bits \t p3_out"<<endl;
+    for(int i = 0; i < 81; i++) {
+        cout << unpacked_bits[i] << "\t" << p3_out[i] << endl;
+    }*/
 }
 

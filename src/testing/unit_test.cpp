@@ -30,8 +30,10 @@ int main(int argc,char* argv[] )
     uint64_t z3_mat[81][256];
     uint64_t naive_out_p3[81];
     uint64_t p3_out[81];//packed version output of phase 3
+
     //PRF alternate method
-    uint64_t output_p3[12];
+    uint64_t output_p3_alter1[12];//12 words output of phase 3 using alternate method InnerProdMul
+    uint64_t output_p3_alter2[12];//12 words output of phase 3 using alternate method InnerProdMul2
 
     unsigned seed = 7;    // std::chrono::system_clock::now().time_since_epoch().count();
     std::mt19937 generator(seed);
@@ -58,8 +60,10 @@ int main(int argc,char* argv[] )
 
     //PRF alternate method
     cout<<"Initializing unit testing for phase 3 ==========>   O.K."<<endl;
-    InnerProdMul(output_p3, randMatZ3, output);
-    //InnerProdMul2(output_p3, randMatZ3, output);
-    InnerProdMul_test(output_p3,p3_out);
+    //InnerProdMul(output_p3_alter1, randMatZ3, output);
+    //InnerProdMul_test(output_p3_alter1,p3_out);
+
+    InnerProdMul2(output_p3_alter2, randMatZ3, output);
+    InnerProdMul_test(output_p3_alter2,p3_out);
 return 0;
 }
