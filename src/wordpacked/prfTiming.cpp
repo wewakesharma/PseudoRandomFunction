@@ -144,7 +144,18 @@ void unpackOutput(uint64_t output[4], char p2output[256])
 {
     for (int j = 0; j < 4; j++) {
         for (int i = 0; i < wLen; i++) {
-            p2output[i+j*wLen] = ((output[i] >> j) & 1);
+            p2output[i+j*wLen] = ((output[i] >> j) & 1) ;
+        }
+    }
+}
+
+void unpackOutputMod3(uint64_t output[12], uint64_t p2output[84])
+{
+    for (int i = 0; i < 12; i++) {
+        uint64_t tmp = output[i];
+        for (int jWord = 0; jWord < 7; jWord++) {
+            p2output[i*7+jWord] = (tmp & 0x1ff) % 3;  //result needs to be mod 3
+            tmp = (tmp>> 9);
         }
     }
 }
@@ -165,7 +176,7 @@ void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[128][256]){
     uint64_t acc = 0;
 
     for (int jCol = 0; jCol < 256; jCol++) {
-        int inWordStart=0; //index into the beginning of the next word in the column
+        int inWordStart = 0; //index into the beginning of the next word in the column
         for (int joutWordIndex = 0; joutWordIndex < 12; joutWordIndex++) { //we will have 12 output words
             acc = 0;
             for (int i = 0; i < 7; i++) {
@@ -214,8 +225,9 @@ void MultPackedMatIn2(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec
 
             for (int i = 0; i < 12; i++) {
                 //this seems to be slower than the first alternative
-                //uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
-                outVec[i] += bit & inMat[i][j1*wLen+j2];
+                uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
+                //uint64_t product += bit & inMat[i][j1*wLen+j2];
+                outVec[i]+=product;
                 }
             }
         }
@@ -255,9 +267,10 @@ void MultPackedMatIn(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec[
  *
  */
 
-void InnerProdMul2(uint64_t outVec[12], uint64_t randMatZ3[128][256], uint64_t in[4]) {
+void InnerProdMul2(uint64_t outVec[84], uint64_t randMatZ3[128][256], uint64_t in[4]) {
 
     uint64_t randPackedWords[12][256];
+    uint64_t outVecPacked[12];
 
     //  cout << "sending 12x256, 128x256 words" << endl;
     packWords(randPackedWords,randMatZ3);
@@ -267,15 +280,18 @@ void InnerProdMul2(uint64_t outVec[12], uint64_t randMatZ3[128][256], uint64_t i
 
     //multiply the words here
     //   cout << "sending  12X256, 4, 12 words" << endl;
-    MultPackedMatIn2(randPackedWords,in,  outVec);
+    MultPackedMatIn2(randPackedWords,in,  outVecPacked);
+
+    unpackOutputMod3(outVecPacked, outVec);
 
     //compare taht the extracted words are equal to the previous matrix
 
 }
 
-void InnerProdMul(uint64_t outVec[12], uint64_t randMatZ3[128][256], uint64_t in[4]) {
+void InnerProdMul(uint64_t outVec[84], uint64_t randMatZ3[128][256], uint64_t in[4]) {
 
     uint64_t randPackedWords[12][256];
+    uint64_t outVecPacked[12];
 
   //  cout << "sending 12x256, 128x256 words" << endl;
     packWords(randPackedWords,randMatZ3);
@@ -285,7 +301,9 @@ void InnerProdMul(uint64_t outVec[12], uint64_t randMatZ3[128][256], uint64_t in
 
     //multiply the words here
  //   cout << "sending  12X256, 4, 12 words" << endl;
-    MultPackedMatIn(randPackedWords,in,  outVec);
+    MultPackedMatIn(randPackedWords,in,  outVecPacked);
+
+    unpackOutputMod3(outVecPacked, outVec);
 
     //compare taht the extracted words are equal to the previous matrix
 
@@ -315,6 +333,14 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 
 }
 
+/*
+ * each party calculates the share input and the shared key
+ * each party runs first phase 1
+ * this function gets the outputs of all parties
+ * b's are outputs of phase 1
+ * c's are chosen randomly - z_3 components
+ */
+
 
 
 
@@ -330,7 +356,7 @@ int main(int argc,char* argv[] ) {
     uint64_t outM[2];
     uint64_t outL[2];
     uint64_t output_p1[4];
-    uint64_t output_p3[12];
+    uint64_t output_p3[84];
 
     int stepsToRun;
 
@@ -357,6 +383,9 @@ int main(int argc,char* argv[] ) {
     compute(key,input, output_p1); // matrix-vector multiply mod 2
 
     uint64_t c[4], d[4];
+
+    //shareSecret( output_p1,  c,  d)
+
 
     multMod3(outM, outL, randMat1, randMat2, output_p1); // matrix-vector multiply mod 3
 
