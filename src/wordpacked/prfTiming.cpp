@@ -153,8 +153,10 @@ void unpackOutputMod3(uint64_t output[12], uint64_t p2output[84])
 {
     for (int i = 0; i < 12; i++) {
         uint64_t tmp = output[i];
-        for (int jWord = 0; jWord < 7; jWord++) {
-            p2output[i*7+jWord] = (tmp & 0x1ff) % 3;  //result needs to be mod 3
+        for (int jWord = 6; jWord >=0; jWord--) {
+
+            uint64_t outputNum= (tmp & 0x1ff) % 3;
+            p2output[i*7+jWord] = outputNum;  //result needs to be mod 3
             tmp = (tmp>> 9);
         }
     }
@@ -180,8 +182,10 @@ void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[128][256]){
         for (int joutWordIndex = 0; joutWordIndex < 12; joutWordIndex++) { //we will have 12 output words
             acc = 0;
             for (int i = 0; i < 7; i++) {
-                if (inWordStart + i >= 81)
+                if (inWordStart + i == 81) {
+                    acc = acc << 27;//(9*((84 - inWordStart+i))); //our vector is 84 bit long, so we need to adjust for this
                     break;
+                }
                 acc = (acc << 9) + randMatZ3[inWordStart + i][jCol];
             }
             inWordStart += 7;
@@ -218,10 +222,11 @@ void MultPackedMatIn2(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec
 
     for (int j1 = 0; j1 < 4; j1++)
     {
+        uint64_t inVecWord = inVec[j1];
         //uint64_t tmp = inVec[j1];  //take each word in the input vector
         for (int j2 = 0; j2 < wLen; j2++)
         {
-            uint64_t bit = -((inVec[j1] >> j2) & 1);
+            uint64_t bit = -((inVecWord >> j2) & 1);
 
             for (int i = 0; i < 12; i++) {
                 //this seems to be slower than the first alternative
@@ -341,7 +346,27 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
  * c's are chosen randomly - z_3 components
  */
 
+/*void twoPartySecretShare(uint64_t b1[4], uint64_t b2[4], uint64_t cl[4], uint64_t cm[4],uint64_t dm, uint64_t dl)
+{
+    uint64_t b[4] = b1 ^ b2;
 
+    dl = (~cl) (cm ^ b);
+    dm = (cm ^ cl) * (~(b ^ cm));
+    //choose by default the variables b1, b2, and b3
+
+};
+
+void threePartyshareSecret(uint64_t b1[4], uint64_t b2[4], uint64_t b3[4], uint64_t cl[4], uint64_t cm[4], uint64_t dm, uint64_t dl)
+{
+    uint64_t c0[4], c1[4];
+    //choose by default the variables b1, b2, and b3
+    generate_rand_input(uint64_t b1[4])
+    generate_rand_input(uint64_t b2[4])
+    generate_rand_input(uint64_t b2[4])
+    generate_rand_z3vector(c0,c1);
+
+};
+ */
 
 
 //Step 1: Generate random input and store it in input array.
