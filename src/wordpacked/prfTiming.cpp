@@ -222,22 +222,24 @@ void MultPackedMatIn2(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec
 
     for (int j1 = 0; j1 < 4; j1++)
     {
-        uint64_t inVecWord = inVec[j1];
         //uint64_t tmp = inVec[j1];  //take each word in the input vector
         for (int j2 = 0; j2 < wLen; j2++)
         {
-            uint64_t bit = -((inVecWord >> j2) & 1);
+            uint64_t bit = ((inVec[j1] >> j2) & 1);
+
+            if (bit!=0)
+                cout << "in MultPackedMatIn2, bit=" << bit << endl;
 
             for (int i = 0; i < 12; i++) {
                 //this seems to be slower than the first alternative
                 uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
                 //uint64_t product += bit & inMat[i][j1*wLen+j2];
                 outVec[i]+=product;
-                }
             }
         }
-
+    }
 }
+
 
 /*
  *
