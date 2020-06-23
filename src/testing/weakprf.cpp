@@ -200,7 +200,7 @@ void phase1_test(uint64_t (&z_final)[4], uint64_t (&naive_out_p1)[256])
     if(flag == 1)
         cout<<"The computational outputs using naive and wordpacking DID NOT match, the function is NOT correct ==========> ERROR"<<endl; //prints if the break statement is not executed
     else
-        cout<<"Output of naive and word-packed version  in phase 1 MATCHED ==========> O.K."<<endl;
+        cout<<"***Phase 1 Test Passed***"<<endl;
     /* DEBUGGING
     cout<<endl<<"Printing the output of phase 1"<<endl; 
     for(int i = 0; i< 256; i++)
@@ -244,7 +244,7 @@ void multMod3(uint64_t (&outM)[2], uint64_t (&outL)[2], uint64_t (&msbs)[2][256]
 
         }
     //The 81 z3 bits from wordpacked method
-    /*for(int row_count = 0; row_count < 2; row_count++)
+    for(int row_count = 0; row_count < 2; row_count++)
     {
         for(int word_count = 0; word_count < wLen; word_count++)
         {
@@ -256,7 +256,7 @@ void multMod3(uint64_t (&outM)[2], uint64_t (&outL)[2], uint64_t (&msbs)[2][256]
                 p3_out[row_count*wLen+word_count] = z3_bit;
             }
         }
-    }  */
+    }  
 }
 
 //compute the product of 81x256 z3 matrix with 256 bit output vector of phase 1
@@ -284,20 +284,22 @@ void phase3_test(uint64_t (&naive_out_p3)[81], uint64_t (&p3_out)[81])//compares
     int row_limit = 81; //number of rows required in final output
     for(int row_count = 0; row_count < row_limit; row_count++)
     {
-        if (naive_out_p3[row_count]!=p3_out[row_count])
+        if (naive_out_p3[row_count] != p3_out[row_count])
         {
-            cout << "Something is wrong in index " << row_count << endl;
-            cout<<endl<<"!!!-Exiting the testing phase-!!!"<<endl;
+            cout <<"Something is wrong in index " << row_count << endl;
             phase3_flag = 1;
             break;
         }  
     }
     if(phase3_flag == 1)
+    {
         cout<<"The computational outputs using naive and wordpacking DID NOT match, the function is NOT correct ==========> ERROR"<<endl; //prints if the break statement is not executed
+        cout<<"!!!-Exiting the testing phase-!!!"<<endl;
+    }
     else
-        cout<<"Output of naive and word-packed version in phase 3 MATCHED ==========> O.K."<<endl;
-    cout<<endl<<"Printing both output of phase3";
-    /* DEBUGGING CODE
+        cout<<"***Phase 3 Test Passed***"<<endl;
+    /*cout<<endl<<"Printing both output of phase3";
+     DEBUGGING CODE
     for(int i = 0;i<81;i++)
     {
         cout<<naive_out_p3[i]<<"\t"<<p3_out[i]<<endl;
@@ -396,16 +398,19 @@ void MultPackedMatIn2(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVec
         //uint64_t tmp = inVec[j1];  //take each word in the input vector
         for (int j2 = 0; j2 < wLen; j2++)
         {
-            uint64_t bit = -((inVec[j1] >> j2) & 1);
+            uint64_t bit = ((inVec[j1] >> j2) & 1);
+
+            if (bit!=0)
+                //cout << "in MultPackedMatIn2, bit=" << bit << endl;
 
             for (int i = 0; i < 12; i++) {
                 //this seems to be slower than the first alternative
                 uint64_t product = (-1 * bit) & inMat[i][(j1*wLen)+j2];
                 //uint64_t product += bit & inMat[i][j1*wLen+j2];
                 outVec[i]+=product;
-                }
             }
         }
+    }
 }
 
 void MultPackedMatIn(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVecPacked[12])
@@ -432,6 +437,25 @@ void MultPackedMatIn(uint64_t inMat[12][256],uint64_t inVec[4], uint64_t outVecP
     }
 }
 
+void InnerProdMul2_test(uint64_t (&outVec)[84], uint64_t (&naive_out_p3)[81])
+{
+    bool test_flag = 0;
+    //cout<<endl<<"outVec \t p3_out"<<endl;
+    cout<<endl<<"Initializing unit testing for phase 3 (INNERPRODMUL2)==========>   O.K."<<endl;
+    for(int i = 0; i < 81; i++) 
+    {
+        if(outVec[i] != naive_out_p3[i])
+        {
+            test_flag = 1;
+            break;
+        }
+    }
+    if(test_flag == 1)
+        cout<<"!!!-TEST FAILED-!!! The InnerProdMul2 test failed, please check the function";
+    else
+        cout<<"***Phase 3(InnerProdMul2) passed***"<<endl;
+}
+
 void InnerProdMul2(uint64_t (&outVec)[84], uint64_t (&randMatZ3)[81][256], uint64_t (&output)[4], uint64_t (&naive_out_p3)[81]) 
 {
     uint64_t randPackedWords[12][256];
@@ -441,11 +465,30 @@ void InnerProdMul2(uint64_t (&outVec)[84], uint64_t (&randMatZ3)[81][256], uint6
     MultPackedMatIn2(randPackedWords,output,outVecPacked);
     unpackOutputMod3(outVecPacked,outVec);
     //comparing 
-    cout<<endl<<"Comparing output of InnerProdMul2 and naive output of phase 3";
+    /*cout<<endl<<"Comparing output of InnerProdMul2 and naive output of phase 3";
     cout<<endl<<"outVec \t p3_out"<<endl;
     for(int i = 0; i < 81; i++) {
         cout << outVec[i] << "\t" << naive_out_p3[i] << endl;
+    }*/
+}
+
+void InnerProdMul_test(uint64_t (&outVec)[84], uint64_t (&naive_out_p3)[81])
+{
+	bool test_flag = 0;
+    //cout<<endl<<"outVec \t p3_out"<<endl;
+    cout<<endl<<"Initializing unit testing for phase 3 (INNERPRODMUL)==========>   O.K."<<endl;
+    for(int i = 0; i < 81; i++) 
+    {
+    	if(outVec[i] != naive_out_p3[i])
+    	{
+    		test_flag = 1;
+    		break;
+    	}
     }
+    if(test_flag == 1)
+    	cout<<"!!!-TEST FAILED-!!! The InnerProdMul test failed, please check the function";
+    else
+    	cout<<"***Phase 3(InnerProdMul) passed***"<<endl;
 }
 
 void InnerProdMul(uint64_t (&outVec)[84], uint64_t (&randMatZ3)[81][256], uint64_t (&output)[4], uint64_t (&naive_out_p3)[81]) {//change it after InnerProdMul2 works
@@ -456,12 +499,8 @@ void InnerProdMul(uint64_t (&outVec)[84], uint64_t (&randMatZ3)[81][256], uint64
     packWords(randPackedWords,randMatZ3);
     MultPackedMatIn(randPackedWords,output,outVecPacked);
     unpackOutputMod3(outVecPacked, outVec);
-    //comparing 
-    cout<<endl<<"Comparing output of InnerProdMul and naive output of phase 3";
-    cout<<endl<<"outVec \t p3_out"<<endl;
-    for(int i = 0; i < 81; i++) {
-        cout << outVec[i] << "\t" << naive_out_p3[i] << endl;
-    }
 }
+
+
 
 

@@ -44,7 +44,7 @@ int main(int argc,char* argv[] )
 	cout<<endl<<"Random input generated ==========>   O.K."<<endl;
 
 	//Phase 1
-    cout<<"Initializing unit testing for phase 1 ==========>   O.K."<<endl;
+    cout<<endl<<"Initializing unit testing for phase 1 ==========>   O.K."<<endl;
     compute(key,input, output); // matrix-vector multiply mod 2
     //unpackOutput(output,p2output); // useless operation that should not be here
     mat_vec_mult(input, key, naive_out_p1);
@@ -59,10 +59,11 @@ int main(int argc,char* argv[] )
     cout<<"==========Phase 3 testing complete=========="<<endl;
 
     //PRF alternate method
-    cout<<"Initializing unit testing for phase 3 ==========>   O.K."<<endl;
     //InnerProdMul(output_p3_alter1, randMatZ3, output);
-    //InnerProdMul_test(output_p3_alter1,p3_out);
+    
     InnerProdMul(output_p3_alter1, randMatZ3, output, naive_out_p3);
+    InnerProdMul_test(output_p3_alter1,naive_out_p3);
     InnerProdMul2(output_p3_alter2, randMatZ3, output, naive_out_p3);
+    InnerProdMul2_test(output_p3_alter1,naive_out_p3);
 return 0;
 }
