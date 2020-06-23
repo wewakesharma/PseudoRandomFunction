@@ -317,8 +317,8 @@ void phase3_test(uint64_t (&naive_out_p3)[81], uint64_t (&p3_out)[81])//compares
 /*   cout << "sending 12x256, 128x256 words" << endl;
  *
  */
-void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[81][256])
-{
+void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[81][256]){
+
  //   cout << "expecting 12x256, 128x256 words" << endl;
     uint64_t acc = 0;
 
@@ -327,8 +327,10 @@ void packWords(uint64_t randPackedWords[12][256] ,uint64_t randMatZ3[81][256])
         for (int joutWordIndex = 0; joutWordIndex < 12; joutWordIndex++) { //we will have 12 output words
             acc = 0;
             for (int i = 0; i < 7; i++) {
-                if (inWordStart + i >= 81)
+                if (inWordStart + i == 81) {
+                    acc = acc << 27;//(9*((84 - inWordStart+i))); //our vector is 84 bit long, so we need to adjust for this
                     break;
+                }
                 acc = (acc << 9) + randMatZ3[inWordStart + i][jCol];
             }
             inWordStart += 7;
@@ -374,8 +376,10 @@ void unpackOutputMod3(uint64_t output[12], uint64_t p2output[84])
 {
     for (int i = 0; i < 12; i++) {
         uint64_t tmp = output[i];
-        for (int jWord = 0; jWord < 7; jWord++) {
-            p2output[i*7+jWord] = (tmp & 0x1ff) % 3;  //result needs to be mod 3
+        for (int jWord = 6; jWord >=0; jWord--) {
+
+            uint64_t outputNum= (tmp & 0x1ff) % 3;
+            p2output[i*7+jWord] = outputNum;  //result needs to be mod 3
             tmp = (tmp>> 9);
         }
     }
