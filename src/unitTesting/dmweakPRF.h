@@ -17,7 +17,7 @@ void unpackOutput(uint64_t output[4], char p2output[256]);
 void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t in[4]);
 
 //PRF alternate method testing
-void InnerProdMul(uint64_t outVec[84], uint64_t randMatZ3[128][256], uint64_t in[4]);
-void InnerProdMul2(uint64_t outVec[84], uint64_t randMatZ3[128][256], uint64_t in[4]);
+void InnerProdMul(uint64_t outVec[84], uint64_t randMatZ3[81][256], uint64_t in[4]);
+void InnerProdMul2(uint64_t outVec[84], uint64_t randMatZ3[81][256], uint64_t in[4]);
 
 #endif

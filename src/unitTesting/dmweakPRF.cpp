@@ -5,7 +5,7 @@
 #include <chrono> 
 #include <ctime> 
 #include <cstdlib>
-
+#include "dmweakPRF.h"
 int wLen = 64;
 
 
