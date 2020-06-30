@@ -75,9 +75,7 @@ void sendMaMb(uint64_t Ma[128][256], uint64_t Mb[128])
  * The two parties hold an additive sharing of the key A and the input x
  * goal: compute additive sharing of max(aX)
  *
- * output: y' = Ax , y= ' y0' y1'
- *
-
+ * output: y' = Ax
  *
  * //at this point the inputs will be chosen randomly
  * Input should be matrices of bits
@@ -90,8 +88,8 @@ void sendMaMb(uint64_t Ma[128][256], uint64_t Mb[128])
  *
  * mx = 128x256
  *
- * In the preprocessing: Ra,Rb,Rx and Z are calculated
- * Z = Ra Rx+Rb
+ * In the preprocessing: Z is calculated using Ra, Rb and Rx
+ * Z = Ra*Rx+Rb
  *
  * party 1 and 2 can change roles depending on the protocol phase
  *
@@ -107,7 +105,7 @@ void sendMaMb(uint64_t Ma[128][256], uint64_t Mb[128])
  * B will be chosen at random outside this function, the function will get B
  *
  * Unit test:
- * test that the sum of the outputs is equal to AX, where A is a matrix of P1 and X is a vecvtor of P2
+ * test that the sum of the outputs is equal to AX, where A is a matrix of P1 and X is a vector of P2
  *
  * Choose random variables for all the variables
  *
@@ -214,6 +212,11 @@ void multProtP2Part2(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_
 //        out[i] = z_final[i] + Mb[i] + Z[i];
 //
 //}
+
+/*
+ * //////////////////////////////
+ */
+
 
 
 void sendmXbit(uint64_t mx)
