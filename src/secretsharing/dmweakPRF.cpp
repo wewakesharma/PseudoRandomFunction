@@ -129,6 +129,7 @@ void wordPackedVecMatMult(uint64_t key[4][256], uint64_t input[4], uint64_t z_fi
 	}
 }
 
+
 void addMod3Alternative(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint64_t msb2, uint64_t lsb2)
 {
 

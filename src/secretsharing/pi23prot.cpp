@@ -9,6 +9,7 @@
 //
 
 #include "dmweakPRF.h"
+#include "dmweakPRFnoPack.h"
 #include "pi23prot.h"
 
 //unsigned long int z_final[4];//to store the final product values
@@ -53,11 +54,11 @@ void getMx(uint64_t mX[256])
     }
 }
 
-void sendMx(uint64_t mX[256])
+void sendMx(uint64_t Mx[256])
 {
     for (int iRow = 0; iRow < 256; iRow++)
     {
-        mX[iRow] = MxGlobal[iRow];  //generate a random matrix
+        MxGlobal[iRow] = Mx[iRow];  //generate a random matrix
     }
 }
 
@@ -129,7 +130,7 @@ void multProtP1(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][256], ui
 
     //multiply matrix with a vector
     uint64_t z_final[4];
-    wordPackedVecMatMult(Ra,Mx,z_final);
+    VecMatMultnotPack2(Ra,Mx,z_final);
 
     uint64_t Mb[128];
 
@@ -157,7 +158,7 @@ void multProtP1(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][256], ui
 void multProtP2Part1(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_t out[128]) {
     uint64_t Mx[256];
 
-    for (int iRow = 1; iRow < 256; iRow++)
+    for (int iRow = 0; iRow < 256; iRow++)
         Mx[iRow] = X[iRow] - Rx[iRow];
 
     sendMx(Mx); //send the global status
@@ -261,18 +262,22 @@ void getm0m1(uint64_t m0,uint64_t m1)
 /*
  * OT for the sender
  *  r0,r1,ra,rb are elements in Z_3
+ *  mx are bits
  *
+ * can be packed into vectors, but then we need two vectors - msb's and lsb's
  */
 
 void OTS(uint64_t r0, uint64_t r1, uint64_t ra, uint64_t rb)
 {
     uint64_t mx;
-    uint64_t m0,m1;
+    uint64_t m0,m1;  //m0, m1 are in Z_3, the outpuf of this
 
-    //getMx from P2
+    //getMx from P2, t
     getmxbit(mx);
 
     m0 = (mx * r1 + (1-mx) * r0 + rb) %3;
+
+
     m1 = ((1 - mx) * r1 + mx * r0 + ra + rb) %3;
 
     //can be packed at a later date
@@ -302,7 +307,7 @@ void OTS(uint64_t r0, uint64_t r1, uint64_t ra, uint64_t rb)
  * assign random input variables
  */
 
-void OTRPart1(uint64_t x, uint64_t rx, uint64_t z, uint64_t w)
+void OTRPart1(uint64_t x, uint64_t rx, uint64_t z)
 {
     uint64_t mx;
     uint64_t m0,m1;
@@ -321,12 +326,14 @@ void OTRPart1(uint64_t x, uint64_t rx, uint64_t z, uint64_t w)
  * m0, m1 are elements in z3
  */
 
-void OTRPart2(uint64_t x, uint64_t rx, uint64_t z, uint64_t w)
+uint64_t OTRPart2(uint64_t x, uint64_t rx, uint64_t z)
 {
     uint64_t m0,m1;
     getm0m1(m0,m1);
 
-    w = (rx * m1 + (1-rx) * m0 - z) % 3;
+    uint64_t w = (rx * m1 + (1-rx) * m0 - z) % 3;
+
+    return w;
 
     //check that this is equivalent to:
 //    if (x==rx) {
@@ -351,6 +358,8 @@ void OTRPart2(uint64_t x, uint64_t rx, uint64_t z, uint64_t w)
  *
  *  * x,rx are bits, Z is a Z3 components
  * w is in Z3 - the output
+ *
+ * Can be packed into bits, but the calculations are mod 3
  */
 void OTR(uint64_t x, uint64_t rx, uint64_t z, uint64_t w)
 {
@@ -421,7 +430,7 @@ zGlobal = z;
  *  * Unit testing should verify that (v+w) mod 3 = (y1 + y2) mod 2
  */
 
-void sc23_p1(uint64_t y1, std::mt19937 &generator, uint64_t v )
+uint64_t sc23_p1(uint64_t y1, std::mt19937 &generator )
 {
     uint64_t ra, rb, r0, r1;
 
@@ -436,7 +445,8 @@ void sc23_p1(uint64_t y1, std::mt19937 &generator, uint64_t v )
     //call the ORS of the sender
     OTS(r0,r1,ra,rb);
 
-    v = 3-r;
+    uint64_t v = 3-r;
+    return v;
 
     //run OT
 }
@@ -447,7 +457,7 @@ void sc23_p1(uint64_t y1, std::mt19937 &generator, uint64_t v )
  * Unit testing should verify that (v+w) mod 3 = (y1 + y2) mod 2
  */
 
-void sc23_p2Part1(uint64_t y2, uint64_t w )
+void sc23_p2Part1(uint64_t y2)
 {
     uint64_t rx, z;
 
@@ -456,7 +466,7 @@ void sc23_p2Part1(uint64_t y2, uint64_t w )
     getrxz(rx,z); //get them from preprocessing
 
     //call the OR of the receiver - part 1
-    OTRPart1(y2,rx,z,w);
+    OTRPart1(y2,rx,z);
 
     //run OT
 
@@ -465,7 +475,7 @@ void sc23_p2Part1(uint64_t y2, uint64_t w )
 /*
  * sc23_p2Part1 needs to run first, and then sc23_p1
  */
-void sc23_p2Part2(uint64_t y2, uint64_t w )
+uint64_t sc23_p2Part2(uint64_t y2)
 {
     uint64_t rx, z;
 
@@ -474,7 +484,9 @@ void sc23_p2Part2(uint64_t y2, uint64_t w )
     getrxz(rx,z); //get them from preprocessing
 
     //call the OR of the receiver - part 1
-    OTRPart2(y2,rx,z,w);
+    uint64_t w = OTRPart2(y2,rx,z);
+
+    return w;
 
     //run OT
 
