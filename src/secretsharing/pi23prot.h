@@ -11,9 +11,10 @@ void getMx(uint64_t mX[4]);
 void sendMaMb(uint64_t Ma[4][256], uint64_t Mb[4]);
 
 void getMaMb(uint64_t Ma[4][256], uint64_t Mb[4]);
-void multProtP2Part2(uint64_t X[4], uint64_t Z[4], uint64_t out[4]);
+void multProtP2Part2(uint64_t X[4], uint64_t Z[4], uint64_t poly_eval_2PC[4]);
 
-void poly_eval(uint64_t A[4][256], uint64_t X[4], uint64_t B[4], uint64_t poly_eval_result[4]);
+void poly_eval_global(uint64_t A[4][256], uint64_t X[4], uint64_t B[4], uint64_t global_res[4]);
+void poly_eval_test(uint64_t poly_eval_2PC[4], uint64_t global_res[4]);
 
 
 //#endif

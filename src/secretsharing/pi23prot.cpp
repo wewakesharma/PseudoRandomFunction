@@ -182,7 +182,7 @@ void multProtP2Part1(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_t out[
 
 }
 
-void multProtP2Part2(uint64_t X[4], uint64_t Z[4], uint64_t out[4])
+void multProtP2Part2(uint64_t X[4], uint64_t Z[4], uint64_t poly_eval_2PC[4])
 {
 
     uint64_t Mx[4];
@@ -197,19 +197,37 @@ void multProtP2Part2(uint64_t X[4], uint64_t Z[4], uint64_t out[4])
     uint64_t Ma_X[4];
     wordPackedVecMatMult(Ma,X,Ma_X);
 
-    /*for (int i = 0; i < 4; i++)
-        out[i] = Ma_X[i] + Mb[i] + Z[i];*/
+    for (int i = 0; i < 4; i++)
+        poly_eval_2PC[i] = Ma_X[i] + Mb[i] + Z[i];
 
 }
 
-void poly_eval(uint64_t A[4][256], uint64_t X[4], uint64_t B[4], uint64_t eval_out[4])
+void poly_eval_global(uint64_t A[4][256], uint64_t X[4], uint64_t B[4], uint64_t global_res[4])//AX+B evaluation
 {
     uint64_t inter_poly_eval[4];//intermediate polynomial evaluation, the variable term
     wordPackedVecMatMult(A,X,inter_poly_eval);
     for(int cnt = 0; cnt < 4; cnt++)
     {
-        eval_out[cnt] = inter_poly_eval[cnt] + B[cnt];
+        global_res[cnt] = inter_poly_eval[cnt] + B[cnt];
     }
+}
+
+void poly_eval_test(uint64_t poly_eval_2PC[4], uint64_t global_res[4])
+{
+    int test_flag = 0;
+    for(int i =0;i<4;i++)
+    {
+        if(poly_eval_2PC[i] != global_res[i])
+        {
+            test_flag = 1;
+            break;
+        }
+
+    }
+    if(test_flag == 0)
+        cout<<"Test Passed";
+    else
+        cout<<"Test failed";
 }
 /*
  * Rx and Z come from preprocessing
