@@ -30,13 +30,20 @@ uint64_t rxGlobal, zGlobal;
 /*
  * Get the Ma and Mb - should be an interactive function eventually - we will wait for the other party to send the protocol
  */
-void getMaMb(uint64_t Ma[256][256], uint64_t Mb[256])
+void getMaMb(uint64_t Ma[4][256], uint64_t Mb[4])
 {
-    Ma = MaGlobal;
-    Mb = MbGlobal;
+    //Ma = MaGlobal;
+    //Mb = MbGlobal;
+
+    for (int iRow=0; iRow < 4; iRow++) {
+        for (int jCol = 0; jCol < 256; jCol++) {
+             Ma[iRow][jCol] = MaGlobal[iRow][jCol];
+        }
+        Mb[iRow] = MbGlobal[iRow];
+    }
 
     //reset the global variables
-    for (int iRow=0; iRow<256; iRow++)
+    for (int iRow=0; iRow<4; iRow++)
         for (int jCol = 0; jCol < 256; jCol++)
         {
             MaGlobal[iRow][jCol] = 0;
@@ -175,7 +182,7 @@ void multProtP2Part1(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_t out[
 
 }
 
-void multProtP2Part2(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_t out[4])
+void multProtP2Part2(uint64_t X[4], uint64_t Z[4], uint64_t out[4])
 {
 
     uint64_t Mx[4];
@@ -190,8 +197,8 @@ void multProtP2Part2(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_t out[
     uint64_t Ma_X[4];
     wordPackedVecMatMult(Ma,X,Ma_X);
 
-    for (int i = 0; i < 2; i++)
-        out[i] = Ma_X[i] + Mb[i] + Z[i];
+    /*for (int i = 0; i < 4; i++)
+        out[i] = Ma_X[i] + Mb[i] + Z[i];*/
 
 }
 

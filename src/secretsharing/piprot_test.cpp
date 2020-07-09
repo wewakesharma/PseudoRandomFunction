@@ -23,7 +23,7 @@ using namespace std;
 uint64_t X[4], Rx[4], B[4], Rb[4];//packed version of values
 uint64_t A[4][256], Ra[4][256];
 uint64_t Z[4], out[4];
-char X_unpack[256];
+uint64_t packed_poly_eval[4];
 //uint64_t MaGlobal[256][256];
 //uint64_t MbGlobal[256];
 //uint64_t mxbitGlobal;
@@ -31,6 +31,7 @@ char X_unpack[256];
 //uint64_t m0Global, m1Global;
 //uint64_t raGlobal, rbGlobal;
 //uint64_t rxGlobal, zGlobal;
+uint64_t poly_eval_result[4];
 
 int main()
 {
@@ -61,8 +62,16 @@ int main()
     */
     multProtP1(A,B, Ra, Rb, out);
 
-    cout<<endl<<"=====================================Party 1========================================"<<endl;
-    multProtP2Part2(X,Rx,Z,out);
+    cout<<endl<<"=====================================Party 2========================================"<<endl;
+    //NOTE: for now generate random value for Z.
+    generate_rand_input(Z,generator);
+    multProtP2Part2(X,Z,packed_poly_eval);
+    poly_eval(A,X,B, poly_eval_result);//evaluation of polynomial using naive method
+    cout<<endl<<"Output of naive polynomial evaluation"<<endl;
+    for(int i = 0; i < 4; i++)
+    {
+        cout<<poly_eval_result[i]<<endl;
+    }
 
 
 
