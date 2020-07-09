@@ -11,6 +11,7 @@
 #include "dmweakPRF.h"
 #include "dmweakPRFnoPack.h"
 #include "pi23prot.h"
+#include "pi23protpacked.h"
 
 //unsigned long int z_final[4];//to store the final product values
 
@@ -18,10 +19,10 @@ using namespace std;
 
 
 //these are global variables to be set to 0 at the beginning of the protocol, used to hold data transmitted between each party
-extern uint64_t MaGlobal[128][256];
-extern uint64_t MbGlobal[128];
+extern uint64_t MaGlobal[2][4];
+extern uint64_t MbGlobal[2];
 extern uint64_t mxbitGlobal;
-extern uint64_t MxGlobal[256];
+extern uint64_t MxGlobal[4];
 extern uint64_t m0Global, m1Global;
 extern uint64_t raGlobal, rbGlobal;
 extern uint64_t rxGlobal, zGlobal;
@@ -71,14 +72,14 @@ extern uint64_t rxGlobal, zGlobal;
  */
 
 
-void multProtP1Packed(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][256], uint64_t Rb[128], uint64_t out[128])
+void multProtP1Packed(uint64_t A[2][4], uint64_t B[2], uint64_t Ra[2][4], uint64_t Rb[2], uint64_t out[2])
 {
-    uint64_t Mx[256];
+    uint64_t Mx[4];
 
     //wait to get mx
     getMx(Mx);
     //calculate and output
-    uint64_t Ma[128][256];
+    uint64_t Ma[2][4];
 
     for (int iRow = 0; iRow < 128; iRow++)
         for (int jCol = 0; jCol < 256; jCol++) {
@@ -89,9 +90,9 @@ void multProtP1Packed(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][25
     uint64_t z_final[4];
     wordPackedVecMatMult(Ra,Mx,z_final);
 
-    uint64_t Mb[128];
+    uint64_t Mb[2];
 
-    for (int iCol=0; iCol<128; iCol++)
+    for (int iCol = 0; iCol < 2; iCol++)
         Mb[iCol]= z_final[iCol] + B[iCol] - Rb[iCol];
 
     //send Ma and Mb to party 2
@@ -112,29 +113,30 @@ void multProtP1Packed(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][25
  *
  *
  */
-void multProtP2Part1Packed(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_t out[128]) {
-    uint64_t Mx[256];
+void multProtP2Part1Packed(uint64_t X[4], uint64_t Rx[4], uint64_t Z[2], uint64_t out[2]) {
+    uint64_t Mx[4];
 
-    for (int iRow = 0; iRow < 256; iRow++)
+    for (int iRow = 0; iRow < 4; iRow++)
         Mx[iRow] = X[iRow] - Rx[iRow];
 
     sendMx(Mx); //send the global status
+
 }
 
-void multProtP2Part2Packed(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_t out[128])
+void multProtP2Part2Packed(uint64_t X[4], uint64_t Rx[4], uint64_t Z[2], uint64_t out[2])
 {
 
-    uint64_t Mx[256];
+    uint64_t Mx[4];
 
-    uint64_t Ma[128][256];
-    uint64_t Mb[128];
+    uint64_t Ma[2][4];
+    uint64_t Mb[2];
 
     getMx(Mx);   //get the global status
 
     getMaMb(Ma,Mb);
 
     uint64_t z_final[4];
-    wordPackedVecMatMult(Ma,X,z_final);
+    //wordPackedVecMatMult(Ma,X,z_final);
 
     for (int i = 0; i < 128; i++)
         out[i] = z_final[i] + Mb[i] + Z[i];
@@ -174,5 +176,23 @@ void multProtP2Part2Packed(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], u
 /*
  * //////////////////////////////
  */
-
+void generate_randkey_pi_protocol(uint64_t key[2][4], std::mt19937 &generator)
+{
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            key[i][j] = generator();
+        }
+    }
+}
+void generate_two_word_randinput(uint64_t input[4], std::mt19937 &generator)
+{
+    //srand(time(NULL));
+    for(int i = 0; i < 4; i++)
+    {
+        //Call the generator that generate a 64-but word each time
+        input[i] = generator();
+    }
+}
 

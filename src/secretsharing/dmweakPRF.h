@@ -1,7 +1,7 @@
 //Header file weak23prf.h
 
-#ifndef UNIT_TEST_H
-#define UNIT_TEST_H
+#ifndef DM_WEAK_PRF_H
+#define DM_WEAK_PRF_H
 
 const int wLen=64;
 

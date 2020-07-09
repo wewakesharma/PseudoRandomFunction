@@ -9,8 +9,7 @@ add_executable(wordpacked
     dmweakPRF.cpp
     dmweakPRF.h
     dmweakPRFnoPack.h
-    dmweakPRFnpack.cpp
+    dmweakPRFnopack.cpp
     pi23prot.cpp
     pi23prot.h
-    pi23protpacked.cpp
-    prfTiming.cpp)
+    pi23protpacked.cpp pi23protpacked.h piprot_test.cpp )

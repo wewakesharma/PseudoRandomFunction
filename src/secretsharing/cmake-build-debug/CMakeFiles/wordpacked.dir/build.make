@@ -43,10 +43,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked
+CMAKE_SOURCE_DIR = /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/wordpacked.dir/depend.make
@@ -59,88 +59,88 @@ include CMakeFiles/wordpacked.dir/flags.make
 
 CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o: CMakeFiles/wordpacked.dir/flags.make
 CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o: ../dmweakPRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/dmweakPRF.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o -c /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp
 
 CMakeFiles/wordpacked.dir/dmweakPRF.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wordpacked.dir/dmweakPRF.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/dmweakPRF.cpp > CMakeFiles/wordpacked.dir/dmweakPRF.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp > CMakeFiles/wordpacked.dir/dmweakPRF.cpp.i
 
 CMakeFiles/wordpacked.dir/dmweakPRF.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wordpacked.dir/dmweakPRF.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/dmweakPRF.cpp -o CMakeFiles/wordpacked.dir/dmweakPRF.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp -o CMakeFiles/wordpacked.dir/dmweakPRF.cpp.s
 
-CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o: CMakeFiles/wordpacked.dir/flags.make
-CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o: ../dmweakPRFnpack.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/dmweakPRFnpack.cpp
+CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o: CMakeFiles/wordpacked.dir/flags.make
+CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o: ../dmweakPRFnopack.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o -c /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/dmweakPRFnopack.cpp
 
-CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/dmweakPRFnpack.cpp > CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.i
+CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/dmweakPRFnopack.cpp > CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.i
 
-CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/dmweakPRFnpack.cpp -o CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.s
+CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/dmweakPRFnopack.cpp -o CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.s
 
 CMakeFiles/wordpacked.dir/pi23prot.cpp.o: CMakeFiles/wordpacked.dir/flags.make
 CMakeFiles/wordpacked.dir/pi23prot.cpp.o: ../pi23prot.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/wordpacked.dir/pi23prot.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/pi23prot.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/pi23prot.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/wordpacked.dir/pi23prot.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/pi23prot.cpp.o -c /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/pi23prot.cpp
 
 CMakeFiles/wordpacked.dir/pi23prot.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wordpacked.dir/pi23prot.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/pi23prot.cpp > CMakeFiles/wordpacked.dir/pi23prot.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/pi23prot.cpp > CMakeFiles/wordpacked.dir/pi23prot.cpp.i
 
 CMakeFiles/wordpacked.dir/pi23prot.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wordpacked.dir/pi23prot.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/pi23prot.cpp -o CMakeFiles/wordpacked.dir/pi23prot.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/pi23prot.cpp -o CMakeFiles/wordpacked.dir/pi23prot.cpp.s
 
 CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o: CMakeFiles/wordpacked.dir/flags.make
 CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o: ../pi23protpacked.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/pi23protpacked.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o -c /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp
 
 CMakeFiles/wordpacked.dir/pi23protpacked.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wordpacked.dir/pi23protpacked.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/pi23protpacked.cpp > CMakeFiles/wordpacked.dir/pi23protpacked.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp > CMakeFiles/wordpacked.dir/pi23protpacked.cpp.i
 
 CMakeFiles/wordpacked.dir/pi23protpacked.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wordpacked.dir/pi23protpacked.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/pi23protpacked.cpp -o CMakeFiles/wordpacked.dir/pi23protpacked.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp -o CMakeFiles/wordpacked.dir/pi23protpacked.cpp.s
 
-CMakeFiles/wordpacked.dir/prfTiming.cpp.o: CMakeFiles/wordpacked.dir/flags.make
-CMakeFiles/wordpacked.dir/prfTiming.cpp.o: ../prfTiming.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/wordpacked.dir/prfTiming.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/prfTiming.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/prfTiming.cpp
+CMakeFiles/wordpacked.dir/piprot_test.cpp.o: CMakeFiles/wordpacked.dir/flags.make
+CMakeFiles/wordpacked.dir/piprot_test.cpp.o: ../piprot_test.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/wordpacked.dir/piprot_test.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordpacked.dir/piprot_test.cpp.o -c /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/piprot_test.cpp
 
-CMakeFiles/wordpacked.dir/prfTiming.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wordpacked.dir/prfTiming.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/prfTiming.cpp > CMakeFiles/wordpacked.dir/prfTiming.cpp.i
+CMakeFiles/wordpacked.dir/piprot_test.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wordpacked.dir/piprot_test.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/piprot_test.cpp > CMakeFiles/wordpacked.dir/piprot_test.cpp.i
 
-CMakeFiles/wordpacked.dir/prfTiming.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wordpacked.dir/prfTiming.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/prfTiming.cpp -o CMakeFiles/wordpacked.dir/prfTiming.cpp.s
+CMakeFiles/wordpacked.dir/piprot_test.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wordpacked.dir/piprot_test.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/piprot_test.cpp -o CMakeFiles/wordpacked.dir/piprot_test.cpp.s
 
 # Object files for target wordpacked
 wordpacked_OBJECTS = \
 "CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o" \
-"CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o" \
+"CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o" \
 "CMakeFiles/wordpacked.dir/pi23prot.cpp.o" \
 "CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o" \
-"CMakeFiles/wordpacked.dir/prfTiming.cpp.o"
+"CMakeFiles/wordpacked.dir/piprot_test.cpp.o"
 
 # External object files for target wordpacked
 wordpacked_EXTERNAL_OBJECTS =
 
 wordpacked: CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o
-wordpacked: CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o
+wordpacked: CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o
 wordpacked: CMakeFiles/wordpacked.dir/pi23prot.cpp.o
 wordpacked: CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o
-wordpacked: CMakeFiles/wordpacked.dir/prfTiming.cpp.o
+wordpacked: CMakeFiles/wordpacked.dir/piprot_test.cpp.o
 wordpacked: CMakeFiles/wordpacked.dir/build.make
 wordpacked: CMakeFiles/wordpacked.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable wordpacked"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable wordpacked"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/wordpacked.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -153,6 +153,6 @@ CMakeFiles/wordpacked.dir/clean:
 .PHONY : CMakeFiles/wordpacked.dir/clean
 
 CMakeFiles/wordpacked.dir/depend:
-	cd /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles/wordpacked.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles/wordpacked.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/wordpacked.dir/depend
 

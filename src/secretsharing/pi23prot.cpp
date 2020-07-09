@@ -18,10 +18,11 @@ using namespace std;
 
 
 //these are global variables to be set to 0 at the beginning of the protocol, used to hold data transmitted between each party
-uint64_t MaGlobal[128][256];
-uint64_t MbGlobal[128];
+
+uint64_t MaGlobal[4][256];
+uint64_t MbGlobal[4];
 uint64_t mxbitGlobal;
-uint64_t MxGlobal[256];
+uint64_t MxGlobal[4];
 uint64_t m0Global, m1Global;
 uint64_t raGlobal, rbGlobal;
 uint64_t rxGlobal, zGlobal;
@@ -29,13 +30,13 @@ uint64_t rxGlobal, zGlobal;
 /*
  * Get the Ma and Mb - should be an interactive function eventually - we will wait for the other party to send the protocol
  */
-void getMaMb(uint64_t Ma[128][256], uint64_t Mb[128])
+void getMaMb(uint64_t Ma[256][256], uint64_t Mb[256])
 {
     Ma = MaGlobal;
     Mb = MbGlobal;
 
     //reset the global variables
-    for (int iRow=0; iRow<128; iRow++)
+    for (int iRow=0; iRow<256; iRow++)
         for (int jCol = 0; jCol < 256; jCol++)
         {
             MaGlobal[iRow][jCol] = 0;
@@ -46,25 +47,25 @@ void getMaMb(uint64_t Ma[128][256], uint64_t Mb[128])
 /*
  *
  */
-void getMx(uint64_t mX[256])
+void getMx(uint64_t mX[4])
 {
-    for (int iRow = 0; iRow < 256; iRow++)
+    for (int iRow = 0; iRow < 4; iRow++)
     {
             mX[iRow] = MxGlobal[iRow]; ;  //generate a random matrix
     }
 }
 
-void sendMx(uint64_t Mx[256])
+void sendMx(uint64_t Mx[4])
 {
-    for (int iRow = 0; iRow < 256; iRow++)
+    for (int iRow = 0; iRow < 4; iRow++)
     {
         MxGlobal[iRow] = Mx[iRow];  //generate a random matrix
     }
 }
 
-void sendMaMb(uint64_t Ma[128][256], uint64_t Mb[128])
+void sendMaMb(uint64_t Ma[4][256], uint64_t Mb[4])
 {
-    for (int iRow=0; iRow<128; iRow++) {
+    for (int iRow=0; iRow < 4; iRow++) {
         for (int jCol = 0; jCol < 256; jCol++) {
             MaGlobal[iRow][jCol] = Ma[iRow][jCol];
         }
@@ -114,33 +115,42 @@ void sendMaMb(uint64_t Ma[128][256], uint64_t Mb[128])
  */
 
 
-void multProtP1(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][256], uint64_t Rb[128], uint64_t out[128])
+void multProtP1(uint64_t A[4][256], uint64_t B[4], uint64_t Ra[4][256], uint64_t Rb[4], uint64_t out[4])
 {
-    uint64_t Mx[256];
+    uint64_t Mx[4];
 
     //wait to get mx
     getMx(Mx);
     //calculate and output
-    uint64_t Ma[128][256];
+    uint64_t Ma[4][256];
 
-    for (int iRow = 0; iRow < 128; iRow++)
+    for (int iRow = 0; iRow < 4; iRow++)
         for (int jCol = 0; jCol < 256; jCol++) {
             Ma[iRow][jCol] = A[iRow][jCol] - Ra[iRow][jCol];
         }
 
     //multiply matrix with a vector
-    uint64_t z_final[4];
-    VecMatMultnotPack2(Ra,Mx,z_final);
+    uint64_t Mb_first[4];
 
-    uint64_t Mb[128];
+     wordPackedVecMatMult(Ra,Mx,Mb_first);
+     cout<<endl<<"Printing the z_final"<<endl;
+     for(int i = 0; i< 4; i++)
+     {
+         cout<<Mb_first[i]<<endl;
+     }
 
-    for (int iCol=0; iCol<128; iCol++)
-        Mb[iCol]= z_final[iCol] + B[iCol] - Rb[iCol];
+    //VecMatMultnotPack2(Ra,Mx,z_final);
+
+    uint64_t Mb[4];
+
+    for (int iCol = 0; iCol < 4; iCol++)
+        Mb[iCol]= Mb_first[iCol] + B[iCol] - Rb[iCol];
 
     //send Ma and Mb to party 2
 
     sendMaMb(Ma,Mb);
-    out = B;
+    cout<<endl<<"Ma and Mb are sent to party 2"<<endl;
+    out = B;//why is it so?
 }
 
 /*
@@ -155,35 +165,45 @@ void multProtP1(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][256], ui
  *
  *
  */
-void multProtP2Part1(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_t out[128]) {
-    uint64_t Mx[256];
+void multProtP2Part1(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_t out[4]) {
+    uint64_t Mx[4];
 
-    for (int iRow = 0; iRow < 256; iRow++)
+    for (int iRow = 0; iRow < 4; iRow++)
         Mx[iRow] = X[iRow] - Rx[iRow];
 
     sendMx(Mx); //send the global status
+
 }
 
-void multProtP2Part2(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_t out[128])
+void multProtP2Part2(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_t out[4])
 {
 
-    uint64_t Mx[256];
+    uint64_t Mx[4];
 
-    uint64_t Ma[128][256];
-    uint64_t Mb[128];
+    uint64_t Ma[4][256];
+    uint64_t Mb[4];
 
     getMx(Mx);   //get the global status
 
     getMaMb(Ma,Mb);
 
-    uint64_t z_final[4];
-    wordPackedVecMatMult(Ma,X,z_final);
+    uint64_t Ma_X[4];
+    wordPackedVecMatMult(Ma,X,Ma_X);
 
-    for (int i = 0; i < 128; i++)
-        out[i] = z_final[i] + Mb[i] + Z[i];
+    for (int i = 0; i < 2; i++)
+        out[i] = Ma_X[i] + Mb[i] + Z[i];
 
 }
 
+void poly_eval(uint64_t A[4][256], uint64_t X[4], uint64_t B[4], uint64_t eval_out[4])
+{
+    uint64_t inter_poly_eval[4];//intermediate polynomial evaluation, the variable term
+    wordPackedVecMatMult(A,X,inter_poly_eval);
+    for(int cnt = 0; cnt < 4; cnt++)
+    {
+        eval_out[cnt] = inter_poly_eval[cnt] + B[cnt];
+    }
+}
 /*
  * Rx and Z come from preprocessing
  * output = Ma*x+Mb+Z = (A-Ra)X + Ra(x-Rx) + B - RB + RaRx+Rb = AX+B

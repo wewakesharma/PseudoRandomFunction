@@ -4,8 +4,9 @@
 CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o: ../dmweakPRF.cpp
 CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o: ../dmweakPRF.h
 
-CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o: ../dmweakPRF.h
-CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o: ../dmweakPRFnpack.cpp
+CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o: ../dmweakPRF.h
+CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o: ../dmweakPRFnoPack.h
+CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o: ../dmweakPRFnopack.cpp
 
 CMakeFiles/wordpacked.dir/pi23prot.cpp.o: ../dmweakPRF.h
 CMakeFiles/wordpacked.dir/pi23prot.cpp.o: ../dmweakPRFnoPack.h
@@ -16,5 +17,11 @@ CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o: ../dmweakPRF.h
 CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o: ../dmweakPRFnoPack.h
 CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o: ../pi23prot.h
 CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o: ../pi23protpacked.cpp
+CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o: ../pi23protpacked.h
 
+CMakeFiles/wordpacked.dir/piprot_test.cpp.o: ../dmweakPRF.h
+CMakeFiles/wordpacked.dir/piprot_test.cpp.o: ../dmweakPRFnoPack.h
+CMakeFiles/wordpacked.dir/piprot_test.cpp.o: ../pi23prot.h
+CMakeFiles/wordpacked.dir/piprot_test.cpp.o: ../pi23protpacked.h
+CMakeFiles/wordpacked.dir/piprot_test.cpp.o: ../piprot_test.cpp
 

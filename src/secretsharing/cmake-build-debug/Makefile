@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked
+CMAKE_SOURCE_DIR = /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -150,32 +150,32 @@ dmweakPRF.cpp.s:
 	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRF.cpp.s
 .PHONY : dmweakPRF.cpp.s
 
-dmweakPRFnpack.o: dmweakPRFnpack.cpp.o
+dmweakPRFnopack.o: dmweakPRFnopack.cpp.o
 
-.PHONY : dmweakPRFnpack.o
+.PHONY : dmweakPRFnopack.o
 
 # target to build an object file
-dmweakPRFnpack.cpp.o:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o
-.PHONY : dmweakPRFnpack.cpp.o
+dmweakPRFnopack.cpp.o:
+	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.o
+.PHONY : dmweakPRFnopack.cpp.o
 
-dmweakPRFnpack.i: dmweakPRFnpack.cpp.i
+dmweakPRFnopack.i: dmweakPRFnopack.cpp.i
 
-.PHONY : dmweakPRFnpack.i
+.PHONY : dmweakPRFnopack.i
 
 # target to preprocess a source file
-dmweakPRFnpack.cpp.i:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.i
-.PHONY : dmweakPRFnpack.cpp.i
+dmweakPRFnopack.cpp.i:
+	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.i
+.PHONY : dmweakPRFnopack.cpp.i
 
-dmweakPRFnpack.s: dmweakPRFnpack.cpp.s
+dmweakPRFnopack.s: dmweakPRFnopack.cpp.s
 
-.PHONY : dmweakPRFnpack.s
+.PHONY : dmweakPRFnopack.s
 
 # target to generate assembly for a file
-dmweakPRFnpack.cpp.s:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.s
-.PHONY : dmweakPRFnpack.cpp.s
+dmweakPRFnopack.cpp.s:
+	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRFnopack.cpp.s
+.PHONY : dmweakPRFnopack.cpp.s
 
 pi23prot.o: pi23prot.cpp.o
 
@@ -231,32 +231,32 @@ pi23protpacked.cpp.s:
 	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/pi23protpacked.cpp.s
 .PHONY : pi23protpacked.cpp.s
 
-prfTiming.o: prfTiming.cpp.o
+piprot_test.o: piprot_test.cpp.o
 
-.PHONY : prfTiming.o
+.PHONY : piprot_test.o
 
 # target to build an object file
-prfTiming.cpp.o:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/prfTiming.cpp.o
-.PHONY : prfTiming.cpp.o
+piprot_test.cpp.o:
+	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/piprot_test.cpp.o
+.PHONY : piprot_test.cpp.o
 
-prfTiming.i: prfTiming.cpp.i
+piprot_test.i: piprot_test.cpp.i
 
-.PHONY : prfTiming.i
+.PHONY : piprot_test.i
 
 # target to preprocess a source file
-prfTiming.cpp.i:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/prfTiming.cpp.i
-.PHONY : prfTiming.cpp.i
+piprot_test.cpp.i:
+	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/piprot_test.cpp.i
+.PHONY : piprot_test.cpp.i
 
-prfTiming.s: prfTiming.cpp.s
+piprot_test.s: piprot_test.cpp.s
 
-.PHONY : prfTiming.s
+.PHONY : piprot_test.s
 
 # target to generate assembly for a file
-prfTiming.cpp.s:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/prfTiming.cpp.s
-.PHONY : prfTiming.cpp.s
+piprot_test.cpp.s:
+	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/piprot_test.cpp.s
+.PHONY : piprot_test.cpp.s
 
 # Help Target
 help:
@@ -270,18 +270,18 @@ help:
 	@echo "... dmweakPRF.o"
 	@echo "... dmweakPRF.i"
 	@echo "... dmweakPRF.s"
-	@echo "... dmweakPRFnpack.o"
-	@echo "... dmweakPRFnpack.i"
-	@echo "... dmweakPRFnpack.s"
+	@echo "... dmweakPRFnopack.o"
+	@echo "... dmweakPRFnopack.i"
+	@echo "... dmweakPRFnopack.s"
 	@echo "... pi23prot.o"
 	@echo "... pi23prot.i"
 	@echo "... pi23prot.s"
 	@echo "... pi23protpacked.o"
 	@echo "... pi23protpacked.i"
 	@echo "... pi23protpacked.s"
-	@echo "... prfTiming.o"
-	@echo "... prfTiming.i"
-	@echo "... prfTiming.s"
+	@echo "... piprot_test.o"
+	@echo "... piprot_test.i"
+	@echo "... piprot_test.s"
 .PHONY : help
 
 
