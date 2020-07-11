@@ -12,4 +12,4 @@ add_executable(wordpacked
     dmweakPRFnopack.cpp
     pi23prot.cpp
     pi23prot.h
-    pi23protpacked.cpp pi23protpacked.h piprot_test.cpp )
+    pi23protpacked.cpp pi23protpacked.h piprot_test.cpp piprot_unpck_test.cpp)

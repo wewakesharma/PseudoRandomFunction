@@ -258,6 +258,33 @@ piprot_test.cpp.s:
 	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/piprot_test.cpp.s
 .PHONY : piprot_test.cpp.s
 
+piprot_unpck_test.o: piprot_unpck_test.cpp.o
+
+.PHONY : piprot_unpck_test.o
+
+# target to build an object file
+piprot_unpck_test.cpp.o:
+	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/piprot_unpck_test.cpp.o
+.PHONY : piprot_unpck_test.cpp.o
+
+piprot_unpck_test.i: piprot_unpck_test.cpp.i
+
+.PHONY : piprot_unpck_test.i
+
+# target to preprocess a source file
+piprot_unpck_test.cpp.i:
+	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/piprot_unpck_test.cpp.i
+.PHONY : piprot_unpck_test.cpp.i
+
+piprot_unpck_test.s: piprot_unpck_test.cpp.s
+
+.PHONY : piprot_unpck_test.s
+
+# target to generate assembly for a file
+piprot_unpck_test.cpp.s:
+	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/piprot_unpck_test.cpp.s
+.PHONY : piprot_unpck_test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -282,6 +309,9 @@ help:
 	@echo "... piprot_test.o"
 	@echo "... piprot_test.i"
 	@echo "... piprot_test.s"
+	@echo "... piprot_unpck_test.o"
+	@echo "... piprot_unpck_test.i"
+	@echo "... piprot_unpck_test.s"
 .PHONY : help
 
 

@@ -60,11 +60,11 @@ void getMaMb(uint64_t Ma[4][256], uint64_t Mb[4])
 /*
  *
  */
-void getMx(uint64_t mX[4])
+void getMx(uint64_t Mx[4])
 {
     for (int iRow = 0; iRow < 4; iRow++)
     {
-            mX[iRow] = MxGlobal[iRow]; ;  //generate a random matrix
+            Mx[iRow] = MxGlobal[iRow]; ;  //generate a random matrix
     }
 }
 
@@ -149,13 +149,7 @@ void multProtP1(uint64_t A[4][256], uint64_t B[4], uint64_t Ra[4][256], uint64_t
     }
 
     //multiply matrix with a vector
-
      wordPackedVecMatMult(Ra,Mx,Mb_first);//Mb_first = Ra*Mx
-     cout<<endl<<"Printing the z_final"<<endl;
-     for(int i = 0; i< 4; i++)
-     {
-         cout<<Mb_first[i]<<endl;
-     }
 
     for (int iCol = 0; iCol < 4; iCol++)
     {
@@ -195,7 +189,6 @@ void multProtP2Part2(uint64_t X[4], uint64_t Z[4], uint64_t poly_eval_2PC[4])
 {
 
     uint64_t Mx[4];
-
     uint64_t Ma[4][256];
     uint64_t Mb[4];
 
@@ -207,7 +200,10 @@ void multProtP2Part2(uint64_t X[4], uint64_t Z[4], uint64_t poly_eval_2PC[4])
     wordPackedVecMatMult(Ma,X,Ma_X);
 
     for (int i = 0; i < 4; i++)
+    {
         poly_eval_2PC[i] = Ma_X[i] + Mb[i] + Z[i];
+    }
+
 
 }
 

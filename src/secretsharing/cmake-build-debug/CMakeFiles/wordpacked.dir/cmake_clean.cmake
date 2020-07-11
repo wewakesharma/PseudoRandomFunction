@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/wordpacked.dir/pi23prot.cpp.o"
   "CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o"
   "CMakeFiles/wordpacked.dir/piprot_test.cpp.o"
+  "CMakeFiles/wordpacked.dir/piprot_unpck_test.cpp.o"
   "wordpacked"
   "wordpacked.pdb"
 )

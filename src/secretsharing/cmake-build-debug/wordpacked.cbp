@@ -112,6 +112,9 @@
 		<Unit filename="/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/piprot_test.cpp">
 			<Option target="wordpacked"/>
 		</Unit>
+		<Unit filename="/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/piprot_unpck_test.cpp">
+			<Option target="wordpacked"/>
+		</Unit>
 		<Unit filename="/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
