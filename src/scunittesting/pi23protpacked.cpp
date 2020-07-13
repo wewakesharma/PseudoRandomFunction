@@ -8,10 +8,8 @@
 
 //
 
-#include "dmweakPRF.h"
-#include "dmweakPRFpacked.h"
-#include "pi23prot.h"
 #include "utils.h"
+#include "dmweakPRF.h"
 #include "pi23protpacked.h"
 
 //unsigned long int z_final[4];//to store the final product values
@@ -20,16 +18,18 @@ using namespace std;
 
 
 //these are global variables to be set to 0 at the beginning of the protocol, used to hold data transmitted between each party
-extern uint64_t MaGlobal[128][256];
+/*extern uint64_t MaGlobal[128][256];
 extern uint64_t MbGlobal[128];
 extern uint64_t mxbitGlobal;
 extern uint64_t MxGlobal[256];
 extern uint64_t m0Global, m1Global;
 extern uint64_t raGlobal, rbGlobal;
-extern uint64_t rxGlobal, zGlobal;
+extern uint64_t rxGlobal, zGlobal;*/
 
 uint64_t MxMulGlobalPacked[4];
 uint64_t MxOTGlobalPacked[4];
+uint64_t MaGlobal[4][256];
+uint64_t MbGlobal[4];
 uint64_t raPackedGlobalm[4], raPackedGloball[4], rbPackedGlobalm[4], rbPackedGloball[4];
 uint64_t M0GlobalPackedm[4], M1GlobalPackedm[4];
 uint64_t M0GlobalPackedl[4], M1GlobalPackedl[4];
@@ -86,7 +86,32 @@ void sendm0m1Z3Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t 
         M1GlobalPackedl[i] = m1l[i] ;
     }
 }
+//=======================Included for missing function sendMaMb and getMaMb==================
+void sendMaMb(uint64_t Ma[4][256], uint64_t Mb[4])
+{
+    for (int iRow=0; iRow < 4; iRow++)
+    {
+        for (int jCol = 0; jCol < 256; jCol++)
+        {
+            MaGlobal[iRow][jCol] = Ma[iRow][jCol];
+        }
+        MbGlobal[iRow] = Mb[iRow];
+    }
+}
+void getMaMb(uint64_t Ma[4][256], uint64_t Mb[4])
+{
+    //Ma = MaGlobal;
+    //Mb = MbGlobal;
 
+    for (int iRow=0; iRow < 4; iRow++)
+    {
+        for (int jCol = 0; jCol < 256; jCol++)
+        {
+            Ma[iRow][jCol] = MaGlobal[iRow][jCol];
+        }
+        Mb[iRow] = MbGlobal[iRow];
+    }
+}
 
 void sendMxOTPacked(uint64_t MxPacked[4])
 {
@@ -250,6 +275,34 @@ void AXplusB_P2PackedPart2(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_
 
 }
 
+//==============================For Unit Testing of first three functions===================
+void poly_eval_global(uint64_t A[4][256], uint64_t X[4], uint64_t B[4], uint64_t global_res[4])//AX+B evaluation
+{
+    uint64_t A_X[4];//intermediate polynomial evaluation, the term representation of A*X
+    wordPackedVecMatMult(A,X,A_X);
+    for(int cnt = 0; cnt < 4; cnt++)
+        global_res[cnt] = A_X[cnt] ^ B[cnt];
+}
+
+void poly_eval_test(uint64_t out[4], uint64_t global_res[4])
+{
+    int test_flag = 0;
+    for(int i =0;i<4;i++)
+    {
+        if(out[i] != global_res[i])
+        {
+            test_flag = 1;
+            break;
+        }
+
+    }
+    if(test_flag == 0)
+        cout<<"Test Passed";
+    else
+        cout<<"Test failed";
+}
+//===========================================================================
+
 /*
  * This is implementation of OT packed in Z3
  * x,rx are bit elements {0,1}
@@ -288,7 +341,7 @@ void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
     {
         tmpl[i] = (Rx[i] & M1l[i]) | (~Rx[i] & M0l[i]) ;// lbs
         tmpm[i] = (Rx[i] & M1m[i]) | (~Rx[i] & M0m[i]); // msb
-        subMod3(Wm[i], Wl[i], tmpm[i], tmpl[i], Zm[i], Zl[i]);
+        //subMod3(Wm[i], Wl[i], tmpm[i], tmpl[i], Zm[i], Zl[i]);
     }
 }
 
@@ -330,8 +383,8 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r
 
     }
 
-    addMod3vec4(t5m,t5l,rbm,rbl, M0m, M0l);
-    addMod3vec4(t6m,t6l,ram,ral,M1l,M1l);
+    //addMod3vec4(t5m,t5l,rbm,rbl, M0m, M0l);
+    //addMod3vec4(t6m,t6l,ram,ral,M1l,M1l);
 
 
 /*
@@ -358,17 +411,6 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r
 
 
 
-/*
- * we have y1 + y2 = y mod 2
- * y1 is a bit
- * right now non-packed
- * eventually will not be non-packed
- * get ra, rb from processing
- *
- * r1, ra, rb are elements in Z3
- *
- *  * Unit testing should verify that (v+w) mod 3 = (y1 + y2) mod 2
- */
 
 void sc23_p2Part1Packed(uint64_t Y2[4], uint64_t Rx[4] )
 {
@@ -380,11 +422,6 @@ void sc23_p2Part1Packed(uint64_t Y2[4], uint64_t Rx[4] )
 
 }
 
-/*
- * sc23_p2Part2Packed
- * W - trinery output of P2
- */
-
 void sc23_p2Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t Wm[4], uint64_t Wl[4] )
 {
     OTZ3_R_Part2Packed(Rx,Zm, Zl, Wm,Wl);
@@ -393,11 +430,6 @@ void sc23_p2Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
 
 }
 
-/*
- * sc23_p1Packed
- *
- * V - trinery vector output of P2
- */
 void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937 &generator)
 {
     uint64_t ram[4], ral[4], rbm[4], rbl[4];
