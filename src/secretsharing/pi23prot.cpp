@@ -172,7 +172,7 @@ void AXplusB_P1(uint64_t A[256][256], uint64_t B[256], uint64_t Ra[256][256], ui
 
     for (int iRow = 0; iRow < 256; iRow++)
         for (int jCol = 0; jCol < 256; jCol++) {
-            Ma[iRow][jCol] = A[iRow][jCol] - Ra[iRow][jCol];
+            Ma[iRow][jCol] = A[iRow][jCol] ^ Ra[iRow][jCol];
         }
 
     //multiply matrix with a vector
@@ -182,7 +182,7 @@ void AXplusB_P1(uint64_t A[256][256], uint64_t B[256], uint64_t Ra[256][256], ui
     uint64_t Mb[256];
 
     for (int iCol=0; iCol<256; iCol++)
-        Mb[iCol]= z_final[iCol] + B[iCol] - Rb[iCol];
+        Mb[iCol]= z_final[iCol] ^ B[iCol] ^ Rb[iCol];
 
     //send Ma and Mb to party 2
 
@@ -206,7 +206,7 @@ void AXplusB_P2Part1(uint64_t X[256], uint64_t Rx[256], uint64_t Z[256]) {
     uint64_t Mx[256];
 
     for (int iRow = 0; iRow < 256; iRow++)
-        Mx[iRow] = X[iRow] - Rx[iRow];
+        Mx[iRow] = X[iRow] ^ Rx[iRow];
 
     sendMx(Mx); //send the global status
 }
@@ -227,7 +227,7 @@ void AXplusB_P2Part2(uint64_t X[256], uint64_t Rx[256], uint64_t Z[256], uint64_
     wordPackedVecMatMult(Ma,X,z_final);
 
     for (int i = 0; i < 256; i++)
-        out[i] = z_final[i] + Mb[i] + Z[i];
+        out[i] = z_final[i] ^ Mb[i] ^ Z[i];
 
 }
 
