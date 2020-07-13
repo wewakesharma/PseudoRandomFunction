@@ -7,10 +7,14 @@
 #include <cstdlib>
 
 //
+#include <stdio.h>
+#include <string.h>
 
 #include "dmweakPRF.h"
-#include "dmweakPRFnoPack.h"
+#include "dmweakPRFpacked.h"
 #include "pi23prot.h"
+#include "utils.h"
+
 
 //unsigned long int z_final[4];//to store the final product values
 
@@ -18,13 +22,49 @@ using namespace std;
 
 
 //these are global variables to be set to 0 at the beginning of the protocol, used to hold data transmitted between each party
-uint64_t MaGlobal[128][256];
-uint64_t MbGlobal[128];
+uint64_t MaGlobal[256][256];
+uint64_t MbGlobal[256];
 uint64_t mxbitGlobal;
 uint64_t MxGlobal[256];
-uint64_t m0Global, m1Global;
+
+uint64_t M0Global[256], M1Global[256];
+
+uint64_t m0Globalbit, m1Globalbit;
 uint64_t raGlobal, rbGlobal;
 uint64_t rxGlobal, zGlobal;
+
+/*
+ * These are the input variables
+ * at this point we generate them randomly
+ */
+
+void getInputVars(uint64_t A1[256],uint64_t A2[256],uint64_t X1[256][256],uint64_t X2[256][256], std::mt19937 &generator)
+{
+    generate_rand_vector_256(A1, generator);
+    generate_rand_vector_256(A2, generator);
+    generate_rand_sqMat_256(X1, generator);
+    generate_rand_sqMat_256(X2, generator);
+
+}
+
+
+
+/*
+ * Here we are generating binary vectors for the data
+ */
+void PreProcGenVals(uint64_t Ra[256][256], uint64_t Rb[256], uint64_t Rx[256], uint64_t Z[256], std::mt19937 &generator)
+{
+    generate_rand_vector_256(Rx, generator);
+    generate_rand_sqMat_256(Ra, generator);
+    generate_rand_vector_256(Rb, generator);
+
+//calculate Z = Ra*Rx+Rb
+for (int i = 0; i < 256; i++) {
+    for (int jCol = 0; jCol < 256; jCol++)
+        Z[i] = (Ra[i][jCol] & Rx[jCol]) ^ Rb[jCol];
+    }
+
+}
 
 /*
  * Get the Ma and Mb - should be an interactive function eventually - we will wait for the other party to send the protocol
@@ -54,6 +94,11 @@ void getMx(uint64_t mX[256])
     }
 }
 
+/*
+ *
+ */
+
+
 void sendMx(uint64_t Mx[256])
 {
     for (int iRow = 0; iRow < 256; iRow++)
@@ -61,6 +106,8 @@ void sendMx(uint64_t Mx[256])
         MxGlobal[iRow] = Mx[iRow];  //generate a random matrix
     }
 }
+
+
 
 void sendMaMb(uint64_t Ma[128][256], uint64_t Mb[128])
 {
@@ -114,16 +161,16 @@ void sendMaMb(uint64_t Ma[128][256], uint64_t Mb[128])
  */
 
 
-void multProtP1(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][256], uint64_t Rb[128], uint64_t out[128])
+void AXplusB_P1(uint64_t A[256][256], uint64_t B[256], uint64_t Ra[256][256], uint64_t Rb[256], uint64_t out[256])
 {
     uint64_t Mx[256];
 
     //wait to get mx
     getMx(Mx);
     //calculate and output
-    uint64_t Ma[128][256];
+    uint64_t Ma[256][256];
 
-    for (int iRow = 0; iRow < 128; iRow++)
+    for (int iRow = 0; iRow < 256; iRow++)
         for (int jCol = 0; jCol < 256; jCol++) {
             Ma[iRow][jCol] = A[iRow][jCol] - Ra[iRow][jCol];
         }
@@ -132,9 +179,9 @@ void multProtP1(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][256], ui
     uint64_t z_final[4];
     VecMatMultnotPack2(Ra,Mx,z_final);
 
-    uint64_t Mb[128];
+    uint64_t Mb[256];
 
-    for (int iCol=0; iCol<128; iCol++)
+    for (int iCol=0; iCol<256; iCol++)
         Mb[iCol]= z_final[iCol] + B[iCol] - Rb[iCol];
 
     //send Ma and Mb to party 2
@@ -155,7 +202,7 @@ void multProtP1(uint64_t A[128][256], uint64_t B[128], uint64_t Ra[128][256], ui
  *
  *
  */
-void multProtP2Part1(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_t out[128]) {
+void AXplusB_P2Part1(uint64_t X[256], uint64_t Rx[256], uint64_t Z[256]) {
     uint64_t Mx[256];
 
     for (int iRow = 0; iRow < 256; iRow++)
@@ -164,13 +211,13 @@ void multProtP2Part1(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_
     sendMx(Mx); //send the global status
 }
 
-void multProtP2Part2(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_t out[128])
+void AXplusB_P2Part2(uint64_t X[256], uint64_t Rx[256], uint64_t Z[256], uint64_t out[256])
 {
 
     uint64_t Mx[256];
 
-    uint64_t Ma[128][256];
-    uint64_t Mb[128];
+    uint64_t Ma[256][256];
+    uint64_t Mb[256];
 
     getMx(Mx);   //get the global status
 
@@ -179,7 +226,7 @@ void multProtP2Part2(uint64_t X[256], uint64_t Rx[256], uint64_t Z[128], uint64_
     uint64_t z_final[4];
     wordPackedVecMatMult(Ma,X,z_final);
 
-    for (int i = 0; i < 128; i++)
+    for (int i = 0; i < 256; i++)
         out[i] = z_final[i] + Mb[i] + Z[i];
 
 }
@@ -245,18 +292,37 @@ void getmxbit(uint64_t mx)
  * test that the output is r0 if x = 0 and r1 if x=1
  */
 
-
-
-void sendm0m1(uint64_t m0,uint64_t m1)
+void sendm0m1(uint64_t M0[256],uint64_t M1[256])
 {
-    m0Global = m0;
-    m1Global = m1;
+    for (int i = 0; i < 256; i++)
+    {
+        M0Global[i] = M0[i];
+        M1Global[i] = M1[i];
+    }
+   // memcpy(M0Global,M0);
+    //memcpy(M1Global,M1);
 }
 
-void getm0m1(uint64_t m0,uint64_t m1)
+void sendm0m1bit(uint64_t m0,uint64_t m1)
 {
-    m0 = m0Global;
-    m1 = m1Global;
+    m0Globalbit = m0;
+    m1Globalbit = m1;
+}
+
+void getm0m1(uint64_t m0[256],uint64_t m1[256])
+{
+    for (int i = 0; i < 256; i++) {
+        m0[i] = M0Global[i];
+        m1[i] = M1Global[i];
+    }
+}
+
+
+
+void getm0m1bit(uint64_t m0,uint64_t m1)
+{
+    m0 = m0Globalbit;
+    m1 = m1Globalbit;
 }
 
 /*
@@ -267,7 +333,36 @@ void getm0m1(uint64_t m0,uint64_t m1)
  * can be packed into vectors, but then we need two vectors - msb's and lsb's
  */
 
-void OTS(uint64_t r0, uint64_t r1, uint64_t ra, uint64_t rb)
+void OTS(uint64_t r0[256], uint64_t r1[256], uint64_t ra[256], uint64_t rb[256])
+{
+    uint64_t Mx[256];
+    uint64_t M0[256],M1[256];  //m0, m1 are in Z_3, the outpuf of this
+
+    //getMx from P2, t
+    getMx(Mx);
+
+    for (int i = 0; i < 256; i++) {
+        M0[i] = (Mx[i] * r1[i] + (1 - Mx[i]) * r0[i] + rb[i]) % 3;
+        M1[i] = ((1 - Mx[i]) * r1[i] + Mx[i] * r0[i] + ra[i] + rb[i]) % 3;
+    }
+    //can be packed at a later date
+
+    //check that this is equivalent to:
+//    if (mx == 0) {
+//        m0 = r0 + rb; //mod 3
+//        m1 = r1 + ra + rb; // mod 3
+//        }
+//    else{
+//        m0 = r1 + rb; // mod 3
+//        m1 = r0 + ra + rb; // mod 3
+//        }
+
+    sendm0m1(M0,M1);
+
+}
+
+
+void OTSbit(uint64_t r0, uint64_t r1, uint64_t ra, uint64_t rb)
 {
     uint64_t mx;
     uint64_t m0,m1;  //m0, m1 are in Z_3, the outpuf of this
@@ -279,6 +374,8 @@ void OTS(uint64_t r0, uint64_t r1, uint64_t ra, uint64_t rb)
 
 
     m1 = ((1 - mx) * r1 + mx * r0 + ra + rb) %3;
+
+    sendm0m1bit(m0,m1);
 
     //can be packed at a later date
 
@@ -292,7 +389,7 @@ void OTS(uint64_t r0, uint64_t r1, uint64_t ra, uint64_t rb)
 //        m1 = r0 + ra + rb; // mod 3
 //        }
 
-    sendm0m1(m0,m1);
+
 
 }
 
@@ -311,7 +408,7 @@ void OTRPart1(uint64_t x, uint64_t rx, uint64_t z)
 {
     uint64_t mx;
     uint64_t m0,m1;
-    getm0m1(m0,m1);
+    getm0m1bit(m0,m1);
 
     mx = x ^ rx;
     sendmXbit(mx);
@@ -329,7 +426,7 @@ void OTRPart1(uint64_t x, uint64_t rx, uint64_t z)
 uint64_t OTRPart2(uint64_t x, uint64_t rx, uint64_t z)
 {
     uint64_t m0,m1;
-    getm0m1(m0,m1);
+    getm0m1bit(m0,m1);
 
     uint64_t w = (rx * m1 + (1-rx) * m0 - z) % 3;
 
@@ -365,7 +462,7 @@ void OTR(uint64_t x, uint64_t rx, uint64_t z, uint64_t w)
 {
     uint64_t mx;
     uint64_t m0,m1;
-    getm0m1(m0,m1);
+    getm0m1bit(m0,m1);
 
     mx = x ^ rx;
     sendmXbit(mx);
@@ -425,12 +522,68 @@ zGlobal = z;
  * eventually will not be non-packed
  * get ra, rb from processing
  *
- * r1, rb aer elements in Z3
+ * r1, ra, rb are elements in Z3
  *
  *  * Unit testing should verify that (v+w) mod 3 = (y1 + y2) mod 2
  */
 
-uint64_t sc23_p1(uint64_t y1, std::mt19937 &generator )
+void sc23_p1(uint64_t y1[256], uint64_t ra[256], uint64_t rb[256], uint64_t out[256], std::mt19937 &generator )
+{
+    uint64_t r0[256];
+    uint64_t r1[256];
+
+    uint64_t r[256]; //needs to be chosen at random
+
+    generate_rand_vector_256(r, generator);
+
+    for (int i = 0; i < 256; i++) {
+        r0[i] = (r[i] + y1[i]) % 3;
+        r1[i] = (r[i] + 1 - y1[i]) % 3;
+    }
+
+    //call the ORS of the sender
+    OTS(r0,r1,ra,rb);
+
+    for (int i = 0; i < 256; i++) {
+        out[i] = 3 - r[i];
+    }
+    //run OT
+}
+
+uint64_t sc23_p1Bit(uint64_t y1, uint64_t r )
+{
+    uint64_t ra, rb, r0, r1;
+
+    getrarb(ra,rb); //get, ra, rb fro preprocessing, both are elements in Z3
+
+
+
+    r0 = (r + y1) % 3;
+    r1 = (r + 1 - y1) % 3;
+
+    //call the ORS of the sender
+    OTSbit(r0,r1,ra,rb);
+
+    uint64_t v = 3-r;
+    return v;
+    //run OT
+}
+
+/*
+ * we have y1 + y2 = y mod 2
+ * y1 is a bit
+ * right now non-packed
+ * eventually will not be non-packed
+ * get ra, rb from processing
+ *
+ * r1, rb aer elements in Z3
+ *
+ *  * Unit testing should verify that (v+w) mod 3 = (y1 + y2) mod 2
+ *
+ *  here we generate the random bit inside the function
+ */
+
+uint64_t sc23_p1withGen(uint64_t y1, std::mt19937 &generator )
 {
     uint64_t ra, rb, r0, r1;
 
@@ -443,7 +596,40 @@ uint64_t sc23_p1(uint64_t y1, std::mt19937 &generator )
     r1 = (r + 1 - y1) % 3;
 
     //call the ORS of the sender
-    OTS(r0,r1,ra,rb);
+    OTSbit(r0,r1,ra,rb);
+
+    uint64_t v = 3-r;
+    return v;
+
+    //run OT
+}
+
+/*
+ * we have y1 + y2 = y mod 2
+ * y1 is a bit
+ * right now non-packed
+ * eventually will not be non-packed
+ * get ra, rb from processing
+ *
+ * r1, rb aer elements in Z3
+ *
+ *  * Unit testing should verify that (v+w) mod 3 = (y1 + y2) mod 2
+ */
+
+uint64_t sc23_p1Bit(uint64_t y1, std::mt19937 &generator )
+{
+    uint64_t ra, rb, r0, r1;
+
+    getrarb(ra,rb); //get, ra, rb fro preprocessing, both are elements in Z3
+
+    //choose r from z3 random
+    uint64_t r = generator() & 1; //for testing purposes
+
+    r0 = (r + y1) % 3;
+    r1 = (r + 1 - y1) % 3;
+
+    //call the ORS of the sender
+    OTSbit(r0,r1,ra,rb);
 
     uint64_t v = 3-r;
     return v;
@@ -457,7 +643,9 @@ uint64_t sc23_p1(uint64_t y1, std::mt19937 &generator )
  * Unit testing should verify that (v+w) mod 3 = (y1 + y2) mod 2
  */
 
-void sc23_p2Part1(uint64_t y2)
+
+
+void sc23_p2Part1bit(uint64_t y2)
 {
     uint64_t rx, z;
 
@@ -475,7 +663,7 @@ void sc23_p2Part1(uint64_t y2)
 /*
  * sc23_p2Part1 needs to run first, and then sc23_p1
  */
-uint64_t sc23_p2Part2(uint64_t y2)
+uint64_t sc23_p2Part2bit(uint64_t y2)
 {
     uint64_t rx, z;
 
@@ -513,7 +701,7 @@ void sc23_p2(uint64_t y2, uint64_t w )
 
 
 
-
+/*
 void two_party_secret_share(uint64_t x1[4], uint64_t key1[4][256], uint64_t x2[4], uint64_t key2[4][256], uint64_t y[4])
 {
     uint64_t z1[4];
@@ -526,6 +714,7 @@ void two_party_secret_share(uint64_t x1[4], uint64_t key1[4][256], uint64_t x2[4
         y[i] = z1[i] ^ z2[i];
 
 }
+ */
 
 //void two_party_gen_rand_input(uint64_t xin[4],uint64_t kin[4][256],uint64_t xout1[4],uint64_t xout2[4],uint64_t kout1[4][256],uint64_t kout2[4][256], std::mt19937 &generator)
 //{

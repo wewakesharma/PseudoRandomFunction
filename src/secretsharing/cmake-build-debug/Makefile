@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked
+CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/cmake-build-debug/CMakeFiles /Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/code/codesrc/wordpacked/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named wordpacked
+# Target rules for targets named secretsharing
 
 # Build rule for target.
-wordpacked: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 wordpacked
-.PHONY : wordpacked
+secretsharing: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 secretsharing
+.PHONY : secretsharing
 
 # fast build rule for target.
-wordpacked/fast:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/build
-.PHONY : wordpacked/fast
+secretsharing/fast:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/build
+.PHONY : secretsharing/fast
 
 dmweakPRF.o: dmweakPRF.cpp.o
 
@@ -129,7 +129,7 @@ dmweakPRF.o: dmweakPRF.cpp.o
 
 # target to build an object file
 dmweakPRF.cpp.o:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRF.cpp.o
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/dmweakPRF.cpp.o
 .PHONY : dmweakPRF.cpp.o
 
 dmweakPRF.i: dmweakPRF.cpp.i
@@ -138,7 +138,7 @@ dmweakPRF.i: dmweakPRF.cpp.i
 
 # target to preprocess a source file
 dmweakPRF.cpp.i:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRF.cpp.i
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/dmweakPRF.cpp.i
 .PHONY : dmweakPRF.cpp.i
 
 dmweakPRF.s: dmweakPRF.cpp.s
@@ -147,35 +147,35 @@ dmweakPRF.s: dmweakPRF.cpp.s
 
 # target to generate assembly for a file
 dmweakPRF.cpp.s:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRF.cpp.s
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/dmweakPRF.cpp.s
 .PHONY : dmweakPRF.cpp.s
 
-dmweakPRFnpack.o: dmweakPRFnpack.cpp.o
+dmweakPRFpacked.o: dmweakPRFpacked.cpp.o
 
-.PHONY : dmweakPRFnpack.o
+.PHONY : dmweakPRFpacked.o
 
 # target to build an object file
-dmweakPRFnpack.cpp.o:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.o
-.PHONY : dmweakPRFnpack.cpp.o
+dmweakPRFpacked.cpp.o:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.o
+.PHONY : dmweakPRFpacked.cpp.o
 
-dmweakPRFnpack.i: dmweakPRFnpack.cpp.i
+dmweakPRFpacked.i: dmweakPRFpacked.cpp.i
 
-.PHONY : dmweakPRFnpack.i
+.PHONY : dmweakPRFpacked.i
 
 # target to preprocess a source file
-dmweakPRFnpack.cpp.i:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.i
-.PHONY : dmweakPRFnpack.cpp.i
+dmweakPRFpacked.cpp.i:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.i
+.PHONY : dmweakPRFpacked.cpp.i
 
-dmweakPRFnpack.s: dmweakPRFnpack.cpp.s
+dmweakPRFpacked.s: dmweakPRFpacked.cpp.s
 
-.PHONY : dmweakPRFnpack.s
+.PHONY : dmweakPRFpacked.s
 
 # target to generate assembly for a file
-dmweakPRFnpack.cpp.s:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/dmweakPRFnpack.cpp.s
-.PHONY : dmweakPRFnpack.cpp.s
+dmweakPRFpacked.cpp.s:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.s
+.PHONY : dmweakPRFpacked.cpp.s
 
 pi23prot.o: pi23prot.cpp.o
 
@@ -183,7 +183,7 @@ pi23prot.o: pi23prot.cpp.o
 
 # target to build an object file
 pi23prot.cpp.o:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/pi23prot.cpp.o
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/pi23prot.cpp.o
 .PHONY : pi23prot.cpp.o
 
 pi23prot.i: pi23prot.cpp.i
@@ -192,7 +192,7 @@ pi23prot.i: pi23prot.cpp.i
 
 # target to preprocess a source file
 pi23prot.cpp.i:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/pi23prot.cpp.i
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/pi23prot.cpp.i
 .PHONY : pi23prot.cpp.i
 
 pi23prot.s: pi23prot.cpp.s
@@ -201,7 +201,7 @@ pi23prot.s: pi23prot.cpp.s
 
 # target to generate assembly for a file
 pi23prot.cpp.s:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/pi23prot.cpp.s
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/pi23prot.cpp.s
 .PHONY : pi23prot.cpp.s
 
 pi23protpacked.o: pi23protpacked.cpp.o
@@ -210,7 +210,7 @@ pi23protpacked.o: pi23protpacked.cpp.o
 
 # target to build an object file
 pi23protpacked.cpp.o:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/pi23protpacked.cpp.o
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/pi23protpacked.cpp.o
 .PHONY : pi23protpacked.cpp.o
 
 pi23protpacked.i: pi23protpacked.cpp.i
@@ -219,7 +219,7 @@ pi23protpacked.i: pi23protpacked.cpp.i
 
 # target to preprocess a source file
 pi23protpacked.cpp.i:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/pi23protpacked.cpp.i
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/pi23protpacked.cpp.i
 .PHONY : pi23protpacked.cpp.i
 
 pi23protpacked.s: pi23protpacked.cpp.s
@@ -228,35 +228,62 @@ pi23protpacked.s: pi23protpacked.cpp.s
 
 # target to generate assembly for a file
 pi23protpacked.cpp.s:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/pi23protpacked.cpp.s
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/pi23protpacked.cpp.s
 .PHONY : pi23protpacked.cpp.s
 
-prfTiming.o: prfTiming.cpp.o
+secShareTiming.o: secShareTiming.cpp.o
 
-.PHONY : prfTiming.o
+.PHONY : secShareTiming.o
 
 # target to build an object file
-prfTiming.cpp.o:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/prfTiming.cpp.o
-.PHONY : prfTiming.cpp.o
+secShareTiming.cpp.o:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/secShareTiming.cpp.o
+.PHONY : secShareTiming.cpp.o
 
-prfTiming.i: prfTiming.cpp.i
+secShareTiming.i: secShareTiming.cpp.i
 
-.PHONY : prfTiming.i
+.PHONY : secShareTiming.i
 
 # target to preprocess a source file
-prfTiming.cpp.i:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/prfTiming.cpp.i
-.PHONY : prfTiming.cpp.i
+secShareTiming.cpp.i:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/secShareTiming.cpp.i
+.PHONY : secShareTiming.cpp.i
 
-prfTiming.s: prfTiming.cpp.s
+secShareTiming.s: secShareTiming.cpp.s
 
-.PHONY : prfTiming.s
+.PHONY : secShareTiming.s
 
 # target to generate assembly for a file
-prfTiming.cpp.s:
-	$(MAKE) -f CMakeFiles/wordpacked.dir/build.make CMakeFiles/wordpacked.dir/prfTiming.cpp.s
-.PHONY : prfTiming.cpp.s
+secShareTiming.cpp.s:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/secShareTiming.cpp.s
+.PHONY : secShareTiming.cpp.s
+
+utils.o: utils.cpp.o
+
+.PHONY : utils.o
+
+# target to build an object file
+utils.cpp.o:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/utils.cpp.o
+.PHONY : utils.cpp.o
+
+utils.i: utils.cpp.i
+
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.cpp.i:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/utils.cpp.i
+.PHONY : utils.cpp.i
+
+utils.s: utils.cpp.s
+
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.cpp.s:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/utils.cpp.s
+.PHONY : utils.cpp.s
 
 # Help Target
 help:
@@ -266,22 +293,25 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... wordpacked"
+	@echo "... secretsharing"
 	@echo "... dmweakPRF.o"
 	@echo "... dmweakPRF.i"
 	@echo "... dmweakPRF.s"
-	@echo "... dmweakPRFnpack.o"
-	@echo "... dmweakPRFnpack.i"
-	@echo "... dmweakPRFnpack.s"
+	@echo "... dmweakPRFpacked.o"
+	@echo "... dmweakPRFpacked.i"
+	@echo "... dmweakPRFpacked.s"
 	@echo "... pi23prot.o"
 	@echo "... pi23prot.i"
 	@echo "... pi23prot.s"
 	@echo "... pi23protpacked.o"
 	@echo "... pi23protpacked.i"
 	@echo "... pi23protpacked.s"
-	@echo "... prfTiming.o"
-	@echo "... prfTiming.i"
-	@echo "... prfTiming.s"
+	@echo "... secShareTiming.o"
+	@echo "... secShareTiming.i"
+	@echo "... secShareTiming.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
 .PHONY : help
 
 
