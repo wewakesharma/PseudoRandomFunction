@@ -1,0 +1,11 @@
+<<<<<<< HEAD
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/cmake-build-debug
+=======
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/secretsharing/cmake-build-debug
+>>>>>>> cd6f466ade8684602c5c08e4f46c24663767b4c8

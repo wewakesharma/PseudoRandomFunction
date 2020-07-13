@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/dmweakPRF.h
+
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/dmweakPRFpacked.h
+
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/pi23prot.h
+
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/pi23protpacked.cpp
+iostream
+-
+random
+-
+bitset
+-
+cmath
+-
+chrono
+-
+ctime
+-
+cstdlib
+-
+dmweakPRF.h
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/dmweakPRF.h
+dmweakPRFpacked.h
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/dmweakPRFpacked.h
+pi23prot.h
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/pi23prot.h
+utils.h
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/utils.h
+pi23protpacked.h
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/pi23protpacked.h
+
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/pi23protpacked.h
+
+/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/utils.h
+
