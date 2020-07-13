@@ -13,11 +13,6 @@ void AXplusB_P2PackedPart2(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_
 
 void getInputPackedVars(uint64_t A1[4][256],uint64_t A2[4][256],uint64_t X1[4],uint64_t X2[4]);
 
-//testing functions
-void poly_eval_global(uint64_t A[4][256], uint64_t X[4], uint64_t B[4], uint64_t global_res[4]);
-void poly_eval_test(uint64_t poly_eval_2PC[4], uint64_t global_res[4]);
-
-/*
 void getrarbPacked(uint64_t ra[4], uint64_t rb[4]);
 void getMxMulPacked(uint64_t mX[4]);
 void getMxOTPacked(uint64_t mX[4]);
@@ -37,5 +32,5 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r1m[4], uint64_t ram[4], uint64_t r
 
 void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint64_t msb2, uint64_t lsb2);
 void getInputPackedVars(uint64_t A1[4][256],uint64_t A2[4][256],uint64_t X1[4],uint64_t X2[4], std::mt19937 &generator);
-*/
+
 //#endif

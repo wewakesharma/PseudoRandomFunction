@@ -6,14 +6,11 @@
 #include <ctime> 
 #include <cstdlib>
 
-#include "utils.h"
 #include "dmweakPRF.h"
-
 
 //unsigned long int z_final[4];//to store the final product values
 
 using namespace std;
-
 
 
 /*
@@ -50,6 +47,4 @@ void VecMatMultnotPack2(uint64_t key[128][256], uint64_t input[256], uint64_t z_
 
         }
 }
-
-
 

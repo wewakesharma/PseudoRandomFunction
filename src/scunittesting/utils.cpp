@@ -92,7 +92,7 @@ void generate_rand_packed_sqMat_4(uint64_t mat[4][256], std::mt19937 &generator)
         for(int i = 0; i < 4; i++)
         {
             //Call the generator that generate a 64-but word each time
-            mat[i][j] = generator();
+            mat[i][j] = generator() & 1;
         }
 }
 //
@@ -110,26 +110,6 @@ void generate_rand_vector_256(uint64_t vec[256], std::mt19937 &generator)
     }
 }
 
-void wordPackedVecMatMult(uint64_t key[4][256], uint64_t input[4], uint64_t z_final[4])
-{
-    for(int i=0; i < 4; i++) {
-        z_final[i] = 0; // initialize the accumulator to zero
-    }
-
-    for(int i=0; i < 4; i++)
-    {
-        uint64_t x = input[i];
-        for(int j = 0; j < wLen; j++)
-        {
-            uint64_t y = -((x>>j) & 1);
-
-            for (int k = 0; k < 4; k++) {
-                uint64_t z = key[k][j+(wLen*i)];
-                z_final[k] ^= (z & y);
-            }
-        }
-    }
-}
 /*
  * generate a random packed vector
  */
