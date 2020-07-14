@@ -1,5 +1,5 @@
 //
-// Created by Vivek Sharma on 7/6/20.
+// Created by Vivek Sharma on 7/13/20.
 //
 
 /*
@@ -19,19 +19,19 @@
 #include "utils.h"
 #include "dmweakPRF.h"
 #include "pi23protpacked.h"
-#include "pi_unit_test.h"
 
 
 using namespace std;
 //declare the variables
-uint64_t X[4], Rx[4], B[4], Rb[4];//packed version of values
-uint64_t A[4][256], Ra[4][256];
-uint64_t Z[4]; //Ra*Rx + Rb
-uint64_t poly_eval_2PC[4];
-uint64_t out[4];
-uint64_t RaRx[4];
-uint64_t global_res[4];//stores result of AX+B evaluation(for testing)
-
+uint64_t X, Rx, B, Rb;//packed version of values
+uint64_t A, Ra;
+uint64_t Z; //Ra*Rx + Rb
+uint64_t poly_eval_2PC;
+uint64_t out;
+uint64_t RaRx;
+uint64_t global_res;//stores result of AX+B evaluation(for testing)
+uint64_t Ma,Mb;
+uint64_t Ra_Mx, Ma_X, Mx;
 //uint64_t mxbitGlobal;
 //uint64_t MxGlobal[4];
 //uint64_t m0Global, m1Global;
@@ -45,31 +45,33 @@ int main()
     std::mt19937 generator(seed);
 
     //PREPROCESSING==========> generating Ra, Rb and Rx and computing Z = RaRx + Rb
-    PreProcPackedGenVals(Ra,Rb,Rx,Z,generator);
+    Ra = generator();
+    Rb = generator();
+    Rx = generator();
+    Z = (Ra & Rx) ^ Rb;
 
     //PARTY2=================> generates random values for X and Rx.
-    generate_rand_packed_vector_4(X,generator);
-    AXplusB_P2PackedPart1(X,Rx,Z);
+    X = generator();
+    Mx = X ^ Rx;
 
     //PARTY 1=================> generates A, B; while Ra and Rb are already generated in preprocessing
-    generate_rand_packed_sqMat_4(A,generator);
-    generate_rand_packed_vector_4(B,generator);
-    AXplusB_P1Packed(A,B,Ra,Rb);
+    A = generator();
+    B = generator();
+    Ma = A ^ Ra;
+    Ra_Mx = Ra & Mx;
+    Mb = Ra_Mx ^ B ^ Rb;
 
-    AXplusB_P2PackedPart2(X,Rx,Z,out);//evaluation of polynomial using Ma*X + Mb + Z
+    Ma_X = Ma & X;
+    out = Ma_X ^ Mb ^ Z;
 
-    poly_eval_global(A,X,B,global_res);    //evaluation of polynomial using Ax+B
-    poly_eval_test(out, global_res); //comparing both the outputs to compare the result
+    global_res = (A & X) ^ B;
+
     //Printing out the result for direct comparison.
     cout<<endl<<"Out"<<"\t"<<"global_res"<<endl;
-    for(int i = 0; i < 4; i++)
-    {
-        cout<<out[i]<<"\t"<<global_res[i]<<endl;
-    }
+    cout<<out<<"\t"<<global_res<<endl;
 
 
 
 
     return 0;
 }
-

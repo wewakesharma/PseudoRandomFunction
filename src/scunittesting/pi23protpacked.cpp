@@ -8,10 +8,8 @@
 
 //
 
-#include "dmweakPRF.h"
-#include "dmweakPRFpacked.h"
-#include "pi23prot.h"
 #include "utils.h"
+#include "dmweakPRF.h"
 #include "pi23protpacked.h"
 
 //unsigned long int z_final[4];//to store the final product values
@@ -20,13 +18,13 @@ using namespace std;
 
 
 //these are global variables to be set to 0 at the beginning of the protocol, used to hold data transmitted between each party
-extern uint64_t MaGlobal[128][256];
+/*extern uint64_t MaGlobal[128][256];
 extern uint64_t MbGlobal[128];
 extern uint64_t mxbitGlobal;
 extern uint64_t MxGlobal[256];
 extern uint64_t m0Global, m1Global;
 extern uint64_t raGlobal, rbGlobal;
-extern uint64_t rxGlobal, zGlobal;
+extern uint64_t rxGlobal, zGlobal;*/
 
 uint64_t MxMulGlobalPacked[4];
 uint64_t MxOTGlobalPacked[4];
@@ -54,16 +52,15 @@ void getInputPackedVars(uint64_t A1[4][256],uint64_t A2[4][256],uint64_t X1[4],
  */
 void PreProcPackedGenVals(uint64_t Ra[4][256], uint64_t Rb[4], uint64_t Rx[4], uint64_t Z[4], std::mt19937 &generator)
     {
+    uint64_t RaRx[4];
     generate_rand_packed_vector_4(Rx, generator);
     generate_rand_packed_sqMat_4(Ra, generator);
     generate_rand_packed_vector_4(Rb, generator);
 
-
-//calculate Z = Ra*Rx+Rb
-    for (int i = 0; i < 4; i++) {
-        for (int jCol = 0; jCol < 256; jCol++) {
-            Z[i] = (Ra[i][jCol] & Rx[jCol]) ^ Rb[jCol];
-        }
+    wordPackedVecMatMult(Ra,Rx,RaRx);
+    for(int i = 0; i < 4; i ++)
+    {
+        Z[i] = RaRx[i] ^ Rb[i];
     }
 }
 
@@ -86,7 +83,32 @@ void sendm0m1Z3Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t 
         M1GlobalPackedl[i] = m1l[i] ;
     }
 }
+//=======================Included for missing function sendMaMb and getMaMb==================
+void sendMaMb(uint64_t Ma[4][256], uint64_t Mb[4])
+{
+    for (int iRow=0; iRow < 4; iRow++)
+    {
+        for (int jCol = 0; jCol < 256; jCol++)
+        {
+            MaGlobalPacked[iRow][jCol] = Ma[iRow][jCol];
+        }
+        MbGlobalPacked[iRow] = Mb[iRow];
+    }
+}
+void getMaMb(uint64_t Ma[4][256], uint64_t Mb[4])
+{
+    //Ma = MaGlobal;
+    //Mb = MbGlobal;
 
+    for (int iRow=0; iRow < 4; iRow++)
+    {
+        for (int jCol = 0; jCol < 256; jCol++)
+        {
+            Ma[iRow][jCol] = MaGlobalPacked[iRow][jCol];
+        }
+        Mb[iRow] = MbGlobalPacked[iRow];
+    }
+}
 
 void sendMxOTPacked(uint64_t MxPacked[4])
 {
@@ -204,13 +226,14 @@ void AXplusB_P1Packed(uint64_t A[4][256], uint64_t B[4], uint64_t Ra[4][256], ui
         }
 
     //multiply matrix with a vector
-    uint64_t z_final[4];
-    wordPackedVecMatMult(Ra,Mx,z_final);
+    uint64_t Ra_Mx[4];
+    wordPackedVecMatMult(Ra,Mx,Ra_Mx);
+
 
     uint64_t Mb[4];
 
     for (int iCol=0; iCol<4; iCol++)
-        Mb[iCol]= z_final[iCol] ^ B[iCol] ^ Rb[iCol];
+        Mb[iCol]= Ra_Mx[iCol] ^ B[iCol] ^ Rb[iCol];
     //z_final[iCol] + B[iCol] - Rb[iCol];
 
     //send Ma and Mb to party 2
@@ -250,6 +273,8 @@ void AXplusB_P2PackedPart2(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_
 
 }
 
+//===========================================================================
+
 /*
  * This is implementation of OT packed in Z3
  * x,rx are bit elements {0,1}
@@ -288,7 +313,7 @@ void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
     {
         tmpl[i] = (Rx[i] & M1l[i]) | (~Rx[i] & M0l[i]) ;// lbs
         tmpm[i] = (Rx[i] & M1m[i]) | (~Rx[i] & M0m[i]); // msb
-        subMod3(Wm[i], Wl[i], tmpm[i], tmpl[i], Zm[i], Zl[i]);
+        //subMod3(Wm[i], Wl[i], tmpm[i], tmpl[i], Zm[i], Zl[i]);
     }
 }
 
@@ -330,8 +355,8 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r
 
     }
 
-    addMod3vec4(t5m,t5l,rbm,rbl, M0m, M0l);
-    addMod3vec4(t6m,t6l,ram,ral,M1l,M1l);
+    //addMod3vec4(t5m,t5l,rbm,rbl, M0m, M0l);
+    //addMod3vec4(t6m,t6l,ram,ral,M1l,M1l);
 
 
 /*
@@ -358,17 +383,6 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r
 
 
 
-/*
- * we have y1 + y2 = y mod 2
- * y1 is a bit
- * right now non-packed
- * eventually will not be non-packed
- * get ra, rb from processing
- *
- * r1, ra, rb are elements in Z3
- *
- *  * Unit testing should verify that (v+w) mod 3 = (y1 + y2) mod 2
- */
 
 void sc23_p2Part1Packed(uint64_t Y2[4], uint64_t Rx[4] )
 {
@@ -380,11 +394,6 @@ void sc23_p2Part1Packed(uint64_t Y2[4], uint64_t Rx[4] )
 
 }
 
-/*
- * sc23_p2Part2Packed
- * W - trinery output of P2
- */
-
 void sc23_p2Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t Wm[4], uint64_t Wl[4] )
 {
     OTZ3_R_Part2Packed(Rx,Zm, Zl, Wm,Wl);
@@ -393,11 +402,6 @@ void sc23_p2Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
 
 }
 
-/*
- * sc23_p1Packed
- *
- * V - trinery vector output of P2
- */
 void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937 &generator)
 {
     uint64_t ram[4], ral[4], rbm[4], rbl[4];
