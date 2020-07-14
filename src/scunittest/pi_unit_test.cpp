@@ -9,8 +9,8 @@
 #include <ctime>
 #include <cstdlib>
 
-#include "utils.h"
-#include "pi23protpacked.h"
+#include "include/utils.h"
+#include "include/pi23protpacked.h"
 #include "pi_unit_test.h"
 
 using namespace std;

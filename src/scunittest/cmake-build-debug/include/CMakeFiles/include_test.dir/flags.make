@@ -6,5 +6,5 @@ CXX_FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/Ma
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/. 
+CXX_INCLUDES = -I/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/. -I/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/include/. 
 

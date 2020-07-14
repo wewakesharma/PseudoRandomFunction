@@ -241,6 +241,12 @@ Project_BINARY_DIR:STATIC=/Users/vivek/Documents/open_garage/PseudoRandomFunctio
 Project_SOURCE_DIR:STATIC=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest
 
 //Value Computed by CMake
+include_test_BINARY_DIR:STATIC=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/cmake-build-debug/include
+
+//Value Computed by CMake
+include_test_SOURCE_DIR:STATIC=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/include
+
+//Value Computed by CMake
 s_BINARY_DIR:STATIC=/Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/cmake-build-debug
 
 //Value Computed by CMake
@@ -361,7 +367,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
