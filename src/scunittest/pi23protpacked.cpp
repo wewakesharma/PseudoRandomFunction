@@ -342,7 +342,7 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r
         t1m[i] = MxOT[i] & r1m[i];
         t1l[i] = MxOT[i] & r1l[i];
         t2m[i] = r1m[i] ^ t1m[i]; //should be minus mod Z3 - is this correct?
-        t2l[i] = t2l[i] ^ t2l[i];
+        t2l[i] = r1l[i] ^ t1l[i];
         t3m[i] = MxOT[i] & r0m[i];
         t3l[i] = MxOT[i] & r0l[i];
         t4m[i] = r0m[i] ^ t3m[i];
