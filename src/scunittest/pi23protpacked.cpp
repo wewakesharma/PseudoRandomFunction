@@ -313,7 +313,7 @@ void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
     {
         tmpl[i] = (Rx[i] & M1l[i]) | (~Rx[i] & M0l[i]) ;// lbs
         tmpm[i] = (Rx[i] & M1m[i]) | (~Rx[i] & M0m[i]); // msb
-        //subMod3(Wm[i], Wl[i], tmpm[i], tmpl[i], Zm[i], Zl[i]);
+        subMod3(Wm[i], Wl[i], tmpm[i], tmpl[i], Zm[i], Zl[i]);
     }
 }
 
