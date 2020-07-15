@@ -9,9 +9,10 @@
 #include <ctime>
 #include <cstdlib>
 
-#include "include/utils.h"
-#include "include/pi23protpacked.h"
+#include "utils.h"
+#include "pi23protpacked.h"
 #include "pi_unit_test.h"
+#include "dmweakPRFpacked.h"
 
 using namespace std;
 //==============================For Unit Testing of first three functions===================

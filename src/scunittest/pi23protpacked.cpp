@@ -10,6 +10,7 @@
 
 #include "utils.h"
 #include "pi23protpacked.h"
+#include "dmweakPRFpacked.H"
 
 //unsigned long int z_final[4];//to store the final product values
 
@@ -17,8 +18,8 @@ using namespace std;
 
 
 //these are global variables to be set to 0 at the beginning of the protocol, used to hold data transmitted between each party
-/*extern uint64_t MaGlobal[128][256];
-extern uint64_t MbGlobal[128];
+/*extern uint64_t MaGlobal[256][256];
+extern uint64_t MbGlobal[256];
 extern uint64_t mxbitGlobal;
 extern uint64_t MxGlobal[256];
 extern uint64_t m0Global, m1Global;
@@ -354,8 +355,8 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r
 
     }
 
-    //addMod3vec4(t5m,t5l,rbm,rbl, M0m, M0l);
-    //addMod3vec4(t6m,t6l,ram,ral,M1l,M1l);
+    addMod3vec4(t5m,t5l,rbm,rbl, M0m, M0l);
+    addMod3vec4(t6m,t6l,ram,ral,M1l,M1l);
 
 
 /*

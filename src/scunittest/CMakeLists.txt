@@ -5,13 +5,13 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 
-add_subdirectory(include EXCLUDE_FROM_ALL)
-
 add_executable(scunittest
+        dmweakPRFpacked.cpp
+        dmweakPRFpacked.h
+        pi23protpacked.cpp
+        pi23protpacked.h
         pi_unit_test.cpp
-        include/pi23protpacked.cpp
-        include/pi23protpacked.h
-        include/utils.cpp
-        include/utils.h
         pi_unit_test.h
-        piprot_test.cpp)
+        piprot_test.cpp
+        utils.cpp
+        utils.h)

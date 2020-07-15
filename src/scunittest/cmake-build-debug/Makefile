@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest
+CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,72 +123,59 @@ scunittest/fast:
 	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/build
 .PHONY : scunittest/fast
 
-#=============================================================================
-# Target rules for targets named include_test
+dmweakPRFpacked.o: dmweakPRFpacked.cpp.o
 
-# Build rule for target.
-include_test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 include_test
-.PHONY : include_test
-
-# fast build rule for target.
-include_test/fast:
-	$(MAKE) -f include/CMakeFiles/include_test.dir/build.make include/CMakeFiles/include_test.dir/build
-.PHONY : include_test/fast
-
-include/pi23protpacked.o: include/pi23protpacked.cpp.o
-
-.PHONY : include/pi23protpacked.o
+.PHONY : dmweakPRFpacked.o
 
 # target to build an object file
-include/pi23protpacked.cpp.o:
-	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/include/pi23protpacked.cpp.o
-.PHONY : include/pi23protpacked.cpp.o
+dmweakPRFpacked.cpp.o:
+	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.o
+.PHONY : dmweakPRFpacked.cpp.o
 
-include/pi23protpacked.i: include/pi23protpacked.cpp.i
+dmweakPRFpacked.i: dmweakPRFpacked.cpp.i
 
-.PHONY : include/pi23protpacked.i
+.PHONY : dmweakPRFpacked.i
 
 # target to preprocess a source file
-include/pi23protpacked.cpp.i:
-	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/include/pi23protpacked.cpp.i
-.PHONY : include/pi23protpacked.cpp.i
+dmweakPRFpacked.cpp.i:
+	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.i
+.PHONY : dmweakPRFpacked.cpp.i
 
-include/pi23protpacked.s: include/pi23protpacked.cpp.s
+dmweakPRFpacked.s: dmweakPRFpacked.cpp.s
 
-.PHONY : include/pi23protpacked.s
+.PHONY : dmweakPRFpacked.s
 
 # target to generate assembly for a file
-include/pi23protpacked.cpp.s:
-	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/include/pi23protpacked.cpp.s
-.PHONY : include/pi23protpacked.cpp.s
+dmweakPRFpacked.cpp.s:
+	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.s
+.PHONY : dmweakPRFpacked.cpp.s
 
-include/utils.o: include/utils.cpp.o
+pi23protpacked.o: pi23protpacked.cpp.o
 
-.PHONY : include/utils.o
+.PHONY : pi23protpacked.o
 
 # target to build an object file
-include/utils.cpp.o:
-	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/include/utils.cpp.o
-.PHONY : include/utils.cpp.o
+pi23protpacked.cpp.o:
+	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/pi23protpacked.cpp.o
+.PHONY : pi23protpacked.cpp.o
 
-include/utils.i: include/utils.cpp.i
+pi23protpacked.i: pi23protpacked.cpp.i
 
-.PHONY : include/utils.i
+.PHONY : pi23protpacked.i
 
 # target to preprocess a source file
-include/utils.cpp.i:
-	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/include/utils.cpp.i
-.PHONY : include/utils.cpp.i
+pi23protpacked.cpp.i:
+	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/pi23protpacked.cpp.i
+.PHONY : pi23protpacked.cpp.i
 
-include/utils.s: include/utils.cpp.s
+pi23protpacked.s: pi23protpacked.cpp.s
 
-.PHONY : include/utils.s
+.PHONY : pi23protpacked.s
 
 # target to generate assembly for a file
-include/utils.cpp.s:
-	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/include/utils.cpp.s
-.PHONY : include/utils.cpp.s
+pi23protpacked.cpp.s:
+	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/pi23protpacked.cpp.s
+.PHONY : pi23protpacked.cpp.s
 
 pi_unit_test.o: pi_unit_test.cpp.o
 
@@ -244,6 +231,33 @@ piprot_test.cpp.s:
 	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/piprot_test.cpp.s
 .PHONY : piprot_test.cpp.s
 
+utils.o: utils.cpp.o
+
+.PHONY : utils.o
+
+# target to build an object file
+utils.cpp.o:
+	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/utils.cpp.o
+.PHONY : utils.cpp.o
+
+utils.i: utils.cpp.i
+
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.cpp.i:
+	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/utils.cpp.i
+.PHONY : utils.cpp.i
+
+utils.s: utils.cpp.s
+
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.cpp.s:
+	$(MAKE) -f CMakeFiles/scunittest.dir/build.make CMakeFiles/scunittest.dir/utils.cpp.s
+.PHONY : utils.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -253,19 +267,21 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... scunittest"
-	@echo "... include_test"
-	@echo "... include/pi23protpacked.o"
-	@echo "... include/pi23protpacked.i"
-	@echo "... include/pi23protpacked.s"
-	@echo "... include/utils.o"
-	@echo "... include/utils.i"
-	@echo "... include/utils.s"
+	@echo "... dmweakPRFpacked.o"
+	@echo "... dmweakPRFpacked.i"
+	@echo "... dmweakPRFpacked.s"
+	@echo "... pi23protpacked.o"
+	@echo "... pi23protpacked.i"
+	@echo "... pi23protpacked.s"
 	@echo "... pi_unit_test.o"
 	@echo "... pi_unit_test.i"
 	@echo "... pi_unit_test.s"
 	@echo "... piprot_test.o"
 	@echo "... piprot_test.i"
 	@echo "... piprot_test.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
 .PHONY : help
 
 

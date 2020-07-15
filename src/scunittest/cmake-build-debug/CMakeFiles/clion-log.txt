@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/vivek/Documents/open_garage/PseudoRandomFunction/src/scunittest/cmake-build-debug
+-- Build files have been written to: /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug

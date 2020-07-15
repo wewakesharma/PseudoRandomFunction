@@ -16,8 +16,8 @@
 
 //include the user defined header files
 
-#include "include/utils.h"
-#include "include/pi23protpacked.h"
+#include "utils.h"
+#include "pi23protpacked.h"
 #include "pi_unit_test.h"
 
 

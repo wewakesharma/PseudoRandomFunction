@@ -1,8 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/scunittest.dir/include/pi23protpacked.cpp.o"
-  "CMakeFiles/scunittest.dir/include/utils.cpp.o"
+  "CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.o"
+  "CMakeFiles/scunittest.dir/pi23protpacked.cpp.o"
   "CMakeFiles/scunittest.dir/pi_unit_test.cpp.o"
   "CMakeFiles/scunittest.dir/piprot_test.cpp.o"
+  "CMakeFiles/scunittest.dir/utils.cpp.o"
   "scunittest"
   "scunittest.pdb"
 )
