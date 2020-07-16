@@ -20,5 +20,7 @@ add_executable(secretsharing
         piprot_test.cpp
         secShareTiming.cpp
         secShareTiming.h
+        secShareTimingpacked.cpp
+        secShareTimingpacked.h
         utils.cpp
         utils.h)

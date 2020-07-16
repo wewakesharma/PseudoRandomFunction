@@ -312,6 +312,33 @@ secShareTiming.cpp.s:
 	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/secShareTiming.cpp.s
 .PHONY : secShareTiming.cpp.s
 
+secShareTimingpacked.o: secShareTimingpacked.cpp.o
+
+.PHONY : secShareTimingpacked.o
+
+# target to build an object file
+secShareTimingpacked.cpp.o:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.o
+.PHONY : secShareTimingpacked.cpp.o
+
+secShareTimingpacked.i: secShareTimingpacked.cpp.i
+
+.PHONY : secShareTimingpacked.i
+
+# target to preprocess a source file
+secShareTimingpacked.cpp.i:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.i
+.PHONY : secShareTimingpacked.cpp.i
+
+secShareTimingpacked.s: secShareTimingpacked.cpp.s
+
+.PHONY : secShareTimingpacked.s
+
+# target to generate assembly for a file
+secShareTimingpacked.cpp.s:
+	$(MAKE) -f CMakeFiles/secretsharing.dir/build.make CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.s
+.PHONY : secShareTimingpacked.cpp.s
+
 utils.o: utils.cpp.o
 
 .PHONY : utils.o
@@ -369,6 +396,9 @@ help:
 	@echo "... secShareTiming.o"
 	@echo "... secShareTiming.i"
 	@echo "... secShareTiming.s"
+	@echo "... secShareTimingpacked.o"
+	@echo "... secShareTimingpacked.i"
+	@echo "... secShareTimingpacked.s"
 	@echo "... utils.o"
 	@echo "... utils.i"
 	@echo "... utils.s"

@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o"
   "CMakeFiles/secretsharing.dir/piprot_test.cpp.o"
   "CMakeFiles/secretsharing.dir/secShareTiming.cpp.o"
+  "CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.o"
   "CMakeFiles/secretsharing.dir/utils.cpp.o"
   "secretsharing"
   "secretsharing.pdb"
