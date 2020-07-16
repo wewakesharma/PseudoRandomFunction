@@ -23,7 +23,7 @@ void sc23_p2Part1Packed(uint64_t Y2[4], uint64_t Rx[4] );
 void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937 &generator);
 void sc23_p2Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t Wm[4], uint64_t Wl[4] );
 
-/*
+
 void getrarbPacked(uint64_t ra[4], uint64_t rb[4]);
 void getMxMulPacked(uint64_t mX[4]);
 void getMxOTPacked(uint64_t mX[4]);
@@ -41,5 +41,5 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r1m[4], uint64_t ram[4], uint64_t r
 
 void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint64_t msb2, uint64_t lsb2);
 void getInputPackedVars(uint64_t A1[4][256],uint64_t A2[4][256],uint64_t X1[4],uint64_t X2[4], std::mt19937 &generator);
-*/
+
 //#endif

@@ -43,10 +43,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest
+CMAKE_SOURCE_DIR = /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/scunittest.dir/depend.make
@@ -59,68 +59,68 @@ include CMakeFiles/scunittest.dir/flags.make
 
 CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.o: CMakeFiles/scunittest.dir/flags.make
 CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.o: ../dmweakPRFpacked.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/dmweakPRFpacked.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/dmweakPRFpacked.cpp
 
 CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/dmweakPRFpacked.cpp > CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/dmweakPRFpacked.cpp > CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.i
 
 CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/dmweakPRFpacked.cpp -o CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/dmweakPRFpacked.cpp -o CMakeFiles/scunittest.dir/dmweakPRFpacked.cpp.s
 
 CMakeFiles/scunittest.dir/pi23protpacked.cpp.o: CMakeFiles/scunittest.dir/flags.make
 CMakeFiles/scunittest.dir/pi23protpacked.cpp.o: ../pi23protpacked.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/scunittest.dir/pi23protpacked.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/pi23protpacked.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/pi23protpacked.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/scunittest.dir/pi23protpacked.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/pi23protpacked.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/pi23protpacked.cpp
 
 CMakeFiles/scunittest.dir/pi23protpacked.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/scunittest.dir/pi23protpacked.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/pi23protpacked.cpp > CMakeFiles/scunittest.dir/pi23protpacked.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/pi23protpacked.cpp > CMakeFiles/scunittest.dir/pi23protpacked.cpp.i
 
 CMakeFiles/scunittest.dir/pi23protpacked.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/scunittest.dir/pi23protpacked.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/pi23protpacked.cpp -o CMakeFiles/scunittest.dir/pi23protpacked.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/pi23protpacked.cpp -o CMakeFiles/scunittest.dir/pi23protpacked.cpp.s
 
 CMakeFiles/scunittest.dir/pi_unit_test.cpp.o: CMakeFiles/scunittest.dir/flags.make
 CMakeFiles/scunittest.dir/pi_unit_test.cpp.o: ../pi_unit_test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/scunittest.dir/pi_unit_test.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/pi_unit_test.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/pi_unit_test.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/scunittest.dir/pi_unit_test.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/pi_unit_test.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/pi_unit_test.cpp
 
 CMakeFiles/scunittest.dir/pi_unit_test.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/scunittest.dir/pi_unit_test.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/pi_unit_test.cpp > CMakeFiles/scunittest.dir/pi_unit_test.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/pi_unit_test.cpp > CMakeFiles/scunittest.dir/pi_unit_test.cpp.i
 
 CMakeFiles/scunittest.dir/pi_unit_test.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/scunittest.dir/pi_unit_test.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/pi_unit_test.cpp -o CMakeFiles/scunittest.dir/pi_unit_test.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/pi_unit_test.cpp -o CMakeFiles/scunittest.dir/pi_unit_test.cpp.s
 
 CMakeFiles/scunittest.dir/piprot_test.cpp.o: CMakeFiles/scunittest.dir/flags.make
 CMakeFiles/scunittest.dir/piprot_test.cpp.o: ../piprot_test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/scunittest.dir/piprot_test.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/piprot_test.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/piprot_test.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/scunittest.dir/piprot_test.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/piprot_test.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/piprot_test.cpp
 
 CMakeFiles/scunittest.dir/piprot_test.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/scunittest.dir/piprot_test.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/piprot_test.cpp > CMakeFiles/scunittest.dir/piprot_test.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/piprot_test.cpp > CMakeFiles/scunittest.dir/piprot_test.cpp.i
 
 CMakeFiles/scunittest.dir/piprot_test.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/scunittest.dir/piprot_test.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/piprot_test.cpp -o CMakeFiles/scunittest.dir/piprot_test.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/piprot_test.cpp -o CMakeFiles/scunittest.dir/piprot_test.cpp.s
 
 CMakeFiles/scunittest.dir/utils.cpp.o: CMakeFiles/scunittest.dir/flags.make
 CMakeFiles/scunittest.dir/utils.cpp.o: ../utils.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/scunittest.dir/utils.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/utils.cpp.o -c /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/utils.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/scunittest.dir/utils.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/scunittest.dir/utils.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/utils.cpp
 
 CMakeFiles/scunittest.dir/utils.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/scunittest.dir/utils.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/utils.cpp > CMakeFiles/scunittest.dir/utils.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/utils.cpp > CMakeFiles/scunittest.dir/utils.cpp.i
 
 CMakeFiles/scunittest.dir/utils.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/scunittest.dir/utils.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/utils.cpp -o CMakeFiles/scunittest.dir/utils.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/utils.cpp -o CMakeFiles/scunittest.dir/utils.cpp.s
 
 # Object files for target scunittest
 scunittest_OBJECTS = \
@@ -140,7 +140,7 @@ scunittest: CMakeFiles/scunittest.dir/piprot_test.cpp.o
 scunittest: CMakeFiles/scunittest.dir/utils.cpp.o
 scunittest: CMakeFiles/scunittest.dir/build.make
 scunittest: CMakeFiles/scunittest.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable scunittest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable scunittest"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/scunittest.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -153,6 +153,6 @@ CMakeFiles/scunittest.dir/clean:
 .PHONY : CMakeFiles/scunittest.dir/clean
 
 CMakeFiles/scunittest.dir/depend:
-	cd /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug /Users/thalevi/Documents/research/PRFs/code/codesrc/scunittest/cmake-build-debug/CMakeFiles/scunittest.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug /Users/vivek/Documents/Github/PseudoRandomFunction/src/scunittest/cmake-build-debug/CMakeFiles/scunittest.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/scunittest.dir/depend
 
