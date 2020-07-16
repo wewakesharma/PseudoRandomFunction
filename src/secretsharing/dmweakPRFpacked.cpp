@@ -151,7 +151,7 @@ void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint6
     outL = (msb1 | msb2 ) ^ T;
 }
 
-void addMod3vec4(uint64_t outM[4], uint64_t outL[4], uint64_t msb1[4], uint64_t lsb1[4], uint64_t msb2[4], uint64_t lsb2[4])
+void addMod3vec4(uint64_t msb1[4], uint64_t lsb1[4], uint64_t msb2[4], uint64_t lsb2[4], uint64_t outM[4], uint64_t outL[4])
 {
 
     for (int i = 0; i < 4; i++) {

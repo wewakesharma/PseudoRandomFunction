@@ -23,7 +23,7 @@ void subMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint6
 void InnerProdMul(uint64_t outVec[84], uint64_t randMatZ3[128][256], uint64_t in[4]);
 void InnerProdMul2(uint64_t outVec[84], uint64_t randMatZ3[128][256], uint64_t in[4]);
 
-void addMod3vec4(uint64_t outM[4], uint64_t outL[4], uint64_t msb1[4], uint64_t lsb1[4], uint64_t msb2[4], uint64_t lsb2[4]);
+void addMod3vec4(uint64_t msb1[4], uint64_t lsb1[4], uint64_t msb2[4], uint64_t lsb2[4], uint64_t outM[4], uint64_t outL[4]);
 
 
 

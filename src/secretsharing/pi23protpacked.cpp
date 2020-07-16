@@ -401,6 +401,10 @@ void sc23_p2Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
     //run OT
 
 }
+/*
+ * r0 = (r + y1) mod 3
+ * r1 = (r + 1 - y1)  mod 3
+ */
 
 void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937 &generator)
 {
@@ -416,7 +420,20 @@ void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937
     getrarbPacked(ram, ral, rbm, rbl ); //get, ra, rb fro preprocessing, both are elements in Z3
 
     //choose r from z3 random
-    generate_rand_packed_vector_4(r0m, generator);
+    //generate_rand_packed_vector_4(r0m, generator);
+    //generate_rand_packed_vector_4(r0l, generator);
+    //generate_rand_packed_vector_4(r1m, generator);
+    //generate_rand_packed_vector_4(r1l, generator);
+
+    uint64_t zVec[4], OneMinusY[4];
+    for (int i = 0; i < 4; i++)
+        zVec[i] = 0;
+
+    for (int i = 0; i < 4; i++)
+        OneMinusY[i] = y1[i] ^ 1;
+
+    addMod3vec4(Rm, Rl, zVec,y1, r0m, r0l);
+    addMod3vec4(Rm, Rl, zVec,OneMinusY, r1m, r1l);
 
     //TODO; This calculation needs to be transformed to Z3 packed version
     /*
