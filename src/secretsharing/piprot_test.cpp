@@ -93,12 +93,12 @@ int main()
     cout<<endl<<"Printing Wm and Wl"<<endl;
     for(int i = 0; i < 4; i++)
     {
-        //cout<<"x = "<<xGlobal[i]<<endl;
+        cout<<"x = "<<xGlobal[i]<<endl;
         //cout<<"W = "<<Wm[i]<<"\t"<<Wl[i]<<endl;
         cout<<"W = "<<((Wm[i]<<1) | Wl[i])<<endl;
-        //cout<<"r0 = "<<r0Global[i]<<endl;
-        //cout<<"r1 = "<<r1Global[i]<<endl;
-        //cout<<"============================"<<endl;
+        cout<<"r0 = "<<r0Global[i]<<endl;
+        cout<<"r1 = "<<r1Global[i]<<endl;
+        cout<<"============================"<<endl;
         //cout<<WGlobal[i]<<endl;
     }
 

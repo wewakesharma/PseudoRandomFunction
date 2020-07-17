@@ -356,7 +356,7 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r
     }
 
     addMod3vec4(t5m,t5l,rbm,rbl, M0m, M0l);
-    addMod3vec4(t6m,t6l,ram,ral,M1l,M1l);
+    addMod3vec4(t6m,t6l,ram,ral,M1m,M1l);
 
 
 /*
