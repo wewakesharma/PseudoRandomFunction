@@ -289,12 +289,12 @@ void AXplusB_P2PackedPart2(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_
  *  * Unit Test: check that w = ro if x=0, w = r1 if x=1
  * assign random input variables
 */
-void OTZ3_R_Part1Packed(uint64_t x[4], uint64_t rx[4])
+void OTZ3_R_Part1Packed(uint64_t x[4], uint64_t Rx[4])
 {
     uint64_t MxOTPacked[4];
 
     for (int i = 0; i < 4; i++) {
-        MxOTPacked[i] = x[i] ^ rx[i];
+        MxOTPacked[i] = x[i] ^ Rx[i];
         sendMxOTPacked(MxOTPacked);
     }
 }
