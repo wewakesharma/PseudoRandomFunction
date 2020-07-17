@@ -325,7 +325,7 @@ void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
  *
  * can be packed into vectors, but then we need two vectors - msb's and lsb's
  *
- * We're defining ra as equal to the original ra+rb
+ * We're defining as equal to the original ra+rb in the paper
  */
 
 void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r1l[4], uint64_t ram[4], uint64_t ral[4], uint64_t rbm[4], uint64_t rbl[4])
