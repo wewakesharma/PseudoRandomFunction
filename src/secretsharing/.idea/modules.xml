@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/scunittesting.iml" filepath="$PROJECT_DIR$/.idea/scunittesting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/secretsharing.iml" filepath="$PROJECT_DIR$/.idea/secretsharing.iml" />
     </modules>
   </component>
 </project>

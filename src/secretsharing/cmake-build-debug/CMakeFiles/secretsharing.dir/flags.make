@@ -6,5 +6,5 @@ CXX_FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/Ma
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/thalevi/Documents/research/PRFs/code/codesrc/secretsharing/. 
+CXX_INCLUDES = -I/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/. 
 
