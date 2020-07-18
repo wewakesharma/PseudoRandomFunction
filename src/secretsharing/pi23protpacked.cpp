@@ -150,11 +150,11 @@ void getMxMulPacked(uint64_t mX[4])
     }
 }
 
-void OTPreroc(std::mt19937 &generator)
+void OTPreproc(std::mt19937 &generator)
 {
     uint64_t unpackedVecra[256], unpackedVecrb[256];
-    generate_rand_Z3_packed_Vec_4(ramOTGlobal,rbmOTGlobal,unpackedVecra, generator);
-    generate_rand_Z3_packed_Vec_4(ramOTGlobal,ramOTGlobal, unpackedVecrb, generator);
+    generate_rand_Z3_packed_Vec_4(ramOTGlobal,ralOTGlobal,unpackedVecra, generator);
+    generate_rand_Z3_packed_Vec_4(rbmOTGlobal,rblOTGlobal, unpackedVecrb, generator);
 
     generate_rand_packed_vector_4(rxOTGlobal, generator);
 

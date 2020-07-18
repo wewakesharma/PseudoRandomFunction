@@ -162,7 +162,7 @@ void packedTiming(int stepsToRun)
     uint64_t Wm[4], Wl[4];
     uint64_t Rxp23[4];
 
-    OTPreroc(generator);
+    OTPreproc(generator);
     sc23_p2Part1Packed(Y2, generator);
     sc23_p1Packed(Y1,Vm,Vl, generator);
 
