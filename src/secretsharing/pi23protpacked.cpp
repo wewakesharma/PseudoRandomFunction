@@ -34,6 +34,14 @@ uint64_t M0GlobalPackedl[4], M1GlobalPackedl[4];
 uint64_t MaGlobalPacked[4][256];
 uint64_t MbGlobalPacked[4];
 
+uint64_t ramOTGlobal[4];
+uint64_t ralOTGlobal[4];
+uint64_t rbmOTGlobal[4];
+uint64_t rblOTGlobal[4];
+uint64_t zmOTGlobal[4];
+uint64_t zlOTGlobal[4];
+uint64_t rxOTGlobal[4];
+
 void getInputPackedVars(uint64_t A1[4][256],uint64_t A2[4][256],uint64_t X1[4],
         uint64_t X2[4], std::mt19937 &generator) {
     generate_rand_packed_vector_4(X1, generator);
@@ -142,17 +150,50 @@ void getMxMulPacked(uint64_t mX[4])
     }
 }
 
-
-
-void getrarbPacked(uint64_t ram[4], uint64_t ral[4], uint64_t rbm[4], uint64_t rbl[4])
+void OTPreroc(std::mt19937 &generator)
 {
-    ram = raPackedGlobalm;
-    ral = raPackedGloball;
-    rbm = rbPackedGlobalm;
-    rbl = rbPackedGloball;
+    uint64_t unpackedVecra[256], unpackedVecrb[256];
+    generate_rand_Z3_packed_Vec_4(ramOTGlobal,rbmOTGlobal,unpackedVecra, generator);
+    generate_rand_Z3_packed_Vec_4(ramOTGlobal,ramOTGlobal, unpackedVecrb, generator);
+
+    generate_rand_packed_vector_4(rxOTGlobal, generator);
+
+    for (int i = 0; i < 4; i++) {
+        zmOTGlobal[i] = (ramOTGlobal[i] & rxOTGlobal[i]) ^ (rbmOTGlobal[i] & (~rxOTGlobal[i]));
+        zlOTGlobal[i] = (ralOTGlobal[i] & rxOTGlobal[i]) ^ (rblOTGlobal[i] & (~rxOTGlobal[i]));
+    }
+
 }
 
+void getSCP1VarsfromPreProc(uint64_t ram[4], uint64_t ral[4], uint64_t rbm[4], uint64_t rbl[4], std::mt19937 &generator)
+{
+    //generate randomly the z3 vectors
 
+    for (int i = 0; i < 4; i++)
+    {
+        ram[i] = ramOTGlobal[i];
+        rbm[i] = rbmOTGlobal[i] ;
+        ral[i] = ralOTGlobal[i];
+        rbl[i] = rblOTGlobal[i] ;
+    }
+
+}
+
+void getSCP2VarsfromPreProc(uint64_t rx[4], uint64_t zm[4], uint64_t zl[4], std::mt19937 &generator)
+{
+    uint64_t unpackedVecra[256], unpackedVecrb[256];
+
+    generate_rand_packed_vector_4(rx, generator);
+
+    for (int i = 0; i < 4; i++) {
+        rx[i] = rxOTGlobal[i];
+        zm[i] = zmOTGlobal[i];
+        zl[i] = zlOTGlobal[i];
+    }
+
+    //generate randomly the z3 vectors
+
+}
 
 /*
  * Rx and Z come from preprocessing
@@ -289,19 +330,20 @@ void AXplusB_P2PackedPart2(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_
  *  * Unit Test: check that w = ro if x=0, w = r1 if x=1
  * assign random input variables
 */
-void OTZ3_R_Part1Packed(uint64_t x[4], uint64_t Rx[4])
+void OTZ3_R_Part1Packed(uint64_t x[4], uint64_t rx[4])
 {
     uint64_t MxOTPacked[4];
 
     for (int i = 0; i < 4; i++) {
-        MxOTPacked[i] = x[i] ^ Rx[i];
+        MxOTPacked[i] = x[i] ^ rx[i];
         sendMxOTPacked(MxOTPacked);
     }
 }
 /*
  * w = output
  */
-void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t Wm[4], uint64_t Wl[4]) {
+void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t Wm[4], uint64_t Wl[4])
+{
 
     uint64_t M0m[4], M0l[4], M1m[4], M1l[4];
     uint64_t tmpm[4], tmpl[4];
@@ -384,19 +426,29 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r
 
 
 
-void sc23_p2Part1Packed(uint64_t Y2[4], uint64_t Rx[4] )
+void sc23_p2Part1Packed(uint64_t Y2[4], std::mt19937 &generator)
 {
 
+    uint64_t rx[4];
+    uint64_t zm[4];
+    uint64_t zl[4];
+
+    getSCP2VarsfromPreProc( rx,  zm,  zl, generator);
+
     //call the OR of the receiver - part 1
-    OTZ3_R_Part1Packed(Y2, Rx);
+    OTZ3_R_Part1Packed(Y2, rx);
 
     //run OT
 
 }
 
-void sc23_p2Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t Wm[4], uint64_t Wl[4] )
+void sc23_p2Part2Packed(uint64_t wm[4], uint64_t wl[4] , std::mt19937 &generator)
 {
-    OTZ3_R_Part2Packed(Rx,Zm, Zl, Wm,Wl);
+    uint64_t rx[4], zm[4], zl[4];
+
+    getSCP2VarsfromPreProc(rx, zm, zl,  generator);
+
+    OTZ3_R_Part2Packed(rx, zm, zl, wm, wl);
         //call the OR of the receiver - part 1
     //run OT
 
@@ -408,6 +460,8 @@ void sc23_p2Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
 
 void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937 &generator)
 {
+
+
     uint64_t ram[4], ral[4], rbm[4], rbl[4];
     uint64_t r0m[4];
     uint64_t r0l[4], r1m[4], r1l[4];
@@ -417,7 +471,7 @@ void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937
     generate_rand_packed_vector_4(Rm, generator);
     generate_rand_packed_vector_4(Rl, generator);
 
-    getrarbPacked(ram, ral, rbm, rbl ); //get, ra, rb fro preprocessing, both are elements in Z3
+    getSCP1VarsfromPreProc(ram, ral, rbm,rbl,  generator); //get, ra, rb fro preprocessing, both are elements in Z3
 
     //choose r from z3 random
     //generate_rand_packed_vector_4(r0m, generator);

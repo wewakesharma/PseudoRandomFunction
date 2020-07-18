@@ -24,7 +24,7 @@ CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o: ../pi_unit_test.cpp
 CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o: ../pi_unit_test.h
 CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o: ../utils.h
 
-CMakeFiles/secretsharing.dir/piprot_test.cpp.o: ../dmweakPRFpacked.h
+CMakeFiles/secretsharing.dir/piprot_test.cpp.o: ../mains.h
 CMakeFiles/secretsharing.dir/piprot_test.cpp.o: ../pi23protpacked.h
 CMakeFiles/secretsharing.dir/piprot_test.cpp.o: ../pi_unit_test.h
 CMakeFiles/secretsharing.dir/piprot_test.cpp.o: ../piprot_test.cpp

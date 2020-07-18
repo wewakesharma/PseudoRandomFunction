@@ -28,7 +28,7 @@ void CalcEachPartyPackedSecret(uint64_t outP1[4], uint64_t out2P2[4], uint64_t A
 
     uint64_t MultRes[4];
 
-    wordPackedVecMatMult(A1,X1,MultRes);
+    wordPackedVecMatMult(A1,X1,MultRes);    //A1 * X1, packed
 
     for (int i = 0; i < 4; i++)
         Y1[i] = outP1[i]^out2P2[i]^MultRes[i];
@@ -81,10 +81,8 @@ void packedTiming(int stepsToRun)
     uint64_t RA2[4][256];
     uint64_t RB2[4];
 
-    uint64_t outP1[4];
-    uint64_t outP2[4];
-    uint64_t out2P1[4];
-    uint64_t out2P2[4];
+    uint64_t outA[4];  //output of Alice,
+    uint64_t outB[4]; //output of Bob
 
     uint64_t Y1[4];
     uint64_t Y2[4];
@@ -115,52 +113,60 @@ void packedTiming(int stepsToRun)
     //B is chosen at random, this is the output of P1
     //outP2 is the output of Bob
     //B is the outpu of Alice
+
+    //if input is known, the vectors are set to 0
+    for (int i = 0; i < 4; i++) {
+        outA[i] = 0;
+        outB[i] = 0;
+    }
+
     if (bInputUnkown) {
         AXplusB_P2PackedPart1(X2, Rx1, Z1);
         AXplusB_P1Packed(A1, B1, RA1, RB1);
-        AXplusB_P2PackedPart2(X2, Rx1, Z1, outP2);
+        AXplusB_P2PackedPart2(X2, Rx1, Z1, outA);
     }
 
     //here Alice and Bob exchange roles, Alice is P2 and Bob is P1
     if (bInputUnkown) {
         AXplusB_P2PackedPart1(X1, Rx2, Z2);
         AXplusB_P1Packed(A2, B2, RA2, RB2);
-        AXplusB_P2PackedPart2(X2, Rx1, Z1, out2P2);
+        AXplusB_P2PackedPart2(X2, Rx1, Z1, outB);
     }
 
     //Alice
-    CalcEachPartyPackedSecret(B1,out2P2, A1,X1,Y1);
+    CalcEachPartyPackedSecret(B1,outB, A1,X1,Y1);
     //Bob calculates his part
-    CalcEachPartyPackedSecret(B2,outP2,A2,X2,Y2);
+    CalcEachPartyPackedSecret(B2,outA,A2,X2,Y2);
 
+/*
     //Here we start the next phase were we deal with Z3 numbers
     uint64_t ram[4], ral[4], rbm[4], rbl[4]; //these are Z3 vectors
     uint64_t Rz[4]; //a binary vector
     uint64_t unpackedVecra[256], unpackedVecrb[256];
 
     generate_rand_Z3_packed_Vec_4(ram, ral, unpackedVecra, generator);
-    generate_rand_Z3_packed_Vec_4(rbl, rbl, unpackedVecrb, generator);
+    generate_rand_Z3_packed_Vec_4(rbm, rbl, unpackedVecrb, generator);
     generate_rand_packed_vector_4(Rz, generator);
 
     uint64_t zZ3m[4], zZ3l[4];
 
     for (int i = 0; i < 4; i++) {
-        zZ3m[i] = (Rz[i] & ram[i]) ^ ((1-Rz[i]) & rbm[i]) ;
-        zZ3l[i] = (Rz[i] & ral[i]) ^ ((1-Rz[i]) & rbl[i]) ;
+        zZ3m[i] = (Rz[i] & ram[i]) ^ (((-1) ^ Rz[i]) & rbm[i]) ;
+        zZ3l[i] = (Rz[i] & ral[i]) ^ (((-1) ^ Rz[i]) & rbl[i]) ;
     }
+    */
 
     /////////////
 
     uint64_t Vm[4], Vl[4];
     uint64_t Wm[4], Wl[4];
     uint64_t Rxp23[4];
-    uint64_t Zmp23[4], Zlp23[4];
-    generate_rand_packed_vector_4(Rxp23, generator);
 
-    sc23_p2Part1Packed(Y2, Rxp23);
+    OTPreroc(generator);
+    sc23_p2Part1Packed(Y2, generator);
     sc23_p1Packed(Y1,Vm,Vl, generator);
 
-    sc23_p2Part2Packed(Rxp23, Zmp23, Zlp23, Wm, Wl);
+    sc23_p2Part2Packed(Wm, Wl, generator);
 
 }
 
