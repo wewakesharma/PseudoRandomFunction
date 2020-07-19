@@ -52,8 +52,8 @@ void UnpackedTiming(int stepsToRun)
 
     uint64_t key[4][256];
     //randMat1 holds the LSB's, randMat2 holds the MSB's of the randomization matrix
-    uint64_t randMat1[2][256], randMat2[2][256];
-    uint64_t randMatZ3[81][256]; //randMatZ3 holds the Z3 elements
+    //uint64_t randMat1[2][256], randMat2[2][256];
+    //uint64_t randMatZ3[81][256]; //randMatZ3 holds the Z3 elements
     uint64_t input[4];
     uint64_t outM[2];
     uint64_t outL[2];

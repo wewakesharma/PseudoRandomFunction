@@ -53,7 +53,7 @@ void generate_rand_key(uint64_t key[4][256], std::mt19937 &generator)
  * in any of the matching MSB's and LSB's
  *
  */
-void generate_rand_Z3_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256], uint64_t randMatZ3[81][256], std::mt19937 &generator)
+void generate_rand_Z3_matrix_81x256(uint64_t randMat1[2][256], uint64_t randMat2[2][256], uint64_t randMatZ3[81][256], std::mt19937 &generator)
 {
 
 
@@ -105,6 +105,74 @@ void generate_rand_Z3_matrix(uint64_t randMat1[2][256], uint64_t randMat2[2][256
     }
 }
 
+void generate_test_Z3_matrix_81x256(uint64_t randMat1[2][256], uint64_t randMat2[2][256], uint64_t randMatZ3[81][256], std::mt19937 &generator)
+{
+
+    int jColTest = 1;
+    int jRowsTest = 1;
+    int nBitsGenMax = 1; //81 by default
+
+    for (int jCol = jColTest; jCol < 256; jCol++) {
+        //go over the columns
+        for (int iRow = jRowsTest; iRow < 2; iRow++) {
+            randMat1[iRow][jCol]=0;
+            randMat2[iRow][jCol]=0;
+        }
+    }
+
+    for (int jCol = 0; jCol < 256; jCol++)
+        for (int iRow = 0; iRow < 81; iRow++)
+        {
+        randMatZ3[iRow][jCol] = 0; //default initialization
+    }
+
+
+    //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
+    for (int jCol = 0; jCol < jColTest; jCol++) {
+        //go over the columns
+        for (int iRow = 0; iRow < jRowsTest; iRow++) {
+            //fill the numbers for each row
+
+            randMat1[iRow][jCol]=0;
+            randMat2[iRow][jCol]=0;
+
+            int nBitsGenerated = 0;
+            while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
+            {
+                if ((iRow*wLen+nBitsGenerated) >= nBitsGenMax) {
+                    break; //go to the next item
+                }
+
+                uint64_t wGen = generator();
+                //k is the index within the wGen, which holds a random 64 bit word
+                for (int k = 0; k < wLen; k = k + 2) {
+
+                    //if we already have 81 rows, the rest of the items in this column are set to 0
+
+                    //examine each two bits and make sure they are not 11
+                    uint64_t bit1 = (wGen >> k) & 1;
+                    uint64_t bit2 = (wGen >> (k + 1)) & 1;
+
+                    //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
+                    if (!((bit1 == 1) & (bit2 == 1)))
+                    {
+                        //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
+                        randMat1[iRow][jCol] |= (bit1 << nBitsGenerated);
+                        randMat2[iRow][jCol] |= (bit2 << nBitsGenerated);
+                        randMatZ3[nBitsGenerated+iRow*wLen][jCol]=(bit1<<1 | bit2);
+                        nBitsGenerated++;
+                        //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
+                        if ((nBitsGenerated == wLen) || (iRow*wLen+nBitsGenerated) == 81) {
+                            break; //go to the next item
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 /*
  * compute the multiplication of the key with the input
  * Each word holds 64 packed binary bits
@@ -152,6 +220,18 @@ void addMod3(uint64_t& outM, uint64_t& outL, uint64_t msb1, uint64_t lsb1, uint6
 }
 
 void addMod3vec4(uint64_t msb1[4], uint64_t lsb1[4], uint64_t msb2[4], uint64_t lsb2[4], uint64_t outM[4], uint64_t outL[4])
+{
+
+    for (int i = 0; i < 4; i++) {
+        uint64_t T = (lsb1[i] | msb2[i]) ^(lsb2[i] | msb1[i]);
+
+        outM[i] = (lsb1[i] | lsb2[i]) ^ T;
+        outL[i] = (msb1[i] | msb2[i]) ^ T;
+    }
+
+}
+
+void addMod3vec2(uint64_t msb1[2], uint64_t lsb1[2], uint64_t msb2[2], uint64_t lsb2[2], uint64_t outM[2], uint64_t outL[2])
 {
 
     for (int i = 0; i < 4; i++) {
@@ -337,9 +417,12 @@ void InnerProdMul(uint64_t outVec[84], uint64_t randMatZ3[128][256], uint64_t in
 }
 
 
+/*
+ * multMod3
+ * Multiply a trinery matrix with a binary vector
+ */
 
-
-void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t in[4])
+void multMod3_Z3Mat_Z2Vec(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t in[4], uint64_t outM[2], uint64_t outL[2])
 {
     uint64_t msb[2], lsb[2];
 
@@ -359,6 +442,101 @@ void multMod3(uint64_t outM[2], uint64_t outL[2], uint64_t msbs[2][256], uint64_
 
         }
 
+}
+
+void multMod3_Z3Mat_Z3Vec2(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t inm[4], uint64_t inl[4], uint64_t outM[2], uint64_t outL[2]) {
+    uint64_t msbbitm[2], lsbbitm[2];
+    uint64_t msbbitl[2], lsbbitl[2];
+
+    uint64_t outMbitm[2], outLbitm[2];
+    uint64_t outMbitl[2], outLbitl[2];
+    uint64_t acc1[2];
+    uint64_t acc2[2] ;
+    //go over the input bits, one by one
+
+    for (int j = 0; j < 2; j++)
+    {
+        acc1[j] = 0;
+        acc2[j] = 0;
+    }
+
+    for (int i1 = 0; i1 < 4; i1++)
+        for (int i2 = 0; i2 < 64; i2++) {
+            uint64_t bitm = -((inm[i1] >> i2) & 1); //the input bit, replicated either all=0 or all=1
+            uint64_t bitl = -((inl[i1] >> i2) & 1); //the input bit, replicated either all=0 or all=1
+
+
+
+            uint64_t tmpm[2], tmpl[2];
+
+            for (int j = 0; j < 2; j++) //each column has 81 rows, so need 2 64-bit words
+            {
+                tmpm[j] = msbs[j][64 * i1 + i2];
+                tmpl[j] = lsbs[j][64 * i1 + i2];
+
+
+                addMod3(outMbitm[j], outMbitl[j], outMbitm[j], outMbitl[j], msbbitm[j],
+                        lsbbitm[j]); //add mod 3 to acumulator
+
+                msbbitl[j] = msbs[j][64 * i1 + i2] & bitl;
+                lsbbitl[j] = lsbs[j][64 * i1 + i2] & bitl;  //multiply by current bit
+
+                uint64_t m1 = (tmpm[j] & bitm) & (tmpl[j] & bitl);
+                uint64_t m2 = (tmpl[j] & bitm) & (tmpm[j] & bitl);
+
+                addMod3(acc1[j], acc2[j], acc1[j], acc2[j], m1, m2);
+
+
+            }
+        }
+
+    for (int i = 0; i < 2; i++) {
+    outM[i] = acc1[i];
+    outL[i] = acc2[i];
+}
+}
+
+void multMod3_Z3Mat_Z3Vec(uint64_t msbs[2][256], uint64_t lsbs[2][256], uint64_t inm[4], uint64_t inl[4], uint64_t outM[2], uint64_t outL[2])
+{
+    uint64_t msbbitm[2], lsbbitm[2];
+    uint64_t msbbitl[2], lsbbitl[2];
+
+    uint64_t outMbitm[2], outLbitm[2];
+    uint64_t outMbitl[2], outLbitl[2];
+
+    //go over the input bits, one by one
+
+    for (int i1 = 0; i1 < 4; i1++)
+        for (int i2 = 0; i2 < 64; i2++)
+        {
+            uint64_t bitm = -((inm[i1] >> i2 ) & 1 ); //the input bit, replicated either all=0 or all=1
+            uint64_t bitl = -((inl[i1] >> i2 ) & 1 ); //the input bit, replicated either all=0 or all=1
+
+            for (int j = 0; j < 2; j++) //each column has 81 rows, so need 2 64-bit words
+            {
+                msbbitm[j] = msbs[j][64*i1+i2] & bitm;
+                lsbbitm[j] = lsbs[j][64*i1+i2] & bitm;  //multiply by current bit
+                addMod3(outMbitm[j],outMbitl[j],outMbitm[j],outMbitl[j],msbbitm[j],lsbbitm[j]); //add mod 3 to acumulator
+
+                msbbitl[j] = msbs[j][64*i1+i2] & bitl;
+                lsbbitl[j] = lsbs[j][64*i1+i2] & bitl;  //multiply by current bit
+                addMod3(outLbitm[j],outLbitl[j],outLbitm[j],outLbitl[j],msbbitl[j],lsbbitl[j]); //add mod 3 to acumulator
+
+            }
+        }
+
+    //subtract the msb output from the lsb - mod 3 calculation:
+    //R = 2*a+b (mod 3)= b - a (mod 3)
+
+    uint64_t outMbitmneg[2], outMbitlneg[2];
+
+    for (int i = 0; i < 2; i++)
+    {
+        outMbitmneg[i] = ~outMbitm[i];
+        outMbitlneg[i] = ~outMbitl[i];
+    }
+
+    addMod3vec2(outM,outL,outLbitm,outLbitl,outMbitmneg,outMbitlneg);
 }
 
 

@@ -168,6 +168,19 @@ void packedTiming(int stepsToRun)
 
     sc23_p2Part2Packed(Wm, Wl, generator);
 
+    //multiply the result of the secret sharing with a random Z3 matrix 81X256
+
+    //generate the random Z3 81X256 matrix first
+    uint64_t randMat1[2][256], randMat2[2][256];
+    uint64_t randMatZ3[81][256]; //randMatZ3 holds the Z3 elements
+    generate_rand_Z3_matrix_81x256(randMat1, randMat2, randMatZ3, generator);
+
+    uint64_t output_Am[2], output_Al[2], output_Bm[2], output_Bl[2];
+
+    multMod3_Z3Mat_Z3Vec(randMat1, randMat2, Vm, Vl, output_Am, output_Al); // matrix-vector multiply mod 3
+    multMod3_Z3Mat_Z3Vec(randMat1, randMat2, Wm, Wl, output_Bm, output_Bl); // matrix-vector multiply mod 3
+
+    //at this point we have the Z3 outputs A1 and B1
 }
 
 
