@@ -88,6 +88,12 @@ void generate_test_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4
         }
 
     }
+
+    for (int jCol = jTestCols; jCol < 256; jCol++) {
+        PackedVecm[jCol] = 0;
+        PackedVecl[jCol] = 0;
+        unpackedVec[jCol]=0;
+    }
 }
 
 void generate_rand_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4], uint64_t unpackedVec[256], std::mt19937 &generator)
