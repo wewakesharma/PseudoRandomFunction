@@ -38,15 +38,16 @@ int main()
     uint64_t Z[4]; //Ra*Rx + Rb
     uint64_t out[4];
 
-    uint64_t mxbitGlobal;
-    uint64_t MxGlobal[4];
-    uint64_t m0Global, m1Global;
-    uint64_t rx[4], z[4], x[4];
-    uint64_t raGlobal[4], rbGlobal[4],r0Global[4], r1Global[4];//ra, rb, r1, r0 values in Z3
+    //uint64_t mxbitGlobal;
+    //uint64_t MxGlobal[4];
+    //uint64_t m0Global, m1Global;
+    uint64_t rx[4]; //number generated in OTPreproc
+    //uint64_t raGlobal[4], rbGlobal[4],r0Global[4], r1Global[4];//ra, rb, r1, r0 values in Z3
     uint64_t r0l[4],r0m[4],r1l[4],r1m[4],ral[4],ram[4],rbl[4],rbm[4];//LSB and MSB of r0, r1, ra, rb
     //uint64_t Zl[4], Zm[4];
-    uint64_t Wl[4], Wm[4], WGlobal[4];
-    uint64_t r0unpck[256],r1unpck[256],raunpck[256],rbunpck[256],Zunpck[256];
+    uint64_t wl[4], wm[4], wGlobal[4];
+    uint64_t r0unpck[256],r1unpck[256];
+    uint64_t zm[4],zl[4];
 
     unsigned seed = 7;    // std::chrono::system_clock::now().time_since_epoch().count();
     std::mt19937 generator(seed);
@@ -70,40 +71,41 @@ int main()
     //Test Complete - AX +B polynomial evaluation
 
     //Unit Test - 2 =========================OT evaluation===========================
-    //Receiver Part 1-generate bits x and rx which are bits{0,1}
-    //generate_bits_4(x,generator);
-    //generate_bits_4(rx,generator);
+    //Receiver Part 1-generate bits x and Rx which are bits{0,1}
+    //X is already generated and Rx will be fetched through OT Preprocessing
     OTPreproc(generator);
-    rxOTGlobal;
-    OTZ3_R_Part1Packed(X, Rx);
+    OT_fetch_preprocessed_values(ram,ral,rbm,rbl,rx,zm,zl);
+
+    OTZ3_R_Part1Packed(X, rx);//X and rx
 
     //Sender
     //generate r0, r0l and r0m
     generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);
     //generate r1, r1l and r1m
     generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);
-    //generate ra, ral and ram
+    /*generate ra, ral and ram
     generate_rand_Z3_packed_Vec_4(ram,ral,raunpck,generator);
     //generate rb, rbl and rbm
-    generate_rand_Z3_packed_Vec_4(rbm,rbl,rbunpck,generator);
+    generate_rand_Z3_packed_Vec_4(rbm,rbl,rbunpck,generator);*/
 
     OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);//doesn't need to do anything except calling the function
 
     //Receiver Part 2
     //generate_rand_Z3_packed_Vec_4(Zm,Zl,Zunpck,generator);
     //generate_msb_lsb_Z3(z,Zm,Zl,generator);//generate zGlobal in Z3 and store their bit representation in Zm and Zl
-    OTZ3_R_Part2Packed(Rx,Zm,Zl,Wm,Wl);
+    OTZ3_R_Part2Packed(rx,zm,zl,wm,wl);
 
     cout<<endl<<"Printing Wm and Wl"<<endl;
-    uint64_t X_bit, Wm_bit, Wl_bit, r0m_bit, r0l_bit, r1m_bit, r1l_bit;
+    uint64_t X_bit, wm_bit, wl_bit, r0m_bit, r0l_bit, r1m_bit, r1l_bit;
     bool test_flag = 1;//test pass
     bool mismatch_x0 = 0;//mismatch when x = 0
     bool mismatch_x1 = 0;//mismatch when x = 1
 
+
     for(int i = 0; i < 1; i++)
     {
-        uint64_t Wm_word = Wm[i];
-        uint64_t Wl_word = Wl[i];
+        uint64_t wm_word = wm[i];
+        uint64_t wl_word = wl[i];
         uint64_t X_word = X[i];
         uint64_t r0m_word = r0m[i];
         uint64_t r0l_word = r0l[i];
@@ -114,18 +116,18 @@ int main()
             //and see that it matches either r0m, r0l or r1m, r1l
             //cepending on the value of the XWord'i bith
             X_bit = (X_word >> jBit) & 1;
-            Wm_bit = (Wm_word >> jBit) & 1;
-            Wl_bit = (Wl_word >> jBit) & 1;
+            wm_bit = (wm_word >> jBit) & 1;
+            wl_bit = (wl_word >> jBit) & 1;
             r0m_bit = (r0m_word >> jBit) & 1;
             r0l_bit = (r0l_word >> jBit) & 1;
             r1m_bit = (r1m_word >> jBit) & 1;
             r1l_bit = (r1l_word >> jBit) & 1;
-            if((X_bit == 0) & ((Wl_bit != r0l_bit) | (Wm_bit != r0m_bit)))//Wl,Wm didn't match with r0l and r0m respectively
+            if((X_bit == 0) & ((wl_bit != r0l_bit) | (wm_bit != r0m_bit)))//Wl,Wm didn't match with r0l and r0m respectively
             {
                 mismatch_x0 = 1;//error when x=0
                 break;//breaks out of inner loop
             }
-            if((X_bit == 1) & ((Wl_bit != r1l_bit) | (Wm_bit != r1m_bit)))//Wl,Wm didn't match with r1l and r1m respectively
+            if((X_bit == 1) & ((wl_bit != r1l_bit) | (wm_bit != r1m_bit)))//Wl,Wm didn't match with r1l and r1m respectively
             {
                 mismatch_x1 = 1;//error when x=0
                 break;//breaks out of inner loop

@@ -6,75 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp
-iostream
--
-random
--
-bitset
--
-cmath
--
-chrono
--
-ctime
--
-cstdlib
--
-dmweakPRF.h
 /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRF.h
-
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRF.h
-
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.cpp
-iostream
--
-random
--
-bitset
--
-cmath
--
-chrono
--
-ctime
--
-cstdlib
--
-dmweakPRFpacked.h
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.h
 
 /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.h
 
 /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/mains.h
-
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23prot.cpp
-iostream
--
-random
--
-bitset
--
-cmath
--
-chrono
--
-ctime
--
-cstdlib
--
-stdio.h
--
-string.h
--
-dmweakPRF.h
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRF.h
-dmweakPRFpacked.h
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.h
-pi23prot.h
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23prot.h
-utils.h
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utils.h
 
 /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23prot.h
 
@@ -143,10 +79,10 @@ ctime
 -
 cstdlib
 -
-mains.h
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/mains.h
 utils.h
 /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utils.h
+dmweakPRFpacked.h
+/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.h
 pi23protpacked.h
 /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23protpacked.h
 pi_unit_test.h
@@ -213,22 +149,6 @@ secShareTiming.h
 /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/secShareTiming.h
 pi23protpacked.h
 /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23protpacked.h
-
-/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utils.cpp
-iostream
--
-random
--
-bitset
--
-cmath
--
-chrono
--
-ctime
--
-cstdlib
--
 
 /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utils.h
 

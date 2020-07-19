@@ -35,6 +35,8 @@ void getm0m1Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t m1l
 void PreProcPackedGenVals(uint64_t Ra[4][256], uint64_t Rb[4], uint64_t Rx[4], uint64_t Z[4], std::mt19937 &generator);
 
 void OTPreproc(std::mt19937 &generator);
+void OT_fetch_preprocessed_values(uint64_t ram[4],uint64_t ral[4],uint64_t rbm[4],uint64_t rbl[4],uint64_t rx[4],uint64_t zm[4],uint64_t zl[4]);
+
 void getSCP1VarsfromPreProc(uint64_t ram[4], uint64_t ral[4], uint64_t rbm[4], uint64_t rbl[4], std::mt19937 &generator);
 void getSCP2VarsfromPreProc(uint64_t rx[4], uint64_t zm[4], uint64_t zl[4], std::mt19937 &generator);
 

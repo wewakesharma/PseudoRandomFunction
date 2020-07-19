@@ -165,6 +165,22 @@ void OTPreproc(std::mt19937 &generator)
 
 }
 
+//===================Unit test function- function to
+void OT_fetch_preprocessed_values(uint64_t ram[4],uint64_t ral[4],uint64_t rbm[4],uint64_t rbl[4],uint64_t rx[4],uint64_t zm[4],uint64_t zl[4])//fetches the preprocessed values for the OT functionality
+{
+    for(int cnt = 0; cnt < 4; cnt++)
+    {
+        ram[cnt] = ramOTGlobal[cnt];
+        ral[cnt] = ralOTGlobal[cnt];
+        rbm[cnt] = rbmOTGlobal[cnt];
+        rbl[cnt] = rblOTGlobal[cnt];
+        rx[cnt] = rxOTGlobal[cnt];
+        zm[cnt] = zmOTGlobal[cnt];
+        zl[cnt] = zlOTGlobal[cnt];
+    }
+
+}
+//==========================================
 void getSCP1VarsfromPreProc(uint64_t ram[4], uint64_t ral[4], uint64_t rbm[4], uint64_t rbl[4], std::mt19937 &generator)
 {
     //generate randomly the z3 vectors
