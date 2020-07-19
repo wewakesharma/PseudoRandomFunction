@@ -44,7 +44,7 @@ int main()
     uint64_t rx[4], z[4], x[4];
     uint64_t raGlobal[4], rbGlobal[4],r0Global[4], r1Global[4];//ra, rb, r1, r0 values in Z3
     uint64_t r0l[4],r0m[4],r1l[4],r1m[4],ral[4],ram[4],rbl[4],rbm[4];//LSB and MSB of r0, r1, ra, rb
-    uint64_t Zl[4], Zm[4];
+    //uint64_t Zl[4], Zm[4];
     uint64_t Wl[4], Wm[4], WGlobal[4];
     uint64_t r0unpck[256],r1unpck[256],raunpck[256],rbunpck[256],Zunpck[256];
 
@@ -73,6 +73,8 @@ int main()
     //Receiver Part 1-generate bits x and rx which are bits{0,1}
     //generate_bits_4(x,generator);
     //generate_bits_4(rx,generator);
+    OTPreproc(generator);
+    rxOTGlobal;
     OTZ3_R_Part1Packed(X, Rx);
 
     //Sender
@@ -88,7 +90,7 @@ int main()
     OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);//doesn't need to do anything except calling the function
 
     //Receiver Part 2
-    generate_rand_Z3_packed_Vec_4(Zm,Zl,Zunpck,generator);
+    //generate_rand_Z3_packed_Vec_4(Zm,Zl,Zunpck,generator);
     //generate_msb_lsb_Z3(z,Zm,Zl,generator);//generate zGlobal in Z3 and store their bit representation in Zm and Zl
     OTZ3_R_Part2Packed(Rx,Zm,Zl,Wm,Wl);
 
