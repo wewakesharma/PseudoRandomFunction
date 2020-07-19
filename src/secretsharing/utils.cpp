@@ -13,6 +13,26 @@ using namespace std;
 
 int wLen = 64;
 
+void generate_test_packed_vector_4(uint64_t vec[4], std::mt19937 &generator)
+{
+
+    for(int i = 0; i < 4; i++)
+    {
+        vec[i] = 0;
+    }
+
+    //number of bits that are non-zero
+    int jBitTest = 1;
+    int iWordTest = 1; //number of words that are non-zero
+    //srand(time(NULL));
+    for(int i = 0; i < iWordTest; i++)
+    {
+        for (int j = 0; j < jBitTest; j++)
+        //Call the generator that generate a 64-but word each time
+        vec[i] |= (generator()& 1) << j;
+    }
+}
+
 void generate_rand_packed_vector_4(uint64_t vec[4], std::mt19937 &generator)
 {
 
@@ -84,6 +104,29 @@ void generate_rand_sqMat_256(uint64_t mat[256][256], std::mt19937 &generator)
             }
 }
 
+void generate_test_packed_sqMat_4(uint64_t mat[4][256], std::mt19937 &generator)
+{
+    for(int i = 0; i < 4; i++)
+        for (int j = 0; j < 256; j++)
+        {
+            mat[i][j] = 0;
+        }
+
+    //number of bits that are non-zero
+    int lBitTest = 1;
+    int iWordTest = 1; //number of words that are non-zero
+    int jColTest = 1;
+
+    //srand(time(NULL));
+    for(int i = 0; i < iWordTest; i++)
+    {
+        for (int j = 0; j < jColTest; j++)
+
+            for (int l = 0; l < lBitTest; l++)
+            //Call the generator that generate a 64-but word each time
+                mat[i][j] |= (generator()& 1) << l;
+    }
+}
 void generate_rand_packed_sqMat_4(uint64_t mat[4][256], std::mt19937 &generator)
 {
 
