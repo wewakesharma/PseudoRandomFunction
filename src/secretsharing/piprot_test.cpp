@@ -56,7 +56,8 @@ int main()
     PreProcPackedGenVals(Ra,Rb,Rx,Z,generator);
 
     //PARTY2==> generates random values for X and Rx.
-    generate_rand_packed_vector_4(X,generator);
+    //generate_rand_packed_vector_4(X,generator);
+    generate_test_packed_vector_4(X,generator);
     AXplusB_P2PackedPart1(X,Rx,Z);
 
     //PARTY 1==> generates A, B; while Ra and Rb are already generated in preprocessing
@@ -73,75 +74,41 @@ int main()
     //Unit Test - 2 =========================OT evaluation===========================
     //Receiver Part 1-generate bits x and Rx which are bits{0,1}
     //X is already generated and Rx will be fetched through OT Preprocessing
-    OTPreproc(generator);
-    OT_fetch_preprocessed_values(ram,ral,rbm,rbl,rx,zm,zl);
+    OTPreproc_debug(ram,ral,rbm,rbl,rx,zm,zl,generator);//DEBUG
+    //OT_fetch_preprocessed_values(ram,ral,rbm,rbl,rx,zm,zl);
+
+    //setting X=0 for debugging
+
 
     OTZ3_R_Part1Packed(X, rx);//X and rx
 
     //Sender
     //generate r0, r0l and r0m
-    generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);
-    //generate r1, r1l and r1m
-    generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);
-    /*generate ra, ral and ram
-    generate_rand_Z3_packed_Vec_4(ram,ral,raunpck,generator);
-    //generate rb, rbl and rbm
-    generate_rand_Z3_packed_Vec_4(rbm,rbl,rbunpck,generator);*/
+    //generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);
+    generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);//DEBUG
 
+    //generate r1, r1l and r1m
+    //generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);
+    generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);//DEBUG
     OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);//doesn't need to do anything except calling the function
 
     //Receiver Part 2
-    //generate_rand_Z3_packed_Vec_4(Zm,Zl,Zunpck,generator);
-    //generate_msb_lsb_Z3(z,Zm,Zl,generator);//generate zGlobal in Z3 and store their bit representation in Zm and Zl
     OTZ3_R_Part2Packed(rx,zm,zl,wm,wl);
 
-    cout<<endl<<"Printing Wm and Wl"<<endl;
-    uint64_t X_bit, wm_bit, wl_bit, r0m_bit, r0l_bit, r1m_bit, r1l_bit;
-    bool test_flag = 1;//test pass
-    bool mismatch_x0 = 0;//mismatch when x = 0
-    bool mismatch_x1 = 0;//mismatch when x = 1
+    //Test function defined in pi_unit_test.cpp
+    OT_test(wm,wl,X,r0m,r0l,r1m,r1l);
 
+    ////Unit Test - 3 =========================SC test===========================
+/*
+    //Receiver Part 1
+    uint64_t Y2[4];
+    sc23_p2Part1Packed(Y2,generator);
 
-    for(int i = 0; i < 1; i++)
-    {
-        uint64_t wm_word = wm[i];
-        uint64_t wl_word = wl[i];
-        uint64_t X_word = X[i];
-        uint64_t r0m_word = r0m[i];
-        uint64_t r0l_word = r0l[i];
-        uint64_t r1m_word = r1m[i];
-        uint64_t r1l_word = r1l[i];
-        for (int jBit = 0; jBit < 64; jBit++) {
-            //TODO: EXAMINE EACH BIT SEPARATELY OF WWordm, WWordl
-            //and see that it matches either r0m, r0l or r1m, r1l
-            //cepending on the value of the XWord'i bith
-            X_bit = (X_word >> jBit) & 1;
-            wm_bit = (wm_word >> jBit) & 1;
-            wl_bit = (wl_word >> jBit) & 1;
-            r0m_bit = (r0m_word >> jBit) & 1;
-            r0l_bit = (r0l_word >> jBit) & 1;
-            r1m_bit = (r1m_word >> jBit) & 1;
-            r1l_bit = (r1l_word >> jBit) & 1;
-            if((X_bit == 0) & ((wl_bit != r0l_bit) | (wm_bit != r0m_bit)))//Wl,Wm didn't match with r0l and r0m respectively
-            {
-                mismatch_x0 = 1;//error when x=0
-                break;//breaks out of inner loop
-            }
-            if((X_bit == 1) & ((wl_bit != r1l_bit) | (wm_bit != r1m_bit)))//Wl,Wm didn't match with r1l and r1m respectively
-            {
-                mismatch_x1 = 1;//error when x=0
-                break;//breaks out of inner loop
-            }
-        }
-        if((mismatch_x0 == 1) | (mismatch_x1 == 1)){
-            test_flag = 0;
-            break;//breaks out of the outer loop
-        }
-    }
-    if(test_flag == 0)
-        cout<<"Test fails";
-    else
-        cout<<"Test passed";
+    //Sender
+    uint64_t y1[4], vm[4],vl[4];
+    sc23_p1Packed(y1,vm,vl,generator);
+
+    //Receiver Part 2*/
     return 0;
 }
 

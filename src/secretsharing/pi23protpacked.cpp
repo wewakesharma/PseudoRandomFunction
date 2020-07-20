@@ -162,7 +162,6 @@ void OTPreproc(std::mt19937 &generator)
         zmOTGlobal[i] = (ramOTGlobal[i] & rxOTGlobal[i]) ^ (rbmOTGlobal[i] & (~rxOTGlobal[i]));
         zlOTGlobal[i] = (ralOTGlobal[i] & rxOTGlobal[i]) ^ (rblOTGlobal[i] & (~rxOTGlobal[i]));
     }
-
 }
 
 //===================Unit test function- function to
@@ -487,7 +486,7 @@ void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937
     generate_rand_packed_vector_4(Rm, generator);
     generate_rand_packed_vector_4(Rl, generator);
 
-    getSCP1VarsfromPreProc(ram, ral, rbm,rbl,  generator); //get, ra, rb fro preprocessing, both are elements in Z3
+    getSCP1VarsfromPreProc(ram,ral,rbm,rbl,generator); //get, ra, rb fro preprocessing, both are elements in Z3
 
     //choose r from z3 random
     //generate_rand_packed_vector_4(r0m, generator);
