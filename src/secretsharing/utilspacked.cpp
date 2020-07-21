@@ -59,6 +59,55 @@ void generate_rand_packed_vector_4(uint64_t vec[4], std::mt19937 &generator)
     }
 }
 
+void generate_test_Z3_packed_Word(uint64_t PackedWordm, uint64_t PackedWordl, uint64_t unpackedWord[64], std::mt19937 &generator)
+{
+    int jTestCols=1;
+
+    //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
+    for (int jCol = 0; jCol < jTestCols; jCol++) {
+        //go over the columns
+        //fill the numbers for each row
+
+        PackedWordm=0;
+        PackedWordl=0;
+        unpackedWord = 0;
+
+        int nBitsGenerated = 0;
+        while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
+        {
+
+            uint64_t wGen = generator();
+            //k is the index within the wGen, which holds a random 64 bit word
+            for (int k = 0; k < wLen; k = k + 2) {
+
+                //if we already have 81 rows, the rest of the items in this column are set to 0
+
+                //examine each two bits and make sure they are not 11
+                uint64_t bit1 = (wGen >> k) & 1;
+                uint64_t bit2 = (wGen >> (k + 1)) & 1;
+
+                //make sure we don't have 11 - this is a mod 2 matrix so we can only have 00, 01 or 10
+                if (!((bit1 == 1) & (bit2 == 1)))
+                {
+                    //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
+                    PackedWordm |= (bit1 << nBitsGenerated);
+                    PackedWordm |= (bit2 << nBitsGenerated);
+                    unpackedWord[nBitsGenerated]=(bit1<<1 | bit2);
+                    nBitsGenerated++;
+                    //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
+                    if (nBitsGenerated == wLen) {
+                        break; //go to the next item
+                    }
+                }
+            }
+        }
+
+    }
+
+
+}
+
+
 void generate_test_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4], uint64_t unpackedVec[256], std::mt19937 &generator)
 {
     int jTestCols=1;
@@ -92,7 +141,7 @@ void generate_test_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4
                     //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
                     PackedVecm[jCol] |= (bit1 << nBitsGenerated);
                     PackedVecl[jCol] |= (bit2 << nBitsGenerated);
-                    unpackedVec[jCol]=(bit1<<1 | bit2);
+                    unpackedVec[jCol*wLen+nBitsGenerated]=(bit1<<1 | bit2);
                     nBitsGenerated++;
                     //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
                     if (nBitsGenerated == wLen) {
