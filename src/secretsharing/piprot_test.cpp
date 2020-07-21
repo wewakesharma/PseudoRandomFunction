@@ -17,6 +17,7 @@
 //include the user defined header files
 
 #include "utils.h"
+#include "utilspacked.h"
 #include "dmweakPRFpacked.h"
 #include "pi23protpacked.h"
 #include "pi_unit_test.h"
@@ -85,11 +86,11 @@ int main()
     //Sender
     //generate r0, r0l and r0m
     //generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);
-    generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);//DEBUG
+    generate_test_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);//DEBUG
 
     //generate r1, r1l and r1m
     //generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);
-    generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);//DEBUG
+    generate_test_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);//DEBUG
     OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);//doesn't need to do anything except calling the function
 
     //Receiver Part 2

@@ -23,4 +23,6 @@ add_executable(secretsharing
         secShareTimingpacked.cpp
         secShareTimingpacked.h
         utils.cpp
-        utils.h)
+        utils.h
+        utilspacked.cpp
+        utilspacked.h)

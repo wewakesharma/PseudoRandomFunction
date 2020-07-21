@@ -9,6 +9,7 @@
 //
 
 #include "utils.h"
+#include "utilspacked.h"
 #include "pi23protpacked.h"
 #include "dmweakPRFpacked.h"
 

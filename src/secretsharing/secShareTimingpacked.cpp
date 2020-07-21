@@ -9,6 +9,7 @@
 
 #include "dmweakPRF.h"
 #include "utils.h"
+#include "utilspacked.h"
 #include "pi23prot.h"
 #include "dmweakPRFpacked.h"
 #include "secShareTiming.h"

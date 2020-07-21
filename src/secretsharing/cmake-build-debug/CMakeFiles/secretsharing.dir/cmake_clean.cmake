@@ -8,6 +8,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/secretsharing.dir/secShareTiming.cpp.o"
   "CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.o"
   "CMakeFiles/secretsharing.dir/utils.cpp.o"
+  "CMakeFiles/secretsharing.dir/utilspacked.cpp.o"
   "secretsharing"
   "secretsharing.pdb"
 )
