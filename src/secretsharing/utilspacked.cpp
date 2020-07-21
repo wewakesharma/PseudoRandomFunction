@@ -191,7 +191,7 @@ void generate_rand_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4
                         //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
                         PackedVecm[jCol] |= (bit1 << nBitsGenerated);
                         PackedVecl[jCol] |= (bit2 << nBitsGenerated);
-                        unpackedVec[jCol]=(bit1<<1 | bit2);
+                        unpackedVec[jCol*wLen+nBitsGenerated]=(bit1<<1 | bit2);
                         nBitsGenerated++;
                         //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
                         if (nBitsGenerated == wLen) {
