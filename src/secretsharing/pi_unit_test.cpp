@@ -79,8 +79,8 @@ void generate_msb_lsb_Z3(uint64_t z3_value[4], uint64_t z3_msb[4], uint64_t z3_l
 void OTPreproc_debug(uint64_t ram[4],uint64_t ral[4],uint64_t rbm[4],uint64_t rbl[4],uint64_t rx[4],uint64_t zm[4],uint64_t zl[4],std::mt19937 &generator)
 {
     uint64_t unpackedVecra[256], unpackedVecrb[256];
-    generate_rand_Z3_packed_Vec_4(ram,ral,unpackedVecra, generator);
-    generate_rand_Z3_packed_Vec_4(rbm,rbl, unpackedVecrb, generator);
+    generate_test_Z3_packed_Vec_4(ram,ral,unpackedVecra, generator);
+    generate_test_Z3_packed_Vec_4(rbm,rbl, unpackedVecrb, generator);
 
     generate_test_packed_vector_4(rx, generator);
 
