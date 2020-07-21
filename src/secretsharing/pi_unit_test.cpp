@@ -144,3 +144,66 @@ void OT_test(uint64_t wm[4],uint64_t wl[4],uint64_t X[4],uint64_t r0m[4],uint64_
     else
         cout<<"Test passed";
 }
+
+void submod3_test(std::mt19937 &generator)
+{
+    uint64_t msb1,msb2;
+    uint64_t lsb1,lsb2;
+    uint64_t unpackedword1[64],unpackedword2[64], naivez3_bit[64], temp_bit[64];
+    uint64_t outM,outL, subz3_bit[64];
+    bool test_flag = true;
+    uint64_t msb_bit,lsb_bit;
+    generate_test_Z3_packed_Word(msb1,lsb1,unpackedword1,generator);
+    generate_test_Z3_packed_Word(msb2,lsb2,unpackedword2,generator);
+    /*cout<<endl<<"Value of lsb and msb generated for submod3 unit testing"<<endl;
+    cout<<"msb: "<<msb1<<endl;
+    cout<<"lsb: "<<lsb1<<endl;
+    cout<<"msb: "<<msb2<<endl;
+    cout<<"lsb: "<<lsb2<<endl;
+    cout<<"First Number"<<endl;
+    for(int i = 0; i < 64; i++)
+    {
+        cout<<unpackedword1[i];
+    }
+    cout<<endl<<"Second Number"<<endl;
+    for(int i = 0; i < 64; i++)
+    {
+        cout<<unpackedword2[i];
+    }*/
+    //Call the submod3 function and perform the subtraction of two words
+    subMod3(outM,outL,msb1,lsb1,msb2,lsb2);
+    //cout<<endl<<"Output by Sub mod 3 function"<<endl;
+    for(int i = 0; i < 64; i++)
+    {
+
+        msb_bit = (outM >> i) & 1;
+        lsb_bit = (outL >> i) & 1;
+        subz3_bit[i] = (msb_bit << 1 | lsb_bit);
+        //cout<<subz3_bit[i];
+    }
+    //Manually/Naively compute the subtraction of the unpacked version of two words.
+    //cout<<endl<<"Manual subtraction of two words unpacked"<<endl;
+    for(int i = 0; i < 64; i++){
+        if(unpackedword1[i] >= unpackedword2[i])
+        {
+            temp_bit[i] = (unpackedword1[i] - unpackedword2[i]);
+            naivez3_bit[i] = temp_bit[i] % 3;
+        }
+        else{
+            temp_bit[i] = (unpackedword2[i] - unpackedword1[i]);
+            naivez3_bit[i] = (3 -(temp_bit[i] % 3));
+        }
+        if(naivez3_bit[i] != subz3_bit[i])
+        {
+            test_flag = false;
+            break;
+        }
+    }
+    if(test_flag == true)
+    {
+        cout<<endl<<"Sub3 mod function unit test status - PASSED"<<endl;
+    } else{
+        cout<<endl<<"Sub3 mod function unit test status - FAILED"<<endl;
+    }
+
+}

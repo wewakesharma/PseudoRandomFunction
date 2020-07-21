@@ -48,29 +48,20 @@ void generate_test_packed_vector_4(uint64_t vec[4], std::mt19937 &generator)
     }
 }
 
-void generate_rand_packed_vector_4(uint64_t vec[4], std::mt19937 &generator)
-{
-
-    //srand(time(NULL));
-    for(int i = 0; i < 4; i++)
-    {
-        //Call the generator that generate a 64-but word each time
-        vec[i] = generator();
-    }
-}
-
-void generate_test_Z3_packed_Word(uint64_t PackedWordm, uint64_t PackedWordl, uint64_t unpackedWord[64], std::mt19937 &generator)
+void generate_test_Z3_packed_Word(uint64_t& PackedWordm, uint64_t& PackedWordl, uint64_t (&unpackedWord)[64], std::mt19937 &generator)
 {
     int jTestCols=1;
-
+    PackedWordm=0;
+    PackedWordl=0;
+    for(int i = 0;i<64;i++)
+    {
+        unpackedWord[i] = 0;
+    }
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
     for (int jCol = 0; jCol < jTestCols; jCol++) {
         //go over the columns
         //fill the numbers for each row
-
-        PackedWordm=0;
-        PackedWordl=0;
-        unpackedWord = 0;
+        //unpackedWord[jCol] = 0;
 
         int nBitsGenerated = 0;
         while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
@@ -91,8 +82,8 @@ void generate_test_Z3_packed_Word(uint64_t PackedWordm, uint64_t PackedWordl, ui
                 {
                     //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
                     PackedWordm |= (bit1 << nBitsGenerated);
-                    PackedWordm |= (bit2 << nBitsGenerated);
-                    unpackedWord[nBitsGenerated]=(bit1<<1 | bit2);
+                    PackedWordl |= (bit2 << nBitsGenerated);
+                    unpackedWord[jCol*wLen+nBitsGenerated]=(bit1<<1 | bit2);
                     nBitsGenerated++;
                     //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
                     if (nBitsGenerated == wLen) {
@@ -104,7 +95,17 @@ void generate_test_Z3_packed_Word(uint64_t PackedWordm, uint64_t PackedWordl, ui
 
     }
 
+}
 
+void generate_rand_packed_vector_4(uint64_t vec[4], std::mt19937 &generator)
+{
+
+    //srand(time(NULL));
+    for(int i = 0; i < 4; i++)
+    {
+        //Call the generator that generate a 64-but word each time
+        vec[i] = generator();
+    }
 }
 
 
