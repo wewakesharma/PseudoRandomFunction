@@ -39,6 +39,9 @@ int main()
     uint64_t Z[4]; //Ra*Rx + Rb
     uint64_t out[4];
 
+    //uint64_t mxbitGlobal;
+    //uint64_t MxGlobal[4];
+    //uint64_t m0Global, m1Global;
     uint64_t rx[4]; //number generated in OTPreproc
     //uint64_t raGlobal[4], rbGlobal[4],r0Global[4], r1Global[4];//ra, rb, r1, r0 values in Z3
     uint64_t r0l[4],r0m[4],r1l[4],r1m[4],ral[4],ram[4],rbl[4],rbm[4];//LSB and MSB of r0, r1, ra, rb
@@ -75,6 +78,9 @@ int main()
     OTPreproc_debug(ram,ral,rbm,rbl,rx,zm,zl,generator);//DEBUG
     //OT_fetch_preprocessed_values(ram,ral,rbm,rbl,rx,zm,zl);
 
+    //setting X=0 for debugging
+
+
     OTZ3_R_Part1Packed(X, rx);//X and rx
 
     //Sender
@@ -91,12 +97,7 @@ int main()
     OTZ3_R_Part2Packed(rx,zm,zl,wm,wl);
 
     //Test function defined in pi_unit_test.cpp
-    /*OT_test(wm,wl,X,r0m,r0l,r1m,r1l);*/
-
-    //Submod3 test function for debugging purpose
-    submod3_test(generator);
-
-
+    OT_test(wm,wl,X,r0m,r0l,r1m,r1l);
 
     ////Unit Test - 3 =========================SC test===========================
 /*

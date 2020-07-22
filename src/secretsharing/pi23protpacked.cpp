@@ -151,6 +151,10 @@ void getMxMulPacked(uint64_t mX[4])
     }
 }
 
+/*
+ * OTPreproc
+ *
+ */
 void OTPreproc(std::mt19937 &generator)
 {
     uint64_t unpackedVecra[256], unpackedVecrb[256];
