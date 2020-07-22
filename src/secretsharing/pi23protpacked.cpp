@@ -73,7 +73,7 @@ void PreProcPackedGenVals(uint64_t Ra[4][256], uint64_t Rb[4], uint64_t Rx[4], u
     }
 }
 
-void getm0m1Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t m1l[4])
+void getm0m1Z3Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t m1l[4])
 {
     for (int i = 0; i < 4; i++) {
         m0m[i] = M0GlobalPackedm[i];
@@ -361,6 +361,9 @@ void OTZ3_R_Part1Packed(uint64_t x[4], uint64_t rx[4])
 }
 /*
  * w = output
+ *
+ * Gets M0,M1 which are right now stored in global variables.
+ * They are set by the OT sender before calling this function in OTZ3_S_Packed
  */
 void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t Wm[4], uint64_t Wl[4])
 {
@@ -368,7 +371,7 @@ void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
     uint64_t M0m[4], M0l[4], M1m[4], M1l[4];
     uint64_t tmpm[4], tmpl[4];
 
-    getm0m1Packed(M0m, M0l, M1m, M1l);
+    getm0m1Z3Packed(M0m, M0l, M1m, M1l);
 
 
     for (int i=0; i<4; i++)
