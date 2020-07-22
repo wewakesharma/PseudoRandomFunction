@@ -153,8 +153,8 @@ void submod3_test(std::mt19937 &generator)
     uint64_t outM,outL, subz3_bit[64];
     bool test_flag = true;
     uint64_t msb_bit,lsb_bit;
-    generate_test_Z3_packed_Word(msb1,lsb1,unpackedword1,generator);
-    generate_test_Z3_packed_Word(msb2,lsb2,unpackedword2,generator);
+    generate_rand_Z3_packed_Word(msb1,lsb1,unpackedword1,generator);
+    generate_rand_Z3_packed_Word(msb2,lsb2,unpackedword2,generator);
     /*cout<<endl<<"Value of lsb and msb generated for submod3 unit testing"<<endl;
     cout<<"msb: "<<msb1<<endl;
     cout<<"lsb: "<<lsb1<<endl;
@@ -184,15 +184,15 @@ void submod3_test(std::mt19937 &generator)
     //Manually/Naively compute the subtraction of the unpacked version of two words.
     //cout<<endl<<"Manual subtraction of two words unpacked"<<endl;
     for(int i = 0; i < 64; i++){
-        if(unpackedword1[i] >= unpackedword2[i])
-        {
+    //    if(unpackedword1[i] >= unpackedword2[i])
+    //    {
             temp_bit[i] = (unpackedword1[i] - unpackedword2[i]);
             naivez3_bit[i] = temp_bit[i] % 3;
-        }
-        else{
-            temp_bit[i] = (unpackedword2[i] - unpackedword1[i]);
-            naivez3_bit[i] = (3 -(temp_bit[i] % 3));
-        }
+     //   }
+     //   else{
+    //        temp_bit[i] = (unpackedword2[i] - unpackedword1[i]);
+     //       naivez3_bit[i] = (3 -(temp_bit[i] % 3));
+     //   }
         if(naivez3_bit[i] != subz3_bit[i])
         {
             test_flag = false;
