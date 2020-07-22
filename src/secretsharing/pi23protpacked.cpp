@@ -83,7 +83,7 @@ void getm0m1Z3Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t m
     }
 }
 
-void sendm0m1Z3Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t m1l[4])
+void setm0m1Z3Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t m1l[4])
 {
     for (int i = 0; i < 4; i++) {
         M0GlobalPackedm[i] = m0m[i];
@@ -92,8 +92,8 @@ void sendm0m1Z3Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t 
         M1GlobalPackedl[i] = m1l[i] ;
     }
 }
-//=======================Included for missing function sendMaMb and getMaMb==================
-void sendMaMbPacked(uint64_t Ma[4][256], uint64_t Mb[4])
+//=======================Included for missing function setMaMb and getMaMb==================
+void setMaMbPacked(uint64_t Ma[4][256], uint64_t Mb[4])
 {
     for (int iRow=0; iRow < 4; iRow++)
     {
@@ -119,7 +119,7 @@ void getMaMbPacked(uint64_t Ma[4][256], uint64_t Mb[4])
     }
 }
 
-void sendMxOTPacked(uint64_t MxPacked[4])
+void setMxOTPacked(uint64_t MxPacked[4])
 {
     for (int iRow = 0; iRow < 4; iRow++)
     {
@@ -135,7 +135,7 @@ void getMxOTPacked(uint64_t mX[4])
     }
 }
 
-void sendMxMulPacked(uint64_t MxPacked[4])
+void setMxMulPacked(uint64_t MxPacked[4])
 {
     for (int iRow = 0; iRow < 4; iRow++)
     {
@@ -240,7 +240,7 @@ void getSCP2VarsfromPreProc(uint64_t rx[4], uint64_t zm[4], uint64_t zl[4], std:
  * Input should be matrices of bits
  * Used to calculate k1X2 and k2X1, as part of the calculation of (x1+x2)(K1+K2)
  *
- * send mx, receive mx
+ * set mx, receive mx
  * Needs to be optimized where we only care about the first column of X and the result
  *
  * Two functions - each for each party
@@ -297,9 +297,9 @@ void AXplusB_P1Packed(uint64_t A[4][256], uint64_t B[4], uint64_t Ra[4][256], ui
         Mb[iCol]= Ra_Mx[iCol] ^ B[iCol] ^ Rb[iCol];
     //z_final[iCol] + B[iCol] - Rb[iCol];
 
-    //send Ma and Mb to party 2
+    //set Ma and Mb to party 2
 
-    sendMaMbPacked(Ma,Mb);
+    setMaMbPacked(Ma,Mb);
 }
 
 /*
@@ -311,7 +311,7 @@ void AXplusB_P2PackedPart1(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4]) {
     for (int iRow = 0; iRow < 4; iRow++)
         MxMulPacked[iRow] = X[iRow] ^ Rx[iRow];
 
-    sendMxMulPacked(MxMulPacked);//send the global status
+    setMxMulPacked(MxMulPacked);//set the global status
 }
 
 void AXplusB_P2PackedPart2(uint64_t X[4], uint64_t Rx[4], uint64_t Z[4], uint64_t out[4])
@@ -356,14 +356,19 @@ void OTZ3_R_Part1Packed(uint64_t x[4], uint64_t rx[4])
 
     for (int i = 0; i < 4; i++) {
         MxOTPacked[i] = x[i] ^ rx[i];
-        sendMxOTPacked(MxOTPacked);
+        setMxOTPacked(MxOTPacked);
     }
 }
 /*
  * w = output
  *
  * Gets M0,M1 which are right now stored in global variables.
- * They are set by the OT sender before calling this function in OTZ3_S_Packed
+ * They are set by the OT seter before calling this function in OTZ3_S_Packed
+ *
+ * Input z = 𝑟_𝑎×𝑟_𝑥+𝑟_𝑏×(1−𝑟_𝑥)
+ * Z = ra if rx=1
+ * z = rb if rx=0
+
  */
 void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t Wm[4], uint64_t Wl[4])
 {
@@ -384,7 +389,7 @@ void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t
 
 
 /*
- * OT for the sender
+ * OT for the seter
  *  r0,r1,ra,rb are elements in Z_3
  *  mx are bits
  *
@@ -442,7 +447,7 @@ void OTZ3_S_Packed(uint64_t r0m[4], uint64_t r0l[4], uint64_t r1m[4], uint64_t r
 //        m1 = r0 + ra + rb; // mod 3
 //        }
 
-    sendm0m1Z3Packed(M0m,M0l,M1m,M1l);
+    setm0m1Z3Packed(M0m,M0l,M1m,M1l);
 
 }
 
@@ -517,7 +522,7 @@ void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937
     r0 = (r + y1) % 3;
     r1 = (r + 1 - y1) % 3;
 */
-    //call the ORS of the sender
+    //call the ORS of the seter
     OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);
 
     for (int i = 0; i < 4; i++) {
