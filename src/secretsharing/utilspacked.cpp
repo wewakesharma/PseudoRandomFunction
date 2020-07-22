@@ -58,13 +58,14 @@ void generate_rand_Z3_packed_Word(uint64_t& PackedWordm, uint64_t& PackedWordl, 
     {
         unpackedWord[i] = 0;
     }
+    int nBitsGenerated = 0;
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
-    for (int jCol = 0; jCol < 64; jCol++) {
+
         //go over the columns
         //fill the numbers for each row
         //unpackedWord[jCol] = 0;
 
-        int nBitsGenerated = 0;
+
         while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
         {
 
@@ -94,27 +95,28 @@ void generate_rand_Z3_packed_Word(uint64_t& PackedWordm, uint64_t& PackedWordl, 
             }
         }
 
-    }
+
 
 }
 
 void generate_test_Z3_packed_Word(uint64_t& PackedWordm, uint64_t& PackedWordl, uint64_t (&unpackedWord)[64], std::mt19937 &generator)
 {
-    int jTestCols=1;
+    int jTestBits=1;
     PackedWordm=0;
     PackedWordl=0;
     for(int i = 0;i<64;i++)
     {
         unpackedWord[i] = 0;
     }
+    int nBitsGenerated = 0;
+
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
-    for (int jCol = 0; jCol < jTestCols; jCol++) {
+
         //go over the columns
         //fill the numbers for each row
         //unpackedWord[jCol] = 0;
-
-        int nBitsGenerated = 0;
-        while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
+        
+        while (nBitsGenerated < jTestBits)  //we need two words for each column in the two MSB and LSB matrices we are filling
         {
 
             uint64_t wGen = generator();
@@ -136,14 +138,14 @@ void generate_test_Z3_packed_Word(uint64_t& PackedWordm, uint64_t& PackedWordl, 
                     unpackedWord[nBitsGenerated]=(bit1<<1 | bit2);
                     nBitsGenerated++;
                     //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
-                    if (nBitsGenerated == wLen) {
+                    if (nBitsGenerated == jTestBits) {
                         break; //go to the next item
                     }
                 }
             }
         }
 
-    }
+
 
 }
 
@@ -162,6 +164,7 @@ void generate_rand_packed_vector_4(uint64_t vec[4], std::mt19937 &generator)
 void generate_test_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4], uint64_t unpackedVec[256], std::mt19937 &generator)
 {
     int jTestCols=1;
+    int jTestBits=1;
     assert(jTestCols<4);
 
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
@@ -174,7 +177,7 @@ void generate_test_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4
         unpackedVec[jCol] = 0;
 
         int nBitsGenerated = 0;
-        while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
+        while (nBitsGenerated < jTestBits)  //we need two words for each column in the two MSB and LSB matrices we are filling
         {
 
             uint64_t wGen = generator();
@@ -196,7 +199,7 @@ void generate_test_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4
                     unpackedVec[jCol*wLen+nBitsGenerated]=(bit1<<1 | bit2);
                     nBitsGenerated++;
                     //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
-                    if (nBitsGenerated == wLen) {
+                    if (nBitsGenerated == jTestBits) {
                         break; //go to the next item
                     }
                 }

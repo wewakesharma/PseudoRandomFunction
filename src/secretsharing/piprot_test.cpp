@@ -69,6 +69,8 @@ int main()
     poly_eval_test(out, global_res); //comparing both the outputs to compare the result
     //Test Complete - AX +B polynomial evaluation
 
+    submod3_test(generator);
+
     //Unit Test - 2 =========================OT evaluation===========================
     //Receiver Part 1-generate bits x and Rx which are bits{0,1}
     //X is already generated and Rx will be fetched through OT Preprocessing
@@ -94,7 +96,7 @@ int main()
     /*OT_test(wm,wl,X,r0m,r0l,r1m,r1l);*/
 
     //Submod3 test function for debugging purpose
-    submod3_test(generator);
+
 
 
 

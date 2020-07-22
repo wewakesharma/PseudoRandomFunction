@@ -184,15 +184,15 @@ void submod3_test(std::mt19937 &generator)
     //Manually/Naively compute the subtraction of the unpacked version of two words.
     //cout<<endl<<"Manual subtraction of two words unpacked"<<endl;
     for(int i = 0; i < 64; i++){
-    //    if(unpackedword1[i] >= unpackedword2[i])
-    //    {
-            temp_bit[i] = (unpackedword1[i] - unpackedword2[i]);
+  //      if(unpackedword1[i] >= unpackedword2[i])
+  //      {
+            temp_bit[i] = (3+unpackedword1[i] - unpackedword2[i]);
             naivez3_bit[i] = temp_bit[i] % 3;
-     //   }
-     //   else{
-    //        temp_bit[i] = (unpackedword2[i] - unpackedword1[i]);
-     //       naivez3_bit[i] = (3 -(temp_bit[i] % 3));
-     //   }
+//        }
+ //       else{
+ //           temp_bit[i] = (unpackedword2[i] - unpackedword1[i]);
+  //          naivez3_bit[i] = (3 -(temp_bit[i] % 3));
+  //      }
         if(naivez3_bit[i] != subz3_bit[i])
         {
             test_flag = false;
