@@ -205,5 +205,80 @@ void submod3_test(std::mt19937 &generator)
     } else{
         cout<<endl<<"Sub3 mod function unit test status - FAILED"<<endl;
     }
+}
+
+void OTZ3_submodule_test(std::mt19937 &generator)
+{
+    //Variables for naive implementation
+    uint64_t M0[256], M1[256], ra[256], rb[256], rx[256], z[256], w[256], w_combined[256];
+    //Variables for packed implementation
+    uint64_t M0m[4],M0l[4], M1m[4],M1l[4], ram[4], ral[4], rbm[4], rbl[4], zm[4],zl[4],wm[4],wl[4],rx_packed[4];
+
+    //generate M0, M1, their msb's and lsb's in Z3
+    generate_rand_Z3_packed_Vec_4(M0m,M0l,M0,generator);//M0m and M0l are 4 words in Z3, M0 is 256 bits in z3
+    generate_rand_Z3_packed_Vec_4(M1m,M1l,M1,generator);//M1m and M1l are 4 words in Z3, M1 is 256 bits in z3
+
+    //generate ram, ral, rbl, rbm, rx(binary)
+    generate_rand_Z3_packed_Vec_4(ram,ral,ra,generator);//ram and ral are 4 words in Z3, ra is 256 bits in z3
+    generate_rand_Z3_packed_Vec_4(rbm,rbl,rb,generator);//rbm and rbl are 4 words in Z3, rb is 256 bits in z3
+
+    //generate rx as a packed word, 4 packed words and unpack it for the naive use
+    generate_rand_packed_vector_4(rx_packed,generator);
+    for (int j = 0; j < 4; j++) //code from unpackOutput, but it generates 256 char output which couldn't be changed in dmweakPRFpacked
+    {
+        for (int i = 0; i < 64; i++) {
+            rx[i+j*wLen] = ((rx_packed[i] >> j) & 1) ;
+        }
+    }
+
+    //compute z (naive) and w(naive)
+    for(int i = 0; i < 256; i++)
+    {
+        z[i] = ((rx[i] * ra[i]) + ((1-rx[i]) * rb[i]));
+        w[i] = ((3 + (rx[i] * M1[i]) + ((1-rx[i]) * M0[i])) - z[i]) % 3;
+    }
+
+    //compute z (word-packed) and w(word-packed)
+    /*
+     * There exists a function which can compute Wm and Wl (word-packed), but
+     * it requires 4 words. Here we are dealing with just one word for the
+     */
+    for (int i = 0; i < 4; i++)
+    {
+        zm[i] = (ram[i] & rx[i]) ^ (rbm[i] & (~rx[i]));
+        zl[i] = (ral[i] & rx[i]) ^ (rbl[i] & (~rx[i]));
+    }
+
+    //compute w (wordpacked)
+    OTZ3_R_Part2Packed(rx_packed,zm,zl,wm,wl);
+
+    //combine value of wm and wl as 4 word packed w_pack
+    for(int i = 0; i < 4; i++)
+    {
+        uint64_t wm_word = wm[i];
+        uint64_t wl_word = wl[i];
+        for(int j = 0; j < 64; j++)
+        {
+            uint64_t wm_bit = (wm_word>>j) & 1;
+            uint64_t wl_bit = (wl_word>>j) & 1;
+            w_combined[64*i+j] = (wm_bit<<1) | wl_bit;
+
+        }
+    }
+
+    //Compare naive w with combined Z3 value w_pack
+    bool OT_mod_test_flag = true; //set the test flag
+    for(int cnt = 0; cnt < 256; cnt++)
+    {
+        if(w[cnt] != w_combined[cnt])
+        {
+            OT_mod_test_flag = false;
+            break;
+        }
+    }
+    if(OT_mod_test_flag == false)
+        cout<<endl<<"OT module test status =====> FAILED"<<endl;
+    else
+        cout<<endl<<"OT module test status =====> PASSED"<<endl;
 
 }

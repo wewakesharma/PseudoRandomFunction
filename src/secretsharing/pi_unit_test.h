@@ -14,4 +14,5 @@ void OT_test(uint64_t wm[4],uint64_t wl[4],uint64_t X[4],uint64_t r0m[4],uint64_
 void OTPreproc_debug(uint64_t ram[4],uint64_t ral[4],uint64_t rbm[4],uint64_t rbl[4],uint64_t rx[4],uint64_t zm[4],uint64_t zl[4],std::mt19937 &generator);
 
 void submod3_test(std::mt19937 &generator);
+void OTZ3_submodule_test(std::mt19937 &generator);
 #endif //SECRETSHARING_PI_UNIT_TEST_H

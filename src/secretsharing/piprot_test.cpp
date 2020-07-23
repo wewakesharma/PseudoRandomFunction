@@ -98,11 +98,13 @@ int main()
     OTZ3_R_Part2Packed(rx,zm,zl,wm,wl);
 
     //Test function defined in pi_unit_test.cpp
-    OT_test(wm,wl,X,r0m,r0l,r1m,r1l);
+    //OT_test(wm,wl,X,r0m,r0l,r1m,r1l);
 
     //Submod3 test function for debugging purpose
+    //submod3_test(generator);
 
-
+    //OTZ3 sub module test
+    OTZ3_submodule_test(generator);
 
 
     ////Unit Test - 3 =========================SC test===========================
