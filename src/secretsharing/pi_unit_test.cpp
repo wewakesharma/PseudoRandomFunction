@@ -226,13 +226,7 @@ void OTZ3_submodule_test(std::mt19937 &generator)
     generate_rand_packed_vector_4(rx_packed,generator);
 
 
-    //rx is a unpacked binary vector
-    for (int j = 0; j < 4; j++) //code from unpackOutput, but it generates 256 char output which couldn't be changed in dmweakPRFpacked
-    {
-        for (int i = 0; i < 64; i++) {
-            rx[i+j*wLen] = ((rx_packed[i] >> j) & 1) ;
-        }
-    }
+
 
     //compute z (word-packed) and w(word-packed)
     /*
@@ -248,24 +242,38 @@ void OTZ3_submodule_test(std::mt19937 &generator)
     //compute w (wordpacked)
     OTZ3_R_Part2Packed(rx_packed,zm,zl,wm,wl);
 
-    //compute z (naive) and w(naive)
-    for(int i = 0; i < 256; i++)
+    //rx is a unpacked binary vector
+    for (int jWord = 0; jWord < 4; jWord++) //code from unpackOutput, but it generates 256 char output which couldn't be changed in dmweakPRFpacked
     {
-        z[i] = ((rx[i] * ra[i]) + ((1-rx[i]) * rb[i]));
-        w[i] = ((3 + (rx[i] * M1[i]) + ((1-rx[i]) * M0[i])) - z[i]) % 3;
+        for (int iBit = 0; iBit < 64; iBit++) {
+            int i = iBit+jWord*wLen;
+            rx[i] = ((rx_packed[jWord] >> iBit) & 1) ;
+            z[i] = ((rx[i] * ra[i]) + ((1-rx[i]) * rb[i]));
+            w[i] = ((3 + (rx[i] * M1[i]) + ((1-rx[i]) * M0[i])) - z[i]) % 3;
+        }
     }
 
-    //combine value of wm and wl as 4 word packed w_pack
-    for(int i = 0; i < 4; i++)
-    {
-        uint64_t wm_word = wm[i];
-        uint64_t wl_word = wl[i];
-        for(int j = 0; j < 64; j++)
-        {
-            uint64_t wm_bit = (wm_word>>j) & 1;
-            uint64_t wl_bit = (wl_word>>j) & 1;
-            w_combined[64*i+j] = (wm_bit<<1) | wl_bit;
+    uint64_t zm_bits[256];
+    uint64_t zl_bits[256];
+    uint64_t zm_combined[256];
 
+    //combine value of wm and wl as 4 word packed w_pack
+    for(int jWord = 0; jWord < 4; jWord++)
+    {
+        uint64_t wm_word = wm[jWord];
+        uint64_t wl_word = wl[jWord];
+        uint64_t zm_word = zm[jWord];
+        uint64_t zl_word = zl[jWord];
+
+        for(int iBit = 0; iBit < 64; iBit++)
+        {
+            int i = iBit+jWord*wLen;
+            uint64_t wm_bit = (wm_word>>iBit) & 1;
+            uint64_t wl_bit = (wl_word>>iBit) & 1;
+            w_combined[i] = (wm_bit<<1) | wl_bit;
+            zm_bits[i] = (zm_word>>iBit) & 1;
+            zl_bits[i] = (zl_word>>iBit) & 1;
+            zm_combined[i] = (zm_bits[i]<<1) | zl_bits[i];
         }
     }
 
