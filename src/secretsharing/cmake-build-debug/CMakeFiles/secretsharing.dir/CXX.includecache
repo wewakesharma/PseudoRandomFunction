@@ -6,7 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.cpp
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.h
+
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23protpacked.h
+
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi_unit_test.h
+
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/piprot_test.cpp
 iostream
 -
 random
@@ -21,8 +27,18 @@ ctime
 -
 cstdlib
 -
+utils.h
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utils.h
+utilspacked.h
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utilspacked.h
 dmweakPRFpacked.h
 /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.h
+pi23protpacked.h
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23protpacked.h
+pi_unit_test.h
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi_unit_test.h
 
-/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.h
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utils.h
+
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utilspacked.h
 

@@ -75,27 +75,27 @@ int main()
     //Receiver Part 1-generate bits x and Rx which are bits{0,1}
     //X is already generated and Rx will be fetched through OT Preprocessing
     //OTPreproc(ram,ral,rbm,rbl,rx,zm,zl,generator);//DEBUG
-    OTPreproc(generator);
-    getSCP1VarsfromPreProc(ram,ral,rbm,rbl,generator); //get, ra, rb fro preprocessing, both are elements in Z3
+   // OTPreproc(generator);
+    //getSCP1VarsfromPreProc(ram,ral,rbm,rbl,generator); //get, ra, rb fro preprocessing, both are elements in Z3
 
-    getSCP2VarsfromPreProc( rx,  zm,  zl, generator);
-    generate_rand_packed_vector_4(X, generator);
+    //getSCP2VarsfromPreProc( rx,  zm,  zl, generator);
+    //generate_rand_packed_vector_4(X, generator);
     //OT_fetch_preprocessed_values(ram,ral,rbm,rbl,rx,zm,zl);
 
-    OTZ3_R_Part1Packed(X, rx);//X and rx
+  //  OTZ3_R_Part1Packed(X, rx);//X and rx
 
     //Sender
     //generate r0, r0l and r0m
     //generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);
-    generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);//DEBUG
+//    generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);//DEBUG
 
     //generate r1, r1l and r1m
     //generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);
-    generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);//DEBUG
-    OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);//doesn't need to do anything except calling the function
+    //generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);//DEBUG
+    //OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);//doesn't need to do anything except calling the function
 
     //Receiver Part 2
-    OTZ3_R_Part2Packed(rx,zm,zl,wm,wl);
+   // OTZ3_R_Part2Packed(rx,zm,zl,wm,wl);
 
     //Test function defined in pi_unit_test.cpp
     //OT_test(wm,wl,X,r0m,r0l,r1m,r1l);

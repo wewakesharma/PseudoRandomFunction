@@ -210,23 +210,20 @@ void submod3_test(std::mt19937 &generator)
 void OTZ3_submodule_test(std::mt19937 &generator)
 {
     //Variables for naive implementation
-    uint64_t M0[256], M1[256], ra[256], rb[256], rx[256], z[256], w[256], w_combined[256];
+    uint64_t M0_packed[256], M1_packed[256], ra[256], rb[256], rx_unpacked[256], z[256], w[256], w_combined[256];
     //Variables for packed implementation
-    uint64_t M0m[4],M0l[4], M1m[4],M1l[4], ram[4], ral[4], rbm[4], rbl[4], zm[4],zl[4],wm[4],wl[4],rx_packed[4];
+    uint64_t M0m[4],M0l[4], M1m[4],M1l[4], ram[4], ral[4], rbm[4], rbl[4], zm[4],zl[4],wm[4],wl[4],rx[4];
 
     //generate M0, M1, their msb's and lsb's in Z3
-    generate_rand_Z3_packed_Vec_4(M0m,M0l,M0,generator);//M0m and M0l are 4 words in Z3, M0 is 256 bits in z3
-    generate_rand_Z3_packed_Vec_4(M1m,M1l,M1,generator);//M1m and M1l are 4 words in Z3, M1 is 256 bits in z3
+    generate_rand_Z3_packed_Vec_4(M0m,M0l,M0_packed,generator);//M0m and M0l are 4 words in Z3, M0 is 256 bits in z3
+    generate_rand_Z3_packed_Vec_4(M1m,M1l,M1_packed,generator);//M1m and M1l are 4 words in Z3, M1 is 256 bits in z3
 
     //generate ram, ral, rbl, rbm, rx(binary)
     generate_rand_Z3_packed_Vec_4(ram,ral,ra,generator);//ram and ral are 4 words in Z3, ra is 256 bits in z3
     generate_rand_Z3_packed_Vec_4(rbm,rbl,rb,generator);//rbm and rbl are 4 words in Z3, rb is 256 bits in z3
 
     //generate rx as a packed word, 4 packed words and unpack it for the naive use
-    generate_rand_packed_vector_4(rx_packed,generator);
-
-
-
+    generate_rand_packed_vector_4(rx,generator);
 
     //compute z (word-packed) and w(word-packed)
     /*
@@ -235,27 +232,27 @@ void OTZ3_submodule_test(std::mt19937 &generator)
      */
     for (int i = 0; i < 4; i++)
     {
-        zm[i] = (ram[i] & rx_packed[i]) ^ (rbm[i] & (~rx_packed[i]));
-        zl[i] = (ral[i] & rx_packed[i]) ^ (rbl[i] & (~rx_packed[i]));
+        zm[i] = (ram[i] & rx[i]) ^ (rbm[i] & (~rx[i]));
+        zl[i] = (ral[i] & rx[i]) ^ (rbl[i] & (~rx[i]));
     }
 
     //compute w (wordpacked)
-    OTZ3_R_Part2Packed(rx_packed,zm,zl,wm,wl);
+    OTZ3_R_Part2Packed(rx,zm,zl,wm,wl);
 
     //rx is a unpacked binary vector
     for (int jWord = 0; jWord < 4; jWord++) //code from unpackOutput, but it generates 256 char output which couldn't be changed in dmweakPRFpacked
     {
         for (int iBit = 0; iBit < 64; iBit++) {
             int i = iBit+jWord*wLen;
-            rx[i] = ((rx_packed[jWord] >> iBit) & 1) ;
-            z[i] = ((rx[i] * ra[i]) + ((1-rx[i]) * rb[i]));
-            w[i] = ((3 + (rx[i] * M1[i]) + ((1-rx[i]) * M0[i])) - z[i]) % 3;
+            rx_unpacked[i] = ((rx[jWord] >> iBit) & 1) ;
+            z[i] = ((rx_unpacked[i] * ra[i]) + ((1-rx_unpacked[i]) * rb[i]));
+            w[i] = ((3 + (rx_unpacked[i] * M1_packed[i]) + ((1-rx_unpacked[i]) * M0_packed[i])) - z[i]) % 3;
         }
     }
 
     uint64_t zm_bits[256];
     uint64_t zl_bits[256];
-    uint64_t zm_combined[256];
+    uint64_t z_combined[256];
 
     //combine value of wm and wl as 4 word packed w_pack
     for(int jWord = 0; jWord < 4; jWord++)
@@ -273,7 +270,7 @@ void OTZ3_submodule_test(std::mt19937 &generator)
             w_combined[i] = (wm_bit<<1) | wl_bit;
             zm_bits[i] = (zm_word>>iBit) & 1;
             zl_bits[i] = (zl_word>>iBit) & 1;
-            zm_combined[i] = (zm_bits[i]<<1) | zl_bits[i];
+            z_combined[i] = (zm_bits[i]<<1) | zl_bits[i];
         }
     }
 
