@@ -217,6 +217,9 @@ void generate_test_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4
 
 void generate_rand_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4], uint64_t unpackedVec[256], std::mt19937 &generator)
 {
+    for (int jUnpackedCol=0; jUnpackedCol < 256; jUnpackedCol++)
+        unpackedVec[jUnpackedCol] = 0;
+
     //for each word of the column, as we have 81 columns, so we need two 64-bit words for each
     for (int jCol = 0; jCol < 4; jCol++) {
         //go over the columns
@@ -224,7 +227,6 @@ void generate_rand_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4
 
             PackedVecm[jCol]=0;
             PackedVecl[jCol]=0;
-            unpackedVec[jCol] = 0;
 
             int nBitsGenerated = 0;
             while (nBitsGenerated < wLen)  //we need two words for each column in the two MSB and LSB matrices we are filling
@@ -255,8 +257,6 @@ void generate_rand_Z3_packed_Vec_4(uint64_t PackedVecm[4], uint64_t PackedVecl[4
                     }
                 }
             }
-
-
 
         }
 }

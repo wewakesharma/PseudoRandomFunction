@@ -356,8 +356,8 @@ void OTZ3_R_Part1Packed(uint64_t x[4], uint64_t rx[4])
 
     for (int i = 0; i < 4; i++) {
         MxOTPacked[i] = x[i] ^ rx[i];
-        setMxOTPacked(MxOTPacked);
     }
+    setMxOTPacked(MxOTPacked);
 }
 /*
  * w = output
