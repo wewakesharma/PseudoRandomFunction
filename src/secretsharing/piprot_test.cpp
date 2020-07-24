@@ -75,7 +75,8 @@ int main()
     //Receiver Part 1-generate bits x and Rx which are bits{0,1}
     //X is already generated and Rx will be fetched through OT Preprocessing
     //OTPreproc(ram,ral,rbm,rbl,rx,zm,zl,generator);//DEBUG
-   // OTPreproc(generator);
+    //OTPreproc(generator);
+
     //getSCP1VarsfromPreProc(ram,ral,rbm,rbl,generator); //get, ra, rb fro preprocessing, both are elements in Z3
 
     //getSCP2VarsfromPreProc( rx,  zm,  zl, generator);

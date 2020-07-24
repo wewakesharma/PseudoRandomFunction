@@ -368,6 +368,9 @@ void OTZ3_R_Part1Packed(uint64_t x[4], uint64_t rx[4])
  * Input z = 𝑟_𝑎×𝑟_𝑥+𝑟_𝑏×(1−𝑟_𝑥)
  * Z = ra if rx=1
  * z = rb if rx=0
+ *
+ * M0,M1 are set previously by the preprocessing, we are getting them inside this function
+ * Now being done through local variables
 
  */
 void OTZ3_R_Part2Packed(uint64_t Rx[4], uint64_t Zm[4], uint64_t Zl[4], uint64_t Wm[4], uint64_t Wl[4])

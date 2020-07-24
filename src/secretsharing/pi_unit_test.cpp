@@ -212,11 +212,13 @@ void OTZ3_submodule_test(std::mt19937 &generator)
     //Variables for naive implementation
     uint64_t M0_packed[256], M1_packed[256], ra[256], rb[256], rx_unpacked[256], z[256], w[256], w_combined[256];
     //Variables for packed implementation
-    uint64_t M0m[4],M0l[4], M1m[4],M1l[4], ram[4], ral[4], rbm[4], rbl[4], zm[4],zl[4],wm[4],wl[4],rx[4];
+    uint64_t m0m[4],m0l[4], m1m[4],m1l[4], ram[4], ral[4], rbm[4], rbl[4], zm[4],zl[4],wm[4],wl[4],rx[4];
 
     //generate M0, M1, their msb's and lsb's in Z3
-    generate_rand_Z3_packed_Vec_4(M0m,M0l,M0_packed,generator);//M0m and M0l are 4 words in Z3, M0 is 256 bits in z3
-    generate_rand_Z3_packed_Vec_4(M1m,M1l,M1_packed,generator);//M1m and M1l are 4 words in Z3, M1 is 256 bits in z3
+    generate_rand_Z3_packed_Vec_4(m0m,m0l,M0_packed,generator);//M0m and M0l are 4 words in Z3, M0 is 256 bits in z3
+    generate_rand_Z3_packed_Vec_4(m1m,m1l,M1_packed,generator);//M1m and M1l are 4 words in Z3, M1 is 256 bits in z3
+
+    setm0m1Z3Packed(m0m, m0l,  m1m, m1l);
 
     //generate ram, ral, rbl, rbm, rx(binary)
     generate_rand_Z3_packed_Vec_4(ram,ral,ra,generator);//ram and ral are 4 words in Z3, ra is 256 bits in z3
