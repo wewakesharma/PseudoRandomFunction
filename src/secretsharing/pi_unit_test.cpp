@@ -224,18 +224,14 @@ void OTZ3_submodule_test(std::mt19937 &generator)
 
     //generate rx as a packed word, 4 packed words and unpack it for the naive use
     generate_rand_packed_vector_4(rx_packed,generator);
+
+
+    //rx is a unpacked binary vector
     for (int j = 0; j < 4; j++) //code from unpackOutput, but it generates 256 char output which couldn't be changed in dmweakPRFpacked
     {
         for (int i = 0; i < 64; i++) {
             rx[i+j*wLen] = ((rx_packed[i] >> j) & 1) ;
         }
-    }
-
-    //compute z (naive) and w(naive)
-    for(int i = 0; i < 256; i++)
-    {
-        z[i] = ((rx[i] * ra[i]) + ((1-rx[i]) * rb[i]));
-        w[i] = ((3 + (rx[i] * M1[i]) + ((1-rx[i]) * M0[i])) - z[i]) % 3;
     }
 
     //compute z (word-packed) and w(word-packed)
@@ -245,12 +241,19 @@ void OTZ3_submodule_test(std::mt19937 &generator)
      */
     for (int i = 0; i < 4; i++)
     {
-        zm[i] = (ram[i] & rx[i]) ^ (rbm[i] & (~rx[i]));
-        zl[i] = (ral[i] & rx[i]) ^ (rbl[i] & (~rx[i]));
+        zm[i] = (ram[i] & rx_packed[i]) ^ (rbm[i] & (~rx_packed[i]));
+        zl[i] = (ral[i] & rx_packed[i]) ^ (rbl[i] & (~rx_packed[i]));
     }
 
     //compute w (wordpacked)
     OTZ3_R_Part2Packed(rx_packed,zm,zl,wm,wl);
+
+    //compute z (naive) and w(naive)
+    for(int i = 0; i < 256; i++)
+    {
+        z[i] = ((rx[i] * ra[i]) + ((1-rx[i]) * rb[i]));
+        w[i] = ((3 + (rx[i] * M1[i]) + ((1-rx[i]) * M0[i])) - z[i]) % 3;
+    }
 
     //combine value of wm and wl as 4 word packed w_pack
     for(int i = 0; i < 4; i++)

@@ -8,7 +8,9 @@
 
 /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.h
 
-/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23protpacked.h
+
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi_unit_test.cpp
 iostream
 -
 random
@@ -29,10 +31,12 @@ utilspacked.h
 /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utilspacked.h
 pi23protpacked.h
 /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23protpacked.h
+pi_unit_test.h
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi_unit_test.h
 dmweakPRFpacked.h
 /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.h
 
-/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23protpacked.h
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi_unit_test.h
 
 /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utils.h
 
