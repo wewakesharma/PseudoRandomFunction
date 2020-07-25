@@ -78,7 +78,7 @@ void getm0m1Z3Packed(uint64_t m0m[4],uint64_t m0l[4], uint64_t m1m[4],uint64_t m
     for (int i = 0; i < 4; i++) {
         m0m[i] = M0GlobalPackedm[i];
         m0l[i] = M0GlobalPackedl[i];
-        m1m[i] = M0GlobalPackedl[i];
+        m1m[i] = M1GlobalPackedm[i];
         m1l[i] = M1GlobalPackedl[i];
     }
 }
