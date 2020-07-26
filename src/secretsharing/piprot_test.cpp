@@ -70,50 +70,18 @@ int main()
     //Test Complete - AX +B polynomial evaluation
 
     //Unit Test - 2 =========================OT evaluation===========================
-    /*Receiver Part 1-generate bits x and Rx which are bits{0,1}
-    //X is already generated and Rx will be fetched through OT Preprocessing
-     */
-    OTPreproc(generator);
 
-    //getSCP1VarsfromPreProc(ram,ral,rbm,rbl,generator); //get, ra, rb fro preprocessing, both are elements in Z3
-    //getSCP2VarsfromPreProc( rx,  zm,  zl, generator);
+    OT_test(generator);
 
-    generate_rand_packed_vector_4(X, generator);
-    OT_fetch_preprocessed_values(ram,ral,rbm,rbl,rx,zm,zl);
-
-    OTZ3_R_Part1Packed(X, rx);//X and rx
-
-    //=====Sender========
-    //generate r0, r0l and r0m
-    generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);
-
-    //generate r1, r1l and r1m
-    generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);
-    OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);//doesn't need to do anything except calling the function
-
-    //=======Receiver Part 2=====
-    OTZ3_R_Part2Packed(rx,zm,zl,wm,wl);
-
-    //Test function defined in pi_unit_test.cpp
-    OT_test(wm,wl,X,r0m,r0l,r1m,r1l);
-
-    /*=======TEST FUNCTIONS FOR DEBUGGING=========
-     * submod3_test(generator);//Submod3 test function for debugging purpose*/
-    OTZ3_submodule_test(generator);//OTZ3 sub module test
-
+    //=======TEST FUNCTIONS FOR DEBUGGING=========
+    //submod3_test(generator);//Submod3 test function for debugging purpose
+    //OTZ3_submodule_test(generator);//OTZ3 sub module test
 
 
     //Unit Test - 3 =========================SC test===========================
-/*
-    //Receiver Part 1
-    uint64_t Y2[4];
-    sc23_p2Part1Packed(Y2,generator);
 
-    //Sender
-    uint64_t y1[4], vm[4],vl[4];
-    sc23_p1Packed(y1,vm,vl,generator);
+    sc_unit_test(generator);
 
-    //Receiver Part 2*/
     return 0;
 }
 

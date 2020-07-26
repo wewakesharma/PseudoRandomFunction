@@ -91,16 +91,42 @@ void OTPreproc_debug(uint64_t ram[4],uint64_t ral[4],uint64_t rbm[4],uint64_t rb
     }
 }
 
-void OT_test(uint64_t wm[4],uint64_t wl[4],uint64_t X[4],uint64_t r0m[4],uint64_t r0l[4],uint64_t r1m[4],uint64_t r1l[4])
+void OT_test(std::mt19937 &generator)
 {
-    //cout<<endl<<"Printing Wm and Wl"<<endl;
+    uint64_t rx[4]; //number generated in OTPreproc
+    uint64_t wm[4],wl[4],X[4],r0m[4],r0l[4],r1m[4],r1l[4];
+    uint64_t ral[4],ram[4],rbl[4],rbm[4];//LSB and MSB of r0, r1, ra, rb
+    uint64_t r0unpck[256],r1unpck[256];
+    uint64_t zm[4],zl[4];
+    OTPreproc(generator);
+
+    //getSCP1VarsfromPreProc(ram,ral,rbm,rbl,generator); //get, ra, rb fro preprocessing, both are elements in Z3
+    //getSCP2VarsfromPreProc( rx,  zm,  zl, generator);
+
+    generate_rand_packed_vector_4(X, generator);
+    OT_fetch_preprocessed_values(ram,ral,rbm,rbl,rx,zm,zl);
+
+    OTZ3_R_Part1Packed(X, rx);//X and rx
+
+    //=====Sender========
+    //generate r0, r0l and r0m
+    generate_rand_Z3_packed_Vec_4(r0m,r0l,r0unpck,generator);
+
+    //generate r1, r1l and r1m
+    generate_rand_Z3_packed_Vec_4(r1m,r1l,r1unpck,generator);
+    OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);//doesn't need to do anything except calling the function
+
+    //=======Receiver Part 2=====
+    OTZ3_R_Part2Packed(rx,zm,zl,wm,wl);
+
+
     uint64_t X_bit, wm_bit, wl_bit, r0m_bit, r0l_bit, r1m_bit, r1l_bit;
     bool test_flag = 1;//test pass
     bool mismatch_x0 = 0;//mismatch when x = 0
     bool mismatch_x1 = 0;//mismatch when x = 1
 
 
-    for(int i = 0; i < 1; i++)
+    for(int i = 0; i < 4; i++)
     {
         uint64_t wm_word = wm[i];
         uint64_t wl_word = wl[i];
@@ -291,4 +317,70 @@ void OTZ3_submodule_test(std::mt19937 &generator)
     else
         cout<<endl<<"OT module test status =====> PASSED"<<endl;
 
+}
+
+void sc_unit_test(std::mt19937 &generator)
+{
+    //generate Z3 values ram, ral, rbm, rbl
+    uint64_t ram[4], ral[4], rbm[4], rbl[4];
+    //genrate rx
+    uint64_t rx[4];
+
+    //call the random generator to fill out these values
+    OTPreproc(generator);
+
+    uint64_t Y2[4];//generate Y2 as 4 word
+    generate_rand_packed_vector_4(Y2, generator);
+
+    sc23_p2Part1Packed(Y2,generator);//perform Mx = Y2 ^ rx
+
+    //Sender
+    uint64_t y1[4], vm[4],vl[4];
+    generate_rand_packed_vector_4(y1, generator);
+    sc23_p1Packed(y1,vm,vl,generator);
+
+    //Receiver Part 2
+    uint64_t wm[4], wl[4];
+    sc23_p2Part2Packed(wm,wl,generator);
+
+
+    uint64_t vplusw_mod3;
+    uint64_t y1plusy2_mod2;
+    bool sc_test_flag = true;
+    for(int i = 0; i < 1; i++)
+    {
+        uint64_t wm_word = wm[i];
+        uint64_t wl_word = wl[i];
+        uint64_t vm_word = vm[i];
+        uint64_t vl_word = vl[i];
+        uint64_t y1_word = y1[i];
+        uint64_t Y2_word = Y2[i];
+        for(int j = 0; j < 64; j++)
+        {
+            uint64_t wm_bit = (wm_word>>j) & 1;
+            uint64_t wl_bit = (wl_word>>j) & 1;
+            uint64_t w_comb = (wm_bit<<1) | wl_bit;
+            uint64_t vm_bit = (vm_word>>j) & 1;
+            uint64_t vl_bit = (vl_word>>j) & 1;
+            uint64_t v_comb = (vm_bit<<1) | vl_bit;
+            uint64_t y1_bit = (y1_word>>j) & 1;
+            uint64_t Y2_bit = (Y2_word>>j) & 1;
+
+            vplusw_mod3 = (w_comb + v_comb) % 3;
+            y1plusy2_mod2 = (y1_bit + Y2_bit) % 2;
+
+            if(vplusw_mod3 != y1plusy2_mod2)
+            {
+                cout<<i<<"\t"<<j<<endl;
+                sc_test_flag = false;
+                break;
+            }
+        }
+        if(sc_test_flag == false)
+            break;
+    }
+    if(sc_test_flag == false)
+        cout<<endl<<"SC unit test ========FAILED"<<endl;
+    else
+        cout<<endl<<"SC unit test ========PASSED"<<endl;
 }

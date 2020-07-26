@@ -203,7 +203,7 @@ void getSCP2VarsfromPreProc(uint64_t rx[4], uint64_t zm[4], uint64_t zl[4], std:
 {
     uint64_t unpackedVecra[256], unpackedVecrb[256];
 
-    generate_rand_packed_vector_4(rx, generator);
+    //generate_rand_packed_vector_4(rx, generator);
 
     for (int i = 0; i < 4; i++) {
         rx[i] = rxOTGlobal[i];
@@ -517,6 +517,8 @@ void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937
     for (int i = 0; i < 4; i++)
         OneMinusY[i] = ~y1[i];
 
+
+
     addMod3vec4(Rm, Rl, zVec,y1, r0m, r0l);
     addMod3vec4(Rm, Rl, zVec,OneMinusY, r1m, r1l);
 
@@ -529,8 +531,8 @@ void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937
     OTZ3_S_Packed(r0m,r0l,r1m,r1l,ram,ral,rbm,rbl);
 
     for (int i = 0; i < 4; i++) {
-        vm[i] = 1 ^ Rm[i];
-        vl[i] = 1 ^ Rl[i];
+        vm[i] = ~Rm[i];
+        vl[i] = ~Rl[i];
     }
 
     //run OT
