@@ -515,7 +515,7 @@ void sc23_p1Packed(uint64_t y1[4], uint64_t vm[4],  uint64_t vl[4], std::mt19937
         zVec[i] = 0;
 
     for (int i = 0; i < 4; i++)
-        OneMinusY[i] = y1[i] ^ 1;
+        OneMinusY[i] = ~y1[i];
 
     addMod3vec4(Rm, Rl, zVec,y1, r0m, r0l);
     addMod3vec4(Rm, Rl, zVec,OneMinusY, r1m, r1l);
