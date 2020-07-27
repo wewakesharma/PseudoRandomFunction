@@ -43,10 +43,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing
+CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/secretsharing.dir/depend.make
@@ -59,133 +59,133 @@ include CMakeFiles/secretsharing.dir/flags.make
 
 CMakeFiles/secretsharing.dir/dmweakPRF.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/dmweakPRF.cpp.o: ../dmweakPRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/secretsharing.dir/dmweakPRF.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/dmweakPRF.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/secretsharing.dir/dmweakPRF.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/dmweakPRF.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp
 
 CMakeFiles/secretsharing.dir/dmweakPRF.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/dmweakPRF.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp > CMakeFiles/secretsharing.dir/dmweakPRF.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp > CMakeFiles/secretsharing.dir/dmweakPRF.cpp.i
 
 CMakeFiles/secretsharing.dir/dmweakPRF.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/dmweakPRF.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp -o CMakeFiles/secretsharing.dir/dmweakPRF.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRF.cpp -o CMakeFiles/secretsharing.dir/dmweakPRF.cpp.s
 
 CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.o: ../dmweakPRFpacked.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.cpp
 
 CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.cpp > CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.cpp > CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.i
 
 CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.cpp -o CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/dmweakPRFpacked.cpp -o CMakeFiles/secretsharing.dir/dmweakPRFpacked.cpp.s
 
 CMakeFiles/secretsharing.dir/pi23prot.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/pi23prot.cpp.o: ../pi23prot.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/secretsharing.dir/pi23prot.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/pi23prot.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23prot.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/secretsharing.dir/pi23prot.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/pi23prot.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23prot.cpp
 
 CMakeFiles/secretsharing.dir/pi23prot.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/pi23prot.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23prot.cpp > CMakeFiles/secretsharing.dir/pi23prot.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23prot.cpp > CMakeFiles/secretsharing.dir/pi23prot.cpp.i
 
 CMakeFiles/secretsharing.dir/pi23prot.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/pi23prot.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23prot.cpp -o CMakeFiles/secretsharing.dir/pi23prot.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23prot.cpp -o CMakeFiles/secretsharing.dir/pi23prot.cpp.s
 
 CMakeFiles/secretsharing.dir/pi23protpacked.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/pi23protpacked.cpp.o: ../pi23protpacked.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/secretsharing.dir/pi23protpacked.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/pi23protpacked.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/secretsharing.dir/pi23protpacked.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/pi23protpacked.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp
 
 CMakeFiles/secretsharing.dir/pi23protpacked.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/pi23protpacked.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp > CMakeFiles/secretsharing.dir/pi23protpacked.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp > CMakeFiles/secretsharing.dir/pi23protpacked.cpp.i
 
 CMakeFiles/secretsharing.dir/pi23protpacked.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/pi23protpacked.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp -o CMakeFiles/secretsharing.dir/pi23protpacked.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi23protpacked.cpp -o CMakeFiles/secretsharing.dir/pi23protpacked.cpp.s
 
 CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o: ../pi_unit_test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi_unit_test.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/pi_unit_test.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi_unit_test.cpp
 
 CMakeFiles/secretsharing.dir/pi_unit_test.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/pi_unit_test.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi_unit_test.cpp > CMakeFiles/secretsharing.dir/pi_unit_test.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi_unit_test.cpp > CMakeFiles/secretsharing.dir/pi_unit_test.cpp.i
 
 CMakeFiles/secretsharing.dir/pi_unit_test.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/pi_unit_test.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/pi_unit_test.cpp -o CMakeFiles/secretsharing.dir/pi_unit_test.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/pi_unit_test.cpp -o CMakeFiles/secretsharing.dir/pi_unit_test.cpp.s
 
 CMakeFiles/secretsharing.dir/piprot_test.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/piprot_test.cpp.o: ../piprot_test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/secretsharing.dir/piprot_test.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/piprot_test.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/piprot_test.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/secretsharing.dir/piprot_test.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/piprot_test.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/piprot_test.cpp
 
 CMakeFiles/secretsharing.dir/piprot_test.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/piprot_test.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/piprot_test.cpp > CMakeFiles/secretsharing.dir/piprot_test.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/piprot_test.cpp > CMakeFiles/secretsharing.dir/piprot_test.cpp.i
 
 CMakeFiles/secretsharing.dir/piprot_test.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/piprot_test.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/piprot_test.cpp -o CMakeFiles/secretsharing.dir/piprot_test.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/piprot_test.cpp -o CMakeFiles/secretsharing.dir/piprot_test.cpp.s
 
 CMakeFiles/secretsharing.dir/secShareTiming.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/secShareTiming.cpp.o: ../secShareTiming.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/secretsharing.dir/secShareTiming.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/secShareTiming.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/secShareTiming.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/secretsharing.dir/secShareTiming.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/secShareTiming.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/secShareTiming.cpp
 
 CMakeFiles/secretsharing.dir/secShareTiming.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/secShareTiming.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/secShareTiming.cpp > CMakeFiles/secretsharing.dir/secShareTiming.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/secShareTiming.cpp > CMakeFiles/secretsharing.dir/secShareTiming.cpp.i
 
 CMakeFiles/secretsharing.dir/secShareTiming.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/secShareTiming.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/secShareTiming.cpp -o CMakeFiles/secretsharing.dir/secShareTiming.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/secShareTiming.cpp -o CMakeFiles/secretsharing.dir/secShareTiming.cpp.s
 
 CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.o: ../secShareTimingpacked.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/secShareTimingpacked.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/secShareTimingpacked.cpp
 
 CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/secShareTimingpacked.cpp > CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/secShareTimingpacked.cpp > CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.i
 
 CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/secShareTimingpacked.cpp -o CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/secShareTimingpacked.cpp -o CMakeFiles/secretsharing.dir/secShareTimingpacked.cpp.s
 
 CMakeFiles/secretsharing.dir/utils.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/utils.cpp.o: ../utils.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/secretsharing.dir/utils.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/utils.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utils.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/secretsharing.dir/utils.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/utils.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utils.cpp
 
 CMakeFiles/secretsharing.dir/utils.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/utils.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utils.cpp > CMakeFiles/secretsharing.dir/utils.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utils.cpp > CMakeFiles/secretsharing.dir/utils.cpp.i
 
 CMakeFiles/secretsharing.dir/utils.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/utils.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utils.cpp -o CMakeFiles/secretsharing.dir/utils.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utils.cpp -o CMakeFiles/secretsharing.dir/utils.cpp.s
 
 CMakeFiles/secretsharing.dir/utilspacked.cpp.o: CMakeFiles/secretsharing.dir/flags.make
 CMakeFiles/secretsharing.dir/utilspacked.cpp.o: ../utilspacked.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/secretsharing.dir/utilspacked.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/utilspacked.cpp.o -c /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utilspacked.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/secretsharing.dir/utilspacked.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/secretsharing.dir/utilspacked.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utilspacked.cpp
 
 CMakeFiles/secretsharing.dir/utilspacked.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/secretsharing.dir/utilspacked.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utilspacked.cpp > CMakeFiles/secretsharing.dir/utilspacked.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utilspacked.cpp > CMakeFiles/secretsharing.dir/utilspacked.cpp.i
 
 CMakeFiles/secretsharing.dir/utilspacked.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/secretsharing.dir/utilspacked.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/utilspacked.cpp -o CMakeFiles/secretsharing.dir/utilspacked.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utilspacked.cpp -o CMakeFiles/secretsharing.dir/utilspacked.cpp.s
 
 # Object files for target secretsharing
 secretsharing_OBJECTS = \
@@ -215,7 +215,7 @@ secretsharing: CMakeFiles/secretsharing.dir/utils.cpp.o
 secretsharing: CMakeFiles/secretsharing.dir/utilspacked.cpp.o
 secretsharing: CMakeFiles/secretsharing.dir/build.make
 secretsharing: CMakeFiles/secretsharing.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable secretsharing"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable secretsharing"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/secretsharing.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -228,6 +228,6 @@ CMakeFiles/secretsharing.dir/clean:
 .PHONY : CMakeFiles/secretsharing.dir/clean
 
 CMakeFiles/secretsharing.dir/depend:
-	cd /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug /Users/vivek/Documents/Github/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles/secretsharing.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/cmake-build-debug/CMakeFiles/secretsharing.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/secretsharing.dir/depend
 

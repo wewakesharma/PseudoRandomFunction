@@ -62,8 +62,7 @@ int main(int argc,char* argv[] ) {
 
 #endif
 
-void packedTiming(int stepsToRun)
-{
+void packedTiming(int stepsToRun) {
     uint64_t A1[4][256];
     uint64_t A2[4][256];
     uint64_t B1[4];
@@ -91,7 +90,7 @@ void packedTiming(int stepsToRun)
     unsigned seed = 7;    // std::chrono::system_clock::now().time_since_epoch().count();
     std::mt19937 generator(seed); // mt19937 is a standard mersenne_twister_engine
 
-    getInputPackedVars(A1,A2,X1,X2, generator);
+    getInputPackedVars(A1, A2, X1, X2, generator);
 
     bool bInputUnkown = 1;
 
@@ -101,7 +100,7 @@ void packedTiming(int stepsToRun)
     //Z = RA*RX+RB (mod 2)
 
     if (bInputUnkown) {
-        PreProcPackedGenVals(RA1,RB1, Rx1, Z1, generator);
+        PreProcPackedGenVals(RA1, RB1, Rx1, Z1, generator);
         PreProcPackedGenVals(RA2, RB2, Rx2, Z2, generator);
     }
 
@@ -121,23 +120,34 @@ void packedTiming(int stepsToRun)
         outB[i] = 0;
     }
 
-    if (bInputUnkown) {
-        AXplusB_P2PackedPart1(X2, Rx1, Z1);
-        AXplusB_P1Packed(A1, B1, RA1, RB1);
-        AXplusB_P2PackedPart2(X2, Rx1, Z1, outA);
+    chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
+
+    for (int i = 0; i < 1000000; i++) {
+
+        if (bInputUnkown) {
+            AXplusB_P2PackedPart1(X2, Rx1, Z1);
+            AXplusB_P1Packed(A1, B1, RA1, RB1);
+            AXplusB_P2PackedPart2(X2, Rx1, Z1, outA);
+        }
+
+        //here Alice and Bob exchange roles, Alice is P2 and Bob is P1
+        if (bInputUnkown) {
+            AXplusB_P2PackedPart1(X1, Rx2, Z2);
+            AXplusB_P1Packed(A2, B2, RA2, RB2);
+            AXplusB_P2PackedPart2(X2, Rx1, Z1, outB);
+        }
+
+        //Alice
+        CalcEachPartyPackedSecret(B1, outB, A1, X1, Y1);
+        //Bob calculates his part
+        CalcEachPartyPackedSecret(B2, outA, A2, X2, Y2);
+
     }
 
-    //here Alice and Bob exchange roles, Alice is P2 and Bob is P1
-    if (bInputUnkown) {
-        AXplusB_P2PackedPart1(X1, Rx2, Z2);
-        AXplusB_P1Packed(A2, B2, RA2, RB2);
-        AXplusB_P2PackedPart2(X2, Rx1, Z1, outB);
-    }
+    chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - start;
 
-    //Alice
-    CalcEachPartyPackedSecret(B1,outB, A1,X1,Y1);
-    //Bob calculates his part
-    CalcEachPartyPackedSecret(B2,outA,A2,X2,Y2);
+
+    cout << endl<< "elapsed time for 1M runs of phase stage:  " << elapsed_seconds.count() << "  s\n";
 
 /*
     //Here we start the next phase were we deal with Z3 numbers
@@ -165,7 +175,7 @@ void packedTiming(int stepsToRun)
 
     OTPreproc(generator);
     sc23_p2Part1Packed(Y2, generator);
-    sc23_p1Packed(Y1,Vm,Vl, generator);
+    sc23_p1Packed(Y1, Vm, Vl, generator);
 
     sc23_p2Part2Packed(Wm, Wl, generator);
 
@@ -180,6 +190,10 @@ void packedTiming(int stepsToRun)
 
     multMod3_Z3Mat_Z3Vec(randMat1, randMat2, Vm, Vl, output_Am, output_Al); // matrix-vector multiply mod 3
     multMod3_Z3Mat_Z3Vec(randMat1, randMat2, Wm, Wl, output_Bm, output_Bl); // matrix-vector multiply mod 3
+
+
+
+
 
     //at this point we have the Z3 outputs A1 and B1
 }
