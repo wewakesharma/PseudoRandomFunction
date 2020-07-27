@@ -120,6 +120,10 @@ void packedTiming(int stepsToRun) {
         outB[i] = 0;
     }
 
+    uint64_t randMat1[2][256], randMat2[2][256];
+    uint64_t randMatZ3[81][256]; //randMatZ3 holds the Z3 elements
+    generate_rand_Z3_matrix_81x256(randMat1, randMat2, randMatZ3, generator); //generate
+
     chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
 
     for (int i = 0; i < 1000000; i++) {
@@ -182,9 +186,6 @@ void packedTiming(int stepsToRun) {
     //multiply the result of the secret sharing with a random Z3 matrix 81X256
 
     //generate the random Z3 81X256 matrix first
-    uint64_t randMat1[2][256], randMat2[2][256];
-    uint64_t randMatZ3[81][256]; //randMatZ3 holds the Z3 elements
-    generate_rand_Z3_matrix_81x256(randMat1, randMat2, randMatZ3, generator);
 
     uint64_t output_Am[2], output_Al[2], output_Bm[2], output_Bl[2];
 
