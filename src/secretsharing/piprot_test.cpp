@@ -30,7 +30,7 @@ using namespace std;
 //uint64_t RaRx[4];
 uint64_t global_res[4];//stores result of AX+B evaluation(for testing)
 
-
+#ifdef UNIT_TEST
 
 int main()
 {
@@ -85,3 +85,4 @@ int main()
     return 0;
 }
 
+#endif

@@ -38,29 +38,7 @@ void CalcEachPartyPackedSecret(uint64_t outP1[4], uint64_t out2P2[4], uint64_t A
 
 
 
-#ifdef PRF_TIMING
 
-//Step 1: Generate random input and store it in input array.
-//Step 2: Generate 1024 uint64 numbers and store it in 4X256 size.
-//Step 3: compute() function will calculate the value of zi's
-int main(int argc,char* argv[] ) {
-
-
-    int stepsToRun;
-
-    if (argc > 1) {
-        char *p;
-        stepsToRun = strtol(argv[1], &p, 10);
-    }
-    else
-        stepsToRun=3;
-
-    packedTiming(stepsToRun);
-
-    return 0;
-}
-
-#endif
 
 void packedTiming(int stepsToRun) {
     uint64_t A1[4][256];
@@ -151,7 +129,51 @@ void packedTiming(int stepsToRun) {
     chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - start;
 
 
-    cout << endl<< "elapsed time for 1M runs of phase stage:  " << elapsed_seconds.count() << "  s\n";
+    cout << endl << "elapsed time for 1M runs of AX+B phase:  " << elapsed_seconds.count() << "  s\n";
+
+    
+    //============================OT evaluation==========================
+
+    uint64_t rx[4]; //number generated in OTPreproc
+    uint64_t wm[4], wl[4], X[4], r0m[4], r0l[4], r1m[4], r1l[4];
+    uint64_t ral[4], ram[4], rbl[4], rbm[4];//LSB and MSB of r0, r1, ra, rb
+    uint64_t r0unpck[256], r1unpck[256];
+    uint64_t zm[4], zl[4];
+
+    OTPreproc(generator);
+    generate_rand_packed_vector_4(X, generator);
+    OT_fetch_preprocessed_values(ram, ral, rbm, rbl, rx, zm, zl);
+    generate_rand_Z3_packed_Vec_4(r0m, r0l, r0unpck, generator);
+    generate_rand_Z3_packed_Vec_4(r1m, r1l, r1unpck, generator);
+
+    chrono::time_point<std::chrono::system_clock> start_OT = chrono::system_clock::now();
+
+    for (int i = 0; i < 1000000; i++) {
+        OTZ3_R_Part1Packed(X, rx);
+        OTZ3_S_Packed(r0m, r0l, r1m, r1l, ram, ral, rbm, rbl);
+        OTZ3_R_Part2Packed(rx, zm, zl, wm, wl);
+    }
+
+    chrono::duration<double> elapsed_seconds_OT = chrono::system_clock::now() - start_OT;
+    cout << endl << "elapsed time for 1M runs of OT phase:  " << elapsed_seconds_OT.count() << "  s\n";
+
+    //============================SC Timing code==========================
+    uint64_t y1[4], vm[4], vl[4];
+
+    generate_rand_packed_vector_4(Y2, generator);
+    OTPreproc(generator);
+    generate_rand_packed_vector_4(y1, generator);
+
+    chrono::time_point<std::chrono::system_clock> start_SC = chrono::system_clock::now();
+    for (int i = 0; i < 1000000; i++) {
+        sc23_p2Part1Packed(Y2, generator);//perform Mx = Y2 ^ rx
+        sc23_p1Packed(y1, vm, vl, generator);
+        sc23_p2Part2Packed(wm, wl, generator);
+    }
+    chrono::duration<double> elapsed_seconds_SC = chrono::system_clock::now() - start_SC;
+    cout << endl << "elapsed time for 1M runs of SC phase:  " << elapsed_seconds_SC.count() << "  s\n";
+    //====================================================================
+}
 
 /*
     //Here we start the next phase were we deal with Z3 numbers
@@ -169,7 +191,7 @@ void packedTiming(int stepsToRun) {
         zZ3m[i] = (Rz[i] & ram[i]) ^ (((-1) ^ Rz[i]) & rbm[i]) ;
         zZ3l[i] = (Rz[i] & ral[i]) ^ (((-1) ^ Rz[i]) & rbl[i]) ;
     }
-    */
+
 
     /////////////
 
@@ -193,11 +215,22 @@ void packedTiming(int stepsToRun) {
     multMod3_Z3Mat_Z3Vec(randMat1, randMat2, Wm, Wl, output_Bm, output_Bl); // matrix-vector multiply mod 3
 
 
+    //at this point we have the Z3 outputs A1 and B1*/
 
+#ifdef PRF_TIMING
 
+//Step 1: Generate random input and store it in input array.
+//Step 2: Generate 1024 uint64 numbers and store it in 4X256 size.
+//Step 3: compute() function will calculate the value of zi's
+int main(int argc,char* argv[] ) {
+    int stepsToRun;
+    if (argc > 1) {
+        char *p;
+        stepsToRun = strtol(argv[1], &p, 10);
+    } else
+        stepsToRun = 3;
 
-    //at this point we have the Z3 outputs A1 and B1
+    packedTiming(stepsToRun);
+    return 0;
 }
-
-
-
+#endif
