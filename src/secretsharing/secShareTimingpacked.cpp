@@ -119,18 +119,16 @@ void packedTiming(int stepsToRun) {
             AXplusB_P2PackedPart2(X2, Rx1, Z1, outB);
         }
 
+
         //Alice
         CalcEachPartyPackedSecret(B1, outB, A1, X1, Y1);
         //Bob calculates his part
         CalcEachPartyPackedSecret(B2, outA, A2, X2, Y2);
 
-    }
-
     chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - start;
 
-
     cout << endl << "elapsed time for 1M runs of AX+B phase:  " << elapsed_seconds.count() << "  s\n";
-
+}
     
     //============================OT evaluation==========================
 
