@@ -102,33 +102,94 @@ void packedTiming(int stepsToRun) {
     uint64_t randMatZ3[81][256]; //randMatZ3 holds the Z3 elements
     generate_rand_Z3_matrix_81x256(randMat1, randMat2, randMatZ3, generator); //generate
 
+    //============================AX+B with separated module==========================  
+    
     chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
+
 
     for (int i = 0; i < 1000000; i++) {
 
         if (bInputUnkown) {
-            AXplusB_P2PackedPart1(X2, Rx1, Z1);
+            AXplusB_P2PackedPart1(X2, Rx1,Z1);
             AXplusB_P1Packed(A1, B1, RA1, RB1);
-            AXplusB_P2PackedPart2(X2, Rx1, Z1, outA);
+            AXplusB_P2PackedPart2(X2, Rx1,Z1,outA);
         }
 
         //here Alice and Bob exchange roles, Alice is P2 and Bob is P1
         if (bInputUnkown) {
-            AXplusB_P2PackedPart1(X1, Rx2, Z2);
+            AXplusB_P2PackedPart1(X1, Rx2,Z2);
             AXplusB_P1Packed(A2, B2, RA2, RB2);
-            AXplusB_P2PackedPart2(X2, Rx1, Z1, outB);
+            AXplusB_P2PackedPart2(X1, Rx2,Z2,outB);
         }
-
 
         //Alice
         CalcEachPartyPackedSecret(B1, outB, A1, X1, Y1);
         //Bob calculates his part
         CalcEachPartyPackedSecret(B2, outA, A2, X2, Y2);
 
-    chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - start;
+    }
 
-    cout << endl << "elapsed time for 1M runs of AX+B phase:  " << elapsed_seconds.count() << "  s\n";
+    chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - start;
+    cout << endl << "elapsed time for 1M runs of AX+B phase(original):  " << elapsed_seconds.count() << "  s\n";
+    
+
+    //============================AX+B with separated module==========================
+
+    //for party 1 generate 2 counts of 4X256 matrix and 2 counts of size 4 vectors
+    getInputPackedVars(A1, RA1, B1, RB1, generator);
+    getInputPackedVars(A2, RA2, B2, RB2, generator);
+    chrono::time_point<std::chrono::system_clock> start_p1 = chrono::system_clock::now();
+
+
+    for (int i = 0; i < 1000000; i++) {
+        if (bInputUnkown) {
+            AXplusB_P1Packed(A1, B1, RA1, RB1);
+            AXplusB_P1Packed(A2, B2, RA2, RB2);
+        }
 }
+    chrono::duration<double> elapsed_seconds_p1 = chrono::system_clock::now() - start_p1;
+    cout << endl << "elapsed time for 1M runs of AX+B phase(party 1):  " << elapsed_seconds_p1.count() << "  s\n";
+
+
+    generate_rand_packed_vector_4(X1,generator);
+    generate_rand_packed_vector_4(Rx2,generator);
+    generate_rand_packed_vector_4(X2,generator);
+    generate_rand_packed_vector_4(Rx1,generator);
+
+    chrono::time_point<std::chrono::system_clock> start_p2 = chrono::system_clock::now();
+
+    for (int i = 0; i < 1000000; i++) {
+        if (bInputUnkown) {
+            AXplusB_P2PackedPart1(X2, Rx1,Z1);
+            AXplusB_P2PackedPart2(X2, Rx1,Z1,outA);
+            AXplusB_P2PackedPart1(X1, Rx2,Z2);
+            AXplusB_P2PackedPart2(X1, Rx2,Z2, outB);
+        }
+    }
+        
+    chrono::duration<double> elapsed_seconds_p2 = chrono::system_clock::now() - start_p2;
+    cout << endl << "elapsed time for 1M runs of AX+B phase(party2):  " << elapsed_seconds_p2.count() << "  s\n";
+
+    chrono::time_point<std::chrono::system_clock> start_calc = chrono::system_clock::now();
+    CalcEachPartyPackedSecret(B1, outB, A1, X1, Y1);
+    CalcEachPartyPackedSecret(B2, outA, A2, X2, Y2);
+    chrono::duration<double> elapsed_seconds_calc = chrono::system_clock::now() - start_p2;
+    cout << endl << "elapsed time for 1M runs of AX+B phase(calc):  " << elapsed_seconds_calc.count() << "  s\n";
+
+    //============================WordPackedVecMult==========================
+
+    chrono::time_point<std::chrono::system_clock> start_wp = chrono::system_clock::now();
+    uint64_t Mx[4];
+    uint64_t Ra[4][256];
+    uint64_t Ra_Mx[4];
+    generate_rand_packed_sqMat_4(Ra, generator);
+    generate_rand_packed_vector_4(Mx, generator);
+
+    for (int i = 0; i < 1000000; i++) {
+            wordPackedVecMatMult(Ra,Mx,Ra_Mx);
+    }
+        chrono::duration<double> elapsed_seconds_wp = chrono::system_clock::now() - start_wp;
+    cout << endl << "elapsed time for 1M runs of wordPackedVecMatMult phase:  " << elapsed_seconds_wp.count() << "  s\n";
     
     //============================OT evaluation==========================
 
