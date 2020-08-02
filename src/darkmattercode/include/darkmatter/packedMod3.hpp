@@ -49,7 +49,7 @@ public:
     PackedZ3() { reset(); }
 
     // get the element at position idx
-    int at(int idx) const {
+    int at(unsigned int idx) const {
         if (idx >= SIZE) {
             throw std::out_of_range("Trying to get index "
                 +std::to_string(idx)
@@ -65,7 +65,7 @@ public:
     }
 
     // set the element at position idx to val mod 3
-    void set(int idx, unsigned int val) {
+    void set(unsigned int idx, unsigned int val) {
         if (idx >= SIZE) {
             throw std::out_of_range("Trying to set index "
                 +std::to_string(idx)
@@ -75,8 +75,8 @@ public:
         int idxInWord = idx & 0x3f; // modulo 64
         val %= 3; // make sure that val is in 0,1,2
         uint64_t mask = ~(uint64_t(1) << idxInWord);
-        uint64_t lsb = (val & 1) << idxInWord;
-        uint64_t msb = ((val& 2)>>1) << idxInWord;
+        uint64_t lsb = (uint64_t(val) & 1) << idxInWord;
+        uint64_t msb = ((uint64_t(val)& 2)>>1) << idxInWord;
         msbs[wIdx] = (msbs[wIdx] & mask) | msb;
         lsbs[wIdx] = (lsbs[wIdx] & mask) | lsb;
     }
@@ -108,7 +108,7 @@ public:
             msbs[wIdx] = lsbs[wIdx] = 0;
             for (int idxInWord=0; idxInWord<64; idxInWord++,i++) {
                 if (i >= SIZE) break;
-                unsigned int val = src[i] % 3; // val is in 0,1,2
+                uint64_t val = src[i] % 3; // val is in 0,1,2
                 uint64_t lsb = (val & 1) << idxInWord;
                 uint64_t msb = ((val& 2)>>1) << idxInWord;
                 msbs[wIdx] |= msb;
