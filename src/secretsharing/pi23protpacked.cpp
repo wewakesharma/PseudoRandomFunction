@@ -153,7 +153,9 @@ void getMxMulPacked(uint64_t mX[4])
 
 /*
  * OTPreproc
- *
+ * Generate random Ra,Rb trinery vectors
+ * Generate Random Rx binary packed vectore
+ * Generate Z = (Ra * Rx + Rb*(1-Rx)
  */
 void OTPreproc(std::mt19937 &generator)
 {
