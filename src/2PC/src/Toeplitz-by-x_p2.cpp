@@ -25,15 +25,14 @@
 #include <cassert>
 #include "packedMod2.hpp"
 #include "Toeplitz-by-x.hpp"
+#include "data_sender.h"
+#include "data_receiver.h"
 
 using namespace std;
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
 // #define N_COLS 256
 
-char *serverIp = "127.0.0.1";
-int port = 12345 ;
-#ifdef PARTY2
 // This test program implements the first phase of the PRF
 int main()
 {
@@ -60,9 +59,9 @@ int main()
 
     // First run, a protocol for K1 times x2
     topelitz_Party2_1(x2, 0);
-    topelitz_Party1(out1_A, K1, 0);
-    topelitz_Party2_2(out1_B, x2, 0);
+    //topelitz_Party2_2(out1_B, x2, 0);
 
+    /*
     // Second run, a protocol for K2 times x1
     topelitz_Party2_1(x1, 0);
     topelitz_Party1(out2_B, K2, 0); // same FIXME as above
@@ -92,5 +91,6 @@ int main()
         std::cerr << "Yay, mult-by-topelit succeeded"<<std::endl;
     else
         std::cerr << "Boo, mult-by-topelit failed"<<std::endl;
+        */
 }
-#endif
+

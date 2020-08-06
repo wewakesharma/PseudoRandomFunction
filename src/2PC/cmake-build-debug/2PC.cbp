@@ -44,6 +44,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/."/>
 					<Add directory="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include"/>
 					<Add directory="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter"/>
 					<Add directory="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests"/>
@@ -68,6 +69,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/."/>
 					<Add directory="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include"/>
 					<Add directory="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter"/>
 					<Add directory="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests"/>
@@ -86,19 +88,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/client.cpp">
-			<Option target="2PC"/>
-		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/OT.hpp">
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/Toeplitz-by-x.hpp">
 			<Option target="2PC"/>
 		</Unit>
-		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/Toeplitz-by-x_p1.h">
-			<Option target="2PC"/>
-		</Unit>
-		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/Toeplitz-by-x_p2.h">
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/data_sender.h">
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/packedMod2.hpp">
@@ -108,9 +104,6 @@
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/utils.hpp">
-			<Option target="2PC"/>
-		</Unit>
-		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/server.cpp">
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/OT copy.cpp">
@@ -126,6 +119,15 @@
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/Toeplitz-by-x_p2.cpp">
+			<Option target="2PC"/>
+		</Unit>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_receiver.cpp">
+			<Option target="2PC"/>
+		</Unit>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_receiver.h">
+			<Option target="2PC"/>
+		</Unit>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_sender.cpp">
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/mains.h">

@@ -96,87 +96,9 @@ CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/Toeplitz-by-x.cpp -o CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.s
 
-CMakeFiles/2PC.dir/tests/test_OT.cpp.o: CMakeFiles/2PC.dir/flags.make
-CMakeFiles/2PC.dir/tests/test_OT.cpp.o: ../tests/test_OT.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/2PC.dir/tests/test_OT.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/tests/test_OT.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_OT.cpp
-
-CMakeFiles/2PC.dir/tests/test_OT.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/tests/test_OT.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_OT.cpp > CMakeFiles/2PC.dir/tests/test_OT.cpp.i
-
-CMakeFiles/2PC.dir/tests/test_OT.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/tests/test_OT.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_OT.cpp -o CMakeFiles/2PC.dir/tests/test_OT.cpp.s
-
-CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o: CMakeFiles/2PC.dir/flags.make
-CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o: ../tests/test_packedMod2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod2.cpp
-
-CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod2.cpp > CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.i
-
-CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod2.cpp -o CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.s
-
-CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o: CMakeFiles/2PC.dir/flags.make
-CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o: ../tests/test_packedMod3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod3.cpp
-
-CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod3.cpp > CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.i
-
-CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod3.cpp -o CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.s
-
-CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o: CMakeFiles/2PC.dir/flags.make
-CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o: ../tests/test_Toeplitz-by-x.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_Toeplitz-by-x.cpp
-
-CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_Toeplitz-by-x.cpp > CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.i
-
-CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_Toeplitz-by-x.cpp -o CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.s
-
-CMakeFiles/2PC.dir/client.cpp.o: CMakeFiles/2PC.dir/flags.make
-CMakeFiles/2PC.dir/client.cpp.o: ../client.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/2PC.dir/client.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/client.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/client.cpp
-
-CMakeFiles/2PC.dir/client.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/client.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/client.cpp > CMakeFiles/2PC.dir/client.cpp.i
-
-CMakeFiles/2PC.dir/client.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/client.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/client.cpp -o CMakeFiles/2PC.dir/client.cpp.s
-
-CMakeFiles/2PC.dir/server.cpp.o: CMakeFiles/2PC.dir/flags.make
-CMakeFiles/2PC.dir/server.cpp.o: ../server.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/2PC.dir/server.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/server.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/server.cpp
-
-CMakeFiles/2PC.dir/server.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/server.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/server.cpp > CMakeFiles/2PC.dir/server.cpp.i
-
-CMakeFiles/2PC.dir/server.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/server.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/server.cpp -o CMakeFiles/2PC.dir/server.cpp.s
-
 CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o: CMakeFiles/2PC.dir/flags.make
 CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o: ../src/Toeplitz-by-x_p1.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/Toeplitz-by-x_p1.cpp
 
 CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.i: cmake_force
@@ -189,7 +111,7 @@ CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.s: cmake_force
 
 CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o: CMakeFiles/2PC.dir/flags.make
 CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o: ../src/Toeplitz-by-x_p2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/Toeplitz-by-x_p2.cpp
 
 CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.i: cmake_force
@@ -200,19 +122,97 @@ CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/Toeplitz-by-x_p2.cpp -o CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.s
 
+CMakeFiles/2PC.dir/tests/test_OT.cpp.o: CMakeFiles/2PC.dir/flags.make
+CMakeFiles/2PC.dir/tests/test_OT.cpp.o: ../tests/test_OT.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/2PC.dir/tests/test_OT.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/tests/test_OT.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_OT.cpp
+
+CMakeFiles/2PC.dir/tests/test_OT.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/tests/test_OT.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_OT.cpp > CMakeFiles/2PC.dir/tests/test_OT.cpp.i
+
+CMakeFiles/2PC.dir/tests/test_OT.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/tests/test_OT.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_OT.cpp -o CMakeFiles/2PC.dir/tests/test_OT.cpp.s
+
+CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o: CMakeFiles/2PC.dir/flags.make
+CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o: ../tests/test_packedMod2.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod2.cpp
+
+CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod2.cpp > CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.i
+
+CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod2.cpp -o CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.s
+
+CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o: CMakeFiles/2PC.dir/flags.make
+CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o: ../tests/test_packedMod3.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod3.cpp
+
+CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod3.cpp > CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.i
+
+CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_packedMod3.cpp -o CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.s
+
+CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o: CMakeFiles/2PC.dir/flags.make
+CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o: ../tests/test_Toeplitz-by-x.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_Toeplitz-by-x.cpp
+
+CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_Toeplitz-by-x.cpp > CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.i
+
+CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/tests/test_Toeplitz-by-x.cpp -o CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.s
+
+CMakeFiles/2PC.dir/src/data_sender.cpp.o: CMakeFiles/2PC.dir/flags.make
+CMakeFiles/2PC.dir/src/data_sender.cpp.o: ../src/data_sender.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/2PC.dir/src/data_sender.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/src/data_sender.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_sender.cpp
+
+CMakeFiles/2PC.dir/src/data_sender.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/src/data_sender.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_sender.cpp > CMakeFiles/2PC.dir/src/data_sender.cpp.i
+
+CMakeFiles/2PC.dir/src/data_sender.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/src/data_sender.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_sender.cpp -o CMakeFiles/2PC.dir/src/data_sender.cpp.s
+
+CMakeFiles/2PC.dir/src/data_receiver.cpp.o: CMakeFiles/2PC.dir/flags.make
+CMakeFiles/2PC.dir/src/data_receiver.cpp.o: ../src/data_receiver.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/2PC.dir/src/data_receiver.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/2PC.dir/src/data_receiver.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_receiver.cpp
+
+CMakeFiles/2PC.dir/src/data_receiver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/2PC.dir/src/data_receiver.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_receiver.cpp > CMakeFiles/2PC.dir/src/data_receiver.cpp.i
+
+CMakeFiles/2PC.dir/src/data_receiver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/2PC.dir/src/data_receiver.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_receiver.cpp -o CMakeFiles/2PC.dir/src/data_receiver.cpp.s
+
 # Object files for target 2PC
 2PC_OBJECTS = \
 "CMakeFiles/2PC.dir/src/OT_copy.cpp.o" \
 "CMakeFiles/2PC.dir/src/OT.cpp.o" \
 "CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.o" \
+"CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o" \
+"CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o" \
 "CMakeFiles/2PC.dir/tests/test_OT.cpp.o" \
 "CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o" \
 "CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o" \
 "CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o" \
-"CMakeFiles/2PC.dir/client.cpp.o" \
-"CMakeFiles/2PC.dir/server.cpp.o" \
-"CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o" \
-"CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o"
+"CMakeFiles/2PC.dir/src/data_sender.cpp.o" \
+"CMakeFiles/2PC.dir/src/data_receiver.cpp.o"
 
 # External object files for target 2PC
 2PC_EXTERNAL_OBJECTS =
@@ -220,14 +220,14 @@ CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.s: cmake_force
 2PC: CMakeFiles/2PC.dir/src/OT_copy.cpp.o
 2PC: CMakeFiles/2PC.dir/src/OT.cpp.o
 2PC: CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.o
+2PC: CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o
+2PC: CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o
 2PC: CMakeFiles/2PC.dir/tests/test_OT.cpp.o
 2PC: CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o
 2PC: CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o
 2PC: CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o
-2PC: CMakeFiles/2PC.dir/client.cpp.o
-2PC: CMakeFiles/2PC.dir/server.cpp.o
-2PC: CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o
-2PC: CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o
+2PC: CMakeFiles/2PC.dir/src/data_sender.cpp.o
+2PC: CMakeFiles/2PC.dir/src/data_receiver.cpp.o
 2PC: CMakeFiles/2PC.dir/build.make
 2PC: CMakeFiles/2PC.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable 2PC"

@@ -3,6 +3,7 @@ project(2PC)
 
 set(CMAKE_CXX_STANDARD 14)
 
+include_directories(.)
 include_directories(include)
 include_directories(include/darkmatter)
 include_directories(tests)
@@ -16,10 +17,10 @@ add_executable(2PC
         "src/OT copy.cpp"
         src/OT.cpp
         src/Toeplitz-by-x.cpp
+        src/Toeplitz-by-x_p1.cpp
+        src/Toeplitz-by-x_p2.cpp
         tests/mains.h
         tests/test_OT.cpp
         tests/test_packedMod2.cpp
         tests/test_packedMod3.cpp
-        tests/test_Toeplitz-by-x.cpp
-        client.cpp
-        server.cpp src/Toeplitz-by-x_p1.cpp src/Toeplitz-by-x_p2.cpp)
+        tests/test_Toeplitz-by-x.cpp src/data_sender.cpp include/darkmatter/data_sender.h src/data_receiver.cpp include/darkmatter/data_receiver.h)

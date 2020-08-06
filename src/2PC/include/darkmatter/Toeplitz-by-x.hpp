@@ -18,9 +18,6 @@ void initGlobals(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A);
 // A "trusted party implementation" of pre-processing
 void preProc_Toeplitz_by_x(unsigned int nTimes);
 
-
-void p1_recv();
-
 void topelitz_Party1(PackedZ2<N_ROWS>& out, const std::vector<uint64_t>& A,
                      int index);
 

@@ -27,9 +27,11 @@
 #include <cassert>
 #include "packedMod2.hpp"
 #include "Toeplitz-by-x.hpp"
+#include "data_sender.h"
+#include "data_receiver.h"
 
 
-using namespace std;
+//using namespace std;
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
 // #define N_COLS 256
@@ -157,12 +159,16 @@ void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
 void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index) {
     // get rx from pre-processing
     PackedZ2<N_COLS>& rx = get_rx_PP(index); // local copy
+    std::vector<unsigned int> mx_vec;
 
     // send mx = x xor rx to party1
     PackedZ2<N_COLS> mx = x;
     mx.add(rx);
-    
-    snd_mx(mx); // send to party1
+
+    mx.toArray(mx_vec);
+    pi_snd(mx_vec);
+    //mx.toArray();
+    //snd_mx(mx); // send to party1
 }
 
 void topelitz_Party2_2(PackedZ2<N_ROWS>& out, PackedZ2<N_COLS>& x,
@@ -180,60 +186,11 @@ void topelitz_Party2_2(PackedZ2<N_ROWS>& out, PackedZ2<N_COLS>& x,
     // out is the output of this party
 }
 
-void p1_recv()//p1 acts as a server
-{
-    int port = 12345;
-    //buffer to send and receive messages with
-    char msg[1500];
 
-    //setup a socket and connection tools
-    sockaddr_in servAddr;
-    bzero((char*)&servAddr, sizeof(servAddr));
-    servAddr.sin_family = AF_INET;
-    servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    servAddr.sin_port = htons(port);
 
-    //open stream oriented socket with internet address
-    //also keep track of the socket descriptor
-    int serverSd = socket(AF_INET, SOCK_STREAM, 0);
-    if(serverSd < 0)
-    {
-        cerr << "Error establishing the server socket" << endl;
-        exit(0);
-    }
-    //bind the socket to its local address
-    int bindStatus = bind(serverSd, (struct sockaddr*) &servAddr,
-                          sizeof(servAddr));
-    if(bindStatus < 0)
-    {
-        cerr << "Error binding socket to local address" << endl;
-        exit(0);
-    }
-    cout << "Waiting for a client to connect..." << endl;
-    //listen for up to 5 requests at a time
-    listen(serverSd, 5);
-    //receive a request from client using accept
-    //we need a new address to connect with the client
-    sockaddr_in newSockAddr;
-    socklen_t newSockAddrSize = sizeof(newSockAddr);
-    //accept, create a new socket descriptor to
-    //handle the new connection with client
-    int newSd = accept(serverSd, (sockaddr *)&newSockAddr, &newSockAddrSize);
-    if(newSd < 0)
-    {
-        cerr << "Error accepting request from client!" << endl;
-        exit(1);
-    }
-    cout << "Connected with Party 2!" << endl;
-    memset(&msg, 0, sizeof(msg));//clear the buffer
-    recv(newSd, (char*)&msg, sizeof(msg), 0);
-    //convert msg from istream to string and then into uint64_t(PackedZ2 data member)
-    std::istr oss;
-    operator<<(oss,mx);
-    string data = oss.str();
-}
 
-p2_recv()//p2 acts as a server
+
+/*p2_recv()//p2 acts as a server
 {
 
-}
+}*/

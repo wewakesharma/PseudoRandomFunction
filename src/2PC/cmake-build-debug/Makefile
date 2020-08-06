@@ -123,60 +123,6 @@ depend:
 	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/build
 .PHONY : 2PC/fast
 
-client.o: client.cpp.o
-
-.PHONY : client.o
-
-# target to build an object file
-client.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/client.cpp.o
-.PHONY : client.cpp.o
-
-client.i: client.cpp.i
-
-.PHONY : client.i
-
-# target to preprocess a source file
-client.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/client.cpp.i
-.PHONY : client.cpp.i
-
-client.s: client.cpp.s
-
-.PHONY : client.s
-
-# target to generate assembly for a file
-client.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/client.cpp.s
-.PHONY : client.cpp.s
-
-server.o: server.cpp.o
-
-.PHONY : server.o
-
-# target to build an object file
-server.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/server.cpp.o
-.PHONY : server.cpp.o
-
-server.i: server.cpp.i
-
-.PHONY : server.i
-
-# target to preprocess a source file
-server.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/server.cpp.i
-.PHONY : server.cpp.i
-
-server.s: server.cpp.s
-
-.PHONY : server.s
-
-# target to generate assembly for a file
-server.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/server.cpp.s
-.PHONY : server.cpp.s
-
 src/OT.o: src/OT.cpp.o
 
 .PHONY : src/OT.o
@@ -312,6 +258,60 @@ src/Toeplitz-by-x_p2.cpp.s:
 	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.s
 .PHONY : src/Toeplitz-by-x_p2.cpp.s
 
+src/data_receiver.o: src/data_receiver.cpp.o
+
+.PHONY : src/data_receiver.o
+
+# target to build an object file
+src/data_receiver.cpp.o:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_receiver.cpp.o
+.PHONY : src/data_receiver.cpp.o
+
+src/data_receiver.i: src/data_receiver.cpp.i
+
+.PHONY : src/data_receiver.i
+
+# target to preprocess a source file
+src/data_receiver.cpp.i:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_receiver.cpp.i
+.PHONY : src/data_receiver.cpp.i
+
+src/data_receiver.s: src/data_receiver.cpp.s
+
+.PHONY : src/data_receiver.s
+
+# target to generate assembly for a file
+src/data_receiver.cpp.s:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_receiver.cpp.s
+.PHONY : src/data_receiver.cpp.s
+
+src/data_sender.o: src/data_sender.cpp.o
+
+.PHONY : src/data_sender.o
+
+# target to build an object file
+src/data_sender.cpp.o:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_sender.cpp.o
+.PHONY : src/data_sender.cpp.o
+
+src/data_sender.i: src/data_sender.cpp.i
+
+.PHONY : src/data_sender.i
+
+# target to preprocess a source file
+src/data_sender.cpp.i:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_sender.cpp.i
+.PHONY : src/data_sender.cpp.i
+
+src/data_sender.s: src/data_sender.cpp.s
+
+.PHONY : src/data_sender.s
+
+# target to generate assembly for a file
+src/data_sender.cpp.s:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_sender.cpp.s
+.PHONY : src/data_sender.cpp.s
+
 tests/test_OT.o: tests/test_OT.cpp.o
 
 .PHONY : tests/test_OT.o
@@ -429,12 +429,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... 2PC"
-	@echo "... client.o"
-	@echo "... client.i"
-	@echo "... client.s"
-	@echo "... server.o"
-	@echo "... server.i"
-	@echo "... server.s"
 	@echo "... src/OT.o"
 	@echo "... src/OT.i"
 	@echo "... src/OT.s"
@@ -450,6 +444,12 @@ help:
 	@echo "... src/Toeplitz-by-x_p2.o"
 	@echo "... src/Toeplitz-by-x_p2.i"
 	@echo "... src/Toeplitz-by-x_p2.s"
+	@echo "... src/data_receiver.o"
+	@echo "... src/data_receiver.i"
+	@echo "... src/data_receiver.s"
+	@echo "... src/data_sender.o"
+	@echo "... src/data_sender.i"
+	@echo "... src/data_sender.s"
 	@echo "... tests/test_OT.o"
 	@echo "... tests/test_OT.i"
 	@echo "... tests/test_OT.s"
