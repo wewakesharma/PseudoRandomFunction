@@ -94,6 +94,9 @@
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/Toeplitz-by-x.hpp">
 			<Option target="2PC"/>
 		</Unit>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/data_receiver.h">
+			<Option target="2PC"/>
+		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/include/darkmatter/data_sender.h">
 			<Option target="2PC"/>
 		</Unit>
@@ -122,9 +125,6 @@
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_receiver.cpp">
-			<Option target="2PC"/>
-		</Unit>
-		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_receiver.h">
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/2PC/src/data_sender.cpp">

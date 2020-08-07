@@ -21,13 +21,14 @@
 #include <sys/uio.h>
 #include <sys/time.h>
 #include <sys/wait.h>
+#include <typeinfo>
 
 
 
 #include "Toeplitz-by-x.hpp"
 #include "data_receiver.h"
 
-void pi_recv()//p1 acts as a server
+std::string pi_recv()//p1 acts as a server
 {
     int port = 12345;
     //buffer to send and receive messages with
@@ -73,10 +74,11 @@ void pi_recv()//p1 acts as a server
     std::cout << "Connected with Party 2!" << std::endl;
     memset(&msg, 0, sizeof(msg));//clear the buffer
     recv(newSd, (char*)&msg, sizeof(msg), 0);
-    std::cout<<msg;
+    //std::cout<<msg<<std::endl;
     close(newSd);
     close(serverSd);
     //convert msg from istream to string and then into uint64_t(PackedZ2 data member)
 
-    //string data = oss.str();
+    std::string msg_str(msg);
+    return msg_str;
 }

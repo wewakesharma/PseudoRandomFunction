@@ -48,15 +48,13 @@ void pi_snd(std::vector<unsigned int>& snd_vec)
     }
     std::cout << "Connected to the server!" << std::endl;
     std::cout << ">";
-    //string data;
-    //getline(cin, data);
     memset(&msg, 0, sizeof(msg));//clear the buffer
     std::ostringstream oss;
     if (!snd_vec.empty())
     {
         // Convert all but the last element to avoid a trailing ","
         std::copy(snd_vec.begin(), snd_vec.end()-1,
-                  std::ostream_iterator<int>(oss, ","));
+                  std::ostream_iterator<int>(oss, ""));
 
         // Now add the last element with no delimiter
         oss << snd_vec.back();
