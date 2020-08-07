@@ -62,7 +62,7 @@ int main()
     //Initialize party 1 to recv the input
     string recd_msg = pi_recv();
     cout<<recd_msg<<endl;
-    stoi(recd_msg);
+    //stoi(recd_msg);
     // First run, a protocol for K1 times x2
 
     topelitz_Party1(out1_A, K1, 0);
