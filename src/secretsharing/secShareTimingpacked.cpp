@@ -146,7 +146,7 @@ void packedTiming(int stepsToRun) {
             AXplusB_P1Packed(A1, B1, RA1, RB1);
             AXplusB_P1Packed(A2, B2, RA2, RB2);
         }
-}
+    }
     chrono::duration<double> elapsed_seconds_p1 = chrono::system_clock::now() - start_p1;
     cout << endl << "elapsed time for 1M runs of AX+B phase(party 1):  " << elapsed_seconds_p1.count() << "  s\n";
 
@@ -238,6 +238,47 @@ void packedTiming(int stepsToRun) {
     int test = wm[1];
     cout << "wm =, wl= " <<test  << wl[1] << endl;
     cout << "r1m =, r1l= " <<r1m[1] << " " << r1l[1] <<vm << vl << endl;
+
+
+    /*
+    //Here we start the next phase were we deal with Z3 numbers
+    uint64_t ram[4], ral[4], rbm[4], rbl[4]; //these are Z3 vectors
+    uint64_t Rz[4]; //a binary vector
+    uint64_t unpackedVecra[256], unpackedVecrb[256];
+
+    generate_rand_Z3_packed_Vec_4(ram, ral, unpackedVecra, generator);
+    generate_rand_Z3_packed_Vec_4(rbm, rbl, unpackedVecrb, generator);
+    generate_rand_packed_vector_4(Rz, generator);
+
+    uint64_t zZ3m[4], zZ3l[4];
+
+    for (int i = 0; i < 4; i++) {
+        zZ3m[i] = (Rz[i] & ram[i]) ^ (((-1) ^ Rz[i]) & rbm[i]) ;
+        zZ3l[i] = (Rz[i] & ral[i]) ^ (((-1) ^ Rz[i]) & rbl[i]) ;
+    }
+
+
+    /////////////
+
+    uint64_t Vm[4], Vl[4];
+    uint64_t Wm[4], Wl[4];
+    uint64_t Rxp23[4];
+
+    OTPreproc(generator);
+    sc23_p2Part1Packed(Y2, generator);
+    sc23_p1Packed(Y1, Vm, Vl, generator);
+
+    sc23_p2Part2Packed(Wm, Wl, generator);
+
+    //multiply the result of the secret sharing with a random Z3 matrix 81X256
+
+    //generate the random Z3 81X256 matrix first
+
+    uint64_t output_Am[2], output_Al[2], output_Bm[2], output_Bl[2];
+
+    multMod3_Z3Mat_Z3Vec(randMat1, randMat2, Vm, Vl, output_Am, output_Al); // matrix-vector multiply mod 3
+    multMod3_Z3Mat_Z3Vec(randMat1, randMat2, Wm, Wl, output_Bm, output_Bl); // matrix-vector multiply mod 3
+
 }
 
 
