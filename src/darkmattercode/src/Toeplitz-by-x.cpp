@@ -6,6 +6,12 @@
 #include <cassert>
 #include "packedMod2.hpp"
 #include "Toeplitz-by-x.hpp"
+#include "mains.hpp"
+#include "Timing.hpp"
+
+using namespace std;
+
+long timerAxpBP1 = 0;
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
@@ -65,7 +71,7 @@ static std::vector<uint64_t> mA_global;
 static PackedZ2<N_ROWS> mb_global;
 static PackedZ2<N_COLS> mx_global;
 
-void initGlobals(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A) {
+void initGlobals() {
     // initialize the Topelitz mask
     int extraBits = 64*toeplitzWords - (N_ROWS+N_COLS-1);
     if (extraBits>0) {
@@ -106,7 +112,10 @@ static PackedZ2<N_ROWS>& rcv_mb()
 /**** implementation of AX+b with A being a Toeplitz matrix *******/
 
 void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
-                     int index) {                     
+                     int index) {
+
+    chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
+
     // get rA, rb from pre-processing
     const std::vector<uint64_t>& rA = get_rA_PP(index);
     PackedZ2<N_ROWS>& rb = get_rb_PP(index);
@@ -125,7 +134,11 @@ void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
     mb.toeplitzByVec(rA, mx); // rA * mx
     mb.add(b);                //    xor b
     mb.add(rb);               //    xor rb
-    
+
+    //chrono::duration<double> elapsed_seconds_part1 = chrono::system_clock::now() - start;
+
+    timerAxpBP1 += (chrono::system_clock::now() - start).count();
+
     snd_mA_mb(mA, mb);        // send to party2
     
     // b is the output of this party

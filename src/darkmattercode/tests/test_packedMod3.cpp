@@ -2,12 +2,9 @@
 /** test_packedMod3.cpp
  *  - testing packed vectors in Z_3
  */
-
-
-
 #include <iostream>
 #include "packedMod3.hpp"
-#include "mains.h"
+//#include "mains.h"
 
 // bool isZero()
 static bool test_isZero() {
@@ -188,7 +185,7 @@ static bool test_randomize() {
     PackedZ3<15> v;
     v.randomize(); // prg initiazalized by default
     const std::vector<unsigned int>
-          expected = {1,0,2,1,1,0,2,2,0,1,2,0,0,2,0};
+          expected = {1,2,2,0,1,2,2,1,2,0,0,2,1,2,1};
     // expected will change when the implementation of randomWord is fixed
 
     std::vector<unsigned int> obtained;

@@ -10,184 +10,227 @@
 #include "packedMod2.hpp"
 #include "packedMod3.hpp"
 #include "OT.hpp"
-
-
-//#define N_SIZE 256
-//#define N_COLS 256
-
-
-
-inline void multPairByX(PackedPairZ2& p, const PackedZ2<N_SIZE>& x){
-    p.first &= x;
-    p.second &= x;
-}
-
-static PackedZ2<N_SIZE> mx_OT_global;
-
-static PackedPairZ2 m0_OT_global;
-static PackedPairZ2 m1_OT_global;
+#include "mains.hpp"
 
 
 // A place to store the results from pre-processing
-//static std::vector< std::vector<uint64_t> > rAs;
-static std::vector< PackedZ2<N_SIZE> > rasm, rasl, rbsm, rbsl, rzsm, rzsl;
+
 static std::vector< PackedZ2<N_SIZE> > rxs;
-static std::vector< PackedZ2<N_SIZE> > tmp;
+static std::vector< PackedPairZ2<N_SIZE> > raps, rbps, zps;
 
-static std::vector< PackedPairZ2 > raps;
-static std::vector< PackedPairZ2 > rbps;
-static std::vector< PackedPairZ2 > zps;
-
+// Methods for returning data from pre-processing
 static PackedZ2<N_SIZE>& get_rx_PP(int index) {
     return rxs.at(index);
 }
-
-static PackedPairZ2& get_z_PP(int index) {
+static PackedPairZ2<N_SIZE>& get_z_PP(int index) {
     return zps.at(index);
 }
-
-static std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> >& get_ra_PP(int index) {
+static PackedPairZ2<N_SIZE>& get_ra_PP(int index) {
     return raps.at(index);
 }
-
-static std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> >& get_rb_PP(int index) {
+static PackedPairZ2<N_SIZE>& get_rb_PP(int index) {
     return rbps.at(index);
 }
 
+// Static variables for implementing poor-man's communication channels
+static PackedZ2<N_SIZE> mx_OT_global;
+static PackedPairZ2<N_SIZE> m0_OT_global;
+static PackedPairZ2<N_SIZE> m1_OT_global;
+
+// Send/receive methods
 static void snd_mx(const PackedZ2<N_SIZE>& mx) {
     mx_OT_global = mx;
 }
-
-static void snd_m0_m1(const std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> >&  m0,
-                      const std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> >&  m1) {
+static void snd_m0_m1(const PackedPairZ2<N_SIZE>&  m0, const PackedPairZ2<N_SIZE>&  m1) {
     m0_OT_global = m0;
     m1_OT_global = m1;
 }
-
-static std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> >& rcv_m0()
+static PackedPairZ2<N_SIZE>& rcv_m0()
 {
     return m0_OT_global;
 }
-
-static std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> >& rcv_m1()
+static PackedPairZ2<N_SIZE>& rcv_m1()
 {
     return m1_OT_global;
 }
-
 static PackedZ2<N_SIZE>& rcv_mx()
 {
     return mx_OT_global;
 }
 
 // A "trusted party implementation" of pre-processing
-// Generate randomly ra, rb trinery vectors
-//genrate randomly binary rx vector
-//calculate z = ra*rx+ rb*(1-rx)
+// Generate randomly ra, rb pairs of binary vectors
+// genrate randomly binary rx vector
+// calculate z = ra*rx+ rb*(~rx)
 
-//we will treat the trinery vectors as two vectors
-/*
- * Calculate z = = 𝑟_𝑏×𝑟_𝑥+𝑟_𝑎×(~𝑟_𝑥)
- *
- * Uses PackedPairZ2 variable which is defined in this file
- */
 void preProc_OT(unsigned int nTimes) {
     // allocate space
-
     raps.resize(nTimes);
     rbps.resize(nTimes);
     zps.resize(nTimes);
     rxs.resize(nTimes);
-    tmp.resize(nTimes);
 
-    //generate Z
-    // fill with trandom data s.t. rz[i]=rA[i]*rx[i] xor rB[i] *(1-rx[i]) for all i
-    //generate ra, rb trinary vectors
+    // generate (ra, rb, rx, rz) tuples, as many as needed
     for (unsigned int i = 0; i < nTimes; i++) {
+        randomize(raps[i]);  // random ra[i]'s
+        randomize(rbps[i]);  // random rb[i]'s
+        rxs[i].randomize();  // random rx[i]'s
 
-        raps[i].first.randomize(); // random ra[i]'s
-        raps[i].second.randomize(); // random ra[i]'s
-        rbps[i].first.randomize(); // random ra[i]'s
-        rbps[i].second.randomize(); // random ra[i]'s
-        rxs[i].randomize(); // random rx[i]'s
+        zps[i] = rbps[i];   // rb
+        zps[i] &= rxs[i];   // rb*rx
 
-        //have a temporary variable and negate it
-        zps[i] = rbps[i];
-        zps[i].first.multiplyBy(rxs[i]);
-        zps[i].second.multiplyBy(rxs[i]);
+        auto notRx = rxs[i];
+        notRx.negate();
+        auto temp = raps[i]; // ra
+        temp &= notRx;       // ra*(~rx)
 
-        PackedPairZ2 temp = raps[i];
-        PackedZ2<N_SIZE> notX = ~(rxs[i]);
-        temp.first.multiplyBy(notX);
-        temp.second.multiplyBy(notX);
-        zps[i].first.add(temp.first);
-        zps[i].second.add(temp.second);
-
+        zps[i] ^= temp;      // rb*rx + ra*(~rx)
     }
-
-}
-
-void SC_Party2_1(PackedZ2<N_SIZE>& x, int index) {
-    // get rx from pre-processing
-
-    OT_Party2_1(x,index);
 }
 
 
-
-void OT_Party2_1(PackedZ2<N_SIZE>& x,  int index) {
+void OT_Party2_1(const PackedZ2<N_SIZE>& x,  int index) {
     // get rx from pre-processing
+    PackedZ2<N_SIZE>& rx = get_rx_PP(index);
 
-    preProc_OT(index);
-
-    PackedZ2<N_SIZE>& rx = get_rx_PP(index); // local copy
+#ifdef DEBUG
+    std::cout << "OT p2 part 1, x="<<x.at(0)<<", rx="<<rx.at(0);
+#endif
 
     // send mx = x xor rx to party1
     PackedZ2<N_SIZE> mx = x;
-    mx.add(rx);
-
+    mx ^= rx;
+#ifdef DEBUG
+    std::cout << ", sending mx="<<mx.at(0) << std::endl;
+#endif
     snd_mx(mx); // send to party1
 }
 
 /*
- * y2 = output
+ * OT_Party1, receives mx from party2 and then sends back
+ *    𝑚0 = mx*r0 + (~𝑚𝑥)*𝑟1 + ra
+ *    𝑚1 = 𝑚𝑥*𝑟1 + (~𝑚𝑥)*𝑟0 + 𝑟𝑏
+ * 
+ *  mx is packed-binary and all the other quantities are pairs of packed binaries
  */
-void SC_Party2_2( PackedZ2<N_SIZE>& y2, PackedZ3<N_SIZE>& out, int index)
-{
-    PackedPairZ2 outp;
-    OT_Party2_2(y2, outp, index);
-    out.makeFromBits(outp.first.bits, outp.second.bits); //most = first, least = second
+void OT_Party1(const PackedPairZ2<N_SIZE>& r0,  const PackedPairZ2<N_SIZE>& r1, int index) {
+    PackedZ2<N_SIZE> mx = rcv_mx(); // receive vector mx from party2
+
+#ifdef DEBUG
+    std::cout << "OT p1, mx="<<mx.at(0) << std::endl;
+
+    std::cout << "OT p1, r0="<<r0.first.at(0)<<r0.second.at(0) << std::endl;
+    std::cout << "OT p1, r1="<<r1.first.at(0)<<r1.second.at(0) << std::endl;
+#endif
+
+    // get rA, rb from pre-processing
+    const PackedPairZ2<N_SIZE>& ra = get_ra_PP(index);
+    const PackedPairZ2<N_SIZE>& rb = get_rb_PP(index);
+
+#ifdef DEBUG
+    std::cout << "OT p1, ra="<<ra.first.at(0)<<ra.second.at(0) << std::endl;
+    std::cout << "OT p1, rb="<<rb.first.at(0)<<rb.second.at(0) << std::endl;
+#endif
+
+    PackedPairZ2<N_SIZE> m0 = rb;
+    PackedPairZ2<N_SIZE> m1 = ra;
+
+    m0 &= mx;    // mx*rb
+    m1 &= mx;    // mx*ra
+
+#ifdef DEBUG
+    std::cout << "OT p1, mx*rb="<<m0.first.at(0)<<m0.second.at(0) << std::endl;
+    std::cout << "OT p1, mx*ra="<<m1.first.at(0)<<m1.second.at(0) << std::endl;
+#endif
+
+    mx.negate(); // ~mx
+
+#ifdef DEBUG
+    std::cout << "OT p1, ~mx="<<mx.at(0) << std::endl;
+#endif
+
+    PackedPairZ2<N_SIZE> tmp = ra;
+    tmp &= mx;   // (~mx)*ra
+
+    m0 ^= tmp;   // ~mx*ra + mx*rb
+
+#ifdef DEBUG
+    std::cout << "OT p1, (~mx)*ra"<<tmp.first.at(0)<<tmp.second.at(0) << std::endl;
+    std::cout << "OT p1, m0 = mx*r1 + (~mx)*r0 = "<<m0.first.at(0)<<m0.second.at(0) << std::endl;
+#endif
+
+    tmp = rb;
+    tmp &= mx;   // (~mx)*rb
+    m1 ^= tmp;   // mx*ra + (~mx)*rb
+
+#ifdef DEBUG
+    std::cout << "OT p1, tmp = (~mx)*rb = "<<tmp.first.at(0)<<tmp.second.at(0) << std::endl;
+    std::cout << "OT p1, m1 = mx*ra + (~mx)*rb = "<<m1.first.at(0)<<m1.second.at(0) << std::endl;
+#endif
+
+
+    m0 ^= r0;    // mx*rn + (~mx)*ra + r0
+    m1 ^= r1;    // mx*ra + (~mx)*rb + r1
+
+    snd_m0_m1(m0, m1);        // send to party2
+
+#ifdef DEBUG
+    std::cout << "OT p1, send m0=mx*rn + (~mx)*ra + r0 = "<<m0.first.at(0)<<m0.second.at(0) << std::endl;
+    std::cout << "OT p1, send m1=mx*ra + (~mx)*rb + r1 = "<<m1.first.at(0)<<m1.second.at(0) << std::endl;
+#endif
 }
 
-/*
- * rx is from preprocessing
- */
+void OT_Party2_2(const PackedZ2<N_SIZE>& x, PackedPairZ2<N_SIZE>& out, int index) {
 
-void OT_Party2_2(PackedZ2<N_SIZE>& x, PackedPairZ2& out, int index) {
+    // get rx and z frp, pre-processing
+    PackedZ2<N_SIZE>& rx = get_rx_PP(index);
+    PackedPairZ2<N_SIZE>& z = get_z_PP(index);
 
-    PackedZ2<N_SIZE>& rx = get_rx_PP(index); // local copy
-    PackedPairZ2& z = get_z_PP(index);
+#ifdef DEBUG
+    std::cout << "OT p2 part 2, z="<<z.first.at(0)<< z.second.at(0) << ", rx="<<rx.at(0) << std::endl;
+#endif
 
-    // receive back mA, mb from party1
-    const PackedPairZ2 m0 = rcv_m0();
-    const PackedPairZ2 m1 = rcv_m1();
+    // receive m0,m1 from party1
+    PackedPairZ2<N_SIZE> m0 = rcv_m0();
+    out = rcv_m1(); // m1
 
+#ifdef DEBUG
+    std::cout << "OT p2 part 2, receive m0="<<m0.first.at(0)<<m0.second.at(0) << std::endl;
+    std::cout << "OT p2 part 2, receive m1="<<out.first.at(0)<<out.second.at(0) << std::endl;
+#endif
 
-    // Send mA=A xor rA and mb=Ra*mx xor b xor rb to party2
-    PackedPairZ2 m1rx = m1;
+    out &= x;      // m1*x
 
-    multPairByX(m1rx,rx);
+#ifdef DEBUG
+    std::cout << "OT p2 part 2, m1*rx="<<out.first.at(0)<<out.second.at(0) << std::endl;
+#endif
 
-    PackedPairZ2 nm0rx = m0;
+    m0 &= ~x;      // m0*(~X)
 
-    multPairByX(nm0rx,~rx);
+#ifdef DEBUG
+    std::cout << "OT p2 part 2, m0*rx="<<m0.first.at(0)<<m0.second.at(0) << std::endl;
+#endif
 
+    out ^= m0;      // m0*(~X) + m1*x
 
-    out.first = ~z.first;
-    out.second = ~out.second;
-    out^=(m1rx);
-    out^=(nm0rx);
+#ifdef DEBUG
+    std::cout << "OT p2 part 2, m0*(~rX) + m1*rx="<<out.first.at(0)<<out.second.at(0) << std::endl;
+#endif
+
+    out ^= z;       // m0*(~rX) + m1*rx - z
+
+#ifdef DEBUG
+    std::cout << "OT p2 part 2, m0*(~rX) + m1*rx - z="<<out.first.at(0)<<out.second.at(0) << std::endl;
+
+    std::cout << "OT p2 part 2, out= "<<out.first.at(0)<<out.second.at(0) << std::endl;
+#endif
 
     // out is the output of this party
+}
+
+void SC_Party2_1(const PackedZ2<N_SIZE>& y2, int index) {
+//    std::cout << "\nSC: party 2 calling OT("<<y2.at(0)<<",index="<<index<<")\n";
+    OT_Party2_1(y2, index);
 }
 
 /*
@@ -197,143 +240,42 @@ Choose   𝑟 ⟵Z_3
 𝑟_1≔(𝑟+1 −𝑦_1) 𝑚𝑜𝑑 3
 𝑂𝑇𝑆𝑒𝑛𝑑𝑒𝑟 (𝑟_0, 𝑟_1, 𝑟_𝑎, 𝑟_𝑏)
  */
-void SC_Party1(PackedZ2<N_SIZE>& y1, PackedZ3<N_SIZE>& r, int index){
+void SC_Party1(const PackedZ2<N_SIZE>& y1, PackedZ3<N_SIZE>& out, int index) {
 
-
-    r.randomize(); //r will be our output
+    // prepare two PackedZ3 vectors, one with y1 and the other with ~y1 = 1-y1
 
     const static PackedZ2<N_SIZE> zVec; //by default constructor initializes to 0
+    PackedZ3<N_SIZE> y1_3;  // initialized to zero
+    y1_3.lsbs() = y1;       // set the lsb's to y1
 
-    PackedZ3<N_SIZE> y3;
-    y3.makeFromBits(zVec.bits,y1.bits);
+#ifdef DEBUG
+    assert(y1.at(0)==y1_3.at(0));
+#endif
 
-    auto noty1 = ~y1;
-    PackedZ3<N_SIZE> noty3;
-    noty3.makeFromBits(zVec.bits,noty1.bits); //one minus y1
+    PackedZ3<N_SIZE> noty1_3 = y1_3; // initialized to y1
+    noty1_3.lsbs().negate();         // negate all the lsb's
 
-    PackedZ3<N_SIZE> r0 = r;
-    r0.add(y3); //mod 3
-    PackedZ3<N_SIZE> r1 = r;
-    r1.add(noty3); // mod 3
+    out.randomize(); // the output is a random vector mod 3;
 
-    PackedZ2<N_SIZE> r0m, r0l, r1m, r1l;
-    r0m.makeFromBits(r0.msbs);
-    r0l.makeFromBits(r0.lsbs);
-    r1m.makeFromBits(r1.msbs);
-    r1l.makeFromBits(r1.lsbs);
+#ifdef DEBUG
+    std::cout << "OT p2 part 2, out= "<<out.first.at(0)<<out.second.at(0) << std::endl;
+#endif
 
-    PackedPairZ2 r0p = std::make_pair(r0m, r0l);
-    PackedPairZ2 r1p = std::make_pair(r1m,r1l);
+    y1_3 -= out;
+    noty1_3 -= out;
 
-    OT_Party1(r0p,r1p,index);
+    // use r0 = y1 - out mod 3 and r1 = (1-y1) - out mod 3 as the OT-sender inputs
+    OT_Party1(y1_3, noty1_3, index);
 
-    r.negate(); // negate mod 3
+    // Note: y1_3 and noty1_3 are PackedZ3, which are derived from PackedPairZ2
+    // so we can directly call OT_Party1 that expects to get PackedPairZ2's.
 }
 
 
-/*
- * OT_Party1
- * Calculate
- * 𝑚_0≔(~𝑚_𝑥 ) 𝑟_1+𝑚_𝑥 𝑟_0+𝑟_𝑎
-𝑚_1≔𝑚_𝑥 𝑟_1+(~𝑚_𝑥 ) 𝑟_0+𝑟_𝑏
-
- m_0, m_1 are trinery vectors
-
- */
-void OT_Party1(PackedPairZ2& r0,  PackedPairZ2& r1, int index) {
-    // get rA, rb from pre-processing
-
-    const PackedPairZ2& ra = get_ra_PP(index);
-    const PackedPairZ2& rb = get_rb_PP(index);
-
-    assert(ra.first.size() == r0.first.size());
-    assert(ra.second.size() == r0.second.size());
-    assert(rb.first.size() == r1.first.size());
-    assert(rb.second.size() == r1.second.size());
-
-    PackedZ2<N_SIZE>& mx = rcv_mx(); // receive vector mx from party2
-
-    // Send mA=A xor rA and mb=Ra*mx xor b xor rb to party2
-    std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> > mxr0 = r0;
-
-        multPairByX(mxr0, mx);
-
-    std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> > nmxr1 = r1;
-
-        multPairByX(nmxr1,(~mx));
-
-    std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> > m0;
-    m0 = ra;
-    m0 ^= nmxr1;
-    m0 ^= mxr0;
-
-    // Send mA=A xor rA and mb=Ra*mx xor b xor rb to party2
-    std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> > mxr1 = r1;
-
-        multPairByX(mxr1,mx);
-
-    std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> > nmxr0 = r0;
-
-        multPairByX(nmxr0,(~mx));
-
-    std::pair < PackedZ2<N_SIZE>,PackedZ2<N_SIZE> > m1;
-    m1 = rb;
-    m1^=(nmxr1);
-    m1^=(mxr0);
-
-    snd_m0_m1(m0, m1);        // send to party2
-
-    // b is the output of this party
-}
-
-
-
-/*
- * preProc_OT2
- *
- * An implementation that uses two vectors for each trinery variable
- * One can be used to represent the MSB and one for the LSB
- *
- *  * Calculates r_z = = 𝑟_𝑏×𝑟_𝑥+𝑟_𝑎×(~𝑟_𝑥)
- */
-void preProc_OT2(unsigned int nTimes) {
-    // allocate space
-
-    rasm.resize(nTimes);
-    rasl.resize(nTimes);
-    rbsm.resize(nTimes);
-    rbsl.resize(nTimes);
-    rzsm.resize(nTimes);
-    rzsl.resize(nTimes);
-    rxs.resize(nTimes);
-    tmp.resize(nTimes);
-
-    PackedZ2<N_SIZE> temp2;
-    //generate Z
-    // fill with trandom data s.t. rz[i]=rA[i]*rx[i] xor rB[i] *(1-rx[i]) for all i
-    //generate ra, rb trinary vectors
-    for (unsigned int i = 0; i < nTimes; i++) {
-
-        rasm[i].randomize(); // random ra[i]'s
-        rasl[i].randomize(); // random ra[i]'s
-        rbsm[i].randomize(); // random rb[i]'s
-        rbsl[i].randomize(); // random rb[i]'s
-        rxs[i].randomize(); // random rx[i]'s
-
-        tmp[i].randomize();
-
-        //have a temporary variable and negate it
-        rzsm[i] = rbsm[i];
-        rzsm[i].multiplyBy(rxs[i]);
-        tmp[i] = (~rxs[i]);
-        tmp[i].multiplyBy(rasm[i]);
-        rzsm[i].add(tmp[i]);
-
-        rzsl[i] = rbsl[i];
-        rzsl[i].multiplyBy(rxs[i]);
-        tmp[i] = ~rxs[i];
-        tmp[i].multiplyBy(rasl[i]);
-        rzsl[i].add(tmp[i]);
-        }
-
+void SC_Party2_2(const PackedZ2<N_SIZE>& y2, PackedZ3<N_SIZE>& out, int index)
+{
+    // Note: out is a PackedZ3, which is derived from PackedPairZ2
+    // so we can directly call OT_Party2_2 that expects to get PackedPairZ2
+    OT_Party2_2(y2,out, index);
+//    std::cout << "\nSC: party 2 OT returns "<<out.at(0)<<std::endl;
 }

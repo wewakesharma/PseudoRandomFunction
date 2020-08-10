@@ -16,16 +16,16 @@
  *
  * represented as two vectors for the msb's and lsb's.
  **/
-template <unsigned int SIZE>
+template <size_t SIZE>
 class PackedZ2 {
 public:
     std::vector<uint64_t> bits;
 
     // how many 64-bit words to keep them all
-    static const unsigned int nWords = (SIZE+63)/64;
+    static const size_t nWords = (SIZE+63)/64;
 
-    unsigned int size() const { return SIZE; }
-    unsigned int wSize() const { return nWords; }
+    size_t size() const { return SIZE; }
+    size_t wSize() const { return nWords; }
 
 private: // some utility functions
     // zero out the unused portion of the last word (if any)
@@ -188,7 +188,7 @@ public:
 
     // Matrix-vector multiplication
     using PackedMatrixZ2 = std::vector< PackedZ2 >;
-    template<unsigned int COLS>
+    template<size_t COLS>
     void matByVec(const PackedMatrixZ2& mat, PackedZ2<COLS> &vec) {
         if (mat.size() != COLS) {
             throw std::logic_error("Multiplying a "+std::to_string(SIZE)
@@ -255,7 +255,7 @@ public:
 
     // Multiply a Toeplitz matrix by vector, the matrix is
     //represented as in the function toeplitzMatrix above
-    template<unsigned int COLS>
+    template<size_t COLS>
     void toeplitzByVec(const std::vector<uint64_t>& T,PackedZ2<COLS> &vec){
         if (T.size() != (COLS+SIZE-1+63)/64) {
             throw std::logic_error("Expecting a "+std::to_string(SIZE)

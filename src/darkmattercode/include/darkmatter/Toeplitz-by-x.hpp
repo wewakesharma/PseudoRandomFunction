@@ -13,7 +13,7 @@ extern uint64_t topelitzMask; // mask to remove extra bits in the rAs
 extern const unsigned int toeplitzWords;
 
 // poor-man's implementation of communication channels
-void initGlobals(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A);
+void initGlobals();
 
 // A "trusted party implementation" of pre-processing
 void preProc_Toeplitz_by_x(unsigned int nTimes);

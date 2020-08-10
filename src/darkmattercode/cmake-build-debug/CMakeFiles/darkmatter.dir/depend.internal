@@ -6,6 +6,7 @@ CMakeFiles/darkmatter.dir/src/OT.cpp.o
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
+ ../tests/mains.h
  /Users/thalevi/Documents/research/PRFs/darkmatter/code/src/OT.cpp
 CMakeFiles/darkmatter.dir/src/Toeplitz-by-x.cpp.o
  ../include/darkmatter/Toeplitz-by-x.hpp
@@ -23,14 +24,13 @@ CMakeFiles/darkmatter.dir/tests/test_Toeplitz-by-x.cpp.o
  ../include/darkmatter/Toeplitz-by-x.hpp
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/utils.hpp
- /Users/thalevi/Documents/research/PRFs/darkmatter/code/tests/mains.h
  /Users/thalevi/Documents/research/PRFs/darkmatter/code/tests/test_Toeplitz-by-x.cpp
 CMakeFiles/darkmatter.dir/tests/test_packedMod2.cpp.o
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/utils.hpp
  /Users/thalevi/Documents/research/PRFs/darkmatter/code/tests/test_packedMod2.cpp
 CMakeFiles/darkmatter.dir/tests/test_packedMod3.cpp.o
+ ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
- /Users/thalevi/Documents/research/PRFs/darkmatter/code/tests/mains.h
  /Users/thalevi/Documents/research/PRFs/darkmatter/code/tests/test_packedMod3.cpp

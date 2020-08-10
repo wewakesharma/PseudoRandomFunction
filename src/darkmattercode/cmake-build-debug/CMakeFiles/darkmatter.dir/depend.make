@@ -5,6 +5,7 @@ CMakeFiles/darkmatter.dir/src/OT.cpp.o: ../include/darkmatter/OT.hpp
 CMakeFiles/darkmatter.dir/src/OT.cpp.o: ../include/darkmatter/packedMod2.hpp
 CMakeFiles/darkmatter.dir/src/OT.cpp.o: ../include/darkmatter/packedMod3.hpp
 CMakeFiles/darkmatter.dir/src/OT.cpp.o: ../include/darkmatter/utils.hpp
+CMakeFiles/darkmatter.dir/src/OT.cpp.o: ../tests/mains.h
 CMakeFiles/darkmatter.dir/src/OT.cpp.o: ../src/OT.cpp
 
 CMakeFiles/darkmatter.dir/src/Toeplitz-by-x.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
@@ -22,15 +23,14 @@ CMakeFiles/darkmatter.dir/tests/test_OT.cpp.o: ../tests/test_OT.cpp
 CMakeFiles/darkmatter.dir/tests/test_Toeplitz-by-x.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
 CMakeFiles/darkmatter.dir/tests/test_Toeplitz-by-x.cpp.o: ../include/darkmatter/packedMod2.hpp
 CMakeFiles/darkmatter.dir/tests/test_Toeplitz-by-x.cpp.o: ../include/darkmatter/utils.hpp
-CMakeFiles/darkmatter.dir/tests/test_Toeplitz-by-x.cpp.o: ../tests/mains.h
 CMakeFiles/darkmatter.dir/tests/test_Toeplitz-by-x.cpp.o: ../tests/test_Toeplitz-by-x.cpp
 
 CMakeFiles/darkmatter.dir/tests/test_packedMod2.cpp.o: ../include/darkmatter/packedMod2.hpp
 CMakeFiles/darkmatter.dir/tests/test_packedMod2.cpp.o: ../include/darkmatter/utils.hpp
 CMakeFiles/darkmatter.dir/tests/test_packedMod2.cpp.o: ../tests/test_packedMod2.cpp
 
+CMakeFiles/darkmatter.dir/tests/test_packedMod3.cpp.o: ../include/darkmatter/packedMod2.hpp
 CMakeFiles/darkmatter.dir/tests/test_packedMod3.cpp.o: ../include/darkmatter/packedMod3.hpp
 CMakeFiles/darkmatter.dir/tests/test_packedMod3.cpp.o: ../include/darkmatter/utils.hpp
-CMakeFiles/darkmatter.dir/tests/test_packedMod3.cpp.o: ../tests/mains.h
 CMakeFiles/darkmatter.dir/tests/test_packedMod3.cpp.o: ../tests/test_packedMod3.cpp
 

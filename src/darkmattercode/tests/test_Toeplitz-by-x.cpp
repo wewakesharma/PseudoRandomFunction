@@ -5,10 +5,12 @@
  */
 #include "packedMod2.hpp"
 #include "Toeplitz-by-x.hpp"
-#include "mains.h"
+#include "mains.hpp"
+
+//using namespace std;
 
 // poor-man's implementation of communication channels
-void initGlobals(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A);
+void initGlobals();
 
 // A "trusted party implementation" of pre-processing
 void preProc_Toeplitz_by_x(unsigned int nTimes);
@@ -28,7 +30,7 @@ int main()
 
     PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
 
-    initGlobals(out1_A, K1);  // initialize some global variables
+    initGlobals();  // initialize some global variables
     preProc_Toeplitz_by_x(2); // pre-processing for two runs
  
     // Choose random K1, K2, x1, x2, we will be computing
@@ -50,7 +52,7 @@ int main()
 
     // Second run, a protocol for K2 times x1
     topelitz_Party2_1(x1, 0);
-    topelitz_Party1(out2_B, K2, 0); // same FIXME as above
+    topelitz_Party1(out2_B, K2, 0); //
     topelitz_Party2_2(out2_A, x1, 0);
 
     // Party1 computes locally K1 times x1, and adds to out1_A,out2_A

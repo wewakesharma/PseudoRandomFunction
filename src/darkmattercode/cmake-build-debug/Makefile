@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named darkmatter
+# Target rules for targets named code
 
 # Build rule for target.
-darkmatter: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 darkmatter
-.PHONY : darkmatter
+code: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 code
+.PHONY : code
 
 # fast build rule for target.
-darkmatter/fast:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/build
-.PHONY : darkmatter/fast
+code/fast:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/build
+.PHONY : code/fast
 
 src/OT.o: src/OT.cpp.o
 
@@ -129,7 +129,7 @@ src/OT.o: src/OT.cpp.o
 
 # target to build an object file
 src/OT.cpp.o:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/src/OT.cpp.o
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/src/OT.cpp.o
 .PHONY : src/OT.cpp.o
 
 src/OT.i: src/OT.cpp.i
@@ -138,7 +138,7 @@ src/OT.i: src/OT.cpp.i
 
 # target to preprocess a source file
 src/OT.cpp.i:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/src/OT.cpp.i
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/src/OT.cpp.i
 .PHONY : src/OT.cpp.i
 
 src/OT.s: src/OT.cpp.s
@@ -147,8 +147,35 @@ src/OT.s: src/OT.cpp.s
 
 # target to generate assembly for a file
 src/OT.cpp.s:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/src/OT.cpp.s
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/src/OT.cpp.s
 .PHONY : src/OT.cpp.s
+
+src/PRF.o: src/PRF.cpp.o
+
+.PHONY : src/PRF.o
+
+# target to build an object file
+src/PRF.cpp.o:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/src/PRF.cpp.o
+.PHONY : src/PRF.cpp.o
+
+src/PRF.i: src/PRF.cpp.i
+
+.PHONY : src/PRF.i
+
+# target to preprocess a source file
+src/PRF.cpp.i:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/src/PRF.cpp.i
+.PHONY : src/PRF.cpp.i
+
+src/PRF.s: src/PRF.cpp.s
+
+.PHONY : src/PRF.s
+
+# target to generate assembly for a file
+src/PRF.cpp.s:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/src/PRF.cpp.s
+.PHONY : src/PRF.cpp.s
 
 src/Toeplitz-by-x.o: src/Toeplitz-by-x.cpp.o
 
@@ -156,7 +183,7 @@ src/Toeplitz-by-x.o: src/Toeplitz-by-x.cpp.o
 
 # target to build an object file
 src/Toeplitz-by-x.cpp.o:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/src/Toeplitz-by-x.cpp.o
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/src/Toeplitz-by-x.cpp.o
 .PHONY : src/Toeplitz-by-x.cpp.o
 
 src/Toeplitz-by-x.i: src/Toeplitz-by-x.cpp.i
@@ -165,7 +192,7 @@ src/Toeplitz-by-x.i: src/Toeplitz-by-x.cpp.i
 
 # target to preprocess a source file
 src/Toeplitz-by-x.cpp.i:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/src/Toeplitz-by-x.cpp.i
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/src/Toeplitz-by-x.cpp.i
 .PHONY : src/Toeplitz-by-x.cpp.i
 
 src/Toeplitz-by-x.s: src/Toeplitz-by-x.cpp.s
@@ -174,7 +201,7 @@ src/Toeplitz-by-x.s: src/Toeplitz-by-x.cpp.s
 
 # target to generate assembly for a file
 src/Toeplitz-by-x.cpp.s:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/src/Toeplitz-by-x.cpp.s
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/src/Toeplitz-by-x.cpp.s
 .PHONY : src/Toeplitz-by-x.cpp.s
 
 tests/test_OT.o: tests/test_OT.cpp.o
@@ -183,7 +210,7 @@ tests/test_OT.o: tests/test_OT.cpp.o
 
 # target to build an object file
 tests/test_OT.cpp.o:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_OT.cpp.o
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_OT.cpp.o
 .PHONY : tests/test_OT.cpp.o
 
 tests/test_OT.i: tests/test_OT.cpp.i
@@ -192,7 +219,7 @@ tests/test_OT.i: tests/test_OT.cpp.i
 
 # target to preprocess a source file
 tests/test_OT.cpp.i:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_OT.cpp.i
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_OT.cpp.i
 .PHONY : tests/test_OT.cpp.i
 
 tests/test_OT.s: tests/test_OT.cpp.s
@@ -201,8 +228,35 @@ tests/test_OT.s: tests/test_OT.cpp.s
 
 # target to generate assembly for a file
 tests/test_OT.cpp.s:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_OT.cpp.s
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_OT.cpp.s
 .PHONY : tests/test_OT.cpp.s
+
+tests/test_PRF.o: tests/test_PRF.cpp.o
+
+.PHONY : tests/test_PRF.o
+
+# target to build an object file
+tests/test_PRF.cpp.o:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_PRF.cpp.o
+.PHONY : tests/test_PRF.cpp.o
+
+tests/test_PRF.i: tests/test_PRF.cpp.i
+
+.PHONY : tests/test_PRF.i
+
+# target to preprocess a source file
+tests/test_PRF.cpp.i:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_PRF.cpp.i
+.PHONY : tests/test_PRF.cpp.i
+
+tests/test_PRF.s: tests/test_PRF.cpp.s
+
+.PHONY : tests/test_PRF.s
+
+# target to generate assembly for a file
+tests/test_PRF.cpp.s:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_PRF.cpp.s
+.PHONY : tests/test_PRF.cpp.s
 
 tests/test_Toeplitz-by-x.o: tests/test_Toeplitz-by-x.cpp.o
 
@@ -210,7 +264,7 @@ tests/test_Toeplitz-by-x.o: tests/test_Toeplitz-by-x.cpp.o
 
 # target to build an object file
 tests/test_Toeplitz-by-x.cpp.o:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_Toeplitz-by-x.cpp.o
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_Toeplitz-by-x.cpp.o
 .PHONY : tests/test_Toeplitz-by-x.cpp.o
 
 tests/test_Toeplitz-by-x.i: tests/test_Toeplitz-by-x.cpp.i
@@ -219,7 +273,7 @@ tests/test_Toeplitz-by-x.i: tests/test_Toeplitz-by-x.cpp.i
 
 # target to preprocess a source file
 tests/test_Toeplitz-by-x.cpp.i:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_Toeplitz-by-x.cpp.i
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_Toeplitz-by-x.cpp.i
 .PHONY : tests/test_Toeplitz-by-x.cpp.i
 
 tests/test_Toeplitz-by-x.s: tests/test_Toeplitz-by-x.cpp.s
@@ -228,7 +282,7 @@ tests/test_Toeplitz-by-x.s: tests/test_Toeplitz-by-x.cpp.s
 
 # target to generate assembly for a file
 tests/test_Toeplitz-by-x.cpp.s:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_Toeplitz-by-x.cpp.s
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_Toeplitz-by-x.cpp.s
 .PHONY : tests/test_Toeplitz-by-x.cpp.s
 
 tests/test_packedMod2.o: tests/test_packedMod2.cpp.o
@@ -237,7 +291,7 @@ tests/test_packedMod2.o: tests/test_packedMod2.cpp.o
 
 # target to build an object file
 tests/test_packedMod2.cpp.o:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_packedMod2.cpp.o
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_packedMod2.cpp.o
 .PHONY : tests/test_packedMod2.cpp.o
 
 tests/test_packedMod2.i: tests/test_packedMod2.cpp.i
@@ -246,7 +300,7 @@ tests/test_packedMod2.i: tests/test_packedMod2.cpp.i
 
 # target to preprocess a source file
 tests/test_packedMod2.cpp.i:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_packedMod2.cpp.i
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_packedMod2.cpp.i
 .PHONY : tests/test_packedMod2.cpp.i
 
 tests/test_packedMod2.s: tests/test_packedMod2.cpp.s
@@ -255,7 +309,7 @@ tests/test_packedMod2.s: tests/test_packedMod2.cpp.s
 
 # target to generate assembly for a file
 tests/test_packedMod2.cpp.s:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_packedMod2.cpp.s
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_packedMod2.cpp.s
 .PHONY : tests/test_packedMod2.cpp.s
 
 tests/test_packedMod3.o: tests/test_packedMod3.cpp.o
@@ -264,7 +318,7 @@ tests/test_packedMod3.o: tests/test_packedMod3.cpp.o
 
 # target to build an object file
 tests/test_packedMod3.cpp.o:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_packedMod3.cpp.o
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_packedMod3.cpp.o
 .PHONY : tests/test_packedMod3.cpp.o
 
 tests/test_packedMod3.i: tests/test_packedMod3.cpp.i
@@ -273,7 +327,7 @@ tests/test_packedMod3.i: tests/test_packedMod3.cpp.i
 
 # target to preprocess a source file
 tests/test_packedMod3.cpp.i:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_packedMod3.cpp.i
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_packedMod3.cpp.i
 .PHONY : tests/test_packedMod3.cpp.i
 
 tests/test_packedMod3.s: tests/test_packedMod3.cpp.s
@@ -282,7 +336,7 @@ tests/test_packedMod3.s: tests/test_packedMod3.cpp.s
 
 # target to generate assembly for a file
 tests/test_packedMod3.cpp.s:
-	$(MAKE) -f CMakeFiles/darkmatter.dir/build.make CMakeFiles/darkmatter.dir/tests/test_packedMod3.cpp.s
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/tests/test_packedMod3.cpp.s
 .PHONY : tests/test_packedMod3.cpp.s
 
 # Help Target
@@ -293,16 +347,22 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... darkmatter"
+	@echo "... code"
 	@echo "... src/OT.o"
 	@echo "... src/OT.i"
 	@echo "... src/OT.s"
+	@echo "... src/PRF.o"
+	@echo "... src/PRF.i"
+	@echo "... src/PRF.s"
 	@echo "... src/Toeplitz-by-x.o"
 	@echo "... src/Toeplitz-by-x.i"
 	@echo "... src/Toeplitz-by-x.s"
 	@echo "... tests/test_OT.o"
 	@echo "... tests/test_OT.i"
 	@echo "... tests/test_OT.s"
+	@echo "... tests/test_PRF.o"
+	@echo "... tests/test_PRF.i"
+	@echo "... tests/test_PRF.s"
 	@echo "... tests/test_Toeplitz-by-x.o"
 	@echo "... tests/test_Toeplitz-by-x.i"
 	@echo "... tests/test_Toeplitz-by-x.s"

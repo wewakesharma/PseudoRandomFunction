@@ -180,7 +180,7 @@ static bool test_randomize() {
     PackedZ2<15> v;
     v.randomize(); // prg initiazalized by default
     const std::vector<unsigned int>
-          expected = {0,0,1,0,0,0,1,1,0,0,1,0,0,1,1};
+          expected = {0,1,1,0,1,1,1,1,1,0,0,1,0,1,0};
     // expected will change when the implementation of randomWord is fixed
 
     std::vector<unsigned int> obtained;
