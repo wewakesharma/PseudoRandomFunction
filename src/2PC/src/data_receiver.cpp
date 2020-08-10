@@ -28,11 +28,13 @@
 #include "Toeplitz-by-x.hpp"
 #include "data_receiver.h"
 
-std::string pi_recv()//p1 acts as a server
+//change the return type based on the alternative used(alt 1: std::string and alt2:std::vector<unsigned int>
+std::vector<unsigned int> pi_recv()//p1 acts as a server
 {
     int port = 12345;
     //buffer to send and receive messages with
     char msg[1500];
+
 
     //setup a socket and connection tools
     sockaddr_in servAddr;
@@ -72,13 +74,97 @@ std::string pi_recv()//p1 acts as a server
         exit(1);
     }
     std::cout << "Connected with Party 2!" << std::endl;
+
+    //Alternate 1 - Working code: the value are received in string
     memset(&msg, 0, sizeof(msg));//clear the buffer
     recv(newSd, (char*)&msg, sizeof(msg), 0);
     //std::cout<<msg<<std::endl;
     close(newSd);
     close(serverSd);
-    //convert msg from istream to string and then into uint64_t(PackedZ2 data member)
-
+    //convert msg from char* to string
     std::string msg_str(msg);
-    return msg_str;
+
+    //std::cout<<msg_str<<std::endl;
+    //converting string into unsigned int vector
+
+    //Method 1:
+    /*std::istringstream iss(msg_str);
+    recd_mx_vec.assign( std::istream_iterator<unsigned int>( iss ), std::istream_iterator<unsigned int>() );
+
+    for(int i = 0; i < recd_mx_vec.size(); i++)
+    {
+        std::cout<<recd_mx_vec.at(i);
+    }*/
+
+    //Method 2:
+
+    /*std::vector<unsigned int> recd_mx_vec;
+    int len = 0;
+    unsigned int value;
+    while(len < 256)
+    {
+        std::stringstream ss(msg_str.at(len));
+        value = 0;
+        ss >> value;
+        //std::cout<<value;
+        recd_mx_vec.push_back(value);
+        len++;
+    }
+    for (int j = 0; j < recd_mx_vec.size(); j++)  //Fix variables
+    {
+        std::cout << recd_mx_vec[j] << " " ; // Can use simply v[j]
+    }
+
+    return recd_mx_vec;*/
+
+    //Method 3:
+    /* Alternate 2 -  The size of vector is received before receiving each element of vector
+    int size = 0;
+
+    recv(newSd, &size, sizeof(unsigned int), 0);
+    for(int i = 0; i < size; i++)
+    {
+        unsigned int t; // In case it's a Float vector, change Type to float
+        // In case it's a Int vector, change Type to int
+        // And so on...
+        recv(newSd,&t,sizeof(unsigned int),0);
+        recd_mx.push_back(t);
+    }
+    return recd_mx;*/
+
+    //Method 4: Directly saving string stream to values==Doesn't work
+    /*
+    int len = 0;
+    std::vector<unsigned int> recd_mx_vec;
+    //unsigned int value;
+    while(len < 256) {
+        std::stringstream ss(msg_str.at(len));
+        int value;
+        while (ss >> value) {
+            recd_mx_vec.push_back(value);
+        }
+        len++;
+    }
+    return recd_mx_vec;*/
+
+    //Method 5: Naive method
+
+    std::vector<unsigned int> recd_mx_vec;
+    int len = 0;
+    unsigned int value;
+    while(len < 256)
+    {
+        char bit = msg_str.at(len);
+        if(bit == 1)
+            recd_mx_vec.push_back(0x00000001);
+        else
+            recd_mx_vec.push_back(0);
+        len++;
+    }
+    for (int j = 0; j < 256; j++)  //Fix variables
+    {
+        std::cout << recd_mx_vec[j] << " " ; // Can use simply v[j]
+    }
+
+    return recd_mx_vec;
 }

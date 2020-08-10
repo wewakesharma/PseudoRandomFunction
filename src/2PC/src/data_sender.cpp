@@ -48,6 +48,10 @@ void pi_snd(std::vector<unsigned int>& snd_vec)
     }
     std::cout << "Connected to the server!" << std::endl;
     std::cout << ">";
+
+    //Enable only one of the following alternates to send the message
+
+    //ALTERNATE 1=========Working Code: Uint vector -> ostringstream -> string=======
     memset(&msg, 0, sizeof(msg));//clear the buffer
     std::ostringstream oss;
     if (!snd_vec.empty())
@@ -61,6 +65,18 @@ void pi_snd(std::vector<unsigned int>& snd_vec)
     }
     strcpy(msg, oss.str().c_str());
     send(clientSd, (char*)&msg, strlen(msg), 0);
+
+    /*ALTERNATE 2========SEnd uint vector directly
+
+    //memset(&msg, 0, sizeof(msg));//clear the buffer
+    const unsigned int vec_size = (unsigned int)snd_vec.size();
+    send(clientSd, (const void *)(vec_size), sizeof(unsigned int), 0);//why to send the size of structure, when it is fixed
+    for(unsigned int i = 0; i < snd_vec.size(); i++)
+    {
+        send(clientSd,&(snd_vec[i]),sizeof(unsigned int),0);
+    }*/
+
+
     close(clientSd);
 }
 

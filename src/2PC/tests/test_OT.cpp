@@ -57,7 +57,7 @@ int main()
 
     // Second run, a protocol for K2 times x1
     topelitz_Party2_1(x1, 0);
-    topelitz_Party1(out2_B, K2, 0); 
+    topelitz_Party1(out2_B, K2, 0); // same FIXME as above
     topelitz_Party2_2(out2_A, x1, 0);
 
     // Party1 computes locally K1 times x1, and adds to out1_A,out2_A
