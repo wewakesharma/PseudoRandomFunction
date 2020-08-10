@@ -22,11 +22,12 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <typeinfo>
-
-
+#include "mains.hpp"
 
 #include "Toeplitz-by-x.hpp"
 #include "data_receiver.h"
+
+//using namespace std;
 
 //change the return type based on the alternative used(alt 1: std::string and alt2:std::vector<unsigned int>
 std::vector<unsigned int> pi_recv()//p1 acts as a server
@@ -78,13 +79,40 @@ std::vector<unsigned int> pi_recv()//p1 acts as a server
     //Alternate 1 - Working code: the value are received in string
     memset(&msg, 0, sizeof(msg));//clear the buffer
     recv(newSd, (char*)&msg, sizeof(msg), 0);
+
+    //TODO: INSTEAD OF MESSAGE, CAN WE RECEIVE AN UNSIGNED INT
+
+/*
+    std::vector<unsigned int> rec_vec(256);
+    rec_vec.resize(256);
+
+    recv(newSd, (char*)&rec_vec, rec_vec.size(), 0);
+
+    std::cout << "in pi_recv, recd_vec=" << rec_vec << std::endl;
+*/
+
     //std::cout<<msg<<std::endl;
     close(newSd);
     close(serverSd);
     //convert msg from char* to string
     std::string msg_str(msg);
+    std::vector<unsigned int> recd_mx_vec;
+#ifdef DEBUG
+    std::cout<<msg_str<<std::endl;
 
-    //std::cout<<msg_str<<std::endl;
+    std::cout << "in pi_recv, msg_str bits =" << std::endl;
+    for(std::string::size_type i = 0; i < msg_str.size(); ++i) {
+        std:: cout << (msg_str[i]);
+        recd_mx_vec.push_back((msg_str[i]) - '0');
+    }
+
+    std::cout<<msg_str<<std::endl;
+
+    std::cout << "in pi_recv, recd_mx_vec =" << recd_mx_vec << std::endl;
+
+
+#endif
+
     //converting string into unsigned int vector
 
     //Method 1:
@@ -144,8 +172,7 @@ std::vector<unsigned int> pi_recv()//p1 acts as a server
             recd_mx_vec.push_back(value);
         }
         len++;
-    }
-    return recd_mx_vec;*/
+    return recd_mx_vec;
 
     //Method 5: Naive method
 
@@ -161,10 +188,16 @@ std::vector<unsigned int> pi_recv()//p1 acts as a server
             recd_mx_vec.push_back(0);
         len++;
     }
+
+
+#ifdef DEBUG
     for (int j = 0; j < 256; j++)  //Fix variables
     {
         std::cout << recd_mx_vec[j] << " " ; // Can use simply v[j]
     }
 
+    std::cout << std::endl;
+#endif
+*/
     return recd_mx_vec;
 }

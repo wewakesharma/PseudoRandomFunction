@@ -258,33 +258,6 @@ src/OT.cpp.s:
 	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT.cpp.s
 .PHONY : src/OT.cpp.s
 
-src/OT_copy.o: src/OT_copy.cpp.o
-
-.PHONY : src/OT_copy.o
-
-# target to build an object file
-src/OT_copy.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT_copy.cpp.o
-.PHONY : src/OT_copy.cpp.o
-
-src/OT_copy.i: src/OT_copy.cpp.i
-
-.PHONY : src/OT_copy.i
-
-# target to preprocess a source file
-src/OT_copy.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT_copy.cpp.i
-.PHONY : src/OT_copy.cpp.i
-
-src/OT_copy.s: src/OT_copy.cpp.s
-
-.PHONY : src/OT_copy.s
-
-# target to generate assembly for a file
-src/OT_copy.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT_copy.cpp.s
-.PHONY : src/OT_copy.cpp.s
-
 src/Toeplitz-by-x.o: src/Toeplitz-by-x.cpp.o
 
 .PHONY : src/Toeplitz-by-x.o
@@ -552,9 +525,6 @@ help:
 	@echo "... src/OT.o"
 	@echo "... src/OT.i"
 	@echo "... src/OT.s"
-	@echo "... src/OT_copy.o"
-	@echo "... src/OT_copy.i"
-	@echo "... src/OT_copy.s"
 	@echo "... src/Toeplitz-by-x.o"
 	@echo "... src/Toeplitz-by-x.i"
 	@echo "... src/Toeplitz-by-x.s"

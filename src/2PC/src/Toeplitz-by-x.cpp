@@ -22,6 +22,7 @@
 #include <sys/uio.h>
 #include <sys/time.h>
 #include <sys/wait.h>
+#include "mains.hpp"
 
 
 #include <cassert>
@@ -31,7 +32,7 @@
 #include "data_receiver.h"
 
 
-//using namespace std;
+using namespace std;
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
 // #define N_COLS 256
@@ -142,7 +143,7 @@ void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
     PackedZ2<N_COLS>& mx = rcv_mx(); // receive vector mx from party2
 
 #ifdef DEBUG
-    cout << "topelitz_Party1, mx =  " << mx << ", mx_vec = " << mx_vec << endl;
+    cout << "topelitz_Party1, mx =  " << mx <<  endl;
 #endif
 
     // Send mA=A xor rA and mb=Ra*mx xor b xor rb to party2

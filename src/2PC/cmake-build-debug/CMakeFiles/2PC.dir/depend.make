@@ -20,12 +20,6 @@ CMakeFiles/2PC.dir/src/OT.cpp.o: ../include/darkmatter/packedMod3.hpp
 CMakeFiles/2PC.dir/src/OT.cpp.o: ../include/darkmatter/utils.hpp
 CMakeFiles/2PC.dir/src/OT.cpp.o: ../src/OT.cpp
 
-CMakeFiles/2PC.dir/src/OT_copy.cpp.o: ../include/darkmatter/OT.hpp
-CMakeFiles/2PC.dir/src/OT_copy.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
-CMakeFiles/2PC.dir/src/OT_copy.cpp.o: ../include/darkmatter/packedMod2.hpp
-CMakeFiles/2PC.dir/src/OT_copy.cpp.o: ../include/darkmatter/utils.hpp
-CMakeFiles/2PC.dir/src/OT_copy.cpp.o: ../src/OT\ copy.cpp
-
 CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
 CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.o: ../include/darkmatter/data_receiver.h
 CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.o: ../include/darkmatter/data_sender.h

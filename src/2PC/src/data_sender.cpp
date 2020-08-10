@@ -20,9 +20,12 @@
 #include <sys/uio.h>
 #include <sys/time.h>
 #include <sys/wait.h>
+#include "mains.hpp"
 
 #include "Toeplitz-by-x.hpp"
 #include "data_sender.h"
+
+using namespace std;
 
 void pi_snd(std::vector<unsigned int>& snd_vec)
 {
@@ -65,6 +68,15 @@ void pi_snd(std::vector<unsigned int>& snd_vec)
     }
     strcpy(msg, oss.str().c_str());
     send(clientSd, (char*)&msg, strlen(msg), 0);
+
+    //TODO: send the vector information directly instead of the text message
+    /*
+    send(clientSd, (char*)&snd_vec, snd_vec.size(), 0);
+    */
+
+#ifdef DEBUG
+    cout << "in pi_snd, snd_vec= " << snd_vec << endl;
+#endif
 
     /*ALTERNATE 2========SEnd uint vector directly
 

@@ -47,7 +47,6 @@
 					<Add directory="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/comm"/>
 					<Add directory="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/include"/>
 					<Add directory="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/include/darkmatter"/>
-					<Add directory="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/tests"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include"/>
@@ -72,7 +71,6 @@
 					<Add directory="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/comm"/>
 					<Add directory="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/include"/>
 					<Add directory="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/include/darkmatter"/>
-					<Add directory="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/tests"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include"/>
@@ -118,6 +116,9 @@
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/include/darkmatter/data_sender.h">
 			<Option target="2PC"/>
 		</Unit>
+		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/include/darkmatter/mains.hpp">
+			<Option target="2PC"/>
+		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/include/darkmatter/packedMod2.hpp">
 			<Option target="2PC"/>
 		</Unit>
@@ -125,9 +126,6 @@
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/include/darkmatter/utils.hpp">
-			<Option target="2PC"/>
-		</Unit>
-		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/src/OT copy.cpp">
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/src/OT.cpp">
@@ -146,9 +144,6 @@
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/src/data_sender.cpp">
-			<Option target="2PC"/>
-		</Unit>
-		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/tests/mains.h">
 			<Option target="2PC"/>
 		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/tests/test_OT.cpp">

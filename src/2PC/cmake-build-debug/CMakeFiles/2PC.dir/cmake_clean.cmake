@@ -6,7 +6,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/2PC.dir/comm/server.cpp.o"
   "CMakeFiles/2PC.dir/comm/snd.cpp.o"
   "CMakeFiles/2PC.dir/src/OT.cpp.o"
-  "CMakeFiles/2PC.dir/src/OT_copy.cpp.o"
   "CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.o"
   "CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o"
   "CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o"

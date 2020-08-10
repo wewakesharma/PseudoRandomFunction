@@ -20,12 +20,6 @@ CMakeFiles/2PC.dir/src/OT.cpp.o
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
  /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/src/OT.cpp
-CMakeFiles/2PC.dir/src/OT_copy.cpp.o
- ../include/darkmatter/OT.hpp
- ../include/darkmatter/Toeplitz-by-x.hpp
- ../include/darkmatter/packedMod2.hpp
- ../include/darkmatter/utils.hpp
- /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/src/OT copy.cpp
 CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.o
  ../include/darkmatter/Toeplitz-by-x.hpp
  ../include/darkmatter/data_receiver.h
