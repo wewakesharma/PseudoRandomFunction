@@ -1,23 +1,23 @@
 cmake_minimum_required(VERSION 3.16)
-project(code)
+project(darkmattercode)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include)
 include_directories(include/darkmatter)
-include_directories(tests)
 
-add_executable(code
+add_executable(darkmattercode
+        include/darkmatter/mains.hpp
         include/darkmatter/OT.hpp
         include/darkmatter/packedMod2.hpp
         include/darkmatter/packedMod3.hpp
         include/darkmatter/PRF.hpp
+        include/darkmatter/Timing.hpp
         include/darkmatter/Toeplitz-by-x.hpp
         include/darkmatter/utils.hpp
         src/OT.cpp
         src/PRF.cpp
         src/Toeplitz-by-x.cpp
-        tests/mains.h
         tests/test_OT.cpp
         tests/test_packedMod2.cpp
         tests/test_packedMod3.cpp
