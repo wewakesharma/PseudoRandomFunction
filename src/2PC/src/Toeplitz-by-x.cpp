@@ -141,6 +141,10 @@ void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
 
     PackedZ2<N_COLS>& mx = rcv_mx(); // receive vector mx from party2
 
+#ifdef DEBUG
+    cout << "topelitz_Party1, mx =  " << mx << ", mx_vec = " << mx_vec << endl;
+#endif
+
     // Send mA=A xor rA and mb=Ra*mx xor b xor rb to party2
     std::vector<uint64_t> mA = A;
     for (unsigned int i=0; i<mA.size(); i++)
@@ -166,6 +170,10 @@ void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index) {
     mx.add(rx);
 
     mx.toArray(mx_vec);
+
+#ifdef DEBUG
+    cout << "topelitz_Party2_1, mx =  " << mx << ", mx_vec = " << mx_vec << endl;
+#endif
     pi_snd(mx_vec);
     //mx.toArray();
     //snd_mx(mx); // send to party1

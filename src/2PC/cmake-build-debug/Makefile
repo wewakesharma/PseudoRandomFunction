@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/2PC
+CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles /Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/2PC/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,6 +123,114 @@ depend:
 	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/build
 .PHONY : 2PC/fast
 
+comm/client.o: comm/client.cpp.o
+
+.PHONY : comm/client.o
+
+# target to build an object file
+comm/client.cpp.o:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/client.cpp.o
+.PHONY : comm/client.cpp.o
+
+comm/client.i: comm/client.cpp.i
+
+.PHONY : comm/client.i
+
+# target to preprocess a source file
+comm/client.cpp.i:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/client.cpp.i
+.PHONY : comm/client.cpp.i
+
+comm/client.s: comm/client.cpp.s
+
+.PHONY : comm/client.s
+
+# target to generate assembly for a file
+comm/client.cpp.s:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/client.cpp.s
+.PHONY : comm/client.cpp.s
+
+comm/recv.o: comm/recv.cpp.o
+
+.PHONY : comm/recv.o
+
+# target to build an object file
+comm/recv.cpp.o:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/recv.cpp.o
+.PHONY : comm/recv.cpp.o
+
+comm/recv.i: comm/recv.cpp.i
+
+.PHONY : comm/recv.i
+
+# target to preprocess a source file
+comm/recv.cpp.i:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/recv.cpp.i
+.PHONY : comm/recv.cpp.i
+
+comm/recv.s: comm/recv.cpp.s
+
+.PHONY : comm/recv.s
+
+# target to generate assembly for a file
+comm/recv.cpp.s:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/recv.cpp.s
+.PHONY : comm/recv.cpp.s
+
+comm/server.o: comm/server.cpp.o
+
+.PHONY : comm/server.o
+
+# target to build an object file
+comm/server.cpp.o:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/server.cpp.o
+.PHONY : comm/server.cpp.o
+
+comm/server.i: comm/server.cpp.i
+
+.PHONY : comm/server.i
+
+# target to preprocess a source file
+comm/server.cpp.i:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/server.cpp.i
+.PHONY : comm/server.cpp.i
+
+comm/server.s: comm/server.cpp.s
+
+.PHONY : comm/server.s
+
+# target to generate assembly for a file
+comm/server.cpp.s:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/server.cpp.s
+.PHONY : comm/server.cpp.s
+
+comm/snd.o: comm/snd.cpp.o
+
+.PHONY : comm/snd.o
+
+# target to build an object file
+comm/snd.cpp.o:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/snd.cpp.o
+.PHONY : comm/snd.cpp.o
+
+comm/snd.i: comm/snd.cpp.i
+
+.PHONY : comm/snd.i
+
+# target to preprocess a source file
+comm/snd.cpp.i:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/snd.cpp.i
+.PHONY : comm/snd.cpp.i
+
+comm/snd.s: comm/snd.cpp.s
+
+.PHONY : comm/snd.s
+
+# target to generate assembly for a file
+comm/snd.cpp.s:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/snd.cpp.s
+.PHONY : comm/snd.cpp.s
+
 src/OT.o: src/OT.cpp.o
 
 .PHONY : src/OT.o
@@ -149,6 +257,33 @@ src/OT.s: src/OT.cpp.s
 src/OT.cpp.s:
 	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT.cpp.s
 .PHONY : src/OT.cpp.s
+
+src/OT_copy.o: src/OT_copy.cpp.o
+
+.PHONY : src/OT_copy.o
+
+# target to build an object file
+src/OT_copy.cpp.o:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT_copy.cpp.o
+.PHONY : src/OT_copy.cpp.o
+
+src/OT_copy.i: src/OT_copy.cpp.i
+
+.PHONY : src/OT_copy.i
+
+# target to preprocess a source file
+src/OT_copy.cpp.i:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT_copy.cpp.i
+.PHONY : src/OT_copy.cpp.i
+
+src/OT_copy.s: src/OT_copy.cpp.s
+
+.PHONY : src/OT_copy.s
+
+# target to generate assembly for a file
+src/OT_copy.cpp.s:
+	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT_copy.cpp.s
+.PHONY : src/OT_copy.cpp.s
 
 src/Toeplitz-by-x.o: src/Toeplitz-by-x.cpp.o
 
@@ -402,9 +537,24 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... 2PC"
+	@echo "... comm/client.o"
+	@echo "... comm/client.i"
+	@echo "... comm/client.s"
+	@echo "... comm/recv.o"
+	@echo "... comm/recv.i"
+	@echo "... comm/recv.s"
+	@echo "... comm/server.o"
+	@echo "... comm/server.i"
+	@echo "... comm/server.s"
+	@echo "... comm/snd.o"
+	@echo "... comm/snd.i"
+	@echo "... comm/snd.s"
 	@echo "... src/OT.o"
 	@echo "... src/OT.i"
 	@echo "... src/OT.s"
+	@echo "... src/OT_copy.o"
+	@echo "... src/OT_copy.i"
+	@echo "... src/OT_copy.s"
 	@echo "... src/Toeplitz-by-x.o"
 	@echo "... src/Toeplitz-by-x.i"
 	@echo "... src/Toeplitz-by-x.s"
