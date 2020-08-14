@@ -108,14 +108,43 @@ void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
 {
     cout<<endl<<"We are in packed unit test of PRF"<<endl;
     //1.perform X = x1+ x2 (on vectors)
-    PackedZ2<N_COLS> X; //declare a variable
-    X.reset();  // Initialize it ( NO need to reset since the default constructor does it)
-    X.add(x1); //x = x1
+    PackedZ2<N_COLS> X = x1; //declare a variable
+    //X.add(x1); x = x1
     X.add(x2);  //x = x1 + x2
+
 
     //2.perform K = k1 + k2 (on matrix)
 
+    std::vector<uint64_t> K(toeplitzWords);
+    for (int i = 0; i < K1.size(); i++)
+    {
+        K[i] = K1[i] ^ K2[i];
+    }
+    PackedZ2<N_COLS> outKX;
+    outKX.toeplitzByVec(K,X);
+
+    PackedZ3<81> outKX_Z3;//packed Z3
+
+    std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
+    outKX.toArray(outKX_unsgn);
+
+    PackedZ3<81> outZ3;//final Z3 output
+    outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
+
+    outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
+
+    PackedZ3<81>out_12_Z3 = out1Z3;
+    out_12_Z3.add(out2Z3);//merged output from parameters
+
+    if(out_12_Z3 == outZ3)
+        cout<<"Test passed";
+    else
+        cout<<"Test fails";
+
+
+
     // WITH THE LOOP
+    /*
     std::vector<unsigned int> unsgn_K(toeplitzWords);
     std::vector<PackedZ2<N_COLS> > K_mat;
     //Create a packedMatZ2
@@ -140,7 +169,12 @@ void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         //save temp_K to K_mat
         K_mat.push_back(temp_K);
 
-    }
+    }*/
+
+    //Another method of matrix an vector implementation
+    //PackedZ2<N_COLS> K_mat;
+
+
     //3.perform K*x -> (mod 2)
     //matByVec(K_mat,X); ==UNCOMMENT THIS PART FOR MULTIPLICATION(DOESN'T WORK)
     //4.perform randmat * (k*x) -> (mod 3)
