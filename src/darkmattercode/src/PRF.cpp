@@ -123,7 +123,7 @@ void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
     PackedZ2<N_COLS> outKX;
     outKX.toeplitzByVec(K,X);
 
-    PackedZ3<81> outKX_Z3;//packed Z3
+    PackedZ3<256> outKX_Z3;//packed Z3
 
     std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
     outKX.toArray(outKX_unsgn);
@@ -140,9 +140,7 @@ void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         cout<<"Test passed";
     else
         cout<<"Test fails";
-
-
-
+    
     // WITH THE LOOP
     /*
     std::vector<unsigned int> unsgn_K(toeplitzWords);
