@@ -33,6 +33,7 @@ CMakeFiles/darkmattercode.dir/tests/test_OT.cpp.o
  /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/tests/test_OT.cpp
 CMakeFiles/darkmattercode.dir/tests/test_PRF.cpp.o
  ../include/darkmatter/PRF.hpp
+ ../include/darkmatter/Toeplitz-by-x.hpp
  ../include/darkmatter/mains.hpp
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/packedMod3.hpp

@@ -32,6 +32,7 @@ CMakeFiles/darkmattercode.dir/tests/test_OT.cpp.o: ../include/darkmatter/utils.h
 CMakeFiles/darkmattercode.dir/tests/test_OT.cpp.o: ../tests/test_OT.cpp
 
 CMakeFiles/darkmattercode.dir/tests/test_PRF.cpp.o: ../include/darkmatter/PRF.hpp
+CMakeFiles/darkmattercode.dir/tests/test_PRF.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
 CMakeFiles/darkmattercode.dir/tests/test_PRF.cpp.o: ../include/darkmatter/mains.hpp
 CMakeFiles/darkmattercode.dir/tests/test_PRF.cpp.o: ../include/darkmatter/packedMod2.hpp
 CMakeFiles/darkmattercode.dir/tests/test_PRF.cpp.o: ../include/darkmatter/packedMod3.hpp

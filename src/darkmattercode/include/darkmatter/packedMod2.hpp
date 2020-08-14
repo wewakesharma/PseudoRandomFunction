@@ -106,6 +106,24 @@ public:
         }
     }
 
+    //====(SAME AS ABOVE FUNCTION BUT WITH UINT64_T======Temporary Testing purpose=========
+    void fromArray_64(const std::vector<uint64_t>& src) {
+        if (src.size() != SIZE) {
+            throw std::logic_error("Trying to init from vector of length "
+                                   +std::to_string(src.size())
+                                   +" but packed size="+std::to_string(SIZE));
+        }
+        int i=0;
+        for (int wIdx=0; wIdx<nWords; wIdx++) {
+            bits[wIdx] = 0;
+            for (int idxInWord=0; idxInWord<64; idxInWord++,i++) {
+                if (i >= SIZE) break;
+                bits[wIdx] |= uint64_t(src[i] & 1) << idxInWord;
+            }
+        }
+    }
+    //==================
+
     // dump content to an array of ints
     void toArray(std::vector<unsigned int>& dst) const {
         dst.resize(SIZE); // set the size
@@ -152,6 +170,11 @@ public:
         return tmp;
     }
 
+    //This method cannot work since bits is a data member of class PackedZ2 and we are passing uint64_t vector
+    /*void add_vec(const std::vector<uint64_t>& other){
+        for (int wIdx=0; wIdx<nWords; wIdx++)
+            bits[wIdx] ^= other.bits[wIdx];
+    }*/
     // Addition
     void add(const PackedZ2& other) {
         for (int wIdx=0; wIdx<nWords; wIdx++)

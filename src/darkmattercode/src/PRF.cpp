@@ -8,6 +8,7 @@
 #include "Toeplitz-by-x.hpp"
 #include "OT.hpp"
 #include "mains.hpp"
+#include <typeinfo>//to determine the type of variables
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
@@ -19,6 +20,131 @@ using namespace std;
 static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
+
+/*void PRF_unpacked_test()
+{
+    //===========================================================================================================
+
+    //Printing out the values of K1, x1, K2, x2, Rmat, out1Z3 and out2Z3
+    //X = x1 + x2
+    std::vector<uint64_t> x(N_COLS);
+    cout << endl << "Printing the values of x" << endl;
+    for (int i = 0; i < x2.size(); i++) {
+        x.at(i) = ((x1.at(i) + x2.at(i)) % 2);
+        cout << x.at(i);
+    }
+    //unpack them x1_unpack and x2_unpack
+    // merge it into x = x1 + x2 mod 2
+    //store it in x_unpack
+
+
+    //Print K1 and K2, merge it into K = K1 ^ K2
+    //vector<uint64_t> K(toeplitzWords);//Stores value of K = K1 ^ K2
+    //cout<<endl<<"Size of k1 and k2 is "<<K1.size()<<"\t"<<K2.size()<<endl;
+    //cout<<endl<<"Printing the values of K1"<<endl;
+    std::vector<uint64_t> K1_toeplitz_vec(N_COLS * 2 - 1);
+    std::vector<uint64_t> K2_toeplitz_vec(N_COLS * 2 - 1);
+    uint64_t K1_toep_mat[256][256];
+    uint64_t K2_toep_mat[256][256];
+    uint64_t K_toep_mat[256][256];
+
+    for (int word_count = 0; word_count < toeplitzWords; word_count++) {
+        for (int bit_count = 0; bit_count < 64; bit_count++) {
+            K1_toeplitz_vec[64 * word_count + bit_count] = (K1[word_count] >> bit_count) & 1;
+            K2_toeplitz_vec[64 * word_count + bit_count] = (K2[word_count] >> bit_count) & 1;
+        }
+    }
+    cout << endl << "Value of toeplitz vector is " << endl;
+    for (int i = 0; i < 512; i++) {
+        cout << K1_toeplitz_vec[i];
+    }
+    cout << "Hello";
+
+    //generate toeplitz matrix
+    int len = 256;
+    int append = len;
+    int base = len;
+    int k = 0;
+    //Filling up the top part of toeplitz matrix
+    for (int i = 0; i < len; i++) {//Filling up the upper triangular matrix
+        int k = 0;
+        for (int j = i; j < len; j++) {
+            K1_toep_mat[i][j] = K1_toeplitz_vec[k];
+            K2_toep_mat[i][j] = K2_toeplitz_vec[k];
+            k++;
+        }
+
+        //Filling lower triangular part of toeplitz key K1 and K2
+        for (int j = 0; j < i + 1; j++) {
+            K1_toep_mat[i + 1][j] = K1_toeplitz_vec[(base - j)];
+            K2_toep_mat[i + 1][j] = K2_toeplitz_vec[(base - j)];
+        }
+        base++;
+    }
+
+    cout << endl << "The key is " << endl;
+    //Adding up K1 and k2
+    for (int i = 0; i < 256; i++) {
+        for (int j = 0; j < 256; j++) {
+            K_toep_mat[i][j] = K1_toep_mat[i][j] + K2_toep_mat[i][j];
+            cout << K_toep_mat[i][j];
+        }
+        cout << endl;
+    }
+
+
+    //1. Naive Unit Test
+    //a. Naive computation of [rmat * ((K * X) mod 2)]mod 3
+    //b. Naive computation of out1 + out2 in Z3
+    //c. Compare the output in Z3
+    //2. PRF Unit Test
+    //a. Compare the output of Naive computation with the packed version.
+//==========================================================================================================
+}*/
+
+void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
+                          PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
+                          PackedZ3<81>& out2Z3, int i)
+{
+    cout<<endl<<"We are in packed unit test of PRF"<<endl;
+    //1.perform X = x1+ x2 (on vectors)
+    PackedZ2<N_COLS> X; //declare a variable
+    X.reset();  // Initialize it ( NO need to reset since the default constructor does it)
+    X.add(x1); //x = x1
+    X.add(x2);  //x = x1 + x2
+
+    //2.perform K = k1 + k2 (on matrix)
+
+    // WITH THE LOOP
+    std::vector<unsigned int> unsgn_K(toeplitzWords);
+    std::vector<PackedZ2<N_COLS> > K_mat;
+    //Create a packedMatZ2
+    for(int k_ctr = 0; k_ctr < K1.size(); k_ctr++)
+    {
+        //Typecast each element of K1 and K2 into unsgn_k1 and unsgn_k2
+        std::vector<unsigned int> k1plusk2;
+        std::vector<unsigned int> unsgn_k1 = (std::vector<unsigned int>)K1.at(k_ctr);
+        std::vector<unsigned int> unsgn_k2 = (std::vector<unsigned int>)K2.at(k_ctr);
+
+        //convert unsigned int to PackedZ2 using fromArray()
+        PackedZ2<N_COLS> temp_k1, temp_k2, temp_K;
+
+        //create temp_k1 and temp_k2 of PackedZ2 type
+        temp_k1.fromArray(unsgn_k1);
+        temp_k2.fromArray(unsgn_k2);
+
+        //perform K = k1 + k2
+        temp_K.add(temp_k1);
+        temp_K.add(temp_k2);
+
+        //save temp_K to K_mat
+        K_mat.push_back(temp_K);
+
+    }
+    //3.perform K*x -> (mod 2)
+    //matByVec(K_mat,X); ==UNCOMMENT THIS PART FOR MULTIPLICATION(DOESN'T WORK)
+    //4.perform randmat * (k*x) -> (mod 3)
+}
 
 
 void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
@@ -61,8 +187,7 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 }
 
 
-void PRF_DM(unsigned int nTimes,  int nRuns, int nStages)
-{
+void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
 
     randomWord(1); // use seed=1
     vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);
@@ -72,13 +197,13 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages)
 
     initGlobals();  // initialize some global variables
 
-    std::vector< PackedZ3<81> > Rmat(256); // generate a 81x256 matrix
+    std::vector<PackedZ3<81> > Rmat(256); // generate a 81x256 matrix
 
     //randomize the matrix
     for (auto &col : Rmat) // iterate over the columns
         col.randomize();
 
-    preProc_Toeplitz_by_x(nRuns*2); // pre-processing for two runs
+    preProc_Toeplitz_by_x(nRuns * 2); // pre-processing for two runs
     preProc_OT(nRuns); //preprocess for OT, generate ra, rn, rx, and z
 
     // Choose random K1, K2, x1, x2, we will be computing
@@ -86,11 +211,11 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages)
 
     //TODO: write randomize Toeplitzß
 
-    for (auto& w : K1) w = randomWord();
-    K1[K1.size()-1] &= topelitzMask; // turn off extra bits at the end
+    for (auto &w : K1) w = randomWord();
+    K1[K1.size() - 1] &= topelitzMask; // turn off extra bits at the end
 
-    for (auto& w : K2) w = randomWord();
-    K2[K2.size()-1] &= topelitzMask; // turn off extra bits at the end
+    for (auto &w : K2) w = randomWord();
+    K2[K2.size() - 1] &= topelitzMask; // turn off extra bits at the end
 
     x1.randomize();
     x2.randomize();
@@ -103,110 +228,12 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages)
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
 
-        PRF(K1, x1, K2, x2, Rmat, out1Z3,out2Z3, i); // R = randomization matrix
-
-    }
-
-    //===========================================================================================================
-
-    //Printing out the values of K1, x1, K2, x2, Rmat, out1Z3 and out2Z3
-        //Print x1 and x2
-        std::vector<uint64_t> x(N_COLS);
-        /*cout<<"Printing the values of x1"<<endl;
-        for(int i = 0 ; i < x1.size(); i++)
-        {
-            cout<<x1.at(i);
-        }
-        cout<<"Printing the values of x2"<<endl;
-        for(int i = 0 ; i < x2.size(); i++)
-        {
-            cout<<x2.at(i);
-        }*/
-        cout<<endl<<"Size of x1 and x2 is "<<x1.size()<<"\t"<<x2.size()<<endl;
-        cout<<endl<<"Printing the values of x"<<endl;
-        for(int i = 0 ; i < x2.size(); i++)
-        {
-            x.at(i) = ((x1.at(i) + x2.at(i)) % 2);
-            cout<< x.at(i);
-        }
-        //unpack them x1_unpack and x2_unpack
-        // merge it into x = x1 + x2 mod 2
-        //store it in x_unpack
-
-
-    //Print K1 and K2, merge it into K = K1 ^ K2
-    /*vector<uint64_t> K(toeplitzWords);//Stores value of K = K1 ^ K2*/
-    //cout<<endl<<"Size of k1 and k2 is "<<K1.size()<<"\t"<<K2.size()<<endl;
-    //cout<<endl<<"Printing the values of K1"<<endl;
-    std::vector<uint64_t> K1_toeplitz_vec(N_COLS*2 -1);
-    std::vector<uint64_t> K2_toeplitz_vec(N_COLS*2 -1);
-    uint64_t K1_toep_mat[256][256];
-    uint64_t K2_toep_mat[256][256];
-    uint64_t K_toep_mat[256][256];
-
-    for(int word_count = 0; word_count < toeplitzWords; word_count++)
-    {
-        for(int bit_count = 0 ; bit_count < 64; bit_count++)
-        {
-            K1_toeplitz_vec[64*word_count+bit_count] = (K1[word_count]>>bit_count) & 1;
-            K2_toeplitz_vec[64*word_count+bit_count] = (K2[word_count]>>bit_count) & 1;
-        }
-    }
-    cout<<endl<<"Value of toeplitz vector is "<<endl;
-    for(int i = 0; i < 512; i++)
-    {
-        cout<<K1_toeplitz_vec[i];
-    }
-    cout<<"Hello";
-
-    //generate toeplitz matrix
-    int len = 256;
-    int append = len;
-    int base = len;
-    int k = 0;
-    //Filling up the top part of toeplitz matrix
-    for(int i = 0; i < len; i++)
-    {//Filling up the upper triangular matrix
-        int k = 0;
-        for(int j = i; j < len;j++)
-        {
-            K1_toep_mat[i][j] = K1_toeplitz_vec[k];
-            K2_toep_mat[i][j] = K2_toeplitz_vec[k];
-            k++;
-        }
-
-        //Filling lower triangular part of toeplitz key K1 and K2
-        for(int j = 0; j < i+1; j++)
-        {
-            K1_toep_mat[i+1][j] = K1_toeplitz_vec[(base-j)];
-            K2_toep_mat[i+1][j] = K2_toeplitz_vec[(base-j)];
-        }
-        base++;
-    }
-
-    cout<<endl<<"The key is "<<endl;
-    //Adding up K1 and k2
-    for(int i = 0; i < 256; i++)
-    {
-        for(int j =0; j < 256; j++)
-        {
-            K_toep_mat[i][j] = K1_toep_mat[i][j] + K2_toep_mat[i][j];
-            cout<<K_toep_mat[i][j];
-        }
-        cout<<endl;
+        PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
+        PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
+        //PRF_unpacked_test() /* just a placeholder*/
     }
 
 
-    //1. Naive Unit Test
-        //a. Naive computation of [rmat * ((K * X) mod 2)]mod 3
-        //b. Naive computation of out1 + out2 in Z3
-        //c. Compare the output in Z3
-    //2. PRF Unit Test
-        //a. Compare the output of Naive computation with the packed version.
-
-
-
-        //===========================================================================================================
     /*
         for (int i = 0; i < nRuns; i++) {
         // First run, a protocol for K1 times x2
@@ -277,5 +304,5 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages)
 
     cout << endl << "elapsed time for Phase3  phase:  " << elapsed_seconds_P3.count() << "  s\n";
 */
-
 }
+
