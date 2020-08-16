@@ -5,7 +5,7 @@
  */
 #include "packedMod2.hpp"
 #include "Toeplitz-by-x.hpp"
-#include "mains.h"
+#include "mains.hpp"
 
 // poor-man's implementation of communication channels
 void initGlobals(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A);

@@ -29,17 +29,12 @@
 
 //using namespace std;
 
-//change the return type based on the alternative used(alt 1: std::string and alt2:std::vector<unsigned int>
-std::vector<unsigned int> pi_recv()//p1 acts as a server
-{
+int openSocket(int& bindStatus) {
+
     int port = 12345;
-    //buffer to send and receive messages with
-    char msg[1500];
-
-
     //setup a socket and connection tools
     sockaddr_in servAddr;
-    bzero((char*)&servAddr, sizeof(servAddr));
+    bzero((char *) &servAddr, sizeof(servAddr));
     servAddr.sin_family = AF_INET;
     servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
     servAddr.sin_port = htons(port);
@@ -47,18 +42,30 @@ std::vector<unsigned int> pi_recv()//p1 acts as a server
     //open stream oriented socket with internet address
     //also keep track of the socket descriptor
     int serverSd = socket(AF_INET, SOCK_STREAM, 0);
-    if(serverSd < 0)
-    {
+    if (serverSd < 0) {
         std::cerr << "Error establishing the server socket" << std::endl;
         exit(0);
     }
     //bind the socket to its local address
-    int bindStatus = bind(serverSd, (struct sockaddr*) &servAddr, sizeof(servAddr));
-    if(bindStatus < 0)
-    {
+    bindStatus = bind(serverSd, (struct sockaddr *) &servAddr, sizeof(servAddr));
+    if (bindStatus < 0) {
         std::cerr << "Error binding socket to local address" << std::endl;
         exit(0);
     }
+    return serverSd;
+}
+
+//change the return type based on the alternative used(alt 1: std::string and alt2:std::vector<unsigned int>
+std::vector<unsigned int> pi_recv()//p1 acts as a server
+{
+
+    //buffer to send and receive messages with
+    char msg[1500];
+
+    int bindStatus;
+    int serverSd = openSocket(bindStatus);
+    assert(bindStatus>=0);
+
     std::cout << "Waiting for a client to connect..." << std::endl;
     //listen for up to 5 requests at a time
     listen(serverSd, 5);
@@ -77,24 +84,28 @@ std::vector<unsigned int> pi_recv()//p1 acts as a server
     std::cout << "Connected with Party 2!" << std::endl;
 
     //Alternate 1 - Working code: the value are received in string
-    memset(&msg, 0, sizeof(msg));//clear the buffer
-    recv(newSd, (char*)&msg, sizeof(msg), 0);
+    //memset(&msg, 0, sizeof(msg));//clear the buffer
+    //recv(newSd, (char*)&msg, sizeof(msg), 0);
 
     //TODO: INSTEAD OF MESSAGE, CAN WE RECEIVE AN UNSIGNED INT
 
-/*
+
     std::vector<unsigned int> rec_vec(256);
     rec_vec.resize(256);
 
-    recv(newSd, (char*)&rec_vec, rec_vec.size(), 0);
+    recv(newSd, (char*)&rec_vec[0], sizeof(unsigned int)*rec_vec.size(), 0);
 
+#ifdef DEBUG
     std::cout << "in pi_recv, recd_vec=" << rec_vec << std::endl;
-*/
+#endif
 
     //std::cout<<msg<<std::endl;
     close(newSd);
     close(serverSd);
+
+    return rec_vec;
     //convert msg from char* to string
+    /*
     std::string msg_str(msg);
     std::vector<unsigned int> recd_mx_vec;
 #ifdef DEBUG
@@ -112,6 +123,8 @@ std::vector<unsigned int> pi_recv()//p1 acts as a server
 
 
 #endif
+
+     */
 
     //converting string into unsigned int vector
 
@@ -199,5 +212,5 @@ std::vector<unsigned int> pi_recv()//p1 acts as a server
     std::cout << std::endl;
 #endif
 */
-    return recd_mx_vec;
+//    return recd_mx_vec;
 }

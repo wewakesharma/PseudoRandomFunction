@@ -55,8 +55,11 @@ void pi_snd(std::vector<unsigned int>& snd_vec)
     //Enable only one of the following alternates to send the message
 
     //ALTERNATE 1=========Working Code: Uint vector -> ostringstream -> string=======
-    memset(&msg, 0, sizeof(msg));//clear the buffer
+   // memset(&msg, 0, sizeof(msg));//clear the buffer
+
+   /*
     std::ostringstream oss;
+
     if (!snd_vec.empty())
     {
         // Convert all but the last element to avoid a trailing ","
@@ -66,13 +69,15 @@ void pi_snd(std::vector<unsigned int>& snd_vec)
         // Now add the last element with no delimiter
         oss << snd_vec.back();
     }
-    strcpy(msg, oss.str().c_str());
-    send(clientSd, (char*)&msg, strlen(msg), 0);
+
+    //strcpy(msg, oss.str().c_str());
+   // send(clientSd, (char*)&msg, strlen(msg), 0);
+*/
 
     //TODO: send the vector information directly instead of the text message
-    /*
-    send(clientSd, (char*)&snd_vec, snd_vec.size(), 0);
-    */
+
+    send(clientSd, (char*)&(snd_vec[0]), (sizeof(unsigned int) * snd_vec.size()), 0);
+
 
 #ifdef DEBUG
     cout << "in pi_snd, snd_vec= " << snd_vec << endl;

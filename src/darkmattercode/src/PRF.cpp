@@ -140,7 +140,7 @@ void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         cout<<"Test passed";
     else
         cout<<"Test fails";
-    
+
     // WITH THE LOOP
     /*
     std::vector<unsigned int> unsgn_K(toeplitzWords);

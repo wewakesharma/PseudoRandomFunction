@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include "packedMod3.hpp"
-#include "mains.h"
+#include "mains.hpp"
 
 // bool isZero()
 static bool test_isZero() {

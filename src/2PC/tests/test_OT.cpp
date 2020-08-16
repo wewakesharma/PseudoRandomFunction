@@ -5,7 +5,7 @@
  */
 #include "packedMod2.hpp"
 #include "packedMod3.hpp"
-#include "mains.h"
+#include "mains.hpp"
 #include "OT.hpp"
 
 // poor-man's implementation of communication channels
