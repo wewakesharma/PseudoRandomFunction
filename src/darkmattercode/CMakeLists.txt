@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
-project(darkmattercode)
+project(code)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include)
 include_directories(include/darkmatter)
 
-add_executable(darkmattercode
+add_executable(code
         include/darkmatter/mains.hpp
         include/darkmatter/OT.hpp
         include/darkmatter/packedMod2.hpp

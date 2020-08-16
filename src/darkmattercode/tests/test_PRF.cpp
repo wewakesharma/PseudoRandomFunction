@@ -8,6 +8,7 @@
 #include "packedMod3.hpp"
 #include "mains.hpp"
 #include "PRF.hpp"
+#include "OT.hpp"
 
 using namespace std;
 
@@ -38,7 +39,7 @@ int main(int argc,char* argv[] )  {
 #endif
 
 
-
+/*
 #ifdef TEST_SC
 // This test program implements the first phase of the PRF
 int main()
@@ -60,9 +61,9 @@ int main()
     std::vector<unsigned int> arrayMod2;
     ySum.toArray(arrayMod2);
 
-    SC_Party2_1(y2, /*index=*/0);
-    SC_Party1(y1, out1, /*index=*/0);
-    SC_Party2_2(y2, out2, /*index=*/0);
+    SC_Party2_1(y2,0);
+    SC_Party1(y1, out1, 0);
+    SC_Party2_2(y2, out2, 0);
 
     std::vector<unsigned int> out1arrayMod3;
     std::vector<unsigned int> out2arrayMod3;
@@ -82,6 +83,7 @@ int main()
 
     // Check the result
 }
-
 #endif
+*/
+
 
