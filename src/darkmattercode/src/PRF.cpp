@@ -23,6 +23,7 @@ static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
 long timerPRF = 0;
+long timer_phase3 = 0;
 
 /*void PRF_unpacked_test()
 {
@@ -215,9 +216,11 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         SC_Party1(y1, out1, i);
         SC_Party2_2(y2, out2, i);
 
+    chrono::time_point<std::chrono::system_clock, std::chrono::microseconds> start = chrono::system_clock::now();
     out1Z3.matByVec(Rmat, out1); // compute matrix-by-vector multiply
     out2Z3.matByVec(Rmat, out2); // compute matrix-by-vector multiply
 
+    timer_phase3 += (std::chrono::system_clock::now() - start).count();
 
 }
 
@@ -342,9 +345,13 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
 */
 }
 
+void display_Phase3_runtime()
+{
+    std::cout<<std::endl<<"Phase 3(Randomization) execution time "<< timer_phase3 <<std::endl;
+}
+
 void display_PRF_runtime()
 {
-    std::cout<<std::endl<<"PRF execution time "<<std::endl;
-    std::cout<<"PRF execution timing " << timerPRF <<std::endl;
+    std::cout<<std::endl<<"PRF execution time "<< timerPRF <<std::endl;
 }
 

@@ -15,4 +15,5 @@ void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
                           PackedZ3<81>& out2Z3, int i);
 void PRF_unpacked_test();
 
-void display_PRF_runtime();
+void display_Phase3_runtime();//measure the runtime of phase 3
+void display_PRF_runtime(); //measure the runtime of entire PRF

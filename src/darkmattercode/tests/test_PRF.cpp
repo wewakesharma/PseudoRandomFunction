@@ -35,7 +35,8 @@ int main(int argc,char* argv[] )  {
     int ntimes = 1;
 
     PRF_DM(ntimes, nRuns, stepsToRun);
-    display_PRF_runtime();
+    display_Phase3_runtime();
+    //display_PRF_runtime();
 
     //Code for 1M run and timing
     /*chrono::time_point<std::chrono::system_clock, std::chrono::microseconds> start_PRF = chrono::system_clock::now();

@@ -8,7 +8,7 @@ CMakeFiles/darkmattercode.dir/src/OT.cpp.o
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/src/OT.cpp
+ /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/src/OT.cpp
 CMakeFiles/darkmattercode.dir/src/PRF.cpp.o
  ../include/darkmatter/OT.hpp
  ../include/darkmatter/Timing.hpp
@@ -17,7 +17,7 @@ CMakeFiles/darkmattercode.dir/src/PRF.cpp.o
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/src/PRF.cpp
+ /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/src/PRF.cpp
 CMakeFiles/darkmattercode.dir/src/Toeplitz-by-x.cpp.o
  ../include/darkmatter/Timing.hpp
  ../include/darkmatter/Toeplitz-by-x.hpp
@@ -25,14 +25,14 @@ CMakeFiles/darkmattercode.dir/src/Toeplitz-by-x.cpp.o
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/src/Toeplitz-by-x.cpp
+ /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/src/Toeplitz-by-x.cpp
 CMakeFiles/darkmattercode.dir/tests/test_OT.cpp.o
  ../include/darkmatter/OT.hpp
  ../include/darkmatter/mains.hpp
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/tests/test_OT.cpp
+ /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/tests/test_OT.cpp
 CMakeFiles/darkmattercode.dir/tests/test_PRF.cpp.o
  ../include/darkmatter/OT.hpp
  ../include/darkmatter/PRF.hpp
@@ -41,19 +41,19 @@ CMakeFiles/darkmattercode.dir/tests/test_PRF.cpp.o
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/tests/test_PRF.cpp
+ /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/tests/test_PRF.cpp
 CMakeFiles/darkmattercode.dir/tests/test_Toeplitz-by-x.cpp.o
  ../include/darkmatter/Toeplitz-by-x.hpp
  ../include/darkmatter/mains.hpp
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/tests/test_Toeplitz-by-x.cpp
+ /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/tests/test_Toeplitz-by-x.cpp
 CMakeFiles/darkmattercode.dir/tests/test_packedMod2.cpp.o
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/tests/test_packedMod2.cpp
+ /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/tests/test_packedMod2.cpp
 CMakeFiles/darkmattercode.dir/tests/test_packedMod3.cpp.o
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/tests/test_packedMod3.cpp
+ /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/tests/test_packedMod3.cpp
