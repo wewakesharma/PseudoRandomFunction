@@ -17,3 +17,5 @@ void OT_Party2_2(const PackedZ2<N_SIZE>& x, PackedPairZ2<N_SIZE>& out, int index
 void SC_Party2_1(const PackedZ2<N_SIZE>& y2, int index);
 void SC_Party1(const PackedZ2<N_SIZE>& y1, PackedZ3<N_SIZE>& r, int index);
 void SC_Party2_2(const PackedZ2<N_SIZE>& y2, PackedZ3<N_SIZE>& out, int index);
+
+void display_SC_runtime();

@@ -23,3 +23,5 @@ void topelitz_Party1(PackedZ2<N_ROWS>& out, const std::vector<uint64_t>& A,
 
 void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index);
 void topelitz_Party2_2(PackedZ2<N_ROWS>& out,PackedZ2<N_COLS>& x,int index);
+
+void display_AXplusB_runtime();

@@ -8,8 +8,9 @@
 //#define TEST_PHASE1
 //#define TEST_PackedMod2
 //#define TEST_PackedMod3
-//#define TEST_PRF
-#define TEST_SC
+#define TEST_PRF
+//#define TEST_SC
+
 
 
 #endif // _EXECUTION_HEADER_H_

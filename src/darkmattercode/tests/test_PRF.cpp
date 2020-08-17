@@ -33,6 +33,7 @@ int main(int argc,char* argv[] )  {
     int ntimes = 1;
 
     PRF_DM(ntimes, nRuns, stepsToRun);
+    display_PRF_runtime();
 
 }
 

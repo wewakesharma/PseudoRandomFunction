@@ -12,6 +12,7 @@
 using namespace std;
 
 long timerAxpBP1 = 0;
+long timerAxpBP2 = 0;
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
@@ -148,10 +149,11 @@ void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index) {
     // get rx from pre-processing
     PackedZ2<N_COLS>& rx = get_rx_PP(index); // local copy
 
+    chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
     // send mx = x xor rx to party1
     PackedZ2<N_COLS> mx = x;
     mx.add(rx);
-    
+    timerAxpBP2 += (chrono::system_clock::now() - start).count();
     snd_mx(mx); // send to party1
 }
 
@@ -161,11 +163,20 @@ void topelitz_Party2_2(PackedZ2<N_ROWS>& out, PackedZ2<N_COLS>& x,
     const std::vector<uint64_t>& mA = rcv_mA();
     PackedZ2<N_ROWS>& mb = rcv_mb();
 
+
     // get from pre-processing rx = rA*rx xor rb
     PackedZ2<N_ROWS>& rz = get_rz_PP(index);
+    chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
     out.toeplitzByVec(mA, x); // mA*x
     out.add(mb);              //   xor mb
     out.add(rz);              //   xor rz
-
+    timerAxpBP2 += (chrono::system_clock::now() - start).count();
     // out is the output of this party
+}
+
+void display_AXplusB_runtime()
+{
+    cout<<endl<<"AX + B execution time "<<endl;
+    cout<<"Party 1: " << timerAxpBP1 <<endl;
+    cout<<"Party 2: "<<timerAxpBP2<<endl;
 }

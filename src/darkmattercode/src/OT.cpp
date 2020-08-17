@@ -10,6 +10,7 @@
 #include "packedMod2.hpp"
 #include "packedMod3.hpp"
 #include "OT.hpp"
+#include "Timing.hpp"
 #include "mains.hpp"
 
 
@@ -17,6 +18,12 @@
 
 static std::vector< PackedZ2<N_SIZE> > rxs;
 static std::vector< PackedPairZ2<N_SIZE> > raps, rbps, zps;
+
+long timerOTP1 = 0;
+long timerOTP2 = 0;
+
+long timerSCP1 = 0;
+long timerSCP2 = 0;
 
 // Methods for returning data from pre-processing
 static PackedZ2<N_SIZE>& get_rx_PP(int index) {
@@ -96,13 +103,14 @@ void OT_Party2_1(const PackedZ2<N_SIZE>& x,  int index) {
 #ifdef DEBUG
     std::cout << "OT p2 part 1, x="<<x.at(0)<<", rx="<<rx.at(0);
 #endif
-
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
     // send mx = x xor rx to party1
     PackedZ2<N_SIZE> mx = x;
     mx ^= rx;
 #ifdef DEBUG
     std::cout << ", sending mx="<<mx.at(0) << std::endl;
 #endif
+    timerOTP2 += (std::chrono::system_clock::now() - start).count();
     snd_mx(mx); // send to party1
 }
 
@@ -131,6 +139,8 @@ void OT_Party1(const PackedPairZ2<N_SIZE>& r0,  const PackedPairZ2<N_SIZE>& r1, 
     std::cout << "OT p1, ra="<<ra.first.at(0)<<ra.second.at(0) << std::endl;
     std::cout << "OT p1, rb="<<rb.first.at(0)<<rb.second.at(0) << std::endl;
 #endif
+
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
 
     PackedPairZ2<N_SIZE> m0 = rb;
     PackedPairZ2<N_SIZE> m1 = ra;
@@ -172,6 +182,8 @@ void OT_Party1(const PackedPairZ2<N_SIZE>& r0,  const PackedPairZ2<N_SIZE>& r1, 
     m0 ^= r0;    // mx*rn + (~mx)*ra + r0
     m1 ^= r1;    // mx*ra + (~mx)*rb + r1
 
+    timerOTP1 += (std::chrono::system_clock::now() - start).count();
+
     snd_m0_m1(m0, m1);        // send to party2
 
 #ifdef DEBUG
@@ -186,6 +198,7 @@ void OT_Party2_2(const PackedZ2<N_SIZE>& x, PackedPairZ2<N_SIZE>& out, int index
     PackedZ2<N_SIZE>& rx = get_rx_PP(index);
     PackedPairZ2<N_SIZE>& z = get_z_PP(index);
 
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
 #ifdef DEBUG
     std::cout << "OT p2 part 2, z="<<z.first.at(0)<< z.second.at(0) << ", rx="<<rx.at(0) << std::endl;
 #endif
@@ -218,6 +231,7 @@ void OT_Party2_2(const PackedZ2<N_SIZE>& x, PackedPairZ2<N_SIZE>& out, int index
 #endif
 
     out ^= z;       // m0*(~rX) + m1*rx - z
+    timerOTP2 += (std::chrono::system_clock::now() - start).count();
 
 #ifdef DEBUG
     std::cout << "OT p2 part 2, m0*(~rX) + m1*rx - z="<<out.first.at(0)<<out.second.at(0) << std::endl;
@@ -230,7 +244,9 @@ void OT_Party2_2(const PackedZ2<N_SIZE>& x, PackedPairZ2<N_SIZE>& out, int index
 
 void SC_Party2_1(const PackedZ2<N_SIZE>& y2, int index) {
 //    std::cout << "\nSC: party 2 calling OT("<<y2.at(0)<<",index="<<index<<")\n";
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
     OT_Party2_1(y2, index);
+    timerSCP2 += (std::chrono::system_clock::now() - start).count();
 }
 
 /*
@@ -244,9 +260,11 @@ void SC_Party1(const PackedZ2<N_SIZE>& y1, PackedZ3<N_SIZE>& out, int index) {
 
     // prepare two PackedZ3 vectors, one with y1 and the other with ~y1 = 1-y1
 
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
     const static PackedZ2<N_SIZE> zVec; //by default constructor initializes to 0
     PackedZ3<N_SIZE> y1_3;  // initialized to zero
     y1_3.lsbs() = y1;       // set the lsb's to y1
+
 
 #ifdef DEBUG
     assert(y1.at(0)==y1_3.at(0));
@@ -267,6 +285,7 @@ void SC_Party1(const PackedZ2<N_SIZE>& y1, PackedZ3<N_SIZE>& out, int index) {
     // use r0 = y1 - out mod 3 and r1 = (1-y1) - out mod 3 as the OT-sender inputs
     OT_Party1(y1_3, noty1_3, index);
 
+    timerSCP1 += (std::chrono::system_clock::now() - start).count();
     // Note: y1_3 and noty1_3 are PackedZ3, which are derived from PackedPairZ2
     // so we can directly call OT_Party1 that expects to get PackedPairZ2's.
 }
@@ -274,8 +293,17 @@ void SC_Party1(const PackedZ2<N_SIZE>& y1, PackedZ3<N_SIZE>& out, int index) {
 
 void SC_Party2_2(const PackedZ2<N_SIZE>& y2, PackedZ3<N_SIZE>& out, int index)
 {
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
     // Note: out is a PackedZ3, which is derived from PackedPairZ2
     // so we can directly call OT_Party2_2 that expects to get PackedPairZ2
     OT_Party2_2(y2,out, index);
+    timerSCP2 += (std::chrono::system_clock::now() - start).count();
 //    std::cout << "\nSC: party 2 OT returns "<<out.at(0)<<std::endl;
+}
+
+void display_SC_runtime()
+{
+    std::cout<<std::endl<<"Share Conversion execution time "<<std::endl;
+    std::cout<<"Party 1: " << timerSCP1 <<std::endl;
+    std::cout<<"Party 2: "<<timerSCP2<<std::endl;
 }

@@ -8,6 +8,7 @@
 #include "Toeplitz-by-x.hpp"
 #include "OT.hpp"
 #include "mains.hpp"
+#include "Timing.hpp"
 #include <typeinfo>//to determine the type of variables
 
 // in Toeplitz-by-x.hpp
@@ -20,6 +21,8 @@ using namespace std;
 static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
+
+long timerPRF = 0;
 
 /*void PRF_unpacked_test()
 {
@@ -261,6 +264,7 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
     for (int i = 0; i < nRuns; i++) {
 
         PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
+        timerPRF += (std::chrono::system_clock::now() - start).count();
         PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
         //PRF_unpacked_test() /* just a placeholder*/
     }
@@ -336,5 +340,11 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
 
     cout << endl << "elapsed time for Phase3  phase:  " << elapsed_seconds_P3.count() << "  s\n";
 */
+}
+
+void display_PRF_runtime()
+{
+    std::cout<<std::endl<<"PRF execution time "<<std::endl;
+    std::cout<<"Party 1: " << timerPRF <<std::endl;
 }
 
