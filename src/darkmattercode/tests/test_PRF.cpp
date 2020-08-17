@@ -17,6 +17,8 @@ using namespace std;
 // This test program implements the first phase of the PRF
 //int main(int argc,char* argv[] ) {
 int main(int argc,char* argv[] )  {
+    //long timer_PRF_1M = 0;
+
     int stepsToRun, nRuns;
     if (argc>1){
         char *p;
@@ -35,6 +37,14 @@ int main(int argc,char* argv[] )  {
     PRF_DM(ntimes, nRuns, stepsToRun);
     display_PRF_runtime();
 
+    //Code for 1M run and timing
+    /*chrono::time_point<std::chrono::system_clock, std::chrono::microseconds> start_PRF = chrono::system_clock::now();
+    for(int i =0; i< 10000; i++)
+    {
+        PRF_DM(ntimes, nRuns, stepsToRun);
+    }
+    timer_PRF_1M = (std::chrono::system_clock::now() - start_PRF).count();
+    std::cout<<std::endl<<"Timing for 1M runs "<<timer_PRF_1M<<endl;*/
 }
 
 #endif

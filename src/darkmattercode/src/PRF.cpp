@@ -255,7 +255,7 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
     x1.randomize();
     x2.randomize();
 
-    chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
+    chrono::time_point<std::chrono::system_clock, std::chrono::microseconds> start = chrono::system_clock::now();
 
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
@@ -265,7 +265,7 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
 
         PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
         timerPRF += (std::chrono::system_clock::now() - start).count();
-        PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
+        //PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); //for packed unit testing of PRF code
         //PRF_unpacked_test() /* just a placeholder*/
     }
 
@@ -345,6 +345,6 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
 void display_PRF_runtime()
 {
     std::cout<<std::endl<<"PRF execution time "<<std::endl;
-    std::cout<<"Party 1: " << timerPRF <<std::endl;
+    std::cout<<"PRF execution timing " << timerPRF <<std::endl;
 }
 
