@@ -6,5 +6,5 @@ CXX_FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/Ma
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/include -I/Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/include/darkmatter 
+CXX_INCLUDES = -I/Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/include -I/Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/include/darkmatter 
 

@@ -44,10 +44,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode
+CMAKE_SOURCE_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -74,14 +74,14 @@ clean: CMakeFiles/darkmattercode.dir/clean
 CMakeFiles/darkmattercode.dir/all:
 	$(MAKE) -f CMakeFiles/darkmattercode.dir/build.make CMakeFiles/darkmattercode.dir/depend
 	$(MAKE) -f CMakeFiles/darkmattercode.dir/build.make CMakeFiles/darkmattercode.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target darkmattercode"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target darkmattercode"
 .PHONY : CMakeFiles/darkmattercode.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/darkmattercode.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/cmake-build-debug/CMakeFiles 9
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/cmake-build-debug/CMakeFiles 9
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/darkmattercode.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/Github/PseudoRandomFunction/src/darkmattercode/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/darkmattercode/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/darkmattercode.dir/rule
 
 # Convenience name for target.
