@@ -70,7 +70,7 @@ int main()
     // First run, a protocol for K1 times x2
 
     int port2 = 54321;
-    pi_snd(recd_mx,port2);
+    pi_snd(recd_mx,port);
     //topelitz_Party1(out1_A, K1, 0);
     /*
     // Second run, a protocol for K2 times x1

@@ -47,10 +47,10 @@ void pi_snd(std::vector<unsigned int>& snd_vec, int& port)
     int status = connect(clientSd,(sockaddr*) &sendSockAddr, sizeof(sendSockAddr));
     if(status < 0)
     {
-        std::cout<<"Error connecting to socket!"<<std::endl;
+        std::cout<<"in pi_snd, Error connecting to socket!"<<std::endl;
         //break;
     }
-    std::cout << "Connected to the server!" << std::endl;
+    std::cout << "in pi_snd, Connected to the server!" << std::endl;
     std::cout << ">";
 
     //Enable only one of the following alternates to send the message

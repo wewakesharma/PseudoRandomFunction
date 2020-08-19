@@ -179,7 +179,7 @@ void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index) {
     pi_snd(mx_vec,port);
 
     int port2 = 54321;
-    std::vector<unsigned int> recd_mx2 = pi_recv(port2);
+    std::vector<unsigned int> recd_mx2 = pi_recv(port);
 
     for(int i =0;i<recd_mx2.size();i++)
     {

@@ -46,12 +46,16 @@ int openSocket(int& bindStatus, int& port) {
         std::cerr << "Error establishing the server socket" << std::endl;
         exit(0);
     }
+
+    std::cerr << "in data receiver OpenSocket, success opening socket" << std::endl;
+
     //bind the socket to its local address
     bindStatus = bind(serverSd, (struct sockaddr *) &servAddr, sizeof(servAddr));
     if (bindStatus < 0) {
-        std::cerr << "Error binding socket to local address" << std::endl;
+        std::cerr << "in data_reeiver, opensocket, Error binding socket to local address" << std::endl;
         exit(0);
     }
+    std::cerr << "in data receiver OpenSocket , success binding socket to local address" << std::endl;
     return serverSd;
 }
 
@@ -83,7 +87,7 @@ std::vector<unsigned int> pi_recv(int& port)//p1 acts as a server
         std::cerr << "Error accepting request from client!" << std::endl;
         exit(1);
     }
-    std::cout << "Connected with Party 2!" << std::endl;
+    std::cout << "in pi_recv, Connected with Party 2!" << std::endl;
 
     //Alternate 1 - Working code: the value are received in string
     memset(&msg, 0, sizeof(msg));//clear the buffer
