@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6"/>
 	<Project>
-		<Option title="2PC"/>
+		<Option title="trial_communication"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
 		<Option virtualFolders="CMake Files\;"/>
@@ -37,8 +37,8 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="2PC">
-				<Option output="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/2PC" prefix_auto="0" extension_auto="0"/>
+			<Target title="trial_communication">
+				<Option output="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/trial_communication" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -55,14 +55,14 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 2PC"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 trial_communication"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="2PC/fast">
-				<Option output="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/2PC" prefix_auto="0" extension_auto="0"/>
+			<Target title="trial_communication/fast">
+				<Option output="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/trial_communication" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -79,7 +79,7 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 2PC/fast"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 trial_communication/fast"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -87,73 +87,73 @@
 			</Target>
 		</Build>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/comm/client.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/comm/recv.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/comm/recv.h">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/comm/server.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/comm/snd.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/comm/snd.h">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/include/darkmatter/OT.hpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/include/darkmatter/Toeplitz-by-x.hpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/include/darkmatter/data_receiver.h">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/include/darkmatter/data_sender.h">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/include/darkmatter/packedMod2.hpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/include/darkmatter/packedMod3.hpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/include/darkmatter/utils.hpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/src/OT.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/src/Toeplitz-by-x.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/src/Toeplitz-by-x_p1.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/src/Toeplitz-by-x_p2.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/src/data_receiver.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/src/data_sender.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/tests/test_OT.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/tests/test_Toeplitz-by-x.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/tests/test_packedMod2.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/tests/test_packedMod3.cpp">
-			<Option target="2PC"/>
+			<Option target="trial_communication"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

@@ -6,6 +6,8 @@
 #define INC_2PC_DATA_RECEIVER_H
 
 //change the return type based on the alternative used(alt 1: std::string and alt2:std::vector<unsigned int>
-std::vector<unsigned int> pi_recv(int& port);
+void init_recv_connection(int& port);
+void pi_recv();
+void close_receiver_connection();
 
 #endif //INC_2PC_DATA_RECEIVER_H

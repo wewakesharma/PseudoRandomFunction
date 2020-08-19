@@ -175,16 +175,8 @@ void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index) {
 #ifdef DEBUG
     cout << "topelitz_Party2_1, mx =  " << mx << ", mx_vec = " << mx_vec << endl;
 #endif
-    int port = 12345;
-    pi_snd(mx_vec,port);
+    pi_snd( mx_vec);
 
-    int port2 = 54321;
-    std::vector<unsigned int> recd_mx2 = pi_recv(port);
-
-    for(int i =0;i<recd_mx2.size();i++)
-    {
-        cout<<recd_mx2[i];
-    }
     //mx.toArray();
     //snd_mx(mx); // send to party1
 }

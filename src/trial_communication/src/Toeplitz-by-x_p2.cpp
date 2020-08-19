@@ -58,7 +58,13 @@ int main()
     x2.randomize();
 
     // First run, a protocol for K1 times x2
-    topelitz_Party2_1(x2, 0);
+    int port = 12345;
+    int clientsd;
+    init_send_connection(port);
+    topelitz_Party2_1(x2, 0);//data sent
+
+    //wait to receive output from party 1
+    pi_recv();
     //topelitz_Party2_2(out1_B, x2, 0);
 
     /*

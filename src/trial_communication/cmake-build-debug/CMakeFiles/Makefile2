@@ -44,16 +44,16 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication
+CMAKE_SOURCE_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/trial_communication
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/2PC.dir/all
+all: CMakeFiles/trial_communication.dir/all
 
 .PHONY : all
 
@@ -63,36 +63,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/2PC.dir/clean
+clean: CMakeFiles/trial_communication.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/2PC.dir
+# Target rules for target CMakeFiles/trial_communication.dir
 
 # All Build rule for target.
-CMakeFiles/2PC.dir/all:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/depend
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 "Built target 2PC"
-.PHONY : CMakeFiles/2PC.dir/all
+CMakeFiles/trial_communication.dir/all:
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/depend
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 "Built target trial_communication"
+.PHONY : CMakeFiles/trial_communication.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/2PC.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles 15
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/2PC.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/2PC.dir/rule
+CMakeFiles/trial_communication.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles 15
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/trial_communication.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/trial_communication.dir/rule
 
 # Convenience name for target.
-2PC: CMakeFiles/2PC.dir/rule
+trial_communication: CMakeFiles/trial_communication.dir/rule
 
-.PHONY : 2PC
+.PHONY : trial_communication
 
 # clean rule for target.
-CMakeFiles/2PC.dir/clean:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/clean
-.PHONY : CMakeFiles/2PC.dir/clean
+CMakeFiles/trial_communication.dir/clean:
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/clean
+.PHONY : CMakeFiles/trial_communication.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

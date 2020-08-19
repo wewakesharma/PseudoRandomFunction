@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(2PC)
+project(trial_communication)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -7,7 +7,7 @@ include_directories(comm)
 include_directories(include)
 include_directories(include/darkmatter)
 
-add_executable(2PC
+add_executable(trial_communication
         comm/client.cpp
         comm/recv.cpp
         comm/recv.h

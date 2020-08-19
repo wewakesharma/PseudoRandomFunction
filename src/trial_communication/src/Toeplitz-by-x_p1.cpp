@@ -60,17 +60,29 @@ int main()
     x2.randomize();
 
     //Initialize party 1 to recv the input
-    //string recd_msg = pi_recv();
-    //cout<<recd_msg<<endl;
-
     int port = 12345;
-    std::vector<unsigned int> recd_mx = pi_recv(port);
+    init_recv_connection(port);
+    pi_recv();
 
-    //printing the value of received mx.
     // First run, a protocol for K1 times x2
 
-    int port2 = 54321;
-    pi_snd(recd_mx,port);
+    //create a dummy vector
+    std::vector<unsigned int> v;
+    for(int i=0;i<256;i++)
+    {
+        v.push_back(0);
+    }
+    /*std::cout<<"printing vector v";
+    for(int i=0;i<256;i++)
+    {
+        cout<<v[i];
+    }*/
+
+    //generate(v.begin(), v.end(), [] { static int i {1}; return i++; });
+
+    //send the dummy vector
+    pi_snd(v);
+    //close_receiver_connection();
     //topelitz_Party1(out1_A, K1, 0);
     /*
     // Second run, a protocol for K2 times x1

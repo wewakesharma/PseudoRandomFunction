@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication
+CMAKE_SOURCE_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/trial_communication
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles /Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/trial_communication/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named 2PC
+# Target rules for targets named trial_communication
 
 # Build rule for target.
-2PC: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 2PC
-.PHONY : 2PC
+trial_communication: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 trial_communication
+.PHONY : trial_communication
 
 # fast build rule for target.
-2PC/fast:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/build
-.PHONY : 2PC/fast
+trial_communication/fast:
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/build
+.PHONY : trial_communication/fast
 
 comm/client.o: comm/client.cpp.o
 
@@ -129,7 +129,7 @@ comm/client.o: comm/client.cpp.o
 
 # target to build an object file
 comm/client.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/client.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/client.cpp.o
 .PHONY : comm/client.cpp.o
 
 comm/client.i: comm/client.cpp.i
@@ -138,7 +138,7 @@ comm/client.i: comm/client.cpp.i
 
 # target to preprocess a source file
 comm/client.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/client.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/client.cpp.i
 .PHONY : comm/client.cpp.i
 
 comm/client.s: comm/client.cpp.s
@@ -147,7 +147,7 @@ comm/client.s: comm/client.cpp.s
 
 # target to generate assembly for a file
 comm/client.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/client.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/client.cpp.s
 .PHONY : comm/client.cpp.s
 
 comm/recv.o: comm/recv.cpp.o
@@ -156,7 +156,7 @@ comm/recv.o: comm/recv.cpp.o
 
 # target to build an object file
 comm/recv.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/recv.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/recv.cpp.o
 .PHONY : comm/recv.cpp.o
 
 comm/recv.i: comm/recv.cpp.i
@@ -165,7 +165,7 @@ comm/recv.i: comm/recv.cpp.i
 
 # target to preprocess a source file
 comm/recv.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/recv.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/recv.cpp.i
 .PHONY : comm/recv.cpp.i
 
 comm/recv.s: comm/recv.cpp.s
@@ -174,7 +174,7 @@ comm/recv.s: comm/recv.cpp.s
 
 # target to generate assembly for a file
 comm/recv.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/recv.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/recv.cpp.s
 .PHONY : comm/recv.cpp.s
 
 comm/server.o: comm/server.cpp.o
@@ -183,7 +183,7 @@ comm/server.o: comm/server.cpp.o
 
 # target to build an object file
 comm/server.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/server.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/server.cpp.o
 .PHONY : comm/server.cpp.o
 
 comm/server.i: comm/server.cpp.i
@@ -192,7 +192,7 @@ comm/server.i: comm/server.cpp.i
 
 # target to preprocess a source file
 comm/server.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/server.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/server.cpp.i
 .PHONY : comm/server.cpp.i
 
 comm/server.s: comm/server.cpp.s
@@ -201,7 +201,7 @@ comm/server.s: comm/server.cpp.s
 
 # target to generate assembly for a file
 comm/server.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/server.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/server.cpp.s
 .PHONY : comm/server.cpp.s
 
 comm/snd.o: comm/snd.cpp.o
@@ -210,7 +210,7 @@ comm/snd.o: comm/snd.cpp.o
 
 # target to build an object file
 comm/snd.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/snd.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/snd.cpp.o
 .PHONY : comm/snd.cpp.o
 
 comm/snd.i: comm/snd.cpp.i
@@ -219,7 +219,7 @@ comm/snd.i: comm/snd.cpp.i
 
 # target to preprocess a source file
 comm/snd.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/snd.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/snd.cpp.i
 .PHONY : comm/snd.cpp.i
 
 comm/snd.s: comm/snd.cpp.s
@@ -228,7 +228,7 @@ comm/snd.s: comm/snd.cpp.s
 
 # target to generate assembly for a file
 comm/snd.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/comm/snd.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/comm/snd.cpp.s
 .PHONY : comm/snd.cpp.s
 
 src/OT.o: src/OT.cpp.o
@@ -237,7 +237,7 @@ src/OT.o: src/OT.cpp.o
 
 # target to build an object file
 src/OT.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/OT.cpp.o
 .PHONY : src/OT.cpp.o
 
 src/OT.i: src/OT.cpp.i
@@ -246,7 +246,7 @@ src/OT.i: src/OT.cpp.i
 
 # target to preprocess a source file
 src/OT.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/OT.cpp.i
 .PHONY : src/OT.cpp.i
 
 src/OT.s: src/OT.cpp.s
@@ -255,7 +255,7 @@ src/OT.s: src/OT.cpp.s
 
 # target to generate assembly for a file
 src/OT.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/OT.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/OT.cpp.s
 .PHONY : src/OT.cpp.s
 
 src/Toeplitz-by-x.o: src/Toeplitz-by-x.cpp.o
@@ -264,7 +264,7 @@ src/Toeplitz-by-x.o: src/Toeplitz-by-x.cpp.o
 
 # target to build an object file
 src/Toeplitz-by-x.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/Toeplitz-by-x.cpp.o
 .PHONY : src/Toeplitz-by-x.cpp.o
 
 src/Toeplitz-by-x.i: src/Toeplitz-by-x.cpp.i
@@ -273,7 +273,7 @@ src/Toeplitz-by-x.i: src/Toeplitz-by-x.cpp.i
 
 # target to preprocess a source file
 src/Toeplitz-by-x.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/Toeplitz-by-x.cpp.i
 .PHONY : src/Toeplitz-by-x.cpp.i
 
 src/Toeplitz-by-x.s: src/Toeplitz-by-x.cpp.s
@@ -282,7 +282,7 @@ src/Toeplitz-by-x.s: src/Toeplitz-by-x.cpp.s
 
 # target to generate assembly for a file
 src/Toeplitz-by-x.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/Toeplitz-by-x.cpp.s
 .PHONY : src/Toeplitz-by-x.cpp.s
 
 src/Toeplitz-by-x_p1.o: src/Toeplitz-by-x_p1.cpp.o
@@ -291,7 +291,7 @@ src/Toeplitz-by-x_p1.o: src/Toeplitz-by-x_p1.cpp.o
 
 # target to build an object file
 src/Toeplitz-by-x_p1.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/Toeplitz-by-x_p1.cpp.o
 .PHONY : src/Toeplitz-by-x_p1.cpp.o
 
 src/Toeplitz-by-x_p1.i: src/Toeplitz-by-x_p1.cpp.i
@@ -300,7 +300,7 @@ src/Toeplitz-by-x_p1.i: src/Toeplitz-by-x_p1.cpp.i
 
 # target to preprocess a source file
 src/Toeplitz-by-x_p1.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/Toeplitz-by-x_p1.cpp.i
 .PHONY : src/Toeplitz-by-x_p1.cpp.i
 
 src/Toeplitz-by-x_p1.s: src/Toeplitz-by-x_p1.cpp.s
@@ -309,7 +309,7 @@ src/Toeplitz-by-x_p1.s: src/Toeplitz-by-x_p1.cpp.s
 
 # target to generate assembly for a file
 src/Toeplitz-by-x_p1.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x_p1.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/Toeplitz-by-x_p1.cpp.s
 .PHONY : src/Toeplitz-by-x_p1.cpp.s
 
 src/Toeplitz-by-x_p2.o: src/Toeplitz-by-x_p2.cpp.o
@@ -318,7 +318,7 @@ src/Toeplitz-by-x_p2.o: src/Toeplitz-by-x_p2.cpp.o
 
 # target to build an object file
 src/Toeplitz-by-x_p2.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/Toeplitz-by-x_p2.cpp.o
 .PHONY : src/Toeplitz-by-x_p2.cpp.o
 
 src/Toeplitz-by-x_p2.i: src/Toeplitz-by-x_p2.cpp.i
@@ -327,7 +327,7 @@ src/Toeplitz-by-x_p2.i: src/Toeplitz-by-x_p2.cpp.i
 
 # target to preprocess a source file
 src/Toeplitz-by-x_p2.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/Toeplitz-by-x_p2.cpp.i
 .PHONY : src/Toeplitz-by-x_p2.cpp.i
 
 src/Toeplitz-by-x_p2.s: src/Toeplitz-by-x_p2.cpp.s
@@ -336,7 +336,7 @@ src/Toeplitz-by-x_p2.s: src/Toeplitz-by-x_p2.cpp.s
 
 # target to generate assembly for a file
 src/Toeplitz-by-x_p2.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/Toeplitz-by-x_p2.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/Toeplitz-by-x_p2.cpp.s
 .PHONY : src/Toeplitz-by-x_p2.cpp.s
 
 src/data_receiver.o: src/data_receiver.cpp.o
@@ -345,7 +345,7 @@ src/data_receiver.o: src/data_receiver.cpp.o
 
 # target to build an object file
 src/data_receiver.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_receiver.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/data_receiver.cpp.o
 .PHONY : src/data_receiver.cpp.o
 
 src/data_receiver.i: src/data_receiver.cpp.i
@@ -354,7 +354,7 @@ src/data_receiver.i: src/data_receiver.cpp.i
 
 # target to preprocess a source file
 src/data_receiver.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_receiver.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/data_receiver.cpp.i
 .PHONY : src/data_receiver.cpp.i
 
 src/data_receiver.s: src/data_receiver.cpp.s
@@ -363,7 +363,7 @@ src/data_receiver.s: src/data_receiver.cpp.s
 
 # target to generate assembly for a file
 src/data_receiver.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_receiver.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/data_receiver.cpp.s
 .PHONY : src/data_receiver.cpp.s
 
 src/data_sender.o: src/data_sender.cpp.o
@@ -372,7 +372,7 @@ src/data_sender.o: src/data_sender.cpp.o
 
 # target to build an object file
 src/data_sender.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_sender.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/data_sender.cpp.o
 .PHONY : src/data_sender.cpp.o
 
 src/data_sender.i: src/data_sender.cpp.i
@@ -381,7 +381,7 @@ src/data_sender.i: src/data_sender.cpp.i
 
 # target to preprocess a source file
 src/data_sender.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_sender.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/data_sender.cpp.i
 .PHONY : src/data_sender.cpp.i
 
 src/data_sender.s: src/data_sender.cpp.s
@@ -390,7 +390,7 @@ src/data_sender.s: src/data_sender.cpp.s
 
 # target to generate assembly for a file
 src/data_sender.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/src/data_sender.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/src/data_sender.cpp.s
 .PHONY : src/data_sender.cpp.s
 
 tests/test_OT.o: tests/test_OT.cpp.o
@@ -399,7 +399,7 @@ tests/test_OT.o: tests/test_OT.cpp.o
 
 # target to build an object file
 tests/test_OT.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_OT.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_OT.cpp.o
 .PHONY : tests/test_OT.cpp.o
 
 tests/test_OT.i: tests/test_OT.cpp.i
@@ -408,7 +408,7 @@ tests/test_OT.i: tests/test_OT.cpp.i
 
 # target to preprocess a source file
 tests/test_OT.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_OT.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_OT.cpp.i
 .PHONY : tests/test_OT.cpp.i
 
 tests/test_OT.s: tests/test_OT.cpp.s
@@ -417,7 +417,7 @@ tests/test_OT.s: tests/test_OT.cpp.s
 
 # target to generate assembly for a file
 tests/test_OT.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_OT.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_OT.cpp.s
 .PHONY : tests/test_OT.cpp.s
 
 tests/test_Toeplitz-by-x.o: tests/test_Toeplitz-by-x.cpp.o
@@ -426,7 +426,7 @@ tests/test_Toeplitz-by-x.o: tests/test_Toeplitz-by-x.cpp.o
 
 # target to build an object file
 tests/test_Toeplitz-by-x.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_Toeplitz-by-x.cpp.o
 .PHONY : tests/test_Toeplitz-by-x.cpp.o
 
 tests/test_Toeplitz-by-x.i: tests/test_Toeplitz-by-x.cpp.i
@@ -435,7 +435,7 @@ tests/test_Toeplitz-by-x.i: tests/test_Toeplitz-by-x.cpp.i
 
 # target to preprocess a source file
 tests/test_Toeplitz-by-x.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_Toeplitz-by-x.cpp.i
 .PHONY : tests/test_Toeplitz-by-x.cpp.i
 
 tests/test_Toeplitz-by-x.s: tests/test_Toeplitz-by-x.cpp.s
@@ -444,7 +444,7 @@ tests/test_Toeplitz-by-x.s: tests/test_Toeplitz-by-x.cpp.s
 
 # target to generate assembly for a file
 tests/test_Toeplitz-by-x.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_Toeplitz-by-x.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_Toeplitz-by-x.cpp.s
 .PHONY : tests/test_Toeplitz-by-x.cpp.s
 
 tests/test_packedMod2.o: tests/test_packedMod2.cpp.o
@@ -453,7 +453,7 @@ tests/test_packedMod2.o: tests/test_packedMod2.cpp.o
 
 # target to build an object file
 tests/test_packedMod2.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_packedMod2.cpp.o
 .PHONY : tests/test_packedMod2.cpp.o
 
 tests/test_packedMod2.i: tests/test_packedMod2.cpp.i
@@ -462,7 +462,7 @@ tests/test_packedMod2.i: tests/test_packedMod2.cpp.i
 
 # target to preprocess a source file
 tests/test_packedMod2.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_packedMod2.cpp.i
 .PHONY : tests/test_packedMod2.cpp.i
 
 tests/test_packedMod2.s: tests/test_packedMod2.cpp.s
@@ -471,7 +471,7 @@ tests/test_packedMod2.s: tests/test_packedMod2.cpp.s
 
 # target to generate assembly for a file
 tests/test_packedMod2.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_packedMod2.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_packedMod2.cpp.s
 .PHONY : tests/test_packedMod2.cpp.s
 
 tests/test_packedMod3.o: tests/test_packedMod3.cpp.o
@@ -480,7 +480,7 @@ tests/test_packedMod3.o: tests/test_packedMod3.cpp.o
 
 # target to build an object file
 tests/test_packedMod3.cpp.o:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.o
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_packedMod3.cpp.o
 .PHONY : tests/test_packedMod3.cpp.o
 
 tests/test_packedMod3.i: tests/test_packedMod3.cpp.i
@@ -489,7 +489,7 @@ tests/test_packedMod3.i: tests/test_packedMod3.cpp.i
 
 # target to preprocess a source file
 tests/test_packedMod3.cpp.i:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.i
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_packedMod3.cpp.i
 .PHONY : tests/test_packedMod3.cpp.i
 
 tests/test_packedMod3.s: tests/test_packedMod3.cpp.s
@@ -498,7 +498,7 @@ tests/test_packedMod3.s: tests/test_packedMod3.cpp.s
 
 # target to generate assembly for a file
 tests/test_packedMod3.cpp.s:
-	$(MAKE) -f CMakeFiles/2PC.dir/build.make CMakeFiles/2PC.dir/tests/test_packedMod3.cpp.s
+	$(MAKE) -f CMakeFiles/trial_communication.dir/build.make CMakeFiles/trial_communication.dir/tests/test_packedMod3.cpp.s
 .PHONY : tests/test_packedMod3.cpp.s
 
 # Help Target
@@ -509,7 +509,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... 2PC"
+	@echo "... trial_communication"
 	@echo "... comm/client.o"
 	@echo "... comm/client.i"
 	@echo "... comm/client.s"
