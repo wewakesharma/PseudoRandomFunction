@@ -107,7 +107,8 @@ void pi_recv()//p1 acts as a server
     std::cout << "in pi_recv, recd_vec=" << rec_vec << std::endl;
 #endif
 
-    std::cout<<msg;
+    int msgsize = sizeof(msg);
+    std::cout<< " in pi_recv, msg=" << msg << ", sizeof msg = " << msgsize << std::endl;
     std::string msg_str(msg);
     std::cout<<msg_str<<std::endl;
 

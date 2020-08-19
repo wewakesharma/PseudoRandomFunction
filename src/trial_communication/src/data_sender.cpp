@@ -77,6 +77,8 @@ void pi_snd(std::vector<unsigned int>& snd_vec)
     //convert string to char
     strcpy(msg, oss.str().c_str());
 
+    std::cout << "in pi_send, sending msg= " << msg << endl;
+
     //send
     send(clientSd, (char*)&msg, strlen(msg), 0);
 
