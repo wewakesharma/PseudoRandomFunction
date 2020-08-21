@@ -32,6 +32,7 @@
 
 #define PORT 8080
 char buffer[1500];
+int valread;
 
 //using namespace std;
 //create a function that initializes the receiver communication: will be called just once by party 1
@@ -86,8 +87,8 @@ void init_party1_communication(int& recv_sock)
 void pi_recv(int& recv_socket)//receiver uses a socket handle to receive data
 {
 
-
-    int valread = read( recv_socket ,buffer, 1500);
+    std::cout<<"In pi_recv function: Waiting for value to be received"<<std::endl;
+    valread = read( recv_socket ,buffer, 1500);
     /*auto curr_time = std::chrono::system_clock::now();
     std::time_t recv_time = std::chrono::system_clock::to_time_t(curr_time);
 

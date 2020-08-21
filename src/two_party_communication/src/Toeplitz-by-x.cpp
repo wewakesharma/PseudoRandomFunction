@@ -175,7 +175,8 @@ void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
     std::vector<unsigned int> ma_vec;
     mx.toArray(ma_vec);
 
-    //wait for certain time before sending 5 sec = 5000ms
+    std::cout<<"In Toeplitz_party1: Sender is being blocked for 5 seconds before sending Ma"<<std::endl;
+    //wait for certain time before sending 5 sec = 5000000 microseconds
     usleep(5000000);
 
     pi_snd(ma_vec,send_socket);

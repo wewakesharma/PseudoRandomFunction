@@ -82,6 +82,7 @@ void pi_snd(std::vector<unsigned int>& snd_vec, int& send_sock)
     strcpy(msg, oss.str().c_str());
 
     send(send_sock , msg , strlen(msg) , 0 );
+    std::cout<<std::endl<<"value to be sent is "<<msg<<std::endl;
     auto curr_time = std::chrono::system_clock::now();
     std::time_t send_time = std::chrono::system_clock::to_time_t(curr_time);
     std::cout<<std::endl<<"Value sent at "<<std::ctime(&send_time)<<std::endl;
