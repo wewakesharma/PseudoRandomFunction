@@ -23,6 +23,7 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <cassert>
+
 #include "packedMod2.hpp"
 #include "Toeplitz-by-x.hpp"
 #include "data_sender.h"
@@ -34,6 +35,7 @@ using namespace std;
 // #define N_COLS 256
 
 // This test program implements the first phase of the PRF
+
 int main()
 {
     randomWord(1); // use seed=1
@@ -58,11 +60,9 @@ int main()
     x2.randomize();
 
 
+
     // First run, a protocol for K1 times x2
-    topelitz_Party2_1(x2, 0);
-
-    //topelitz_Party2_2(out1_B, x2, 0);
-
+    topelitz_Party1(out1_A, K1, 0);
     /*
     // Second run, a protocol for K2 times x1
     topelitz_Party2_1(x1, 0);
@@ -95,4 +95,3 @@ int main()
         std::cerr << "Boo, mult-by-topelit failed"<<std::endl;
         */
 }
-
