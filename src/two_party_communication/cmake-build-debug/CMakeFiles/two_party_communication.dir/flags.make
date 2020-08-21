@@ -6,5 +6,5 @@ CXX_FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/Ma
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/vivek/Documents/PseudoRandomFunction/src/two_party_communication/comm -I/Users/vivek/Documents/PseudoRandomFunction/src/two_party_communication/include -I/Users/vivek/Documents/PseudoRandomFunction/src/two_party_communication/include/darkmatter 
+CXX_INCLUDES = -I/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/two_party_communication/comm -I/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/two_party_communication/include -I/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/two_party_communication/include/darkmatter 
 

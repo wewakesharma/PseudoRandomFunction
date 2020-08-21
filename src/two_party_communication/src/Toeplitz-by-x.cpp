@@ -173,8 +173,9 @@ void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
     //Instead of sending ma and mb together, we can serialize their transfer
     std::vector<unsigned int> ma_vec;
     mx.toArray(ma_vec);
-    pi_snd(ma_vec,send_socket);
-    std::cout<<std::endl<<"Value of Ma sent to party 1 at "<<std::endl;
+    std::cout<<"in  topelitz_Party1, ma_vec = "<<ma_vec << std::endl;
+    pi_snd(ma_vec,recv_socket);
+
     
     // b is the output of this party
 }
@@ -196,10 +197,14 @@ void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index) {
 #ifdef DEBUG
     cout << "topelitz_Party2_1, mx =  " << mx << ", mx_vec = " << mx_vec << endl;
 #endif
+    std::cout << "in topelitz_Party2_1, sending mx_vec " << mx_vec << std::endl;
     pi_snd(mx_vec,send_socket);
-    std::cout<<std::endl<<"Value of mx sent to party 1"<<std::endl;
-    std::cout<<"Waiting for value of Ma to be sent by party 1"<<std::endl;
-    pi_recv(recv_socket);
+    std::cout << "in topelitz_Party2_1, finished sending " << mx_vec << std::endl;
+    //std::cout<<std::endl<<"Value of mx sent to party 1"<<std::endl;
+    //std::cout<<"Waiting for value of Ma to be sent by party 1"<<std::endl;
+    pi_recv(send_socket);
+
+    std::cout << "in topelitz_Party2_1,  mx_vec= " << mx_vec << std::endl;
     //mx.toArray();
     //snd_mx(mx); // send to party1
 }

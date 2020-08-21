@@ -86,11 +86,13 @@ void pi_recv(int& recv_socket)//receiver uses a socket handle to receive data
 {
 
     char buffer[1500] = {0};
+    std::cout<<" in pi_recv, before reading, buffer= " << buffer << std::endl;
     int valread = read( recv_socket ,buffer, 1500);
+    std::cout<<" in pi_recv, after reading, buffer= " << buffer << std::endl;
     auto curr_time = std::chrono::system_clock::now();
     std::time_t recv_time = std::chrono::system_clock::to_time_t(curr_time);
-    printf("%s\n",buffer );
-    std::cout<<std::endl<<"Received value at "<<std::ctime(&recv_time)<<std::endl;
+    //printf("%s\n",buffer );
+    std::cout<<" in pi_recv, buffer= " << buffer << ", valread=" << valread <<  std::endl;
 
 #ifdef DEBUG
     std::cout << "in pi_recv, recd_vec=" << rec_vec << std::endl;

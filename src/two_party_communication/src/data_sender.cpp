@@ -81,10 +81,11 @@ void pi_snd(std::vector<unsigned int>& snd_vec, int& send_sock)
     //convert string to char
     strcpy(msg, oss.str().c_str());
 
+    std::cout<<std::endl<<"in pi_snd , msg = " << msg <<std::endl;
+
     send(send_sock , msg , strlen(msg) , 0 );
     auto curr_time = std::chrono::system_clock::now();
     std::time_t send_time = std::chrono::system_clock::to_time_t(curr_time);
-    std::cout<<std::endl<<"Value sent at "<<std::ctime(&send_time)<<std::endl;
 
 #ifdef DEBUG
     cout << "in pi_snd, snd_vec= " << snd_vec << endl;
