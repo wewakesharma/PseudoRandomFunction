@@ -61,7 +61,7 @@ int main()
     // First run, a protocol for K1 times x2
     topelitz_Party2_1(x2, 0);
 
-    topelitz_Party2_2(out1_B, x2, 0);
+    //topelitz_Party2_2(out1_B, x2, 0);
 
     /*
     // Second run, a protocol for K2 times x1

@@ -22,6 +22,7 @@
 #include <sys/uio.h>
 #include <sys/time.h>
 #include <sys/wait.h>
+#include <unistd.h>
 //#include "mains.hpp"
 
 
@@ -173,6 +174,10 @@ void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
     //Instead of sending ma and mb together, we can serialize their transfer
     std::vector<unsigned int> ma_vec;
     mx.toArray(ma_vec);
+
+    //wait for certain time before sending 5 sec = 5000ms
+    usleep(5000000);
+
     pi_snd(ma_vec,send_socket);
     std::cout<<std::endl<<"Value of Ma sent to party 1 at "<<std::endl;
     

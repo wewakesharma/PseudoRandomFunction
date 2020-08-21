@@ -31,6 +31,7 @@
 #include "data_receiver.h"
 
 #define PORT 8080
+char buffer[1500];
 
 //using namespace std;
 //create a function that initializes the receiver communication: will be called just once by party 1
@@ -85,12 +86,13 @@ void init_party1_communication(int& recv_sock)
 void pi_recv(int& recv_socket)//receiver uses a socket handle to receive data
 {
 
-    char buffer[1500] = {0};
+
     int valread = read( recv_socket ,buffer, 1500);
-    auto curr_time = std::chrono::system_clock::now();
+    /*auto curr_time = std::chrono::system_clock::now();
     std::time_t recv_time = std::chrono::system_clock::to_time_t(curr_time);
+
+    std::cout<<std::endl<<"Received value at "<<std::ctime(&recv_time)<<std::endl;*/
     printf("%s\n",buffer );
-    std::cout<<std::endl<<"Received value at "<<std::ctime(&recv_time)<<std::endl;
 
 #ifdef DEBUG
     std::cout << "in pi_recv, recd_vec=" << rec_vec << std::endl;
