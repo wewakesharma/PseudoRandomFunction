@@ -80,7 +80,7 @@ int main()
     else
         std::cerr << "Boo, mult-by-topelit failed"<<std::endl;
 
-    display_AXPLUSB_runtime();
+    display_AXplusB_runtime();
 }
 
 #endif
