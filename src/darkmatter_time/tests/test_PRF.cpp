@@ -37,6 +37,8 @@ int main(int argc,char* argv[] )  {
     //FOR 1000 RUNS
     nRuns = 1000;
     PRF_DM(ntimes, nRuns, stepsToRun);
+    display_AXplusB_runtime();
+    display_SC_runtime();
     display_Phase3_runtime();
     display_PRF_runtime();
 

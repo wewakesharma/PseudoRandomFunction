@@ -111,11 +111,11 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
     for (int i = 0; i < nRuns; i++) {
 
         PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
-        timerPRF += std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start_seconds).count();
-        //PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); //for packed unit testing of PRF code
+         //PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); //for packed unit testing of PRF code
         //PRF_unpacked_test() /* just a placeholder*/
     }
-    
+
+    timerPRF += std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start_seconds).count();
 
 
 
