@@ -106,6 +106,8 @@ static std::vector< PackedZ2<N_COLS> > rxs;
 //==========================================================================================================
 }*/
 
+//The file has been now shifted to packed_PRF_central
+/*
 void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                           PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
                           PackedZ3<81>& out2Z3, int i)
@@ -144,43 +146,53 @@ void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         cout<<"Test passed";
     else
         cout<<"Test fails";
-
-    // WITH THE LOOP
-    /*
-    std::vector<unsigned int> unsgn_K(toeplitzWords);
-    std::vector<PackedZ2<N_COLS> > K_mat;
-    //Create a packedMatZ2
-    for(int k_ctr = 0; k_ctr < K1.size(); k_ctr++)
-    {
-        //Typecast each element of K1 and K2 into unsgn_k1 and unsgn_k2
-        std::vector<unsigned int> k1plusk2;
-        std::vector<unsigned int> unsgn_k1 = (std::vector<unsigned int>)K1.at(k_ctr);
-        std::vector<unsigned int> unsgn_k2 = (std::vector<unsigned int>)K2.at(k_ctr);
-
-        //convert unsigned int to PackedZ2 using fromArray()
-        PackedZ2<N_COLS> temp_k1, temp_k2, temp_K;
-
-        //create temp_k1 and temp_k2 of PackedZ2 type
-        temp_k1.fromArray(unsgn_k1);
-        temp_k2.fromArray(unsgn_k2);
-
-        //perform K = k1 + k2
-        temp_K.add(temp_k1);
-        temp_K.add(temp_k2);
-
-        //save temp_K to K_mat
-        K_mat.push_back(temp_K);
-
-    }*/
-
-    //Another method of matrix an vector implementation
-    //PackedZ2<N_COLS> K_mat;
-
-
-    //3.perform K*x -> (mod 2)
-    //matByVec(K_mat,X); ==UNCOMMENT THIS PART FOR MULTIPLICATION(DOESN'T WORK)
-    //4.perform randmat * (k*x) -> (mod 3)
 }
+
+void PRF_packed_init(int nTimes,  int nRuns, int nStages)
+{
+    randomWord(1); // use seed=1
+    vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);
+    PackedZ2<N_COLS> x1, x2;
+
+    PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
+
+    initGlobals();  // initialize some global variables
+
+    std::vector<PackedZ3<81> > Rmat(256); // generate a 81x256 matrix
+
+    //randomize the matrix
+    for (auto &col : Rmat) // iterate over the columns
+        col.randomize();
+
+    preProc_Toeplitz_by_x(nRuns * 2); // pre-processing for two runs
+    preProc_OT(nRuns); //preprocess for OT, generate ra, rn, rx, and z
+
+    // Choose random K1, K2, x1, x2, we will be computing
+    // (K1 xor K2) \times (x1 xor x2)
+
+    //TODO: write randomize Toeplitzß
+
+    for (auto &w : K1) w = randomWord();
+    K1[K1.size() - 1] &= topelitzMask; // turn off extra bits at the end
+
+    for (auto &w : K2) w = randomWord();
+    K2[K2.size() - 1] &= topelitzMask; // turn off extra bits at the end
+
+    x1.randomize();
+    x2.randomize();
+
+    PackedZ3<81> out1Z3;                     // 81-vector
+    PackedZ3<81> out2Z3;                     // 81-vector
+
+    auto start = std::chrono::system_clock::now();
+
+    //TODO: write phase 1 function
+    for (int i = 0; i < nRuns; i++) {
+        PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
+    }
+}
+
+*/
 
 
 void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
@@ -272,6 +284,7 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
     }
 
     timerPRF += (chrono::system_clock::now() - start).count();
+
 
 
     /*
