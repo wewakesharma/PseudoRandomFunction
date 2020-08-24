@@ -260,7 +260,6 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
 
     //chrono::time_point<std::chrono::system_clock, std::chrono::seconds> start = chrono::system_clock::now();
     auto start = std::chrono::system_clock::now();
-    auto start_seconds = std::chrono::time_point_cast<std::chrono::seconds>(start);
 
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
@@ -268,13 +267,13 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
 
-        PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
-        timerPRF += std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - start_seconds).count();
-        //PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); //for packed unit testing of PRF code
+       // PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
+        PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); //for packed unit testing of PRF code
         //PRF_unpacked_test() /* just a placeholder*/
     }
-    
 
+//    timerPRF += std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - start_secondsPRF).count();
+    timerPRF += (chrono::system_clock::now() - start).count();
 
 
     /*

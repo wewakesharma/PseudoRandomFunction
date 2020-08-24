@@ -36,9 +36,15 @@ int main(int argc,char* argv[] )  {
 
     //FOR 1000 RUNS
     nRuns = 1000;
+
+
     PRF_DM(ntimes, nRuns, stepsToRun);
     //display_Phase3_runtime();
+    display_AXplusB_runtime();
+    display_SC_runtime();
+    display_Phase3_runtime();
     display_PRF_runtime();
+
 
     //Code for 1M run and timing
     /*chrono::time_point<std::chrono::system_clock, std::chrono::microseconds> start_PRF = chrono::system_clock::now();
@@ -49,6 +55,7 @@ int main(int argc,char* argv[] )  {
     timer_PRF_1M = (std::chrono::system_clock::now() - start_PRF).count();
     std::cout<<std::endl<<"Timing for 1M runs "<<timer_PRF_1M<<endl;*/
 }
+
 
 #endif
 
