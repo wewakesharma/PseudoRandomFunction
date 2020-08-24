@@ -107,7 +107,7 @@ static std::vector< PackedZ2<N_COLS> > rxs;
 }*/
 
 //The file has been now shifted to packed_PRF_central
-/*
+
 void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                           PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
                           PackedZ3<81>& out2Z3, int i)
@@ -148,51 +148,6 @@ void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         cout<<"Test fails";
 }
 
-void PRF_packed_init(int nTimes,  int nRuns, int nStages)
-{
-    randomWord(1); // use seed=1
-    vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);
-    PackedZ2<N_COLS> x1, x2;
-
-    PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
-
-    initGlobals();  // initialize some global variables
-
-    std::vector<PackedZ3<81> > Rmat(256); // generate a 81x256 matrix
-
-    //randomize the matrix
-    for (auto &col : Rmat) // iterate over the columns
-        col.randomize();
-
-    preProc_Toeplitz_by_x(nRuns * 2); // pre-processing for two runs
-    preProc_OT(nRuns); //preprocess for OT, generate ra, rn, rx, and z
-
-    // Choose random K1, K2, x1, x2, we will be computing
-    // (K1 xor K2) \times (x1 xor x2)
-
-    //TODO: write randomize Toeplitzß
-
-    for (auto &w : K1) w = randomWord();
-    K1[K1.size() - 1] &= topelitzMask; // turn off extra bits at the end
-
-    for (auto &w : K2) w = randomWord();
-    K2[K2.size() - 1] &= topelitzMask; // turn off extra bits at the end
-
-    x1.randomize();
-    x2.randomize();
-
-    PackedZ3<81> out1Z3;                     // 81-vector
-    PackedZ3<81> out2Z3;                     // 81-vector
-
-    auto start = std::chrono::system_clock::now();
-
-    //TODO: write phase 1 function
-    for (int i = 0; i < nRuns; i++) {
-        PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
-    }
-}
-
-*/
 
 
 void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
@@ -279,7 +234,7 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
     for (int i = 0; i < nRuns; i++) {
 
         PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
-      //  PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
+        //PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
         //PRF_unpacked_test() /* just a placeholder*/
     }
 

@@ -62,12 +62,6 @@ void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vecto
     PackedZ3<81>out_12_Z3 = out1Z3;
     out_12_Z3.add(out2Z3);//merged output from parameters
 
-    /*
-    if(out_12_Z3 == outZ3)
-        cout<<"Test passed";
-    else
-        cout<<"Test fails";
-        */
 }
 
 void PRF_packed(int nTimes,  int nRuns, int nStages)
