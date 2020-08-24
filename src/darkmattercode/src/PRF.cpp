@@ -8,8 +8,8 @@
 #include "Toeplitz-by-x.hpp"
 #include "OT.hpp"
 #include "mains.hpp"
-#include "Timing.hpp"
 #include <typeinfo>//to determine the type of variables
+#include "Timing.hpp"
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
@@ -17,13 +17,13 @@
 
 using namespace std;
 
+long timerPRF = 0;
+long timer_phase3 = 0;
+
 // A place to store the results from pre-processing
 static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
-
-long timerPRF = 0;
-long timer_phase3 = 0;
 
 /*void PRF_unpacked_test()
 {
@@ -216,12 +216,12 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         SC_Party1(y1, out1, i);
         SC_Party2_2(y2, out2, i);
 
-    chrono::time_point<std::chrono::system_clock, std::chrono::microseconds> start = chrono::system_clock::now();
+    auto start = chrono::system_clock::now();
+
     out1Z3.matByVec(Rmat, out1); // compute matrix-by-vector multiply
     out2Z3.matByVec(Rmat, out2); // compute matrix-by-vector multiply
 
     timer_phase3 += (std::chrono::system_clock::now() - start).count();
-
 }
 
 
@@ -258,21 +258,19 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
     x1.randomize();
     x2.randomize();
 
-    //chrono::time_point<std::chrono::system_clock, std::chrono::seconds> start = chrono::system_clock::now();
-    auto start = std::chrono::system_clock::now();
-
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
+
+    auto start = std::chrono::system_clock::now();
 
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
 
-       // PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
-        PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); //for packed unit testing of PRF code
+        PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
+        PRF_packed_unit_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
         //PRF_unpacked_test() /* just a placeholder*/
     }
 
-//    timerPRF += std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - start_secondsPRF).count();
     timerPRF += (chrono::system_clock::now() - start).count();
 
 
@@ -346,15 +344,5 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
 
     cout << endl << "elapsed time for Phase3  phase:  " << elapsed_seconds_P3.count() << "  s\n";
 */
-}
-
-void display_Phase3_runtime()
-{
-    std::cout<<std::endl<<"Phase 3(Randomization) execution time "<< timer_phase3 <<std::endl;
-}
-
-void display_PRF_runtime()
-{
-    std::cout<<std::endl<<"PRF execution time "<< timerPRF <<std::endl;
 }
 

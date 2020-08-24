@@ -79,8 +79,6 @@ int main()
         std::cerr << "Yay, mult-by-topelit succeeded"<<std::endl;
     else
         std::cerr << "Boo, mult-by-topelit failed"<<std::endl;
-
-    display_AXplusB_runtime();
 }
 
 #endif

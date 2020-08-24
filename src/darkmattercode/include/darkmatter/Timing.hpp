@@ -12,8 +12,7 @@ extern long timerOTP1;
 extern long timerOTP2;
 extern long timerSCP1;
 extern long timerSCP2;
-extern long timerPhs3P1;
-extern long timerPhs3P2;
+extern long timer_phase3;
 extern long timerPRF;
 
 

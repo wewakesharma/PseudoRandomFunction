@@ -11,7 +11,6 @@
 
 using namespace std;
 
-
 #ifdef OT_TEST
 // This test program implements the first phase of the PRF
 int main()
@@ -86,7 +85,7 @@ int main()
         bTestPassed = true;
 
     cout << "SC test result = " << bTestPassed << endl;
-    display_SC_runtime();
+
     // Check the result
 }
 
