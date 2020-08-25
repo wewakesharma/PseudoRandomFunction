@@ -114,9 +114,9 @@ void PRF_packed(int nTimes,  int nRuns, int nStages)
 
 void display_time_p1(int nRuns)
 {
-    std::cout<<std::endl<<"Time in ms for first phase:"<<timer_packed_cent_p1<< ", for #" << nRuns <<  nRuns std::endl;
+    std::cout<<std::endl<<"Time in ms for "<<nRuns << " runs = " << timer_packed_cent_p1<<  std::endl;
 }
 void display_time_p3(int nRuns)
 {
-    std::cout<<"Time in ms for for third phase:"<<timer_packed_cent_p3<<", for #" << nRuns << std::endl;
+    std::cout<<"Time in ms for "<<nRuns << " runs = " <<timer_packed_cent_p3 << std::endl;
 }
