@@ -49,11 +49,14 @@ void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vecto
 
     PackedZ3<256> outKX_Z3;//packed Z3
 
-    std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
-    outKX.toArray(outKX_unsgn);
+ //   std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
+ //   outKX.toArray(outKX_unsgn);
+
+    PackedZ2<N_SIZE> hi; //will be initialized to 0
 
     PackedZ3<81> outZ3;//final Z3 output
-    outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
+    outZ3.makeFromBits(hi.bits, outKX.bits);
+ //   outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
 
     auto start_p3 = chrono::system_clock::now();
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
