@@ -34,9 +34,7 @@ int main(int argc,char* argv[] )  {
     //nRuns = 1000;
 
     PRF_packed(ntimes, nRuns, stepsToRun);
-    display_time_p1(nRuns);
-    display_time_p3(nRuns);
-
+    display_times(nRuns);
 }
 #endif
 

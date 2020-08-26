@@ -15,6 +15,5 @@ void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vecto
                           PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
                           PackedZ3<81>& out2Z3, int i);
 void PRF_packed(int nTimes,  int nRuns, int nStages);
-void display_time_p1(int nRuns);
-void display_time_p3(int nRuns);
+void display_times(int nRuns);
 #endif //DARKMATTERCODE_PACKED_PRF_CENTRAL_H

@@ -251,10 +251,6 @@ public:
             this->second.bits[wIdx] = (l1 | l2 ) ^ T;
             this->first.bits[wIdx] = (m1 | m2 ) ^ T;
 
-/*            uint64_t z1 = (~m1)&(~l1); // this==0
-            uint64_t z2 = (~m2)&(~l2); // other==0
-            this->first.bits[wIdx] = (m1&m2) | (l1&z2) | (z1&l2);
-            this->second.bits[wIdx] = (l1&l2) | (m1&z2) | (z1&m2);*/
         }
     }
     PackedZ3& operator+=(const PackedZ3& other) {

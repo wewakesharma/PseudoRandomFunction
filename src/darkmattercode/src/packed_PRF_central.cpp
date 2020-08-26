@@ -18,6 +18,7 @@ using namespace std;
 long timer_PRF_packed = 0;
 long timer_packed_cent_p1 = 0;
 long timer_packed_cent_p3 = 0;
+long timer_packed_cent_p2 = 0;
 
 // A place to store the results from pre-processing
 static std::vector< std::vector<uint64_t> > rAs;
@@ -53,10 +54,11 @@ void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vecto
  //   outKX.toArray(outKX_unsgn);
 
     PackedZ2<N_SIZE> hi; //will be initialized to 0
-
+    auto start_p2 = chrono::system_clock::now();
 
     outKX_Z3.makeFromBits(hi.bits, outKX.bits);
  //   outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
+    timer_packed_cent_p2 += (std::chrono::system_clock::now() - start_p2).count();
 
     PackedZ3<81> outZ3;//final Z3 output
     auto start_p3 = chrono::system_clock::now();
@@ -112,11 +114,10 @@ void PRF_packed(int nTimes,  int nRuns, int nStages)
     }
 }
 
-void display_time_p1(int nRuns)
+
+void display_times(int nRuns)
 {
-    std::cout<<std::endl<<"Time in ms for "<<nRuns << " runs = " << timer_packed_cent_p1<<  std::endl;
-}
-void display_time_p3(int nRuns)
-{
-    std::cout<<"Time in ms for "<<nRuns << " runs = " <<timer_packed_cent_p3 << std::endl;
+    std::cout<<"Time in ms for p1, "<<nRuns << " runs = " << timer_packed_cent_p1<<  std::endl;
+    std::cout<<"Time in ms for p2, "<<nRuns << " runs = " << timer_packed_cent_p2<<  std::endl;
+    std::cout<<"Time in ms for p3,  "<<nRuns << " runs = " <<timer_packed_cent_p3 << std::endl;
 }

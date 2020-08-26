@@ -175,6 +175,8 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         out2_B.toeplitzByVec(K2, x2); // K2 times x2
         out1_B.add(out2_B);           // sum of all terms
 
+        //end of phase 1
+
         PackedZ2<N_SIZE>& y1 = out1_A;
         PackedZ2<N_SIZE>& y2 = out1_B;
         PackedZ3<N_SIZE> out1, out2;
@@ -182,6 +184,8 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         SC_Party2_1(y2, i);
         SC_Party1(y1, out1, i);
         SC_Party2_2(y2, out2, i);
+
+        //end of phase 2
 
     auto start = chrono::system_clock::now();
 
