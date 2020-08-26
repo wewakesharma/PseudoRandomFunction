@@ -31,11 +31,14 @@ int main(int argc,char* argv[] )  {
         stepsToRun = 3;
 
     int ntimes = 1;
-    //nRuns = 1000; //Enable this line for 1000 runs
+    //nRuns = 1000;
+
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
 
     PRF_packed(ntimes, nRuns, stepsToRun);
-    display_time_packed(nRuns);
-
+    display_times(nRuns);
 }
 #endif
 

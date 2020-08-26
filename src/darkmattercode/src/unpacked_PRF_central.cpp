@@ -158,7 +158,6 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
 
-    auto start = std::chrono::system_clock::now();
 
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {

@@ -251,10 +251,6 @@ public:
             this->second.bits[wIdx] = (l1 | l2 ) ^ T;
             this->first.bits[wIdx] = (m1 | m2 ) ^ T;
 
-/*            uint64_t z1 = (~m1)&(~l1); // this==0
-            uint64_t z2 = (~m2)&(~l2); // other==0
-            this->first.bits[wIdx] = (m1&m2) | (l1&z2) | (z1&l2);
-            this->second.bits[wIdx] = (l1&l2) | (m1&z2) | (z1&m2);*/
         }
     }
     PackedZ3& operator+=(const PackedZ3& other) {
@@ -343,7 +339,9 @@ public:
             msb = -msb;                  // all-0 or all-1
 
             // multiply the column by (msb,lsb)
+
             PackedZ3 col = mat[cIdx]; // a local copy
+
             for (int wIdx=0; wIdx<nWords; wIdx++) {
                 uint64_t tmp = (col.first.bits[wIdx] & lsb)
                                ^ (col.second.bits[wIdx] & msb);
@@ -351,7 +349,9 @@ public:
                                  ^ (col.second.bits[wIdx] & lsb);
                 col.first.bits[wIdx] = tmp;
             }
-            *this += col;
+
+           *this += col;
+
         }
     }
 

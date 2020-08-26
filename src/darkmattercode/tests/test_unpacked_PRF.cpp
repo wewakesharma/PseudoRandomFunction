@@ -31,7 +31,7 @@ int main(int argc,char* argv[] )  {
         stepsToRun = 3;
 
     int ntimes = 1;
-    //nRuns = 1000; //Enable this line for 1000 runs
+    nRuns = 1000; //Enable this line for 1000 runs
 
     PRF_unpacked_driver(ntimes, nRuns, stepsToRun); //driver program does the preprocessing and called unpacked function
     display_time_unpacked(nRuns);

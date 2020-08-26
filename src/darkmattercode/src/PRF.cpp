@@ -25,86 +25,7 @@ static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
-/*void PRF_unpacked_test()
-{
-    //===========================================================================================================
 
-    //Printing out the values of K1, x1, K2, x2, Rmat, out1Z3 and out2Z3
-    //X = x1 + x2
-    std::vector<uint64_t> x(N_COLS);
-    cout << endl << "Printing the values of x" << endl;
-    for (int i = 0; i < x2.size(); i++) {
-        x.at(i) = ((x1.at(i) + x2.at(i)) % 2);
-        cout << x.at(i);
-    }
-    //unpack them x1_unpack and x2_unpack
-    // merge it into x = x1 + x2 mod 2
-    //store it in x_unpack
-
-
-    //Print K1 and K2, merge it into K = K1 ^ K2
-    //vector<uint64_t> K(toeplitzWords);//Stores value of K = K1 ^ K2
-    //cout<<endl<<"Size of k1 and k2 is "<<K1.size()<<"\t"<<K2.size()<<endl;
-    //cout<<endl<<"Printing the values of K1"<<endl;
-    std::vector<uint64_t> K1_toeplitz_vec(N_COLS * 2 - 1);
-    std::vector<uint64_t> K2_toeplitz_vec(N_COLS * 2 - 1);
-    uint64_t K1_toep_mat[256][256];
-    uint64_t K2_toep_mat[256][256];
-    uint64_t K_toep_mat[256][256];
-
-    for (int word_count = 0; word_count < toeplitzWords; word_count++) {
-        for (int bit_count = 0; bit_count < 64; bit_count++) {
-            K1_toeplitz_vec[64 * word_count + bit_count] = (K1[word_count] >> bit_count) & 1;
-            K2_toeplitz_vec[64 * word_count + bit_count] = (K2[word_count] >> bit_count) & 1;
-        }
-    }
-    cout << endl << "Value of toeplitz vector is " << endl;
-    for (int i = 0; i < 512; i++) {
-        cout << K1_toeplitz_vec[i];
-    }
-    cout << "Hello";
-
-    //generate toeplitz matrix
-    int len = 256;
-    int append = len;
-    int base = len;
-    int k = 0;
-    //Filling up the top part of toeplitz matrix
-    for (int i = 0; i < len; i++) {//Filling up the upper triangular matrix
-        int k = 0;
-        for (int j = i; j < len; j++) {
-            K1_toep_mat[i][j] = K1_toeplitz_vec[k];
-            K2_toep_mat[i][j] = K2_toeplitz_vec[k];
-            k++;
-        }
-
-        //Filling lower triangular part of toeplitz key K1 and K2
-        for (int j = 0; j < i + 1; j++) {
-            K1_toep_mat[i + 1][j] = K1_toeplitz_vec[(base - j)];
-            K2_toep_mat[i + 1][j] = K2_toeplitz_vec[(base - j)];
-        }
-        base++;
-    }
-
-    cout << endl << "The key is " << endl;
-    //Adding up K1 and k2
-    for (int i = 0; i < 256; i++) {
-        for (int j = 0; j < 256; j++) {
-            K_toep_mat[i][j] = K1_toep_mat[i][j] + K2_toep_mat[i][j];
-            cout << K_toep_mat[i][j];
-        }
-        cout << endl;
-    }
-
-
-    //1. Naive Unit Test
-    //a. Naive computation of [rmat * ((K * X) mod 2)]mod 3
-    //b. Naive computation of out1 + out2 in Z3
-    //c. Compare the output in Z3
-    //2. PRF Unit Test
-    //a. Compare the output of Naive computation with the packed version.
-//==========================================================================================================
-}*/
 
 //The file has been now shifted to packed_PRF_central
 
@@ -165,15 +86,26 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         topelitz_Party1(out2_B, K2, 2*i+1);
         topelitz_Party2_2(out2_A, x1, 2*i+1);
 
+        chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
+
         // Party1 computes locally K1 times x1, and adds to out1_A,out2_A
         out1_A.add(out2_A);           // out1 ^= out2
         out2_A.toeplitzByVec(K1, x1); // K1 times x1
         out1_A.add(out2_A);           // sum of all terms
 
+        timerAxpBP1 += (chrono::system_clock::now() - start).count();
+
+
+        start = chrono::system_clock::now();
+
         // Party2 computes locally K2 times x2, and adds to out1_B,out2_N
         out1_B.add(out2_B);           // out1 ^= out2
         out2_B.toeplitzByVec(K2, x2); // K2 times x2
         out1_B.add(out2_B);           // sum of all terms
+
+        timerAxpBP2 += (chrono::system_clock::now() - start).count();
+
+        //end of phase 1
 
         PackedZ2<N_SIZE>& y1 = out1_A;
         PackedZ2<N_SIZE>& y2 = out1_B;
@@ -183,7 +115,9 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         SC_Party1(y1, out1, i);
         SC_Party2_2(y2, out2, i);
 
-    auto start = chrono::system_clock::now();
+        //end of phase 2
+
+    start = chrono::system_clock::now();
 
     out1Z3.matByVec(Rmat, out1); // compute matrix-by-vector multiply
     out2Z3.matByVec(Rmat, out2); // compute matrix-by-vector multiply
