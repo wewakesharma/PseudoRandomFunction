@@ -33,6 +33,10 @@ int main(int argc,char* argv[] )  {
     int ntimes = 1;
     //nRuns = 1000;
 
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+
     PRF_packed(ntimes, nRuns, stepsToRun);
     display_times(nRuns);
 }
