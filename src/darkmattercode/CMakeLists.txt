@@ -15,14 +15,17 @@ add_executable(darkmattercode
         include/darkmatter/PRF.hpp
         include/darkmatter/Timing.hpp
         include/darkmatter/Toeplitz-by-x.hpp
+        include/darkmatter/unpacked_PRF_central.h
         include/darkmatter/utils.hpp
         src/OT.cpp
         src/packed_PRF_central.cpp
         src/PRF.cpp
         src/Toeplitz-by-x.cpp
+        src/unpacked_PRF_central.cpp
         tests/test_OT.cpp
         tests/test_Packed_PRF.cpp
         tests/test_packedMod2.cpp
         tests/test_packedMod3.cpp
         tests/test_PRF.cpp
-        tests/test_Toeplitz-by-x.cpp src/unpacked_PRF_central.cpp include/darkmatter/unpacked_PRF_central.h tests/test_unpacked_PRF.cpp)
+        tests/test_Toeplitz-by-x.cpp
+        tests/test_unpacked_PRF.cpp)

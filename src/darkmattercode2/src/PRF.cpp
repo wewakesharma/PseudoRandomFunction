@@ -165,15 +165,24 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         topelitz_Party1(out2_B, K2, 2*i+1);
         topelitz_Party2_2(out2_A, x1, 2*i+1);
 
+        chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
+
         // Party1 computes locally K1 times x1, and adds to out1_A,out2_A
         out1_A.add(out2_A);           // out1 ^= out2
         out2_A.toeplitzByVec(K1, x1); // K1 times x1
         out1_A.add(out2_A);           // sum of all terms
 
+        timerAxpBP1 += (chrono::system_clock::now() - start).count();
+
+
+        start = chrono::system_clock::now();
+
         // Party2 computes locally K2 times x2, and adds to out1_B,out2_N
         out1_B.add(out2_B);           // out1 ^= out2
         out2_B.toeplitzByVec(K2, x2); // K2 times x2
         out1_B.add(out2_B);           // sum of all terms
+
+        timerAxpBP2 += (chrono::system_clock::now() - start).count();
 
         //end of phase 1
 
@@ -187,7 +196,7 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 
         //end of phase 2
 
-    auto start = chrono::system_clock::now();
+    start = chrono::system_clock::now();
 
     out1Z3.matByVec(Rmat, out1); // compute matrix-by-vector multiply
     out2Z3.matByVec(Rmat, out2); // compute matrix-by-vector multiply
