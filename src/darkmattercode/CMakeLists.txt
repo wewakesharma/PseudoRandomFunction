@@ -25,4 +25,4 @@ add_executable(darkmattercode
         tests/test_packedMod2.cpp
         tests/test_packedMod3.cpp
         tests/test_PRF.cpp
-        tests/test_Toeplitz-by-x.cpp)
+        tests/test_Toeplitz-by-x.cpp src/unpacked_PRF_central.cpp include/darkmatter/unpacked_PRF_central.h tests/test_unpacked_PRF.cpp)

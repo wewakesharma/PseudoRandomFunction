@@ -1,5 +1,5 @@
 //
-// Created by Vivek Sharma on 8/24/20.
+// Created by Vivek Sharma on 8/25/20.
 //
 
 #include <iostream>
@@ -8,13 +8,13 @@
 #include "packedMod3.hpp"
 #include "mains.hpp"
 //#include "PRF.hpp"
-#include "packed_PRF_central.h"
+#include "unpacked_PRF_central.h"
 #include "OT.hpp"
 #include "Timing.hpp"
 
 using namespace std;
 
-#ifdef PACKED_PRF_CENTRAL
+#ifdef UNPACKED_PRF_CENTRAL
 
 int main(int argc,char* argv[] )  {
     int stepsToRun, nRuns;
@@ -33,9 +33,8 @@ int main(int argc,char* argv[] )  {
     int ntimes = 1;
     //nRuns = 1000; //Enable this line for 1000 runs
 
-    PRF_packed(ntimes, nRuns, stepsToRun);
-    display_time_packed(nRuns);
+    PRF_unpacked_driver(ntimes, nRuns, stepsToRun); //driver program does the preprocessing and called unpacked function
+    display_time_unpacked(nRuns);
 
 }
 #endif
-

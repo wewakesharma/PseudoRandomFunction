@@ -17,6 +17,7 @@ using namespace std;
 
 long timer_PRF_packed = 0;
 long timer_packed_cent_p1 = 0;
+long timer_packed_cent_p2 = 0;
 long timer_packed_cent_p3 = 0;
 
 // A place to store the results from pre-processing
@@ -24,7 +25,7 @@ static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
-void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
+void PRF_packed_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                           PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
                           PackedZ3<81>& out2Z3, int i)
 {
@@ -55,7 +56,9 @@ void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vecto
     PackedZ2<N_SIZE> hi; //will be initialized to 0
 
 
+    auto start_p2 = chrono::system_clock::now();
     outKX_Z3.makeFromBits(hi.bits, outKX.bits);
+    timer_packed_cent_p2 += (std::chrono::system_clock::now() - start_p1).count();
  //   outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
 
     PackedZ3<81> outZ3;//final Z3 output
@@ -108,15 +111,13 @@ void PRF_packed(int nTimes,  int nRuns, int nStages)
 
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
-        PRF_packed_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
+        PRF_packed_central(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
     }
 }
 
-void display_time_p1(int nRuns)
+void display_time_packed(int nRuns)
 {
-    std::cout<<std::endl<<"Time in ms for "<<nRuns << " runs = " << timer_packed_cent_p1<<  std::endl;
-}
-void display_time_p3(int nRuns)
-{
-    std::cout<<"Time in ms for "<<nRuns << " runs = " <<timer_packed_cent_p3 << std::endl;
+    std::cout<<std::endl<<"Time to execute phase 1 in ms for "<<nRuns << " runs = " << timer_packed_cent_p1<<  std::endl;
+    std::cout<<"Time to execute phase 2 in ms for "<<nRuns << " runs = " <<timer_packed_cent_p2 << std::endl;
+    std::cout<<"Time to execute phase 3 in ms for "<<nRuns << " runs = " <<timer_packed_cent_p3 << std::endl;
 }

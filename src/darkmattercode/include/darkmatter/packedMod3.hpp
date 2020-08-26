@@ -343,10 +343,7 @@ public:
             msb = -msb;                  // all-0 or all-1
 
             // multiply the column by (msb,lsb)
-
-
             PackedZ3 col = mat[cIdx]; // a local copy
-
             for (int wIdx=0; wIdx<nWords; wIdx++) {
                 uint64_t tmp = (col.first.bits[wIdx] & lsb)
                                ^ (col.second.bits[wIdx] & msb);
@@ -354,9 +351,7 @@ public:
                                  ^ (col.second.bits[wIdx] & lsb);
                 col.first.bits[wIdx] = tmp;
             }
-
-           *this += col;
-
+            *this += col;
         }
     }
 
