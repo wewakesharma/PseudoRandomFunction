@@ -340,7 +340,6 @@ public:
 
             // multiply the column by (msb,lsb)
 
-
             PackedZ3 col = mat[cIdx]; // a local copy
 
             for (int wIdx=0; wIdx<nWords; wIdx++) {
