@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
-project(darkmattercode2)
+project(darkmattercode)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include)
 include_directories(include/darkmatter)
 
-add_executable(darkmattercode2
+add_executable(darkmattercode
         include/darkmatter/mains.hpp
         include/darkmatter/OT.hpp
         include/darkmatter/packed_PRF_central.h
