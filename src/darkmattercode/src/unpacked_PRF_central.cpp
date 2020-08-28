@@ -8,6 +8,7 @@
 #include "mains.hpp"
 #include <typeinfo>//to determine the type of variables
 #include "Timing.hpp"
+#include <chrono>
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
