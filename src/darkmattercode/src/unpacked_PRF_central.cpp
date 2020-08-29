@@ -18,7 +18,7 @@ using namespace std;
 
 long timer_PRF_unpacked = 0;
 long timer_unpacked_cent_p1 = 0;
-long timer_unpacked_cent_p2 = 0;
+long timer_unpacked_cent_rand_Z3 = 0;
 long timer_unpacked_cent_p3 = 0;
 
 // A place to store the results from pre-processing
@@ -65,7 +65,7 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
     }
     uint64_t randMat[81][256];
 
-    auto start_p2 = chrono::system_clock::now();
+    auto start_randZ3 = chrono::system_clock::now();
     //3b. Take outKX and multiply it with 81X256 Z3 matrix
     int nColsGenerated;
     int wLen = 64;
@@ -93,7 +93,7 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         }
     rows++;
     }
-    timer_unpacked_cent_p2 += (std::chrono::system_clock::now() - start_p2).count();
+    timer_unpacked_cent_rand_Z3 += (std::chrono::system_clock::now() - start_randZ3).count();
 
     //4.Multiply KtimesX with K_unpack
 
@@ -169,6 +169,6 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
 void display_time_unpacked(int nRuns)
 {
     std::cout<<std::endl<<"Time to execute unpacked phase 1 in ms for "<<nRuns << " runs = " << timer_unpacked_cent_p1<<  std::endl;
-    std::cout<<"Time to generate randomization matrix in ms for "<<nRuns << " runs = " <<timer_unpacked_cent_p2 << std::endl;
+    std::cout<<"Time to generate randomization matrix in ms for "<<nRuns << " runs = " <<timer_unpacked_cent_rand_Z3 << std::endl;
     std::cout<<"Time to execute unpakced phase 3 in ms for "<<nRuns << " runs = " <<timer_unpacked_cent_p3 << std::endl;
 }
