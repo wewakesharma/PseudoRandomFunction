@@ -10,6 +10,7 @@
 #include "PRF.hpp"
 #include "OT.hpp"
 #include "Timing.hpp"
+#include <chrono>
 
 using namespace std;
 
@@ -32,6 +33,10 @@ int main(int argc,char* argv[] )  {
         stepsToRun = 3;
 
     int ntimes = 1;
+
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
 
     PRF_DM(ntimes, nRuns, stepsToRun);
 

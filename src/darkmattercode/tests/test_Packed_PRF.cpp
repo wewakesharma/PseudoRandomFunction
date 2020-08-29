@@ -11,6 +11,7 @@
 #include "packed_PRF_central.h"
 #include "OT.hpp"
 #include "Timing.hpp"
+#include <chrono>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ int main(int argc,char* argv[] )  {
         char *p;
         nRuns = strtol(argv[1], &p, 10);
     } else
-        nRuns=1;
+        nRuns=1000;
 
     if (argc > 2) {
         char *p;
