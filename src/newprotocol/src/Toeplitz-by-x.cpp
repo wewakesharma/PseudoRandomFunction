@@ -27,6 +27,9 @@ static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
+
+static PackedPairZ2<N_SIZE> r0z, r1z;
+
 // A "trusted party implementation" of pre-processing
 void preProc_Toeplitz_by_x(unsigned int nTimes) {
     // allocate space
@@ -49,6 +52,7 @@ void preProc_Toeplitz_by_x(unsigned int nTimes) {
         rzs[i].add(rbs[i]);
     }
 }
+
 
 static std::vector<uint64_t>& get_rA_PP(int index) {
     return rAs.at(index);
