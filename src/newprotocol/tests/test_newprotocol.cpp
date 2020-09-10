@@ -20,7 +20,8 @@ using namespace std;
 int main()
 {
     //call the centralized version of the new protocol
-
+    std::cout<<"test_newprotocol/main.cpp: test_newprotocol"<<std::endl;
+    PRF_new_protocol_central();
     return 0;
 }
 

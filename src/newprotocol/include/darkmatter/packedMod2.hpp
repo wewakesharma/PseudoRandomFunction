@@ -170,6 +170,7 @@ public:
         return tmp;
     }
 
+
     //This method cannot work since bits is a data member of class PackedZ2 and we are passing uint64_t vector
     /*void add_vec(const std::vector<uint64_t>& other){
         for (int wIdx=0; wIdx<nWords; wIdx++)

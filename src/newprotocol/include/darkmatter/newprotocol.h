@@ -2,6 +2,7 @@
 // Created by Vivek Sharma on 9/2/20.
 //
 
+#include <iostream>
 #include "packedMod2.hpp" // defines PackedZ2
 #include "packedMod3.hpp" // defines PackedPairZ2 and PackedZ3
 #include "Toeplitz-by-x.hpp" //defines N_COLS
