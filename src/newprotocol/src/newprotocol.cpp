@@ -26,15 +26,16 @@ std::vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);
 PackedZ2<N_COLS> x1, x2;
 
 //Declaring shares of key and input masks of two parties
-static std::vector< std::vector<uint64_t> > rK1_global, rK2_global, rK_global;
-static std::vector< PackedZ2<N_COLS> > rx1_global, rx2_global, rx_global;
-static std::vector< PackedZ2<N_COLS> >  sw1_global, sw2_global, sw_global, rw_global;
+std::vector<uint64_t> rK1_global(toeplitzWords), rK2_global(toeplitzWords), rK_global(toeplitzWords);
+PackedZ2<N_COLS> rx1_global, rx2_global, rx_global;
+PackedZ2<N_COLS> sw1_global, sw2_global, sw_global;
+PackedZ2<N_COLS> rw1_global, rw2_global, rw_global;
 
 //declare a variable in Z3 called r0z and r1z
-static std::vector< PackedPairZ2<N_SIZE> > r0z, r1z;
+PackedPairZ2<N_SIZE>r0z, r1z;
 
-static std::vector<PackedZ2<N_COLS>> x1_mask, x2_mask;
-static std::vector< std::vector<uint64_t> > K1_mask, K2_mask;
+PackedZ2<N_COLS> x1_mask, x2_mask,x_mask;
+std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toeplitzWords);
 
 
 
@@ -45,61 +46,74 @@ static std::vector< std::vector<uint64_t> > K1_mask, K2_mask;
 void preProc_mod2_dm2020(unsigned int nTimes)
 {
     std::cout<<"newprotocol.cpp/preProc_mod2_dm_2020:Preprocessing centralized"<<std::endl;
-    rK_global.resize(nTimes, std::vector<uint64_t>(toeplitzWords));//mask for key
-    rx_global.resize(nTimes);//mask for input
-    rw_global.resize(nTimes);
-    sw_global.resize(nTimes);
+    //rK_global.resize(nTimes);//mask for key
+    //rx_global.resize(nTimes);//mask for input
+
+    //resizing the shares
+    //rK1_global.resize(nTimes);
+    //rK2_global.resize(nTimes);
+
 
     //1.generate mod2 random values for rK, rx and sw
     for(unsigned int i=0; i<nTimes; i++)
     {
         //2.generate random rx1, rx2 and rx = rx1 ^ rx2
-        rx1_global[i].randomize(); // random rx[i]'s
-        rx2_global[i].randomize();
-        rx_global[i].add(rx1_global[i]);
-        rx_global[i].add(rx2_global[i]);
+        rx1_global.randomize(); // random rx[i]'s
+        rx2_global.randomize();
+        rx_global = rx1_global; //rx = rx1
+        //rx_global[i].add(rx1_global[i]);
+        rx_global.add(rx2_global); //rx = rx1 ^ rx2
 
-        //3.generate random sw1, sw2 and sw = sw1 ^ sw2
-        sw1_global[i].randomize(); // random sw1[i]
-        sw2_global[i].randomize(); // random sw2[i]
-        sw_global[i].add(sw1_global[i]);
-        sw_global[i].add(sw2_global[i]);
+        //3.generate random rw1, rw2 and rw = rw1 ^ rw2
+        rw1_global.randomize(); // random sw1[i]
+        rw2_global.randomize(); // random sw2[i]
+        rw_global = rw1_global; //rw = rw1
+        //rw_global[i].add(rw1_global[i]); //rw += rw1
+        rw_global.add(rw2_global); //rw += rw2
 
         #ifdef DEBUG
-        std::cout<<"size of rk"<<rK_global[i].size()<<std::endl;
+        std::cout<<"size of rk "<<rK_global.size()<<std::endl;
         #endif
 
         //4.generate rK1, rK2, rK = rK1 ^ rK2
-        for (auto& w : rK1_global[i]) w = randomWord(); //creating 8 random vector for rk1
-        for (auto& w : rK2_global[i]) w = randomWord(); //creating 8 random vector for rk2
-        std::cout<<rK_global[i].size()<<std::endl;
-        for(int j = 0; j <  rK_global[i].size(); j++)
+        for (auto& w : rK1_global) w = randomWord(); //creating 8 random vector for rk1
+        rK1_global[rK1_global.size() - 1] &= topelitzMask;
+
+        for (auto& w : rK2_global) w = randomWord(); //creating 8 random vector for rk2
+        rK2_global[rK2_global.size() - 1] &= topelitzMask;
+
+        for (int i = 0; i < rK_global.size(); i++)
         {
-            rK_global[i][j] = rK1_global[i][j] ^ rK2_global[i][j];  //rk = rk1 ^ rk2
+            rK_global[i] = rK1_global[i] ^ rK2_global[i];   //rk = rk1 ^ rk2
         }
+
+
         //std::cout<<"The size of rx is "<<rx_global.size()<<std::endl;
 
-        //5.Calculate rw = rk_global * rx_global ^ sw_global
-        rw_global[i].toeplitzByVec(rK_global[i],rx_global[i]);
-        rw_global[i] ^= sw_global[i];
+        //5.Calculate sw = rk_global * rx_global ^ rw_global
+        sw1_global.toeplitzByVec(rK1_global,rx1_global);
+        sw1_global ^= rw1_global;
+        sw2_global.toeplitzByVec(rK2_global,rx2_global);
+        sw2_global ^= rw2_global;
+        sw_global = sw1_global;
+        sw_global.add(sw2_global);
 
         //print rw and 1-rw and cast both to mod3
         #ifdef DEBUG
-        std::cout<<rw_global[i]<<std::endl;
+        std::cout<<rw_global<<std::endl;
         #endif
-        for(int z3_count = 0; z3_count < r0z.size(); z3_count++)
+
+        int rw_val,not_rw_val;
+        for(int z3_count = 0; z3_count < N_SIZE; z3_count++)
         {
-            int rw_val = (unsigned int)rw_global[i].at(z3_count);
-            int not_rw_val = 1 - rw_val;
-            r0z[i].first.set(z3_count,0);   //r0z_msb = 0
-            r0z[i].second.set(z3_count, rw_val); //r0z_lsb = rw
-            r1z[i].first.set(z3_count, 0);  //r1z_msb = 0
-            r1z[i].second.set(z3_count, not_rw_val);    //r1z_lsb = rw
+            rw_val = (unsigned int)rw_global.at(z3_count);
+            not_rw_val = 1 - rw_val;
+            r0z.first.set(z3_count,0);   //r0z_msb = 0
+            r0z.second.set(z3_count, rw_val); //r0z_lsb = rw
+            r1z.first.set(z3_count, 0);  //r1z_msb = 0
+            r1z.second.set(z3_count, not_rw_val);    //r1z_lsb = rw
         }
-
     }
-
-
 }
 
 /*
@@ -126,33 +140,27 @@ void PRF_new_protocol_central()
     x1.randomize();
     x2.randomize();
 
-    std::cout.flush();
     std::cout<<"newprotocol.cpp: Preprocessing complete"<<std::endl;
 
     //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
-    for(int n_count =0; n_count < nTimes; n_count++)
+    //Party 1: masking input (x' = x ^ rx)
+    x1_mask = x1;
+    x1_mask.add(rx1_global);
+
+    //Party 1 & 2: masking key K' = K ^ rK
+    for(int word_count=0; word_count < K1.size(); word_count++)
     {
-        //Party 1: masking input (x' = x ^ rx)
-        x1_mask.resize(nTimes);//x1_mask is x1'
-        x1_mask[n_count].add(x1);
-        x1_mask[n_count].add(rx1_global[n_count]);
-
-        //Party 1 & 2: masking key K' = K ^ rK
-        /*for(int word_count=0; word_count < rK_global.size(); word_count++)
-        {
-            K1_mask[n_count][word_count] = K1[n_count][word_count] ^ rK1_global[n_count][word_count];
-            K2_mask[n_count][word_count] = K2[n_count][word_count] ^ rK2_global[n_count][word_count];
-        }*/
-
-        //Party 2: masking input
-        x2_mask.resize(nTimes);//x2_mask is x2'
-        x2_mask[n_count].add(x2);
-        x2_mask[n_count].add(rx2_global[n_count]);
-        
+        K1_mask[word_count] = K1[word_count] ^ rK1_global[word_count];
+        K2_mask[word_count] = K2[word_count] ^ rK2_global[word_count];
     }
 
-    //(rx1_global);
-
+    //Party 2: masking input
+    x2_mask.add(x2);
+    x2_mask.add(rx2_global);
+    #ifdef DEBUG
+        std::cout<<"x1_mask: "<<x1_mask<<std::endl;
+    #endif
 
     //Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
 }
+
