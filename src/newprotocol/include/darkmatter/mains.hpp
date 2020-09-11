@@ -1,7 +1,7 @@
 #ifndef _EXECUTION_HEADER_H_
 #define _EXECUTION_HEADER_H_
 
-//#define DEBUG
+#define DEBUG
 
 
 // Uncomment one and only one
