@@ -27,9 +27,10 @@ PackedZ2<N_COLS> x1, x2;
 
 //Declaring shares of key and input masks of two parties
 std::vector<uint64_t> rK1_global(toeplitzWords), rK2_global(toeplitzWords), rK_global(toeplitzWords);
-PackedZ2<N_COLS> rx1_global, rx2_global, rx_global;
-PackedZ2<N_COLS> sw1_global, sw2_global, sw_global;
-PackedZ2<N_COLS> rw1_global, rw2_global, rw_global;
+PackedZ2<N_COLS> rx1_global, rx2_global, rx_global; //mask for input
+PackedZ2<N_COLS> sw1_global, sw2_global, sw_global; //sw = rK * rx + rw
+PackedZ2<N_COLS> rw1_global, rw2_global, rw_global; //random
+PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
 
 //declare a variable in Z3 called r0z and r1z
 PackedPairZ2<N_SIZE>r0z, r1z;
@@ -45,14 +46,9 @@ std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toe
  */
 void preProc_mod2_dm2020(unsigned int nTimes)
 {
-    std::cout<<"newprotocol.cpp/preProc_mod2_dm_2020:Preprocessing centralized"<<std::endl;
-    //rK_global.resize(nTimes);//mask for key
-    //rx_global.resize(nTimes);//mask for input
-
-    //resizing the shares
-    //rK1_global.resize(nTimes);
-    //rK2_global.resize(nTimes);
-
+    #ifdef DEBUG
+    std::cout<<"newprotocol.cpp/preProc_mod2_dm_2020: Preprocessing begins"<<std::endl;
+    #endif
 
     //1.generate mod2 random values for rK, rx and sw
     for(unsigned int i=0; i<nTimes; i++)
@@ -61,19 +57,13 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         rx1_global.randomize(); // random rx[i]'s
         rx2_global.randomize();
         rx_global = rx1_global; //rx = rx1
-        //rx_global[i].add(rx1_global[i]);
         rx_global.add(rx2_global); //rx = rx1 ^ rx2
 
         //3.generate random rw1, rw2 and rw = rw1 ^ rw2
         rw1_global.randomize(); // random sw1[i]
         rw2_global.randomize(); // random sw2[i]
         rw_global = rw1_global; //rw = rw1
-        //rw_global[i].add(rw1_global[i]); //rw += rw1
         rw_global.add(rw2_global); //rw += rw2
-
-        #ifdef DEBUG
-        std::cout<<"size of rk "<<rK_global.size()<<std::endl;
-        #endif
 
         //4.generate rK1, rK2, rK = rK1 ^ rK2
         for (auto& w : rK1_global) w = randomWord(); //creating 8 random vector for rk1
@@ -87,9 +77,6 @@ void preProc_mod2_dm2020(unsigned int nTimes)
             rK_global[i] = rK1_global[i] ^ rK2_global[i];   //rk = rk1 ^ rk2
         }
 
-
-        //std::cout<<"The size of rx is "<<rx_global.size()<<std::endl;
-
         //5.Calculate sw = rk_global * rx_global ^ rw_global
         sw1_global.toeplitzByVec(rK1_global,rx1_global);
         sw1_global ^= rw1_global;
@@ -98,22 +85,22 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         sw_global = sw1_global;
         sw_global.add(sw2_global);
 
-        //print rw and 1-rw and cast both to mod3
-        #ifdef DEBUG
-        std::cout<<rw_global<<std::endl;
-        #endif
-
-        int rw_val,not_rw_val;
+        //Cast rw and 1-rw  to mod3
+        int sw_val,not_sw_val;
         for(int z3_count = 0; z3_count < N_SIZE; z3_count++)
         {
-            rw_val = (unsigned int)rw_global.at(z3_count);
-            not_rw_val = 1 - rw_val;
+            sw_val = (unsigned int)sw_global.at(z3_count);
+            not_sw_val = 1 - sw_val;
             r0z.first.set(z3_count,0);   //r0z_msb = 0
-            r0z.second.set(z3_count, rw_val); //r0z_lsb = rw
+            r0z.second.set(z3_count, sw_val); //r0z_lsb = rw
             r1z.first.set(z3_count, 0);  //r1z_msb = 0
-            r1z.second.set(z3_count, not_rw_val);    //r1z_lsb = rw
+            r1z.second.set(z3_count, not_sw_val);    //r1z_lsb = rw
         }
     }
+
+    #ifdef DEBUG
+        std::cout<<"newprotocol.cpp/preProc_mod2_dm_2020: Preprocessing ends"<<std::endl;
+    #endif
 }
 
 /*
@@ -122,27 +109,21 @@ void preProc_mod2_dm2020(unsigned int nTimes)
  */
 void PRF_new_protocol_central()
 {
-
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central() start"<<std::endl<<std::flush;
-    //1. Perform preprocessing
     int nTimes = 1;
+    //1. Perform preprocessing
     preProc_mod2_dm2020(nTimes);//it was nRuns * 2 in previous protocol, needs to be changed later
 
-    std::cout<<"newprotocol.cpp/Finished preProc"<<std::endl;
     //2. generate input X and key K
     randomWord(1); // use seed=1
     for (auto &w : K1) w = randomWord();
     K1[K1.size() - 1] &= topelitzMask; // turn off extra bits at the end
-
     for (auto &w : K2) w = randomWord();
     K2[K2.size() - 1] &= topelitzMask; // turn off extra bits at the end
-
     x1.randomize();
     x2.randomize();
 
-    std::cout<<"newprotocol.cpp: Preprocessing complete"<<std::endl;
-
     //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
+
     //Party 1: masking input (x' = x ^ rx)
     x1_mask = x1;
     x1_mask.add(rx1_global);
@@ -154,13 +135,63 @@ void PRF_new_protocol_central()
         K2_mask[word_count] = K2[word_count] ^ rK2_global[word_count];
     }
 
-    //Party 2: masking input
+    //Party 2: masking input (x' = x ^ rx)
     x2_mask.add(x2);
     x2_mask.add(rx2_global);
+
     #ifdef DEBUG
-        std::cout<<"x1_mask: "<<x1_mask<<std::endl;
+        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 1 ends"<<std::endl;
     #endif
 
-    //Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
+    //Round 2: Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
+
+    #ifdef DEBUG
+        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 begins"<<std::endl;
+    #endif
+
+    //Party 1
+    PackedZ2<N_COLS> x_rx1 = x_mask;    //x_rx1 = x_mask - rx1
+    x_rx1 ^= rx1_global;
+
+    PackedZ2<N_COLS> Kx1;   //kx1 = K_mask * x_rx1
+    Kx1.toeplitzByVec(K_mask,x_rx1);
+
+    PackedZ2<N_COLS> x_rK1;//x_rk1 = rK1 * x_mask
+    x_rK1.toeplitzByVec(rK1_global,x_mask);
+
+    w1_mask = Kx1;//w1 = kx1 - rk_x1
+    w1_mask.add(x_rK1); //since add contains ^ operation in packedz2
+    w1_mask.add(sw_global);
+
+    //Party 2
+    PackedZ2<N_COLS> x_rx2 = x_mask;    //x_rx2 = x_mask - rx2
+    x_rx2 ^= rx2_global;
+
+    PackedZ2<N_COLS> Kx2;   //kx2 = K_mask * x_rx2
+    Kx2.toeplitzByVec(K_mask,x_rx2);
+
+    PackedZ2<N_COLS> x_rK2; //x_rk2 = rK2 * x_mask
+    x_rK2.toeplitzByVec(rK2_global,x_mask);
+
+    w2_mask = Kx2; //w2 = kx2 - rk_x2
+    w2_mask.add(x_rK2); //since add contains ^ operation in packedz2
+    w2_mask.add(sw_global);
+
+    w_mask = w1_mask;
+    w_mask.add(w2_mask); //w' = w1 + w2
+
+    #ifdef DEBUG
+        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 ends"<<std::endl;
+    #endif
+
+    //Round 3: Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
+    #ifdef DEBUG
+        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 begins"<<std::endl;
+    #endif
+    PackedZ3<N_SIZE> z1, z2;
+
+    #ifdef DEBUG
+        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
+    #endif
 }
 
