@@ -125,7 +125,7 @@ public:
     //==================
 
     // dump content to an array of ints
-    void toArray(std::vector<unsigned int>& dst) const {
+    void toArray(std::vector<uint64_t>& dst) const {
         dst.resize(SIZE); // set the size
         int i=0;
         for (int wIdx=0; wIdx<nWords; wIdx++) {

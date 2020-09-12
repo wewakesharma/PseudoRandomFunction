@@ -32,8 +32,11 @@ PackedZ2<N_COLS> sw1_global, sw2_global, sw_global; //sw = rK * rx + rw
 PackedZ2<N_COLS> rw1_global, rw2_global, rw_global; //random
 PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
 
+
+
 //declare a variable in Z3 called r0z and r1z
-PackedPairZ2<N_SIZE>r0z, r1z;
+PackedZ3<N_SIZE>r0z, r1z;
+PackedZ3<N_SIZE> r0z1, r0z2, r1z1, r1z2;
 
 PackedZ2<N_COLS> x1_mask, x2_mask,x_mask;
 std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toeplitzWords);
@@ -96,6 +99,17 @@ void preProc_mod2_dm2020(unsigned int nTimes)
             r1z.first.set(z3_count, 0);  //r1z_msb = 0
             r1z.second.set(z3_count, not_sw_val);    //r1z_lsb = rw
         }
+
+        //generate random values for r0z1 and r1z1; share of r0z and r1z for party 1
+        r0z1.randomize();
+        r1z1.randomize();
+
+        //perform xor operation and calculate r0z2 and r1z2; share of r0z and r1z for party 2
+        r0z2 = r0z1;
+        r0z2 ^= r0z;
+
+        r1z2 = r1z1;
+        r1z2 ^= r1z;
     }
 
     #ifdef DEBUG
@@ -188,7 +202,33 @@ void PRF_new_protocol_central()
     #ifdef DEBUG
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 begins"<<std::endl;
     #endif
+
+#ifdef DEBUG
+    std::cout<<"The value of w_mask is "<<w1_mask;
+#endif
+
     PackedZ3<N_SIZE> z1, z2;
+    PackedZ3<N_SIZE> res1, res2, res; //stores the mux result of both the parties
+
+    //convert w_mask from PackedZ2 to vector of uint64_t.
+    std::vector<uint64_t>w_mask_vec;
+    w_mask.toArray(w_mask_vec);
+
+    //PARTY 1: calculates the value of mux(w', r0z1, r1z1)
+    res1 = r0z1; //copy the contents of r0z to res1.
+
+    //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
+    res1.mux(r1z1,w_mask_vec);
+
+    //party 2 calculates the value of mux(w', r0z, r1z)
+    res2 = r1z2;
+
+    //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
+    res2.mux(r1z2,w_mask_vec);
+
+    //compute res =  res1 + res2
+    res = res1;
+    res.add(res2);
 
     #ifdef DEBUG
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
