@@ -31,6 +31,7 @@ PackedZ2<N_COLS> rx1_global, rx2_global, rx_global; //mask for input
 PackedZ2<N_COLS> sw1_global, sw2_global, sw_global; //sw = rK * rx + rw
 PackedZ2<N_COLS> rw1_global, rw2_global, rw_global; //random
 PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
+PackedZ3<81> y1_z3, y2_z3, y_out_z3;
 
 
 
@@ -229,6 +230,20 @@ void PRF_new_protocol_central()
     //compute res =  res1 + res2
     res = res1;
     res.add(res2);
+
+    //generate a 81 X 256 randomization matrix in Z3.
+    std::vector<PackedZ3<81> > Rmat(256);
+    for (auto &col : Rmat) // iterate over the columns
+        col.randomize();
+
+    //party 1 computes y1 =  M * res1
+    y1_z3.matByVec(Rmat, res1);
+    //party computes y2 = M* res2
+    y2_z3.matByVec(Rmat, res2);
+
+    //calculating y = y1 + y2
+    y_out_z3 = y1_z3;
+    y_out_z3.add(y2_z3);
 
     #ifdef DEBUG
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
