@@ -16,7 +16,6 @@
 using namespace std;
 
 #ifdef TEST_NP
-
 int main()
 {
     #ifdef DEBUG
@@ -24,6 +23,19 @@ int main()
     #endif
     //call the centralized version of the new protocol
     PRF_new_protocol_central();
+    return 0;
+}
+#endif
+
+#ifdef TEST_NP_DIST
+
+int main()
+{
+    #ifdef DEBUG
+    std::cout<<"test_newprotocol/main.cpp: Distributed Protocol Execution begins"<<std::endl;
+    #endif
+    //call the centralized version of the new protocol
+    PRF_new_protocol_distributed();
     return 0;
 }
 

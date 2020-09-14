@@ -211,21 +211,26 @@ void PRF_new_protocol_central()
     PackedZ3<N_SIZE> z1, z2;
     PackedZ3<N_SIZE> res1, res2, res; //stores the mux result of both the parties
 
+
     //convert w_mask from PackedZ2 to vector of uint64_t.
     std::vector<uint64_t>w_mask_vec;
-    w_mask.toArray(w_mask_vec);
+    w_mask.toArray_64(w_mask_vec);
+
+#ifdef DEBUG
+    std::cout<<std::endl<<"Here ";
+#endif
 
     //PARTY 1: calculates the value of mux(w', r0z1, r1z1)
     res1 = r0z1; //copy the contents of r0z to res1.
 
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
-    res1.mux(r1z1,w_mask_vec);
+    res1.mux(r1z1, w_mask_vec);
 
     //party 2 calculates the value of mux(w', r0z, r1z)
     res2 = r1z2;
 
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
-    res2.mux(r1z2,w_mask_vec);
+    res2.mux(r1z2, w_mask_vec);
 
     //compute res =  res1 + res2
     res = res1;
@@ -247,6 +252,10 @@ void PRF_new_protocol_central()
 
     #ifdef DEBUG
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
+    #endif
+
+    #ifdef NP_TEST
+        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): NP_TEST is enabled; calling the test function";
     #endif
 }
 

@@ -12,7 +12,11 @@
 //#define TEST_SC
 //#define PACKED_PRF_CENTRAL
 //#define UNPACKED_PRF_CENTRAL
+
 #define TEST_NP
+
+//#define TEST_NP_DIST
+
 
 
 #endif // _EXECUTION_HEADER_H_
