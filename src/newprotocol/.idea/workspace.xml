@@ -79,6 +79,7 @@
       <workItem from="1600105586152" duration="829000" />
       <workItem from="1600106756516" duration="2621000" />
       <workItem from="1600113448623" duration="1083000" />
+      <workItem from="1600119785793" duration="1162000" />
     </task>
     <servers />
   </component>
@@ -86,42 +87,42 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600113563790">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600119845271">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1600113563790" />
-    <state width="1440" height="181" key="GridCell.Tab.0.bottom" timestamp="1600114907034">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1600119845271" />
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom" timestamp="1600120951440">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600114907034" />
-    <state width="1440" height="181" key="GridCell.Tab.0.center" timestamp="1600114907032">
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600120951440" />
+    <state width="1440" height="181" key="GridCell.Tab.0.center" timestamp="1600120951439">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600114907032" />
-    <state width="1440" height="181" key="GridCell.Tab.0.left" timestamp="1600114907031">
+    <state width="1440" height="181" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600120951439" />
+    <state width="1440" height="181" key="GridCell.Tab.0.left" timestamp="1600120951438">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600114907031" />
-    <state width="1440" height="181" key="GridCell.Tab.0.right" timestamp="1600114907033">
+    <state width="1440" height="181" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600120951438" />
+    <state width="1440" height="181" key="GridCell.Tab.0.right" timestamp="1600120951439">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600114907033" />
-    <state width="1398" height="304" key="GridCell.Tab.1.bottom" timestamp="1600108864801">
+    <state width="1440" height="181" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600120951439" />
+    <state width="1440" height="312" key="GridCell.Tab.1.bottom" timestamp="1600120951431">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600108864801" />
-    <state width="1398" height="304" key="GridCell.Tab.1.center" timestamp="1600108864757">
+    <state width="1440" height="312" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600120951431" />
+    <state width="1440" height="312" key="GridCell.Tab.1.center" timestamp="1600120951430">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1600108864757" />
-    <state width="1398" height="304" key="GridCell.Tab.1.left" timestamp="1600108864753">
+    <state width="1440" height="312" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1600120951430" />
+    <state width="1440" height="312" key="GridCell.Tab.1.left" timestamp="1600120951429">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1600108864753" />
-    <state width="1398" height="304" key="GridCell.Tab.1.right" timestamp="1600108864793">
+    <state width="1440" height="312" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1600120951429" />
+    <state width="1440" height="312" key="GridCell.Tab.1.right" timestamp="1600120951431">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1600108864793" />
+    <state width="1440" height="312" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1600120951431" />
     <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1600106749222">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -136,27 +137,27 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>271</line>
+          <line>285</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>269</line>
+          <line>283</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>282</line>
+          <line>296</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>261</line>
+          <line>275</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>257</line>
+          <line>270</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
@@ -165,9 +166,11 @@
       <configuration name="CMakeRunConfiguration">
         <watch expression="test_out_z3.at(test_cnt)" language="ObjectiveC" />
         <watch expression="y_out_z3.at(test_cnt)" language="ObjectiveC" />
+        <watch expression="res2.at(0)" language="ObjectiveC" />
         <watch expression="y_out_z3.at(0)" language="ObjectiveC" />
         <watch expression="other.at(0)" language="ObjectiveC" />
         <watch expression="y2_z3.at(0)" language="ObjectiveC" />
+        <watch expression="y1_z3.at(0)" language="ObjectiveC" />
       </configuration>
     </watches-manager>
   </component>

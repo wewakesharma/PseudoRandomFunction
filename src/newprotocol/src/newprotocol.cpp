@@ -59,13 +59,15 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         rx1_global.randomize(); // random rx[i]'s
         rx2_global.randomize();
         rx_global = rx1_global; //rx = rx1
-        rx_global.add(rx2_global); //rx = rx1 ^ rx2
+        rx_global ^= rx2_global;
+        //rx_global.add(rx2_global); //rx = rx1 ^ rx2
 
         //3.generate random rw1, rw2 and rw = rw1 ^ rw2
         rw1_global.randomize(); // random sw1[i]
         rw2_global.randomize(); // random sw2[i]
         rw_global = rw1_global; //rw = rw1
-        rw_global.add(rw2_global); //rw += rw2
+        rw_global ^= rw2_global;
+        //rw_global.add(rw2_global); //rw += rw2
 
         //4.generate rK1, rK2, rK = rK1 ^ rK2
         for (auto& w : rK1_global) w = randomWord(); //creating 8 random vector for rk1
@@ -85,7 +87,8 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         sw2_global.toeplitzByVec(rK2_global,rx2_global);
         sw2_global ^= rw2_global;
         sw_global = sw1_global;
-        sw_global.add(sw2_global);
+        sw_global ^= sw2_global;
+        //sw_global.add(sw2_global);
 
         //Cast rw and 1-rw  to mod3
         int sw_val,not_sw_val;
@@ -140,7 +143,8 @@ void PRF_new_protocol_central()
     //Party 1: masking input (x' = x ^ rx)
     PackedZ2<N_COLS> x1_mask,x_mask;
     x1_mask = x1;
-    x1_mask.add(rx1_global);
+    x1_mask ^= rx1_global;
+    //x1_mask.add(rx1_global);
 
     //Party 1 & 2: masking key K' = K ^ rK
     std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toeplitzWords);
@@ -153,12 +157,15 @@ void PRF_new_protocol_central()
 
     //Party 2: masking input (x' = x ^ rx)
     PackedZ2<N_COLS> x2_mask;
-    x2_mask.add(x2);
-    x2_mask.add(rx2_global);
+    x2_mask ^= x2;
+    x2_mask ^= rx2_global;
+    //x2_mask.add(x2);
+    //x2_mask.add(rx2_global);
 
     //calculation of x_mask
     x_mask = x1_mask;
-    x_mask.add(x2_mask);
+    x_mask ^= x2_mask;
+    //x_mask.add(x2_mask);
 
     #ifdef DEBUG
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 1 ends"<<std::endl;
@@ -181,8 +188,10 @@ void PRF_new_protocol_central()
     x_rK1.toeplitzByVec(rK1_global,x_mask);
 
     w1_mask = Kx1;//w1 = kx1 - rk_x1
-    w1_mask.add(x_rK1); //since add contains ^ operation in packedz2
-    w1_mask.add(sw_global);
+    w1_mask ^= x_rK1;
+    w1_mask ^= sw_global;
+    //w1_mask.add(x_rK1); //since add contains ^ operation in packedz2
+    //w1_mask.add(sw_global);
 
     //Party 2
     PackedZ2<N_COLS> x_rx2 = x_mask;    //x_rx2 = x_mask - rx2
@@ -195,11 +204,14 @@ void PRF_new_protocol_central()
     x_rK2.toeplitzByVec(rK2_global,x_mask);
 
     w2_mask = Kx2; //w2 = kx2 - rk_x2
-    w2_mask.add(x_rK2); //since add contains ^ operation in packedz2
-    w2_mask.add(sw_global);
+    w2_mask ^= x_rK2;
+    w2_mask ^= sw_global;
+    //w2_mask.add(x_rK2); //since add contains ^ operation in packedz2
+    //w2_mask.add(sw_global);
 
     w_mask = w1_mask;
-    w_mask.add(w2_mask); //w' = w1 + w2
+    w_mask ^= w2_mask;
+    //w_mask.add(w2_mask); //w' = w1 + w2
 
     #ifdef DEBUG
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 ends"<<std::endl;
@@ -243,7 +255,8 @@ void PRF_new_protocol_central()
 
     //compute res =  res1 + res2
     res = res1;
-    res.add(res2);
+    res ^= res2;
+    //res.add(res2);
 
     //generate a 81 X 256 randomization matrix in Z3.
     std::vector<PackedZ3<81> > Rmat(256);
@@ -259,7 +272,8 @@ void PRF_new_protocol_central()
 
     //calculating y = y1 + y2
     y_out_z3 = y1_z3;
-    y_out_z3.add(y2_z3);
+    y_out_z3 ^= y2_z3;
+
 
     #ifdef DEBUG
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
