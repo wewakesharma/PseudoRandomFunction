@@ -169,7 +169,7 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
     for (int i = 0; i < nRuns; i++) {
 
         PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
-        PRF_packed_centralized_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
+    //    PRF_packed_centralized_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
         //PRF_unpacked_test() /* just a placeholder*/
     }
 
