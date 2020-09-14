@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="newprotocol" targetName="newprotocol" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dfa39a2c-4ad6-41c2-9af4-3f90a8d46ce5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Documents/analysis/PRFanalysis.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/analysis/PRFanalysis.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../~$sign Decision for toeplitz filling.docx" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1geP0kjE5EuOsbhMHvsJZDXqFY3" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/include/darkmatter" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="newprotocol" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="newprotocol" TARGET_NAME="newprotocol" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="newprotocol" RUN_TARGET_NAME="newprotocol">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dfa39a2c-4ad6-41c2-9af4-3f90a8d46ce5" name="Default Changelist" comment="" />
+      <created>1598471864006</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598471864006</updated>
+      <workItem from="1598471866051" duration="999000" />
+      <workItem from="1598677380864" duration="1069000" />
+      <workItem from="1599082619667" duration="4756000" />
+      <workItem from="1599316851253" duration="2721000" />
+      <workItem from="1599498939044" duration="3009000" />
+      <workItem from="1599600416378" duration="898000" />
+      <workItem from="1599602096460" duration="11849000" />
+      <workItem from="1599747028591" duration="6295000" />
+      <workItem from="1599768477550" duration="4492000" />
+      <workItem from="1599844078589" duration="7722000" />
+      <workItem from="1599864218368" duration="7985000" />
+      <workItem from="1600007592573" duration="2884000" />
+      <workItem from="1600097761020" duration="116000" />
+      <workItem from="1600105586152" duration="829000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom" timestamp="1600106418453">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600106418453" />
+    <state width="1440" height="181" key="GridCell.Tab.0.center" timestamp="1600106418451">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="181" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600106418451" />
+    <state width="1440" height="181" key="GridCell.Tab.0.left" timestamp="1600106418450">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="181" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600106418450" />
+    <state width="1440" height="181" key="GridCell.Tab.0.right" timestamp="1600106418452">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="181" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600106418452" />
+    <state width="1440" height="312" key="GridCell.Tab.1.bottom" timestamp="1599864153498">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="312" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1599864153498" />
+    <state width="1440" height="312" key="GridCell.Tab.1.center" timestamp="1599864153497">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="312" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1599864153497" />
+    <state width="1440" height="312" key="GridCell.Tab.1.left" timestamp="1599864153496">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="312" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1599864153496" />
+    <state width="1440" height="312" key="GridCell.Tab.1.right" timestamp="1599864153497">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="312" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1599864153497" />
+  </component>
+</project>

@@ -13,6 +13,7 @@
 #include <typeinfo>//to determine the type of variables
 #include "Timing.hpp"
 #include <chrono>
+#include "packed_PRF_central.h"
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
@@ -253,6 +254,30 @@ void PRF_new_protocol_central()
     #ifdef DEBUG
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
     #endif
+    #ifdef DEBUG
+        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Calling PRF unit test function"<<std::endl;
+    #endif
+        PackedZ3<81> test_out1_z3, test_out2_z3;
+        PRF_packed_test(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
+
+    PackedZ3<81>test_out_z3 = test_out1_z3;
+    test_out_z3.add(test_out2_z3);//out = out1 + out2
+
+    //comparing test_out_z3 with y_out_z3
+    bool test_flag = 0;//no problem
+    for(int test_cnt = 0; test_cnt < 81; test_cnt++)
+    {
+        if(test_out_z3.at(test_cnt) != y_out_z3.at(test_cnt))
+        {
+            std::cout<<"The problem is at index "<<test_cnt<<std::endl;
+            test_flag = 1;//some problem
+            break;
+        }
+    }
+    if(test_flag == 0)
+        std::cout<<"Test passed"<<std::endl;
+    else
+        std::cout<<"Test fails"<<std::endl;
 
     #ifdef NP_TEST
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): NP_TEST is enabled; calling the test function";
