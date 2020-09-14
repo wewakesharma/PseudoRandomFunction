@@ -12,7 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfa39a2c-4ad6-41c2-9af4-3f90a8d46ce5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/newprotocol.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/newprotocol.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Documents/analysis/PRFanalysis.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/analysis/PRFanalysis.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../~$sign Decision for toeplitz filling.docx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +78,7 @@
       <workItem from="1600097761020" duration="116000" />
       <workItem from="1600105586152" duration="829000" />
       <workItem from="1600106756516" duration="2621000" />
+      <workItem from="1600113448623" duration="1083000" />
     </task>
     <servers />
   </component>
@@ -84,22 +86,26 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1398" height="304" key="GridCell.Tab.0.bottom" timestamp="1600108864751">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600113563790">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600108864751" />
-    <state width="1398" height="304" key="GridCell.Tab.0.center" timestamp="1600108864723">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1600113563790" />
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom" timestamp="1600114907034">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600108864723" />
-    <state width="1398" height="304" key="GridCell.Tab.0.left" timestamp="1600108864717">
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600114907034" />
+    <state width="1440" height="181" key="GridCell.Tab.0.center" timestamp="1600114907032">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600108864717" />
-    <state width="1398" height="304" key="GridCell.Tab.0.right" timestamp="1600108864724">
+    <state width="1440" height="181" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600114907032" />
+    <state width="1440" height="181" key="GridCell.Tab.0.left" timestamp="1600114907031">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600108864724" />
+    <state width="1440" height="181" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600114907031" />
+    <state width="1440" height="181" key="GridCell.Tab.0.right" timestamp="1600114907033">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="181" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600114907033" />
     <state width="1398" height="304" key="GridCell.Tab.1.bottom" timestamp="1600108864801">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -130,27 +136,27 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>264</line>
+          <line>271</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>262</line>
+          <line>269</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>275</line>
+          <line>282</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>254</line>
+          <line>261</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>250</line>
+          <line>257</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>

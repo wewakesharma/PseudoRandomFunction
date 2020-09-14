@@ -38,8 +38,7 @@ PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
 PackedZ3<N_SIZE>r0z, r1z;
 PackedZ3<N_SIZE> r0z1, r0z2, r1z1, r1z2;
 
-PackedZ2<N_COLS> x1_mask, x2_mask,x_mask;
-std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toeplitzWords);
+
 
 
 
@@ -139,19 +138,27 @@ void PRF_new_protocol_central()
     //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
 
     //Party 1: masking input (x' = x ^ rx)
+    PackedZ2<N_COLS> x1_mask,x_mask;
     x1_mask = x1;
     x1_mask.add(rx1_global);
 
     //Party 1 & 2: masking key K' = K ^ rK
+    std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toeplitzWords);
     for(int word_count=0; word_count < K1.size(); word_count++)
     {
         K1_mask[word_count] = K1[word_count] ^ rK1_global[word_count];
         K2_mask[word_count] = K2[word_count] ^ rK2_global[word_count];
+        K_mask[word_count] = K1_mask[word_count] ^ K2_mask[word_count];
     }
 
     //Party 2: masking input (x' = x ^ rx)
+    PackedZ2<N_COLS> x2_mask;
     x2_mask.add(x2);
     x2_mask.add(rx2_global);
+
+    //calculation of x_mask
+    x_mask = x1_mask;
+    x_mask.add(x2_mask);
 
     #ifdef DEBUG
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 1 ends"<<std::endl;
