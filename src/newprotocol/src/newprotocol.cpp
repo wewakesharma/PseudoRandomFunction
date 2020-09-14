@@ -34,9 +34,6 @@ PackedZ2<N_COLS> sw1_global, sw2_global, sw_global; //sw = rK * rx + rw
 PackedZ2<N_COLS> rw1_global, rw2_global, rw_global; //random
 PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
 
-
-
-
 //declare a variable in Z3 called r0z and r1z
 PackedZ3<N_SIZE>r0z, r1z;
 PackedZ3<N_SIZE> r0z1, r0z2, r1z1, r1z2;
