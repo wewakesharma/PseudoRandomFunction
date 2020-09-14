@@ -14,6 +14,7 @@
 #include "Timing.hpp"
 #include <chrono>
 #include "packed_PRF_central.h"
+#include "PRF.hpp"
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
@@ -32,7 +33,7 @@ PackedZ2<N_COLS> rx1_global, rx2_global, rx_global; //mask for input
 PackedZ2<N_COLS> sw1_global, sw2_global, sw_global; //sw = rK * rx + rw
 PackedZ2<N_COLS> rw1_global, rw2_global, rw_global; //random
 PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
-PackedZ3<81> y1_z3, y2_z3, y_out_z3;
+
 
 
 
@@ -221,6 +222,9 @@ void PRF_new_protocol_central()
     std::cout<<std::endl<<"Here ";
 #endif
 
+    // PackedZ3<N_SIZE>r0z, r1z;
+    //PackedZ3<N_SIZE> r0z1, r0z2, r1z1, r1z2;
+
     //PARTY 1: calculates the value of mux(w', r0z1, r1z1)
     res1 = r0z1; //copy the contents of r0z to res1.
 
@@ -228,7 +232,7 @@ void PRF_new_protocol_central()
     res1.mux(r1z1, w_mask.bits);
 
     //party 2 calculates the value of mux(w', r0z, r1z)
-    res2 = r1z2;
+    res2 = r0z2;
 
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
     res2.mux(r1z2, w_mask.bits);
@@ -241,6 +245,8 @@ void PRF_new_protocol_central()
     std::vector<PackedZ3<81> > Rmat(256);
     for (auto &col : Rmat) // iterate over the columns
         col.randomize();
+
+    PackedZ3<81> y1_z3, y2_z3, y_out_z3;
 
     //party 1 computes y1 =  M * res1
     y1_z3.matByVec(Rmat, res1);
@@ -258,7 +264,8 @@ void PRF_new_protocol_central()
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Calling PRF unit test function"<<std::endl;
     #endif
         PackedZ3<81> test_out1_z3, test_out2_z3;
-        PRF_packed_test(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
+        //PRF_packed_test(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
+        PRF_packed_centralized_test(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
 
     PackedZ3<81>test_out_z3 = test_out1_z3;
     test_out_z3.add(test_out2_z3);//out = out1 + out2
