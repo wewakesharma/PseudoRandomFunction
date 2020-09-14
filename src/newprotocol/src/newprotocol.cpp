@@ -213,8 +213,8 @@ void PRF_new_protocol_central()
 
 
     //convert w_mask from PackedZ2 to vector of uint64_t.
-    std::vector<uint64_t>w_mask_vec;
-    w_mask.toArray_64(w_mask_vec);
+   // std::vector<uint64_t>w_mask_vec(4);
+   // w_mask.toArray_64(w_mask_vec);
 
 #ifdef DEBUG
     std::cout<<std::endl<<"Here ";
@@ -224,13 +224,13 @@ void PRF_new_protocol_central()
     res1 = r0z1; //copy the contents of r0z to res1.
 
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
-    res1.mux(r1z1, w_mask_vec);
+    res1.mux(r1z1, w_mask.bits);
 
     //party 2 calculates the value of mux(w', r0z, r1z)
     res2 = r1z2;
 
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
-    res2.mux(r1z2, w_mask_vec);
+    res2.mux(r1z2, w_mask.bits);
 
     //compute res =  res1 + res2
     res = res1;
