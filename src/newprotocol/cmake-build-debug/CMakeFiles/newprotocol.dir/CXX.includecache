@@ -86,24 +86,6 @@ iterator
 random
 -
 
-/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/PRF.cpp
-cassert
--
-packedMod2.hpp
-/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/packedMod2.hpp
-Toeplitz-by-x.hpp
-/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/Toeplitz-by-x.hpp
-OT.hpp
-/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/OT.hpp
-mains.hpp
-/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/mains.hpp
-typeinfo
--
-Timing.hpp
-/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/Timing.hpp
-chrono
--
-
 /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/newprotocol.cpp
 iostream
 -

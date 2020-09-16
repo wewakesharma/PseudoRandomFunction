@@ -13,6 +13,8 @@
   <component name="ChangeListManager">
     <list default="true" id="dfa39a2c-4ad6-41c2-9af4-3f90a8d46ce5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/PRF.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/newprotocol" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/newprotocol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PRF.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/PRF.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/newprotocol.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/newprotocol.cpp" afterDir="false" />
@@ -84,6 +86,7 @@
       <workItem from="1600113448623" duration="1083000" />
       <workItem from="1600119785793" duration="1162000" />
       <workItem from="1600208511201" duration="5742000" />
+      <workItem from="1600219322534" duration="814000" />
     </task>
     <servers />
   </component>
@@ -91,26 +94,26 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600218506199">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600264063965">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1600218506199" />
-    <state width="1440" height="181" key="GridCell.Tab.0.bottom" timestamp="1600219031142">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1600264063965" />
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom" timestamp="1600264088206">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600219031142" />
-    <state width="1440" height="181" key="GridCell.Tab.0.center" timestamp="1600219031140">
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600264088206" />
+    <state width="1440" height="181" key="GridCell.Tab.0.center" timestamp="1600264088205">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600219031140" />
-    <state width="1440" height="181" key="GridCell.Tab.0.left" timestamp="1600219031139">
+    <state width="1440" height="181" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600264088205" />
+    <state width="1440" height="181" key="GridCell.Tab.0.left" timestamp="1600264088204">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600219031139" />
-    <state width="1440" height="181" key="GridCell.Tab.0.right" timestamp="1600219031141">
+    <state width="1440" height="181" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600264088204" />
+    <state width="1440" height="181" key="GridCell.Tab.0.right" timestamp="1600264088205">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600219031141" />
+    <state width="1440" height="181" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600264088205" />
     <state width="1440" height="312" key="GridCell.Tab.1.bottom" timestamp="1600120951431">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
