@@ -26,12 +26,14 @@ CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o: ../include/darkmatter/utils.
 CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o: ../src/Toeplitz-by-x.cpp
 
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/OT.hpp
+CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/PRF.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/Timing.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/mains.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/newprotocol.h
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/packedMod2.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/packedMod3.hpp
+CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/packed_PRF_central.h
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/utils.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../src/newprotocol.cpp
 

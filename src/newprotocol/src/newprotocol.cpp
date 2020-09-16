@@ -253,7 +253,7 @@ void newprotocol_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vect
 
     //PRF_packed_test(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
     //PRF_packed_centralized_test(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
-    PRF_packed_centralized_test(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
+    PRF_packed_centralized_res_compare(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
 
     PackedZ3<81>test_out_z3 = test_out1_z3;
     test_out_z3.add(test_out2_z3);//out = out1 + out2

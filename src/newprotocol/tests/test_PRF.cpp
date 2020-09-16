@@ -38,7 +38,7 @@ int main(int argc,char* argv[] )  {
     using Duration = Clock::duration;
     std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
 
-    PRF_DM(ntimes, nRuns, stepsToRun);
+    PRF_DM_wpreproc(ntimes, nRuns, stepsToRun);
 
     display_AXplusB_runtime();
     display_SC_runtime();

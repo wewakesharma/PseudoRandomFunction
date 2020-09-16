@@ -27,10 +27,13 @@ static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
 
-
+/*
 //The file has been now shifted to packed_PRF_central
+ test distributed version is equal to the centralized version
+ testing that the sum of two outputs is equal to the centralized version result
+*/
 
-void PRF_packed_centralized_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
+void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                           PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
                           PackedZ3<81>& out2Z3, int i)
 {
@@ -70,9 +73,11 @@ void PRF_packed_centralized_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1
         cout<<endl<<"PRF packed test: Test fails";
 }
 
+/*
+ * PRF without the pre-processing
+ */
 
-
-void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
+void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
         PackedZ3<81>& out2Z3, int i)
 {
@@ -126,8 +131,11 @@ void PRF(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
     timer_phase3 += (std::chrono::system_clock::now() - start).count();
 }
 
+/*
+ * PRF_DM includes pre-processing
+ */
 
-void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
+void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
 
     randomWord(1); // use seed=1
     vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);
@@ -168,7 +176,7 @@ void PRF_DM(unsigned int nTimes,  int nRuns, int nStages) {
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
 
-        PRF(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
+        PRF_DM(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
     //    PRF_packed_centralized_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
         //PRF_unpacked_test() /* just a placeholder*/
     }
