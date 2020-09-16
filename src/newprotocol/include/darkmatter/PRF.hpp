@@ -13,7 +13,6 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages);
 void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                           PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
                           PackedZ3<81>& out2Z3, int i);
-void PRF_unpacked_test();
 
 
 void display_Phase3_runtime();//measure the runtime of phase 3

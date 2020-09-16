@@ -31,4 +31,4 @@ add_executable(newprotocol
         tests/test_packedMod3.cpp
         tests/test_PRF.cpp
         tests/test_Toeplitz-by-x.cpp
-        tests/test_unpacked_PRF.cpp)
+        tests/test_unpacked_PRF.cpp tests/newprotocol_driver.cpp tests/test_dmprotocol.cpp include/darkmatter/newprotocol_test.h)

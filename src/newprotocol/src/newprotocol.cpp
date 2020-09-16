@@ -155,7 +155,7 @@ void party2_round_1(PackedZ2<N_COLS> x2_mask, std::vector<uint64_t> K2_mask,
                     PackedZ2<N_COLS>& x2, PackedZ2<N_COLS>& rx2, std::vector<uint64_t> K2, std::vector<uint64_t> rK2)
 {
     x2_mask = x2;
-    x2_mask ^= rx1_global;
+    x2_mask ^= rx2_global;
     for(int word_count=0; word_count < K2.size(); word_count++) {
         K2_mask[word_count] = K2[word_count] ^ rK2[word_count];
     }
@@ -177,33 +177,33 @@ void party1_round2(PackedZ2<N_COLS> w1_mask, std::vector<uint64_t> K_mask, Packe
         std::vector<uint64_t> rK1, PackedZ2<N_COLS> sw1)
 {
     PackedZ2<N_COLS> x_rx1 = x_mask;    //x_rx1 = x_mask - rx1
-    x_rx1 ^= rx1_global;
+    x_rx1 ^= rx1;
 
     PackedZ2<N_COLS> Kx1;   //kx1 = K_mask * x_rx1
     Kx1.toeplitzByVec(K_mask,x_rx1);
 
     PackedZ2<N_COLS> x_rK1;//x_rk1 = rK1 * x_mask
-    x_rK1.toeplitzByVec(rK1_global,x_mask);
+    x_rK1.toeplitzByVec(rK1,x_mask);
 
     w1_mask = Kx1;//w1 = kx1 - rk_x1
     w1_mask ^= x_rK1;
-    w1_mask ^= sw_global;
+    w1_mask ^= sw1;
 }
 void party2_round2(PackedZ2<N_COLS> w2_mask, std::vector<uint64_t> K_mask,PackedZ2<N_COLS> x_mask, PackedZ2<N_COLS> rx2,
                    std::vector<uint64_t> rK2, PackedZ2<N_COLS> sw2)
 {
     PackedZ2<N_COLS> x_rx2 = x_mask;    //x_rx2 = x_mask - rx2
-    x_rx2 ^= rx2_global;
+    x_rx2 ^= rx2;
 
     PackedZ2<N_COLS> Kx2;   //kx2 = K_mask * x_rx2
     Kx2.toeplitzByVec(K_mask,x_rx2);
 
     PackedZ2<N_COLS> x_rK2; //x_rk2 = rK2 * x_mask
-    x_rK2.toeplitzByVec(rK2_global,x_mask);
+    x_rK2.toeplitzByVec(rK2,x_mask);
 
     w2_mask = Kx2; //w2 = kx2 - rk_x2
     w2_mask ^= x_rK2;
-    w2_mask ^= sw_global;
+    w2_mask ^= sw2;
 }
 
 void compute_wmask(PackedZ2<N_COLS> w_mask, PackedZ2<N_COLS> w1_mask, PackedZ2<N_COLS> w2_mask)
@@ -246,40 +246,14 @@ void compute_y_out(PackedZ3<81>  y_out_z3, PackedZ3<81> y1_z3, PackedZ3<81> y2_z
     y_out_z3 ^= y2_z3;
 }
 
-void newprotocol_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                      PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81> y_out_z3,
-                      PackedZ3<81> test_out1_z3, PackedZ3<81> test_out2_z3, int i)
-{
-
-    //PRF_packed_test(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
-    //PRF_packed_centralized_test(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
-    PRF_packed_centralized_res_compare(K1,x1,K2,x2,Rmat,test_out1_z3,test_out2_z3,1);
-
-    PackedZ3<81>test_out_z3 = test_out1_z3;
-    test_out_z3.add(test_out2_z3);//out = out1 + out2
-
-    //comparing test_out_z3 with y_out_z3
-    bool test_flag = 0;//no problem
-    for(int test_cnt = 0; test_cnt < 81; test_cnt++)
-    {
-        if(test_out_z3.at(test_cnt) != y_out_z3.at(test_cnt))
-        {
-            std::cout<<"The problem is at index "<<test_cnt<<std::endl;
-            test_flag = 1;//some problem
-            break;
-        }
-    }
-    if(test_flag == 0)
-        std::cout<<std::endl<<"New protocol test: Test passed"<<std::endl;
-    else
-        std::cout<<std::endl<<"New protocol test: Test fails"<<std::endl;
-}
-
 /*
  * This function generates the variables and perform computation to simulate centralized
  * version of the new protocol
  */
-void PRF_new_protocol_central()
+void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
+                              std::vector<uint64_t>& K2, PackedZ2<N_COLS>& x2,
+                              std::vector<PackedZ3<81> > Rmat, PackedZ3<81> y1_z3,
+                              PackedZ3<81> y2_z3, int nTimes)
 {
     //local declarations=======9/15
     std::vector<uint64_t> rK1(toeplitzWords), rK2(toeplitzWords), rK(toeplitzWords);
@@ -287,17 +261,11 @@ void PRF_new_protocol_central()
     PackedZ2<N_COLS> sw1, sw2, sw; //sw = rK * rx + rw
     PackedZ2<N_COLS> rw1, rw2, rw;
 
-    //declaring the inputs
-    std::vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);
-    PackedZ2<N_COLS> x1, x2;
-
     //declare a variable in Z3 called r0z and r1z
     PackedZ3<N_SIZE>r0z, r1z;
     PackedZ3<N_SIZE> r0z1, r0z2, r1z1, r1z2;
 
     //============================
-
-    int nTimes = 1;
 
     //1. Perform preprocessing
     preProc_mod2_dm2020(nTimes);//it was nRuns * 2 in previous protocol, needs to be changed later
@@ -305,18 +273,6 @@ void PRF_new_protocol_central()
 
     fetchPreproc_party1(rx1,rw1,sw1,rK1,r0z1,r1z1);
     fetchPreproc_party2(rx2,rw2,sw2,rK2, r0z2,r1z2);
-
-
-    //2. generate input X and key K
-    randomWord(1); // use seed=1
-    for (auto &w : K1) w = randomWord();
-    K1[K1.size() - 1] &= topelitzMask; // turn off extra bits at the end
-    for (auto &w : K2) w = randomWord();
-    K2[K2.size() - 1] &= topelitzMask; // turn off extra bits at the end
-    x1.randomize();
-    x2.randomize();
-
-
 
     //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
     PackedZ2<N_COLS> x1_mask,x_mask, x2_mask;
@@ -360,17 +316,17 @@ void PRF_new_protocol_central()
 
     PackedZ3<N_SIZE> z1, z2;
     PackedZ3<N_SIZE> res1, res2, res; //stores the mux result of both the parties
-    PackedZ3<81> y1_z3, y2_z3, y_out_z3;
+    PackedZ3<81> y_out_z3; //y_out = y1 + y2
 
-    //generate a 81 X 256 randomization matrix in Z3.
-    std::vector<PackedZ3<81> > Rmat(256);
-    for (auto &col : Rmat) // iterate over the columns
-        col.randomize();
 
     party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask);
     party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
 
     compute_y_out(y_out_z3,y1_z3,y2_z3);
+    for(int c = 0; c<81;c++)
+    {
+        std::cout<<y1_z3.at(c);
+    }
 
     //compute res =  res1 + res2; res is equivalent to z
     res = res1;
@@ -379,13 +335,6 @@ void PRF_new_protocol_central()
 #ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
 #endif
-#ifdef DEBUG
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Calling PRF unit test function"<<std::endl;
-#endif
-
-    PackedZ3<81> test_out1_z3, test_out2_z3;
-
-    newprotocol_test(K1,x1,K2,x2,Rmat,y_out_z3,test_out1_z3, test_out2_z3,nTimes);
     
 #ifdef NP_TEST
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): NP_TEST is enabled; calling the test function";

@@ -55,6 +55,17 @@ CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o: ../include/darkmatter
 CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o: ../include/darkmatter/utils.hpp
 CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o: ../src/unpacked_PRF_central.cpp
 
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../include/darkmatter/OT.hpp
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../include/darkmatter/Timing.hpp
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../include/darkmatter/mains.hpp
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../include/darkmatter/newprotocol.h
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../include/darkmatter/newprotocol_test.h
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../include/darkmatter/packedMod2.hpp
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../include/darkmatter/packedMod3.hpp
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../include/darkmatter/utils.hpp
+CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o: ../tests/newprotocol_driver.cpp
+
 CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o: ../include/darkmatter/OT.hpp
 CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o: ../include/darkmatter/mains.hpp
 CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o: ../include/darkmatter/packedMod2.hpp
@@ -88,7 +99,17 @@ CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o: ../include/darkmatter
 CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o: ../include/darkmatter/utils.hpp
 CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o: ../tests/test_Toeplitz-by-x.cpp
 
+CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/OT.hpp
+CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/Timing.hpp
+CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
+CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/mains.hpp
+CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/packedMod2.hpp
+CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/packedMod3.hpp
+CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/utils.hpp
+CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../tests/test_dmprotocol.cpp
+
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/OT.hpp
+CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/PRF.hpp
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/Timing.hpp
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/mains.hpp

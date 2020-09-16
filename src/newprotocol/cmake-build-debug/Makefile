@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol
+CMAKE_SOURCE_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -285,6 +285,33 @@ src/unpacked_PRF_central.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.s
 .PHONY : src/unpacked_PRF_central.cpp.s
 
+tests/newprotocol_driver.o: tests/newprotocol_driver.cpp.o
+
+.PHONY : tests/newprotocol_driver.o
+
+# target to build an object file
+tests/newprotocol_driver.cpp.o:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o
+.PHONY : tests/newprotocol_driver.cpp.o
+
+tests/newprotocol_driver.i: tests/newprotocol_driver.cpp.i
+
+.PHONY : tests/newprotocol_driver.i
+
+# target to preprocess a source file
+tests/newprotocol_driver.cpp.i:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.i
+.PHONY : tests/newprotocol_driver.cpp.i
+
+tests/newprotocol_driver.s: tests/newprotocol_driver.cpp.s
+
+.PHONY : tests/newprotocol_driver.s
+
+# target to generate assembly for a file
+tests/newprotocol_driver.cpp.s:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.s
+.PHONY : tests/newprotocol_driver.cpp.s
+
 tests/test_OT.o: tests/test_OT.cpp.o
 
 .PHONY : tests/test_OT.o
@@ -392,6 +419,33 @@ tests/test_Toeplitz-by-x.s: tests/test_Toeplitz-by-x.cpp.s
 tests/test_Toeplitz-by-x.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.s
 .PHONY : tests/test_Toeplitz-by-x.cpp.s
+
+tests/test_dmprotocol.o: tests/test_dmprotocol.cpp.o
+
+.PHONY : tests/test_dmprotocol.o
+
+# target to build an object file
+tests/test_dmprotocol.cpp.o:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o
+.PHONY : tests/test_dmprotocol.cpp.o
+
+tests/test_dmprotocol.i: tests/test_dmprotocol.cpp.i
+
+.PHONY : tests/test_dmprotocol.i
+
+# target to preprocess a source file
+tests/test_dmprotocol.cpp.i:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.i
+.PHONY : tests/test_dmprotocol.cpp.i
+
+tests/test_dmprotocol.s: tests/test_dmprotocol.cpp.s
+
+.PHONY : tests/test_dmprotocol.s
+
+# target to generate assembly for a file
+tests/test_dmprotocol.cpp.s:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.s
+.PHONY : tests/test_dmprotocol.cpp.s
 
 tests/test_newprotocol.o: tests/test_newprotocol.cpp.o
 
@@ -528,6 +582,9 @@ help:
 	@echo "... src/unpacked_PRF_central.o"
 	@echo "... src/unpacked_PRF_central.i"
 	@echo "... src/unpacked_PRF_central.s"
+	@echo "... tests/newprotocol_driver.o"
+	@echo "... tests/newprotocol_driver.i"
+	@echo "... tests/newprotocol_driver.s"
 	@echo "... tests/test_OT.o"
 	@echo "... tests/test_OT.i"
 	@echo "... tests/test_OT.s"
@@ -540,6 +597,9 @@ help:
 	@echo "... tests/test_Toeplitz-by-x.o"
 	@echo "... tests/test_Toeplitz-by-x.i"
 	@echo "... tests/test_Toeplitz-by-x.s"
+	@echo "... tests/test_dmprotocol.o"
+	@echo "... tests/test_dmprotocol.i"
+	@echo "... tests/test_dmprotocol.s"
 	@echo "... tests/test_newprotocol.o"
 	@echo "... tests/test_newprotocol.i"
 	@echo "... tests/test_newprotocol.s"

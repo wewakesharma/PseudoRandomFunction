@@ -27,17 +27,11 @@ static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
 
-/*
-//The file has been now shifted to packed_PRF_central
- test distributed version is equal to the centralized version
- testing that the sum of two outputs is equal to the centralized version result
-*/
-
 void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                          PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
-                          PackedZ3<81>& out2Z3, int i)
+                                        PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
+                                        PackedZ3<81>& out2Z3, int nTimes)
 {
-    cout<<endl<<"We are in packed unit test of PRF"<<endl;
+    cout<<endl<<"PRF.cpp/PRF_packed_centralized_res_compare()"<<endl;
     //1.perform X = x1+ x2 (on vectors)
     PackedZ2<N_COLS> X = x1; //declare a variable
     //X.add(x1); x = x1
@@ -56,11 +50,15 @@ void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_CO
 
     PackedZ3<256> outKX_Z3;//packed Z3
 
-    std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
-    outKX.toArray(outKX_unsgn);
+    //std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
+    //outKX.toArray(outKX_unsgn);
+
 
     PackedZ3<81> outZ3;//final Z3 output
-    outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
+    //outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
+    PackedZ2<N_SIZE> hi; //will be initialized to 0
+
+    outKX_Z3.makeFromBits(hi.bits, outKX.bits);
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
 
@@ -72,7 +70,6 @@ void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_CO
     else
         cout<<endl<<"PRF packed test: Test fails";
 }
-
 /*
  * PRF without the pre-processing
  */
