@@ -65,9 +65,9 @@ void PRF_packed_centralized_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1
     out_12_Z3.add(out2Z3);//merged output from parameters
 
     if(out_12_Z3 == outZ3)
-        cout<<"Test passed";
+        cout<<endl<<"PRF packed test: Test passed";
     else
-        cout<<"Test fails";
+        cout<<endl<<"PRF packed test: Test fails";
 }
 
 

@@ -12,7 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfa39a2c-4ad6-41c2-9af4-3f90a8d46ce5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Documents/analysis/PRFanalysis.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/analysis/PRFanalysis.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/newprotocol" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/newprotocol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PRF.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/PRF.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/newprotocol.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/newprotocol.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../~$sign Decision for toeplitz filling.docx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,6 +83,7 @@
       <workItem from="1600106756516" duration="2621000" />
       <workItem from="1600113448623" duration="1083000" />
       <workItem from="1600119785793" duration="1162000" />
+      <workItem from="1600208511201" duration="5742000" />
     </task>
     <servers />
   </component>
@@ -87,26 +91,26 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600119845271">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600218506199">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1600119845271" />
-    <state width="1440" height="181" key="GridCell.Tab.0.bottom" timestamp="1600120951440">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1600218506199" />
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom" timestamp="1600219031142">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600120951440" />
-    <state width="1440" height="181" key="GridCell.Tab.0.center" timestamp="1600120951439">
+    <state width="1440" height="181" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1600219031142" />
+    <state width="1440" height="181" key="GridCell.Tab.0.center" timestamp="1600219031140">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600120951439" />
-    <state width="1440" height="181" key="GridCell.Tab.0.left" timestamp="1600120951438">
+    <state width="1440" height="181" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1600219031140" />
+    <state width="1440" height="181" key="GridCell.Tab.0.left" timestamp="1600219031139">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600120951438" />
-    <state width="1440" height="181" key="GridCell.Tab.0.right" timestamp="1600120951439">
+    <state width="1440" height="181" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1600219031139" />
+    <state width="1440" height="181" key="GridCell.Tab.0.right" timestamp="1600219031141">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="181" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600120951439" />
+    <state width="1440" height="181" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1600219031141" />
     <state width="1440" height="312" key="GridCell.Tab.1.bottom" timestamp="1600120951431">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -133,35 +137,6 @@
     <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel/0.0.1440.900@0.0.1440.900" timestamp="1600106749221" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>285</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>283</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>296</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>275</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
-          <line>270</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="test_out_z3.at(test_cnt)" language="ObjectiveC" />
