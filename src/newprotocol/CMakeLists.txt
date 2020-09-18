@@ -9,6 +9,7 @@ include_directories(include/darkmatter)
 add_executable(newprotocol
         include/darkmatter/mains.hpp
         include/darkmatter/newprotocol.h
+        include/darkmatter/newprotocol_test.h
         include/darkmatter/OT.hpp
         include/darkmatter/packed_PRF_central.h
         include/darkmatter/packedMod2.hpp
@@ -24,6 +25,8 @@ add_executable(newprotocol
         src/PRF.cpp
         src/Toeplitz-by-x.cpp
         src/unpacked_PRF_central.cpp
+        tests/newprotocol_driver.cpp
+        tests/test_dmprotocol.cpp
         tests/test_newprotocol.cpp
         tests/test_OT.cpp
         tests/test_Packed_PRF.cpp
@@ -31,4 +34,4 @@ add_executable(newprotocol
         tests/test_packedMod3.cpp
         tests/test_PRF.cpp
         tests/test_Toeplitz-by-x.cpp
-        tests/test_unpacked_PRF.cpp tests/newprotocol_driver.cpp tests/test_dmprotocol.cpp include/darkmatter/newprotocol_test.h)
+        tests/test_unpacked_PRF.cpp)
