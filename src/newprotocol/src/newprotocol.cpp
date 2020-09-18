@@ -110,12 +110,44 @@ void preProc_mod3_dm2020(unsigned int nTimes)
     r0z1_global.randomize();
     r1z1_global.randomize();
 
+
+    //=====================EXPERIMENTAL method: compute r0z2m, r0z2l========================================
+    bool first_bit, second_bit;
+    //r0zm and r0zl is share of party 2
+    bool r0z2m, r0z2l, r1z2m, r1z2l;
+    //r0z1m and r0z1l is share of party 1
+    bool r0z1m, r0z1l, r1z1m, r1z1l, r0zm, r0zl, r1zm, r1zl;//computing second parties r0z and r1z
+    for(int z3_count = 0; z3_count < N_SIZE; z3_count++) //for the entire 256 bits
+    {
+        //calculate r0zm and r0zl
+        r0zm = r0z_global.second.at(z3_count);//the r0zm
+        r0zl = r0z_global.first.at(z3_count); //the r0zl
+        r0z1m = r0z1_global.second.at(z3_count); //first party r0zm
+        r0z1l = r0z1_global.first.at(z3_count); //first party r0zl
+        second_bit = ((~r0zm) & (~r0zl) & r0z1m & (~r0z1l)) | ((~r0zm) & r0zl & (~r0z1m) & r0z1l);
+        first_bit = ((~r0zm) & (~r0zl) & (~r0z1m) & r0z1l) | ((~r0zm) & r0zl & (~r0z1m) & (~r0z1l));
+        r0z2_global.first.set(z3_count, first_bit);
+        r0z2_global.second.set(z3_count, second_bit);
+        //calculate r1zm and r1zl
+        r1zm = r1z_global.second.at(z3_count);//the r0zm
+        r1zl = r1z_global.first.at(z3_count); //the r0zl
+        r1z1m = r1z1_global.second.at(z3_count); //first party r0zm
+        r1z1l = r1z1_global.first.at(z3_count); //first party r0zl
+        second_bit = ((~r1zm) & (~r1zl) & r1z1m & (~r1z1l)) | ((~r1zm) & r1zl & (~r1z1m) & r1z1l);
+        first_bit = ((~r1zm) & (~r1zl) & (~r1z1m) & r1z1l) | ((~r1zm) & r1zl & (~r1z1m) & (~r1z1l));
+        r1z2_global.first.set(z3_count, first_bit);
+        r1z2_global.second.set(z3_count, second_bit);
+    }
+
+    //=============================================================
+
+/*
     //perform xor operation and calculate r0z2 and r1z2; share of r0z and r1z for party 2
     r0z2_global = r0z1_global;    //r0z2 = r0z ^ r0z1
     r0z2_global ^= r0z_global;
 
     r1z2_global = r1z1_global;    //r1z2 = r1z ^ r1z1
-    r1z2_global ^= r1z_global;
+    r1z2_global ^= r1z_global;*/
 }
 
 
@@ -332,7 +364,19 @@ void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     compute_y_out(y_out_z3,y1_z3,y2_z3);
 
     #ifdef DEBUG
-        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of y_out"<<std::endl;
+    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z"<<std::endl;
+    for(int c = 0; c<81;c++)
+    {
+        std::cout<<r0z_global.at(c);
+    }
+    std::cout<<""<<std::endl;
+    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z1"<<std::endl;
+    for(int c = 0; c<81;c++)
+    {
+        std::cout<<r0z1.at(c);
+    }
+    std::cout<<""<<std::endl;
+    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z2"<<std::endl;
     for(int c = 0; c<81;c++)
     {
         std::cout<<r0z2.at(c);
