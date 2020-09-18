@@ -100,10 +100,10 @@ void preProc_mod3_dm2020(unsigned int nTimes)
     {
         sw_val = (unsigned int)sw_global.at(z3_count);
         not_sw_val = 1 - sw_val;
-        r0z_global.first.set(z3_count,0);   //r0z_msb = 0
-        r0z_global.second.set(z3_count, sw_val); //r0z_lsb = rw
-        r1z_global.first.set(z3_count, 0);  //r1z_msb = 0
-        r1z_global.second.set(z3_count, not_sw_val);    //r1z_lsb = rw
+        r0z_global.second.set(z3_count,0);   //r0z_msb = 0
+        r0z_global.first.set(z3_count, sw_val); //r0z_lsb = rw
+        r1z_global.second.set(z3_count, 0);  //r1z_msb = 0
+        r1z_global.first.set(z3_count, not_sw_val);    //r1z_lsb = rw
     }
 
     //generate random values for r0z1 and r1z1; share of r0z and r1z for party 1
@@ -335,7 +335,7 @@ void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of y_out"<<std::endl;
     for(int c = 0; c<81;c++)
     {
-        std::cout<<y2_z3.at(c);
+        std::cout<<r0z2.at(c);
     }
     std::cout<<""<<std::endl;
     #endif
