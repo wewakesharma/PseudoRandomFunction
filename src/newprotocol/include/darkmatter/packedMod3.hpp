@@ -189,6 +189,23 @@ public:
         }
     }
 
+    //========experimental method for computing y_out_z3
+    void compute_y_out(const PackedZ3<81>& y1_z3, const PackedZ3<81>& y2_z3)
+    {
+        for (int wIdx=0; wIdx<nWords; wIdx++)
+        {
+            this->first.bits[wIdx] = ((~y1_z3.second.bits[wIdx]) & (~y2_z3.second.bits[wIdx]) &
+                             (~y1_z3.first.bits[wIdx]) & y2_z3.first.bits[wIdx]) | (y1_z3.first.bits[wIdx] & (~y2_z3.first.bits[wIdx])) |
+                             (y1_z3.second.bits[wIdx] & (~y1_z3.first.bits[wIdx]) & y2_z3.second.bits[wIdx] & (~y2_z3.first.bits[wIdx]));
+
+            this->second.bits[wIdx] = (~y1_z3.first.bits[wIdx]) & (~y2_z3.first.bits[wIdx]) &
+                                              (((~y1_z3.second.bits[wIdx]) & y2_z3.second.bits[wIdx]) |
+                                                      (y1_z3.second.bits[wIdx] & (~y2_z3.second.bits[wIdx]))) |
+                    ((~y1_z3.second.bits[wIdx]) & y1_z3.first.bits[wIdx] & (~y2_z3.second.bits[wIdx]) & y2_z3.first.bits[wIdx]);
+        }
+    }
+    //==================================================
+
     // Initialize from two bit-arrays for MSBs and LSBs
     // If we get (1,1) at any position then we record (0,0) instead
     void makeFromBits(const std::vector<uint64_t>& hi,

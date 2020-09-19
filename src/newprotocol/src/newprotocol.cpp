@@ -277,12 +277,24 @@ void party2_round3(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
     //party computes y2 = M* res2
     y2_z3.matByVec(Rmat, res2);
 }
+
+/*
 void compute_y_out(PackedZ3<81>&  y_out_z3, PackedZ3<81>& y1_z3, PackedZ3<81>& y2_z3)
 {
+    //==============EXPERIMENTAL MOD 3 CALUCLATION(without the loop)==============
+
+    y_out_z3.first = (y1_z3.second.negate() & y2_z3.second.negate()) &
+            (y1_z3.first.negate() && y2_z3.first) | (y1_z3.first & y2_z3.first.negate()) |
+            (y1_z3.second & y1_z3.first.negate()) & (y2_z3.second & y2_z3.first.negate());
+
+    y_out_z3.second = (y1_z3.first.negate() & y2_z3.first.negate()) &
+                     (y1_z3.second.negate() & y2_z3.second) | (y1_z3.second & y2_z3.second.negate()) |
+                     (y1_z3.second.negate() & y1_z3.first) & (y2_z3.second.negate() & y2_z3.first);
+    //====================================================================
     //calculating y = y1 + y2
     y_out_z3 = y1_z3;
-    y_out_z3 ^= y2_z3;
-}
+    y_out_z3 ^= (y2_z3);
+}*/
 
 /*
  * This function generates the variables and perform computation to simulate centralized
@@ -361,25 +373,25 @@ void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask);
     party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
 
-    compute_y_out(y_out_z3,y1_z3,y2_z3);
+    y_out_z3.compute_y_out(y1_z3,y2_z3);
 
     #ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z"<<std::endl;
     for(int c = 0; c<81;c++)
     {
-        std::cout<<r0z_global.at(c);
+        std::cout<<y1_z3.at(c);
     }
     std::cout<<""<<std::endl;
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z1"<<std::endl;
     for(int c = 0; c<81;c++)
     {
-        std::cout<<r0z1.at(c);
+        std::cout<<y2_z3.at(c);
     }
     std::cout<<""<<std::endl;
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z2"<<std::endl;
     for(int c = 0; c<81;c++)
     {
-        std::cout<<r0z2.at(c);
+        std::cout<<y_out_z3.at(c);
     }
     std::cout<<""<<std::endl;
     #endif
