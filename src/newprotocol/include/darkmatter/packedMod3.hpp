@@ -198,7 +198,7 @@ public:
                              (~y1_z3.first.bits[wIdx]) & y2_z3.first.bits[wIdx]) | (y1_z3.first.bits[wIdx] & (~y2_z3.first.bits[wIdx])) |
                              (y1_z3.second.bits[wIdx] & (~y1_z3.first.bits[wIdx]) & y2_z3.second.bits[wIdx] & (~y2_z3.first.bits[wIdx]));
 
-            this->second.bits[wIdx] = (~y1_z3.first.bits[wIdx]) & (~y2_z3.first.bits[wIdx]) &
+            this->second.bits[wIdx] = ((~y1_z3.first.bits[wIdx]) & (~y2_z3.first.bits[wIdx]))&
                                               (((~y1_z3.second.bits[wIdx]) & y2_z3.second.bits[wIdx]) |
                                                       (y1_z3.second.bits[wIdx] & (~y2_z3.second.bits[wIdx]))) |
                     ((~y1_z3.second.bits[wIdx]) & y1_z3.first.bits[wIdx] & (~y2_z3.second.bits[wIdx]) & y2_z3.first.bits[wIdx]);

@@ -9,6 +9,8 @@ CMakeFiles/newprotocol.dir/src/OT.cpp.o: ../include/darkmatter/utils.hpp
 CMakeFiles/newprotocol.dir/src/OT.cpp.o: ../src/OT.cpp
 
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/OT.hpp
+CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/PackedMod2.hpp
+CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/PackedMod3.hpp
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/Timing.hpp
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/mains.hpp

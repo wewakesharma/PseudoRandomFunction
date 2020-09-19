@@ -302,8 +302,7 @@ void compute_y_out(PackedZ3<81>&  y_out_z3, PackedZ3<81>& y1_z3, PackedZ3<81>& y
  */
 void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
                               std::vector<uint64_t>& K2, PackedZ2<N_COLS>& x2,
-                              std::vector<PackedZ3<81> > Rmat, PackedZ3<81> y1_z3,
-                              PackedZ3<81> y2_z3, int nTimes)
+                              std::vector<PackedZ3<81> >& Rmat, PackedZ3<81>& y1_z3, PackedZ3<81>& y2_z3, int nTimes)
 {
     //local declarations=======9/15
     std::vector<uint64_t> rK1(toeplitzWords), rK2(toeplitzWords), rK(toeplitzWords);
@@ -315,6 +314,8 @@ void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     PackedZ3<N_SIZE>r0z, r1z;
     PackedZ3<N_SIZE> r0z1, r0z2, r1z1, r1z2;
 
+    PackedZ3<81> y_out_z3;//output of each parties
+
     //============================
 
     //1. Perform preprocessing
@@ -324,6 +325,9 @@ void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     fetchPreproc_party1(rx1,rw1,sw1,rK1,r0z1,r1z1);
     fetchPreproc_party2(rx2,rw2,sw2,rK2, r0z2,r1z2);
 
+    std::cout<<"rx1 "<<rx1<<std::endl;
+    std::cout<<"rx1 "<<rx1<<std::endl;
+
     //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
     PackedZ2<N_COLS> x1_mask,x_mask, x2_mask;
     std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toeplitzWords);
@@ -331,7 +335,7 @@ void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     party1_round_1(x1_mask,K1_mask,x1,rx1,K1,rK1);
     party2_round_1(x2_mask,K2_mask,x2,rx2,K2,rK2);
 
-    std::cout<<""<<std::endl;
+    //std::cout<<""<<std::endl;
     //both the parties are supposed to exchange their mask values
     compute_input_mask(x_mask, K_mask, x1_mask, x2_mask, K1_mask, K2_mask);
 
@@ -350,7 +354,7 @@ void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
     PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
     party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, sw1);
-    party2_round2(w2_mask, K_mask,x_mask, rx1, rK1, sw1);
+    party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, sw2);
 
     compute_wmask(w_mask, w1_mask, w2_mask);
 
@@ -367,13 +371,13 @@ void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
     PackedZ3<N_SIZE> z1, z2;
     PackedZ3<N_SIZE> res1, res2, res; //stores the mux result of both the parties
-    PackedZ3<81> y_out_z3; //y_out = y1 + y2
+    //PackedZ3<81> y_out_z3; //y_out = y1 + y2
 
 
     party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask);
     party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
 
-    y_out_z3.compute_y_out(y1_z3,y2_z3);
+    //y_out_z3.compute_y_out(y1_z3,y2_z3); //merging the output by both the parties
 
     #ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z"<<std::endl;
@@ -388,18 +392,13 @@ void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         std::cout<<y2_z3.at(c);
     }
     std::cout<<""<<std::endl;
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z2"<<std::endl;
-    for(int c = 0; c<81;c++)
-    {
-        std::cout<<y_out_z3.at(c);
-    }
-    std::cout<<""<<std::endl;
     #endif
 
     std::cout<<""<<std::endl;
+   /*
     //compute res =  res1 + res2; res is equivalent to z
     res = res1;
-    res ^= res2;
+    res ^= res2;*/
 
 #ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;

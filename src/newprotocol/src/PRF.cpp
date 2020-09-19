@@ -11,6 +11,8 @@
 #include <typeinfo>//to determine the type of variables
 #include "Timing.hpp"
 #include <chrono>
+#include "PackedMod2.hpp"
+#include "PackedMod3.hpp"
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
@@ -50,20 +52,41 @@ void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_CO
 
     PackedZ3<256> outKX_Z3;//packed Z3
 
-    //std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
-    //outKX.toArray(outKX_unsgn);
+    std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
+    outKX.toArray(outKX_unsgn);
 
 
     PackedZ3<81> outZ3;//final Z3 output
-    //outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
-    PackedZ2<N_SIZE> hi; //will be initialized to 0
+    outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
 
-    outKX_Z3.makeFromBits(hi.bits, outKX.bits);
+    //PackedZ2<N_SIZE> hi; //will be initialized to 0
+    //outKX_Z3.makeFromBits(hi.bits, outKX.bits);
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
 
-    PackedZ3<81>out_12_Z3 = out1Z3;
+    PackedZ3<81>out_12_Z3;
+    /*previous code: it seems that the add function doesn't work as intended.
+     * It created the problem of value "3" in new protocol's y_out
+    *PackedZ3<81>out_12_Z3 = out1Z3;
     out_12_Z3.add(out2Z3);//merged output from parameters
+     */
+
+    out_12_Z3.compute_y_out(out1Z3, out2Z3);
+
+#ifdef DEBUG
+    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of out_12_Z3"<<std::endl;
+    for(int c = 0; c<81;c++)
+    {
+        std::cout<<out_12_Z3.at(c);
+    }
+    std::cout<<""<<std::endl;
+    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of out_Z3"<<std::endl;
+    for(int c = 0; c<81;c++)
+    {
+        std::cout<<outZ3.at(c);
+    }
+    std::cout<<""<<std::endl;
+#endif
 
     if(out_12_Z3 == outZ3)
         cout<<endl<<"PRF packed test: Test passed";

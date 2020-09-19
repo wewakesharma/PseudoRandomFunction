@@ -17,7 +17,10 @@
 using namespace std;
 
 
-
+/*
+ * Main driver program to start the execution of newprotocol
+ * the test code is in newprotocol_test() which is in test_newprotocol.cpp
+ */
 #ifdef TEST_NP
 int main()
 {
@@ -25,7 +28,7 @@ int main()
     int nTimes = 1;//keep it constant for 1 run
     std::vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);//key shares of parties
     PackedZ2<N_COLS> x1, x2; //input shares of parties
-    PackedZ3<81> y1_z3, y2_z3;//output shares of both the parties
+    PackedZ3<81> y_out_z3, y1_z3, y2_z3;//output of new protocol
 
 #ifdef DEBUG
     std::cout<<"test_newprotocol/main.cpp: Protocol Execution begins"<<std::endl;
@@ -53,7 +56,7 @@ int main()
     std::cout<<"test_newprotocol/main.cpp: Calling the newprotocol test function"<<std::endl;
 #endif
 
-    newprotocol_test(K1,x1,K2,x2,Rmat,y1_z3,y2_z3,nTimes);
+    newprotocol_test(K1,x1,K2,x2,Rmat,y1_z3, y2_z3, nTimes);
     return 0;
 }
 #endif

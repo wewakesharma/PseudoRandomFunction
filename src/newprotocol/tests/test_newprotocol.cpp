@@ -15,8 +15,8 @@
 using namespace std;
 
 void newprotocol_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                      PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81> y1_z3,
-                      PackedZ3<81> y2_z3, int nTimes)
+                      PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& y1_z3,
+                      PackedZ3<81>& y2_z3, int nTimes)
 {
 
 
