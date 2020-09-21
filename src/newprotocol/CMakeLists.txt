@@ -25,7 +25,6 @@ add_executable(newprotocol
         src/PRF.cpp
         src/Toeplitz-by-x.cpp
         src/unpacked_PRF_central.cpp
-        tests/newprotocol_driver.cpp
         tests/test_dmprotocol.cpp
         tests/test_newprotocol.cpp
         tests/test_OT.cpp

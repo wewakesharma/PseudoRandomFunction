@@ -5,7 +5,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o"
   "CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o"
   "CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o"
-  "CMakeFiles/newprotocol.dir/tests/newprotocol_driver.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o"

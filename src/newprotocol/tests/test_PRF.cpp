@@ -49,6 +49,8 @@ int main(int argc,char* argv[] )  {
 
 #endif
 
+
+
 void display_Phase3_runtime()
 {
     cout<<endl<<"phase 3 timing "<<endl;

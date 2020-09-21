@@ -188,7 +188,7 @@ public:
             }
         }
     }
-
+/*
     //========experimental method for computing y_out_z3
     void compute_y_out(const PackedZ3<81>& y1_z3, const PackedZ3<81>& y2_z3)
     {
@@ -204,6 +204,7 @@ public:
                     ((~y1_z3.second.bits[wIdx]) & y1_z3.first.bits[wIdx] & (~y2_z3.second.bits[wIdx]) & y2_z3.first.bits[wIdx]);
         }
     }
+    */
     //==================================================
 
     // Initialize from two bit-arrays for MSBs and LSBs

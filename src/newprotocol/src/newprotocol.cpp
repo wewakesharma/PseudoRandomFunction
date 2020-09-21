@@ -53,16 +53,6 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         //2.generate random rx1, rx2 and rx = rx1 ^ rx2
         rx1_global.randomize(); // random rx[i]'s
         rx2_global.randomize();
-        rx_global = rx1_global; //rx = rx1
-        rx_global ^= rx2_global;
-        //rx_global.add(rx2_global); //rx = rx1 ^ rx2
-
-        //3.generate random rw1, rw2 and rw = rw1 ^ rw2
-        rw1_global.randomize(); // random sw1[i]
-        rw2_global.randomize(); // random sw2[i]
-        rw_global = rw1_global; //rw = rw1
-        rw_global ^= rw2_global;
-        //rw_global.add(rw2_global); //rw += rw2
 
         //4.generate rK1, rK2, rK = rK1 ^ rK2
         for (auto& w : rK1_global) w = randomWord(); //creating 8 random vector for rk1
@@ -70,6 +60,36 @@ void preProc_mod2_dm2020(unsigned int nTimes)
 
         for (auto& w : rK2_global) w = randomWord(); //creating 8 random vector for rk2
         rK2_global[rK2_global.size() - 1] &= topelitzMask;
+
+        rw1_global.randomize(); // random sw1[i]
+        rw2_global.randomize(); // random sw2[i]
+
+#ifdef DEBUG
+        rK1_global= {1,0,0,0,0, 0,0,0};
+        rK2_global = {0,1,0,0,0,0,0,0};
+
+        rx1_global.reset();
+        rx2_global.reset();
+        rx1_global.set(0,1);
+        rx2_global.set(1,1);
+
+        rw1_global.reset();
+        rw2_global.reset();
+        rw1_global.set(0,1);
+        rw2_global.set(1,1);
+
+#endif
+        rx_global = rx1_global; //rx = rx1
+        rx_global ^= rx2_global;
+        //rx_global.add(rx2_global); //rx = rx1 ^ rx2
+
+        //3.generate random rw1, rw2 and rw = rw1 ^ rw2
+
+        rw_global = rw1_global; //rw = rw1
+        rw_global ^= rw2_global;
+        //rw_global.add(rw2_global); //rw += rw2
+
+
 
         for (int i = 0; i < rK_global.size(); i++)
         {
@@ -300,7 +320,7 @@ void compute_y_out(PackedZ3<81>&  y_out_z3, PackedZ3<81>& y1_z3, PackedZ3<81>& y
  * This function generates the variables and perform computation to simulate centralized
  * version of the new protocol
  */
-void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
+void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
                               std::vector<uint64_t>& K2, PackedZ2<N_COLS>& x2,
                               std::vector<PackedZ3<81> >& Rmat, PackedZ3<81>& y1_z3, PackedZ3<81>& y2_z3, int nTimes)
 {

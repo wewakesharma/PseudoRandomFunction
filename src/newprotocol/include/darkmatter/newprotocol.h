@@ -12,7 +12,7 @@
 #ifndef NEWPROTOCOL_NEWPROTOCOL_H
 #define NEWPROTOCOL_NEWPROTOCOL_H
 
-void PRF_new_protocol_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
+void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
                               std::vector<uint64_t>& K2, PackedZ2<N_COLS>& x2, std::vector<PackedZ3<81> >& Rmat,
                               PackedZ3<81>& y1_z3, PackedZ3<81>& y2_z3, int nTimes);
 #endif //NEWPROTOCOL_NEWPROTOCOL_H

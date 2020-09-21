@@ -11,8 +11,8 @@
 #include <typeinfo>//to determine the type of variables
 #include "Timing.hpp"
 #include <chrono>
-#include "PackedMod2.hpp"
-#include "PackedMod3.hpp"
+#include "packedMod2.hpp"
+#include "packedMod3.hpp"
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
@@ -28,10 +28,8 @@ static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
-
-void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                                        PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
-                                        PackedZ3<81>& out2Z3, int nTimes)
+void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
+                            PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81> outZ3, int nTimes)
 {
     cout<<endl<<"PRF.cpp/PRF_packed_centralized_res_compare()"<<endl;
     //1.perform X = x1+ x2 (on vectors)
@@ -56,7 +54,7 @@ void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_CO
     outKX.toArray(outKX_unsgn);
 
 
-    PackedZ3<81> outZ3;//final Z3 output
+    //PackedZ3<81> outZ3;//final Z3 output
     outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
 
     //PackedZ2<N_SIZE> hi; //will be initialized to 0
@@ -64,35 +62,10 @@ void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_CO
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
 
-    PackedZ3<81>out_12_Z3;
-    /*previous code: it seems that the add function doesn't work as intended.
-     * It created the problem of value "3" in new protocol's y_out
-    *PackedZ3<81>out_12_Z3 = out1Z3;
-    out_12_Z3.add(out2Z3);//merged output from parameters
-     */
 
-    out_12_Z3.compute_y_out(out1Z3, out2Z3);
 
-#ifdef DEBUG
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of out_12_Z3"<<std::endl;
-    for(int c = 0; c<81;c++)
-    {
-        std::cout<<out_12_Z3.at(c);
-    }
-    std::cout<<""<<std::endl;
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of out_Z3"<<std::endl;
-    for(int c = 0; c<81;c++)
-    {
-        std::cout<<outZ3.at(c);
-    }
-    std::cout<<""<<std::endl;
-#endif
-
-    if(out_12_Z3 == outZ3)
-        cout<<endl<<"PRF packed test: Test passed";
-    else
-        cout<<endl<<"PRF packed test: Test fails";
 }
+
 /*
  * PRF without the pre-processing
  */
