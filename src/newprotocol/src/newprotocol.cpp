@@ -65,13 +65,15 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         rw2_global.randomize(); // random sw2[i]
 
 #ifdef DEBUG
-        rK1_global= {1,0,0,0,0, 0,0,0};
-        rK2_global = {0,1,0,0,0,0,0,0};
+        rK1_global= {0,1,1,1,1,0,0,0};
+        rK2_global = {1,1,1,1,1,0,0,0};
 
         rx1_global.reset();
         rx2_global.reset();
         rx1_global.set(0,1);
+        rx1_global.set(63,1);
         rx2_global.set(1,1);
+        rx1_global.set(63,1);
 
         rw1_global.reset();
         rw2_global.reset();
@@ -94,13 +96,13 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         }
 
         //5.Calculate sw = rk_global * rx_global ^ rw_global
-        sw1_global.toeplitzByVec(rK1_global,rx1_global);
-        sw1_global ^= rw1_global;
-        sw2_global.toeplitzByVec(rK2_global,rx2_global);
-        sw2_global ^= rw2_global;
-        sw_global = sw1_global;
+        sw1_global.toeplitzByVec(rK1_global,rx1_global); //sw1 = rk1 * rx1
+        sw1_global ^= rw1_global;   //sw1 = sw1 ^ rw1
+        sw2_global.toeplitzByVec(rK2_global,rx2_global); //sw2 = rk2 * rx2
+        sw2_global ^= rw2_global;   //sw2 = sw2 ^ rw2
+        sw_global = sw1_global; //sw = sw1 ^ sw2
         sw_global ^= sw2_global;
-        //sw_global.add(sw2_global);
+
 #ifdef DEBUG
         std::cout<<"sw_global "<<sw_global<<std::endl;
         std::cout<<"sw1_global "<<sw1_global<<std::endl;
@@ -116,8 +118,7 @@ void preProc_mod2_dm2020(unsigned int nTimes)
 
 void preProc_mod3_dm2020(unsigned int nTimes)
 {
-    //Cast rw and 1-rw  to mod3
-    //single line assignment of r0z_global and r1z_global
+    //Cast rw and 1-rw  to mod3; single line assignment of r0z_global and r1z_global
     std::vector<unsigned int> sw_int; //array to act as a bridge between packedZ2 to packedZ3 conversion
     sw_global.toArray(sw_int); //convert packedZ2 to an array
     r0z_global.fromArray(sw_int); //convert an array to packedZ3
@@ -129,41 +130,31 @@ void preProc_mod3_dm2020(unsigned int nTimes)
     not_sw_global.toArray(not_sw_int); //convert the values in an array
     r1z_global.fromArray(not_sw_int);   //convert array into packedZ3 for further processing
 
-#ifdef DEBUG
-    std::cout<<"sw_global "<<sw_global<<std::endl;
-    std::cout<<"r0z_global "<<r0z_global<<std::endl;
-    std::cout<<"not_sw_global "<<not_sw_global<<std::endl;
-    std::cout<<"r1z_global "<<r1z_global<<std::endl;
-    //r0z_global = sw_global;
-    //check the value for
-#endif
     //generate random values for r0z1 and r1z1; share of r0z and r1z for party 1
     r0z1_global.randomize();
     r1z1_global.randomize();
-
-
-    bool first_bit, second_bit;
-    //r0zm and r0zl is share of party 2
-    bool r0z2m, r0z2l, r1z2m, r1z2l;
-    //r0z1m and r0z1l is share of party 1
-    bool r0z1m, r0z1l, r1z1m, r1z1l, r0zm, r0zl, r1zm, r1zl;//computing second parties r0z and r1z
-
-
-    //=============================================================
-
 
     //perform xor operation and calculate r0z2 and r1z2; share of r0z and r1z for party 2
     r0z2_global = r0z_global;    //r0z2 = r0z ^ r0z1
     r0z2_global.subtract(r0z1_global);
 
-    r1z2_global = r1z1_global;    //r1z2 = r1z ^ r1z1
-    r1z2_global.subtract(r1z_global);
+    r1z2_global = r1z_global;    //r1z2 = r1z ^ r1z1
+    r1z2_global.subtract(r1z1_global);
 
+    /*
 #ifdef DEBUG//print the values of r0z, r0z1  and r0z2
+    std::cout<<"newprotocol.cpp/preProc_mod3_dm2020():"<<std::endl;
+
+    std::cout<<"sw_global "<<sw_global<<std::endl;
     std::cout<<"r0z "<<r0z_global<<std::endl;
     std::cout<<"r0z1 "<<r0z1_global<<std::endl;
     std::cout<<"r0z2 "<<r0z2_global<<std::endl;
-#endif
+    std::cout<<"not_sw_global "<<not_sw_global<<std::endl;
+    std::cout<<"r1z "<<r1z_global<<std::endl;
+    std::cout<<"r1z1 "<<r1z1_global<<std::endl;
+    std::cout<<"r1z2 "<<r1z2_global<<std::endl;
+
+#endif*/
 
 }
 
@@ -193,16 +184,20 @@ void fetchPreproc_party2(PackedZ2<N_COLS>& rx2, PackedZ2<N_COLS>& rw2, PackedZ2<
 void party1_round_1(PackedZ2<N_COLS>& x1_mask, std::vector<uint64_t>& K1_mask,
                     PackedZ2<N_COLS>& x1, PackedZ2<N_COLS>& rx1, std::vector<uint64_t>& K1, std::vector<uint64_t>& rK1)
 {
-    #ifdef DEBUG
-        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of x1_mask"<<std::endl;
-    #endif
-
-
     x1_mask = x1;
     x1_mask.add(rx1);
     for(int word_count=0; word_count < K1.size(); word_count++) {
         K1_mask[word_count] = K1[word_count] ^ rK1[word_count];
     }
+
+    #ifdef DEBUG
+        std::cout<<"newprotocol.cpp/party1_round_1():"<<std::endl;
+        std::cout<<"x1 "<<x1<<std::endl;
+        std::cout<<"K1 "<<K1<<std::endl;
+        std::cout<<"rK1 "<<rK1<<std::endl;
+        std::cout<<"x1_mask "<<x1_mask<<std::endl;
+        std::cout<<"K1_mask "<<K1_mask<<std::endl;
+    #endif
 }
 
 void party2_round_1(PackedZ2<N_COLS>& x2_mask, std::vector<uint64_t>& K2_mask,
@@ -210,22 +205,39 @@ void party2_round_1(PackedZ2<N_COLS>& x2_mask, std::vector<uint64_t>& K2_mask,
 {
     x2_mask = x2;
     x2_mask ^= rx2;
+
     for(int word_count=0; word_count < K2.size(); word_count++) {
         K2_mask[word_count] = K2[word_count] ^ rK2[word_count];
     }
+
+ //-commented to reduce clutter
+#ifdef DEBUG
+    std::cout<<"newprotocol.cpp/party2_round_1():"<<std::endl;
+    std::cout<<"x2 "<<x2<<std::endl;
+    std::cout<<"K2 "<<K2<<std::endl;
+    std::cout<<"rK2 "<<rK2<<std::endl;
+    std::cout<<"x2_mask "<<x2_mask<<std::endl;
+    std::cout<<"K2_mask "<<K2_mask<<std::endl;
+#endif
 }
 
 void compute_input_mask(PackedZ2<N_COLS>& x_mask, std::vector<uint64_t>& K_mask,PackedZ2<N_COLS>& x1_mask,
                   PackedZ2<N_COLS>& x2_mask,std::vector<uint64_t>& K1_mask,std::vector<uint64_t>& K2_mask)
 {
     x_mask = x1_mask;
-    x_mask.add(x2_mask);
+    x_mask ^= x2_mask;
+    //x_mask.add(x2_mask);
     //x_mask = x1_mask ^ x2_mask;
 
     for(int word_count=0; word_count < K_mask.size(); word_count++)
     {
         K_mask[word_count] = K1_mask[word_count] ^ K2_mask[word_count];
     }
+#ifdef DEBUG
+    std::cout<<"newprotocol.cpp/compute_input_mask(): "<<std::endl;
+    std::cout<<"x_mask "<<x_mask<<std::endl;
+    std::cout<<"K_mask "<<K_mask<<std::endl;
+#endif
 }
 
 void party1_round2(PackedZ2<N_COLS>& w1_mask, std::vector<uint64_t>& K_mask, PackedZ2<N_COLS>& x_mask, PackedZ2<N_COLS>& rx1,
@@ -243,6 +255,10 @@ void party1_round2(PackedZ2<N_COLS>& w1_mask, std::vector<uint64_t>& K_mask, Pac
     w1_mask = Kx1;//w1 = kx1 - rk_x1
     w1_mask ^= x_rK1;
     w1_mask ^= sw1;
+#ifdef DEBUG
+    std::cout<<"newprotocol.cpp/party1_round2(): "<<std::endl;
+    std::cout<<"w1_mask "<<w1_mask<<std::endl;
+#endif
 }
 void party2_round2(PackedZ2<N_COLS>& w2_mask, std::vector<uint64_t>& K_mask,PackedZ2<N_COLS>& x_mask, PackedZ2<N_COLS>& rx2,
                    std::vector<uint64_t>& rK2, PackedZ2<N_COLS>& sw2)
@@ -259,12 +275,20 @@ void party2_round2(PackedZ2<N_COLS>& w2_mask, std::vector<uint64_t>& K_mask,Pack
     w2_mask = Kx2; //w2 = kx2 - rk_x2
     w2_mask ^= x_rK2;
     w2_mask ^= sw2;
+#ifdef DEBUG
+    std::cout<<"newprotocol.cpp/party2_round2(): "<<std::endl;
+    std::cout<<"w2_mask "<<w2_mask<<std::endl;
+#endif
 }
 
 void compute_wmask(PackedZ2<N_COLS>& w_mask, PackedZ2<N_COLS>& w1_mask, PackedZ2<N_COLS>& w2_mask)
 {
     w_mask = w1_mask;
     w_mask ^= w2_mask;
+#ifdef DEBUG
+    std::cout<<"newprotocol.cpp/compute_wmask(): "<<std::endl;
+    std::cout<<"w_mask "<<w_mask<<std::endl;
+#endif
 }
 
 void party1_round3(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
@@ -277,8 +301,12 @@ void party1_round3(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
     res1.mux(r1z1, w_mask.bits);
 
-    //party 1 computes y1 =  M * res1
-    y1_z3.matByVec(Rmat, res1);
+    y1_z3.matByVec(Rmat, res1); //party 1 computes y1 =  M * res1
+#ifdef DEBUG
+    std::cout<<"newprotocol.cpp/party1_round3(): "<<std::endl;
+    std::cout<<"res1 "<<res1<<std::endl;
+    std::cout<<"y1_z3 "<<y1_z3<<std::endl;
+#endif
 }
 
 void party2_round3(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
@@ -293,6 +321,10 @@ void party2_round3(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
 
     //party computes y2 = M* res2
     y2_z3.matByVec(Rmat, res2);
+#ifdef DEBUG
+    std::cout<<"newprotocol.cpp/party2_round3(): "<<std::endl;
+    std::cout<<"y2_z3 "<<y2_z3<<std::endl;
+#endif
 }
 
 /*

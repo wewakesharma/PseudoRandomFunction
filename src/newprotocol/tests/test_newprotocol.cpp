@@ -112,21 +112,27 @@ K2= {1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
     x1.randomize();
     x2.randomize();
 
-#ifdef DEBUG
-    K1= {1,0,0,0,0, 0,0,0};
-    K2 = {0,1,0,0,0,0,0,0};
+    #ifdef DEBUG//K1, K2 , x1 and x2 are set to 1 for debugging purpose
+        K1= {1,0,0,0,0, 0,0,0};
+        K2 = {0,1,0,0,0,0,0,0};
 
-    x1.reset();
-    x2.reset();
-    x1.set(0,1);
-    x2.set(1,1);
+        x1.reset();
+        x2.reset();
+        x1.set(0,1);
+        x2.set(1,1);
 
-#endif
+    #endif
 
     //generate a 81 X 256 randomization matrix in Z3.
     std::vector<PackedZ3<81> > Rmat(256);
     for (auto &col : Rmat) // iterate over the columns
         col.randomize();
+
+    #ifdef DEBUG //Rmat first value has been set to one(1)
+        //setting Rmat as 1
+        Rmat[0].set(0,1);
+        //std::cout<<"Rmat "<<Rmat<<std::endl;
+    #endif
 
     //call the centralized version of the new protocol
     PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nTimes);
@@ -136,7 +142,7 @@ K2= {1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
     std::cout<<"test_newprotocol/main.cpp: Calling the newprotocol test function"<<std::endl;
 #endif
 
-    PackedZ3<81> outZ3Central;//final Z3 outpu;
+    PackedZ3<81> outZ3Central;//final Z3 output;
 
     PRF_packed_centralized(K1,  x1,  K2,
                            x2,  Rmat, outZ3Central, nTimes);
@@ -146,23 +152,8 @@ K2= {1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
     PackedZ3<81>out_dist_Z3 = y1_z3;
     out_dist_Z3.add(y2_z3);//merged output from parameters
 
-    //  out_12_Z3.compute_y_out(out1Z3, out2Z3);
-
-#ifdef DEBUG
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of out_12_Z3"<<std::endl;
-    for(int c = 0; c<81;c++)
-    {
-        std::cout<<out_dist_Z3.at(c);
-    }
-    std::cout<<""<<std::endl;
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of out_Z3"<<std::endl;
-    for(int c = 0; c<81;c++)
-    {
-        std::cout<<outZ3Central.at(c);
-    }
-    std::cout<<""<<std::endl;
-#endif
-
+    std::cout<<"out_dist_Z3 "<<out_dist_Z3<<std::endl;
+    std::cout<<"outZ3Central "<<outZ3Central<<std::endl;
     if(out_dist_Z3 == outZ3Central)
         cout<<endl<<"PRF packed test: Test passed";
     else

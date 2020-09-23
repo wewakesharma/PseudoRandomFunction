@@ -22,4 +22,4 @@ void display_PRF_runtime(); //measure the runtime of entire PRF
 //                                 PackedZ3<81>& out2Z3, int i);
 
 void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                           PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81> outZ3, int nTimes);
+                           PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81>& outZ3, int nTimes);
