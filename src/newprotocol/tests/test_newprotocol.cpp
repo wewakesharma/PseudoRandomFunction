@@ -130,6 +130,10 @@ K2= {1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
 
     #ifdef DEBUG //Rmat first value has been set to one(1)
         //setting Rmat as 1
+        for (int i = 0; i < 256; i++)
+        {
+            Rmat[i].reset();
+        }
         Rmat[0].set(0,1);
         //std::cout<<"Rmat "<<Rmat<<std::endl;
     #endif

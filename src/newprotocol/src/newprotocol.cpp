@@ -65,15 +65,15 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         rw2_global.randomize(); // random sw2[i]
 
 #ifdef DEBUG
-        rK1_global= {0,1,1,1,1,0,0,0};
-        rK2_global = {1,1,1,1,1,0,0,0};
+        rK1_global= {0,0,0,0,0,0,0,0};
+        rK2_global = {1,0,0,0,0,0,0,0};
 
         rx1_global.reset();
         rx2_global.reset();
         rx1_global.set(0,1);
-        rx1_global.set(63,1);
+        rx1_global.set(63,0);
         rx2_global.set(1,1);
-        rx1_global.set(63,1);
+        rx2_global.set(63,0);
 
         rw1_global.reset();
         rw2_global.reset();
@@ -375,8 +375,8 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     fetchPreproc_party2(rx2,rw2,sw2,rK2, r0z2,r1z2);
 
     #ifdef DEBUG
-        std::cout<<"rx1 "<<rx1<<std::endl;
-        std::cout<<"rx2 "<<rx2<<std::endl;
+        std::cout<<"in PRF_new_protocol, rx1= "<<rx1<<std::endl;
+        std::cout<<"PRF_new_protocol, rx2 "<<rx2<<std::endl;
     #endif
 
     //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
