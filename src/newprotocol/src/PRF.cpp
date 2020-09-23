@@ -29,9 +29,11 @@ static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
 void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                            PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81> outZ3, int nTimes)
+                            PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81>& outZ3, int nTimes)
 {
-    cout<<endl<<"PRF.cpp/PRF_packed_centralized_res_compare()"<<endl;
+    #ifdef DEBUG
+        cout<<endl<<"PRF.cpp/PRF_packed_centralized_res_compare()"<<endl;
+    #endif
     //1.perform X = x1+ x2 (on vectors)
     PackedZ2<N_COLS> X = x1; //declare a variable
     //X.add(x1); x = x1
@@ -61,8 +63,6 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     //outKX_Z3.makeFromBits(hi.bits, outKX.bits);
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
-
-
 
 }
 

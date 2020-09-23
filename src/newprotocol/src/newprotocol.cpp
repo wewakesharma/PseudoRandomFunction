@@ -84,12 +84,9 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         //rx_global.add(rx2_global); //rx = rx1 ^ rx2
 
         //3.generate random rw1, rw2 and rw = rw1 ^ rw2
-
         rw_global = rw1_global; //rw = rw1
         rw_global ^= rw2_global;
         //rw_global.add(rw2_global); //rw += rw2
-
-
 
         for (int i = 0; i < rK_global.size(); i++)
         {
@@ -104,6 +101,11 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         sw_global = sw1_global;
         sw_global ^= sw2_global;
         //sw_global.add(sw2_global);
+#ifdef DEBUG
+        std::cout<<"sw_global "<<sw_global<<std::endl;
+        std::cout<<"sw1_global "<<sw1_global<<std::endl;
+        std::cout<<"sw2_global "<<sw2_global<<std::endl;
+#endif
 
     }
 
@@ -137,37 +139,45 @@ void preProc_mod3_dm2020(unsigned int nTimes)
     bool r0z2m, r0z2l, r1z2m, r1z2l;
     //r0z1m and r0z1l is share of party 1
     bool r0z1m, r0z1l, r1z1m, r1z1l, r0zm, r0zl, r1zm, r1zl;//computing second parties r0z and r1z
-    for(int z3_count = 0; z3_count < N_SIZE; z3_count++) //for the entire 256 bits
+
+
+    /*for(int z3_count = 0; z3_count < N_SIZE; z3_count++) //for the entire 256 bits
     {
         //calculate r0zm and r0zl
         r0zm = r0z_global.second.at(z3_count);//the r0zm
         r0zl = r0z_global.first.at(z3_count); //the r0zl
         r0z1m = r0z1_global.second.at(z3_count); //first party r0zm
         r0z1l = r0z1_global.first.at(z3_count); //first party r0zl
-        second_bit = ((~r0zm) & (~r0zl) & r0z1m & (~r0z1l)) | ((~r0zm) & r0zl & (~r0z1m) & r0z1l);
+        second_bit = ((~r0zm) & (~r0zl) & r0z1m & (~r0z1l));
         first_bit = ((~r0zm) & (~r0zl) & (~r0z1m) & r0z1l) | ((~r0zm) & r0zl & (~r0z1m) & (~r0z1l));
         r0z2_global.first.set(z3_count, first_bit);
         r0z2_global.second.set(z3_count, second_bit);
+
         //calculate r1zm and r1zl
-        r1zm = r1z_global.second.at(z3_count);//the r0zm
-        r1zl = r1z_global.first.at(z3_count); //the r0zl
-        r1z1m = r1z1_global.second.at(z3_count); //first party r0zm
-        r1z1l = r1z1_global.first.at(z3_count); //first party r0zl
-        second_bit = ((~r1zm) & (~r1zl) & r1z1m & (~r1z1l)) | ((~r1zm) & r1zl & (~r1z1m) & r1z1l);
+        r1zm = r1z_global.second.at(z3_count);//the r1zm
+        r1zl = r1z_global.first.at(z3_count); //the r1zl
+        r1z1m = r1z1_global.second.at(z3_count); //first party r1zm
+        r1z1l = r1z1_global.first.at(z3_count); //first party r1zl
+        second_bit = ((~r1zm) & (~r1zl) & r1z1m & (~r1z1l));
         first_bit = ((~r1zm) & (~r1zl) & (~r1z1m) & r1z1l) | ((~r1zm) & r1zl & (~r1z1m) & (~r1z1l));
         r1z2_global.first.set(z3_count, first_bit);
         r1z2_global.second.set(z3_count, second_bit);
-    }
+    }*/
+
 
     //=============================================================
 
-/*
+
     //perform xor operation and calculate r0z2 and r1z2; share of r0z and r1z for party 2
-    r0z2_global = r0z1_global;    //r0z2 = r0z ^ r0z1
-    r0z2_global ^= r0z_global;
+    r0z2_global = r0z_global;    //r0z2 = r0z ^ r0z1
+    r0z2_global.subtract(r0z1_global);
 
     r1z2_global = r1z1_global;    //r1z2 = r1z ^ r1z1
-    r1z2_global ^= r1z_global;*/
+    r1z2_global.subtract(r1z_global);
+
+    std::cout<<"r0z "<<r0z_global<<std::endl;
+    std::cout<<"r0z1 "<<r0z1_global<<std::endl;
+    std::cout<<"r0z2 "<<r0z2_global<<std::endl;
 }
 
 
@@ -345,8 +355,10 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     fetchPreproc_party1(rx1,rw1,sw1,rK1,r0z1,r1z1);
     fetchPreproc_party2(rx2,rw2,sw2,rK2, r0z2,r1z2);
 
-    std::cout<<"rx1 "<<rx1<<std::endl;
-    std::cout<<"rx1 "<<rx1<<std::endl;
+    #ifdef DEBUG
+        std::cout<<"rx1 "<<rx1<<std::endl;
+        std::cout<<"rx2 "<<rx2<<std::endl;
+    #endif
 
     //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
     PackedZ2<N_COLS> x1_mask,x_mask, x2_mask;
@@ -361,6 +373,7 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
 
 #ifdef DEBUG
+
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 1 ends"<<std::endl;
 #endif
 
@@ -396,23 +409,6 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
     party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask);
     party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
-
-    //y_out_z3.compute_y_out(y1_z3,y2_z3); //merging the output by both the parties
-
-    #ifdef DEBUG
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z"<<std::endl;
-    for(int c = 0; c<81;c++)
-    {
-        std::cout<<y1_z3.at(c);
-    }
-    std::cout<<""<<std::endl;
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of r0z1"<<std::endl;
-    for(int c = 0; c<81;c++)
-    {
-        std::cout<<y2_z3.at(c);
-    }
-    std::cout<<""<<std::endl;
-    #endif
 
     std::cout<<""<<std::endl;
    /*
