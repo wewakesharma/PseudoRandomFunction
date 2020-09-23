@@ -117,52 +117,36 @@ void preProc_mod2_dm2020(unsigned int nTimes)
 void preProc_mod3_dm2020(unsigned int nTimes)
 {
     //Cast rw and 1-rw  to mod3
-    int sw_val,not_sw_val;
-    for(int z3_count = 0; z3_count < N_SIZE; z3_count++)
-    {
-        sw_val = (unsigned int)sw_global.at(z3_count);
-        not_sw_val = 1 - sw_val;
-        r0z_global.second.set(z3_count,0);   //r0z_msb = 0
-        r0z_global.first.set(z3_count, sw_val); //r0z_lsb = rw
-        r1z_global.second.set(z3_count, 0);  //r1z_msb = 0
-        r1z_global.first.set(z3_count, not_sw_val);    //r1z_lsb = rw
-    }
+    //single line assignment of r0z_global and r1z_global
+    std::vector<unsigned int> sw_int; //array to act as a bridge between packedZ2 to packedZ3 conversion
+    sw_global.toArray(sw_int); //convert packedZ2 to an array
+    r0z_global.fromArray(sw_int); //convert an array to packedZ3
 
+    std::vector<unsigned int> not_sw_int;//to store ~sw_val
+    PackedZ2<N_COLS> not_sw_global;//to store ~sw_val
+    not_sw_global = sw_global; //copy the value of sw_global
+    not_sw_global.negate(); //negate the values
+    not_sw_global.toArray(not_sw_int); //convert the values in an array
+    r1z_global.fromArray(not_sw_int);   //convert array into packedZ3 for further processing
+
+#ifdef DEBUG
+    std::cout<<"sw_global "<<sw_global<<std::endl;
+    std::cout<<"r0z_global "<<r0z_global<<std::endl;
+    std::cout<<"not_sw_global "<<not_sw_global<<std::endl;
+    std::cout<<"r1z_global "<<r1z_global<<std::endl;
+    //r0z_global = sw_global;
+    //check the value for
+#endif
     //generate random values for r0z1 and r1z1; share of r0z and r1z for party 1
     r0z1_global.randomize();
     r1z1_global.randomize();
 
 
-    //=====================EXPERIMENTAL method: compute r0z2m, r0z2l========================================
     bool first_bit, second_bit;
     //r0zm and r0zl is share of party 2
     bool r0z2m, r0z2l, r1z2m, r1z2l;
     //r0z1m and r0z1l is share of party 1
     bool r0z1m, r0z1l, r1z1m, r1z1l, r0zm, r0zl, r1zm, r1zl;//computing second parties r0z and r1z
-
-
-    /*for(int z3_count = 0; z3_count < N_SIZE; z3_count++) //for the entire 256 bits
-    {
-        //calculate r0zm and r0zl
-        r0zm = r0z_global.second.at(z3_count);//the r0zm
-        r0zl = r0z_global.first.at(z3_count); //the r0zl
-        r0z1m = r0z1_global.second.at(z3_count); //first party r0zm
-        r0z1l = r0z1_global.first.at(z3_count); //first party r0zl
-        second_bit = ((~r0zm) & (~r0zl) & r0z1m & (~r0z1l));
-        first_bit = ((~r0zm) & (~r0zl) & (~r0z1m) & r0z1l) | ((~r0zm) & r0zl & (~r0z1m) & (~r0z1l));
-        r0z2_global.first.set(z3_count, first_bit);
-        r0z2_global.second.set(z3_count, second_bit);
-
-        //calculate r1zm and r1zl
-        r1zm = r1z_global.second.at(z3_count);//the r1zm
-        r1zl = r1z_global.first.at(z3_count); //the r1zl
-        r1z1m = r1z1_global.second.at(z3_count); //first party r1zm
-        r1z1l = r1z1_global.first.at(z3_count); //first party r1zl
-        second_bit = ((~r1zm) & (~r1zl) & r1z1m & (~r1z1l));
-        first_bit = ((~r1zm) & (~r1zl) & (~r1z1m) & r1z1l) | ((~r1zm) & r1zl & (~r1z1m) & (~r1z1l));
-        r1z2_global.first.set(z3_count, first_bit);
-        r1z2_global.second.set(z3_count, second_bit);
-    }*/
 
 
     //=============================================================
@@ -175,9 +159,12 @@ void preProc_mod3_dm2020(unsigned int nTimes)
     r1z2_global = r1z1_global;    //r1z2 = r1z ^ r1z1
     r1z2_global.subtract(r1z_global);
 
+#ifdef DEBUG//print the values of r0z, r0z1  and r0z2
     std::cout<<"r0z "<<r0z_global<<std::endl;
     std::cout<<"r0z1 "<<r0z1_global<<std::endl;
     std::cout<<"r0z2 "<<r0z2_global<<std::endl;
+#endif
+
 }
 
 
