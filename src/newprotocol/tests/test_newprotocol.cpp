@@ -82,7 +82,7 @@ int main()
 
     #ifdef DEBUG//K1, K2 , x1 and x2 are set to 1 for debugging purpose
         K1= {1,0,0,0,0,0,0,0};
-        K2 = {0,1,0,0,0,0,0,0};
+        K2 = {0,0,0,0,0,0,0,0};
 
         x1.reset();
         x2.reset();
