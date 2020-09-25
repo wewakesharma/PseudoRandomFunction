@@ -86,8 +86,8 @@ int main()
 
         x1.reset();
         x2.reset();
-        x1.set(0,1);
-        x2.set(1,1);
+     //   x1.set(0,1);
+       // x2.set(1,1);
 
     #endif
 

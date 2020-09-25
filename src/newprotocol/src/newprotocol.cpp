@@ -66,19 +66,19 @@ void preProc_mod2_dm2020(unsigned int nTimes)
 
 #ifdef DEBUG
         rK1_global= {1,0,0,0,0,0,0,0};
-        rK2_global = {0,1,0,0,0,0,0,0};
+        rK2_global = {0,0,0,0,0,0,0,0};
 
         rx1_global.reset();
         rx2_global.reset();
         rx1_global.set(0,1);
         //rx1_global.set(63,0);
-        rx2_global.set(1,1);
+     //   rx2_global.set(1,1);
         //rx2_global.set(63,0);
 
         rw1_global.reset();
         rw2_global.reset();
         rw1_global.set(0,1);
-        rw2_global.set(1,1);
+     //   rw2_global.set(1,1);
 
 #endif
         rx_global = rx1_global; //rx = rx1
@@ -134,9 +134,9 @@ void preProc_mod3_dm2020(unsigned int nTimes)
 
     #ifdef DEBUG
         r0z1_global.reset();
-        r0z1_global.set(0,1);
+//        r0z1_global.set(0,1);
         r1z1_global.reset();
-        r1z1_global.set(1,1);
+ //       r1z1_global.set(1,1);
     #endif
     //perform xor operation and calculate r0z2 and r1z2; share of r0z and r1z for party 2
     r0z2_global = r0z_global;    //r0z2 = r0z ^ r0z1
@@ -443,8 +443,15 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     PackedZ2<N_COLS> outKX;
     outKX.toeplitzByVec(K,X);
 
-    w_mask = outKX;
-    w_mask ^= rw_global;
+    PackedZ2<N_COLS> w_maskComp;
+
+    w_maskComp = outKX;
+    w_maskComp ^= rw_global;
+    if (w_mask == w_maskComp) {
+        std::cout << "in newprotocol.cpp/PRF_new_protocol_central, w_mask = " << w_mask << std::endl;
+        std::cout << "in newprotocol.cpp/PRF_new_protocol_central, w_maskComp = " << w_maskComp << std::endl;
+    }
+
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): w_mask using Kx+rw"<<w_mask<<std::endl;
 
     #endif
@@ -462,8 +469,8 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
     //Round 3: Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
 
-    PackedZ3<N_SIZE> z1, z2;
-    PackedZ3<N_SIZE> res1, res2, res; //stores the mux result of both the parties
+//    PackedZ3<N_SIZE> z1, z2;
+//    PackedZ3<N_SIZE> res1, res2, res; //stores the mux result of both the parties
     //PackedZ3<81> y_out_z3; //y_out = y1 + y2
 
 
