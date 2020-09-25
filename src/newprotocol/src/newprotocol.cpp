@@ -61,8 +61,8 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         for (auto& w : rK2_global) w = randomWord(); //creating 8 random vector for rk2
         rK2_global[rK2_global.size() - 1] &= topelitzMask;
 
-        rw1_global.randomize(); // random rw1[i]
-        rw2_global.randomize(); // random rw2[i]
+        sw1_global.randomize(); // random rw1[i]
+        sw2_global.randomize(); // random rw2[i]
 
 #ifdef DEBUG
         rK1_global= {1,0,0,0,0,0,0,0};
@@ -75,36 +75,36 @@ void preProc_mod2_dm2020(unsigned int nTimes)
      //   rx2_global.set(1,1);
         //rx2_global.set(63,0);
 
-        rw1_global.reset();
-        rw2_global.reset();
-        rw1_global.set(0,1);
+        sw1_global.reset();
+        sw2_global.reset();
+        sw1_global.set(0,1);
      //   rw2_global.set(1,1);
 
 #endif
         rx_global = rx1_global; //rx = rx1
         rx_global ^= rx2_global;
 
-        //3.generate random rw1, rw2 and rw = rw1 ^ rw2
-        rw_global = rw1_global; //rw = rw1
-        rw_global ^= rw2_global;
+        //3.generate random sw1,sw2 and sw = sw1 ^ sw2
+        sw_global = sw1_global; //rw = rw1
+        sw_global ^= sw2_global;
 
         for (int i = 0; i < rK_global.size(); i++)
         {
             rK_global[i] = rK1_global[i] ^ rK2_global[i];   //rk = rk1 ^ rk2
         }
 
-        //5.Calculate sw = rk_global * rx_global ^ rw_global
-        sw1_global.toeplitzByVec(rK1_global,rx1_global); //sw1 = rk1 * rx1
-        sw1_global ^= rw1_global;   //sw1 = sw1 ^ rw1
-        sw2_global.toeplitzByVec(rK2_global,rx2_global); //sw2 = rk2 * rx2
-        sw2_global ^= rw2_global;   //sw2 = sw2 ^ rw2
-        sw_global = sw1_global; //sw = sw1 ^ sw2
-        sw_global ^= sw2_global;
+        //5.Calculate rw = rk_global * rx_global ^ sw_global
+        rw1_global.toeplitzByVec(rK1_global,rx1_global); //sw1 = rk1 * rx1
+        rw1_global ^= sw1_global;   //sw1 = sw1 ^ rw1
+        rw2_global.toeplitzByVec(rK2_global,rx2_global); //sw2 = rk2 * rx2
+        rw2_global ^= sw2_global;   //sw2 = sw2 ^ rw2
+        rw_global = rw1_global; //sw = sw1 ^ sw2
+        rw_global ^= rw2_global;
 
 #ifdef DEBUG
-        std::cout<<"sw_global "<<sw_global<<std::endl;
-        std::cout<<"sw1_global "<<sw1_global<<std::endl;
-        std::cout<<"sw2_global "<<sw2_global<<std::endl;
+        std::cout<<"sw_global "<<rw_global<<std::endl;
+        std::cout<<"sw1_global "<<rw1_global<<std::endl;
+        std::cout<<"sw2_global "<<rw2_global<<std::endl;
 #endif
 
     }
@@ -117,16 +117,16 @@ void preProc_mod2_dm2020(unsigned int nTimes)
 void preProc_mod3_dm2020(unsigned int nTimes)
 {
     //Cast rw and 1-rw  to mod3; single line assignment of r0z_global and r1z_global
-    std::vector<unsigned int> sw_int; //array to act as a bridge between packedZ2 to packedZ3 conversion
-    sw_global.toArray(sw_int); //convert packedZ2 to an array
-    r0z_global.fromArray(sw_int); //convert an array to packedZ3
+    std::vector<unsigned int> rw_int; //array to act as a bridge between packedZ2 to packedZ3 conversion
+    rw_global.toArray(rw_int); //convert packedZ2 to an array
+    r0z_global.fromArray(rw_int); //convert an array to packedZ3
 
-    std::vector<unsigned int> not_sw_int;//to store ~sw_val
-    PackedZ2<N_COLS> not_sw_global;//to store ~sw_val
-    not_sw_global = sw_global; //copy the value of sw_global
-    not_sw_global.negate(); //negate the values
-    not_sw_global.toArray(not_sw_int); //convert the values in an array
-    r1z_global.fromArray(not_sw_int);   //convert array into packedZ3 for further processing
+    std::vector<unsigned int> not_rw_int;//to store ~sw_val
+    PackedZ2<N_COLS> not_rw_global;//to store ~sw_val
+    not_rw_global = sw_global; //copy the value of sw_global
+    not_rw_global.negate(); //negate the values
+    not_rw_global.toArray(not_rw_int); //convert the values in an array
+    r1z_global.fromArray(not_rw_int);   //convert array into packedZ3 for further processing
 
     //generate random values for r0z1 and r1z1; share of r0z and r1z for party 1
     r0z1_global.randomize();
@@ -149,11 +149,11 @@ void preProc_mod3_dm2020(unsigned int nTimes)
 #ifdef DEBUG//print the values of r0z, r0z1  and r0z2
     std::cout<<"newprotocol.cpp/preProc_mod3_dm2020():"<<std::endl;
 
-    std::cout<<"sw_global "<<sw_global<<std::endl;
+    std::cout<<"sw_global "<<rw_global<<std::endl;
     std::cout<<"r0z "<<r0z_global<<std::endl;
     std::cout<<"r0z1 "<<r0z1_global<<std::endl;
     std::cout<<"r0z2 "<<r0z2_global<<std::endl;
-    std::cout<<"not_sw_global "<<not_sw_global<<std::endl;
+    std::cout<<"not_sw_global "<<not_rw_global<<std::endl;
     std::cout<<"r1z "<<r1z_global<<std::endl;
     std::cout<<"r1z1 "<<r1z1_global<<std::endl;
     std::cout<<"r1z2 "<<r1z2_global<<std::endl;
@@ -365,8 +365,8 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     //local declarations=======9/15
     std::vector<uint64_t> rK1(toeplitzWords), rK2(toeplitzWords), rK(toeplitzWords);
     PackedZ2<N_COLS> rx1, rx2, rx; //mask for input
-    PackedZ2<N_COLS> sw1, sw2, sw; //sw = rK * rx + rw
-    PackedZ2<N_COLS> rw1, rw2, rw;
+    PackedZ2<N_COLS> sw1, sw2, sw;
+    PackedZ2<N_COLS> rw1, rw2, rw;//rw = rK * rx + sw
 
     //declare a variable in Z3 called r0z and r1z
     PackedZ3<N_SIZE>r0z, r1z;
