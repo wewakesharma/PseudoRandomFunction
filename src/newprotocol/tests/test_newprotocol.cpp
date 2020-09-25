@@ -81,13 +81,14 @@ int main()
     x2.randomize();
 
     #ifdef DEBUG//K1, K2 , x1 and x2 are set to 1 for debugging purpose
-        K1= {1,0,0,0,0,0,0,0};
-        K2 = {0,0,0,0,0,0,0,0};
+        K1= {1,1,0,0,0,0,0,0};
+        K2 = {0,1,1,0,0,0,0,0};
 
         x1.reset();
         x2.reset();
-     //   x1.set(0,1);
-       // x2.set(1,1);
+        x1.set(0,1);
+        x1.set(2,1);
+        x2.set(1,1);
 
     #endif
 
@@ -102,7 +103,8 @@ int main()
         {
             Rmat[i].reset();
         }
-        Rmat[0].set(0,1);
+        Rmat[0].set(0,2);
+        Rmat[0].set(1,2);
         //std::cout<<"Rmat "<<Rmat<<std::endl;
     #endif
 

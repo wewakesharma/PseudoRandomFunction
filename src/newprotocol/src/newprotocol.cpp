@@ -66,19 +66,21 @@ void preProc_mod2_dm2020(unsigned int nTimes)
 
 #ifdef DEBUG
         rK1_global= {1,0,0,0,0,0,0,0};
-        rK2_global = {0,0,0,0,0,0,0,0};
+        rK2_global = {0,1,1,0,0,0,0,0};
 
         rx1_global.reset();
         rx2_global.reset();
         rx1_global.set(0,1);
         //rx1_global.set(63,0);
-     //   rx2_global.set(1,1);
+        rx2_global.set(1,1);
+        rx2_global.set(2,1);
+        rx2_global.set(33,1);
         //rx2_global.set(63,0);
 
         sw1_global.reset();
         sw2_global.reset();
         sw1_global.set(0,1);
-     //   rw2_global.set(1,1);
+        sw2_global.set(1,1);
 
 #endif
         rx_global = rx1_global; //rx = rx1
@@ -123,7 +125,7 @@ void preProc_mod3_dm2020(unsigned int nTimes)
 
     std::vector<unsigned int> not_rw_int;//to store ~sw_val
     PackedZ2<N_COLS> not_rw_global;//to store ~sw_val
-    not_rw_global = sw_global; //copy the value of sw_global
+    not_rw_global = rw_global; //copy the value of sw_global
     not_rw_global.negate(); //negate the values
     not_rw_global.toArray(not_rw_int); //convert the values in an array
     r1z_global.fromArray(not_rw_int);   //convert array into packedZ3 for further processing
@@ -134,9 +136,10 @@ void preProc_mod3_dm2020(unsigned int nTimes)
 
     #ifdef DEBUG
         r0z1_global.reset();
-//        r0z1_global.set(0,1);
+        r0z1_global.set(0,2);
+        r0z1_global.set(2,2);
         r1z1_global.reset();
- //       r1z1_global.set(1,1);
+        r1z1_global.set(1,2);
     #endif
     //perform xor operation and calculate r0z2 and r1z2; share of r0z and r1z for party 2
     r0z2_global = r0z_global;    //r0z2 = r0z ^ r0z1
