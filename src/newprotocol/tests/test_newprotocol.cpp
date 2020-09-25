@@ -10,30 +10,13 @@
 #include "OT.hpp"
 #include "Timing.hpp"
 #include "newprotocol.h"
+#include "newprotocol_test.h"
 #include <chrono>
 
 using namespace std;
 
 
-
-//
-// Created by Vivek Sharma on 9/16/20.
-//
-
-#include <iostream>
-#include <cstdlib>
-#include "packedMod2.hpp"
-#include "packedMod3.hpp"
-#include "mains.hpp"
-//#include "PRF.hpp"
-#include "OT.hpp"
-#include "Timing.hpp"
-#include "newprotocol.h"
-#include "newprotocol_test.h"
-#include <chrono>
-
-
-
+/*
 void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                                         PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& y1_z3,
                                         PackedZ3<81>& y2_z3, int nTimes)
@@ -68,7 +51,7 @@ void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_CO
         cout<<endl<<"PRF packed test: Test passed";
     else
         cout<<endl<<"PRF packed test: Test fails";
-}
+}*/
 
 /*
  * Main driver program to start the execution of newprotocol
@@ -80,21 +63,6 @@ int main()
     //declaring the inputs
     int nTimes = 1;//keep it constant for 1 run
     std::vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);//key shares of parties
-
-
-    /*
-0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-            0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-            0,0,0,0,1, 0,0,0,0,0,
-            0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-        0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0};
-
-K2= {1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-     0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-     0,0,0,0,1, 0,0,0,0,0,
-     0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-     0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0};
-     */
     PackedZ2<N_COLS> x1, x2; //input shares of parties
     PackedZ3<81> y_out_z3, y1_z3, y2_z3;//output of new protocol
 
@@ -113,7 +81,7 @@ K2= {1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
     x2.randomize();
 
     #ifdef DEBUG//K1, K2 , x1 and x2 are set to 1 for debugging purpose
-        K1= {1,0,0,0,0, 0,0,0};
+        K1= {1,0,0,0,0,0,0,0};
         K2 = {0,1,0,0,0,0,0,0};
 
         x1.reset();
@@ -138,7 +106,14 @@ K2= {1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
         //std::cout<<"Rmat "<<Rmat<<std::endl;
     #endif
 
-    //call the centralized version of the new protocol
+    /*
+     * Centralized implementation of the PRF ((K*x) * Rmat)
+     */
+    PackedZ3<81> outZ3Central;//final centralized PRF Z3 output;
+    PRF_packed_centralized(K1,  x1,  K2,
+                           x2,  Rmat, outZ3Central, nTimes);
+
+    //calling the distributed version of the new PRF protocol
     PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nTimes);
 
 #ifdef DEBUG
@@ -146,10 +121,9 @@ K2= {1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
     std::cout<<"test_newprotocol/main.cpp: Calling the newprotocol test function"<<std::endl;
 #endif
 
-    PackedZ3<81> outZ3Central;//final Z3 output;
 
-    PRF_packed_centralized(K1,  x1,  K2,
-                           x2,  Rmat, outZ3Central, nTimes);
+
+
 
 //    PRF_packed_centralized_res_compare(K1,x1,K2,x2,Rmat,y1_z3,y2_z3,nTimes);
 

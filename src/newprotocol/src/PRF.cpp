@@ -34,36 +34,46 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     #ifdef DEBUG
         cout<<endl<<"PRF.cpp/PRF_packed_centralized_res_compare()"<<endl;
     #endif
+
     //1.perform X = x1+ x2 (on vectors)
     PackedZ2<N_COLS> X = x1; //declare a variable
-    //X.add(x1); x = x1
-    X.add(x2);  //x = x1 + x2
-
+    X ^= x2;    //x = x1 + x2
 
     //2.perform K = k1 + k2 (on matrix)
-
     std::vector<uint64_t> K(toeplitzWords);
     for (int i = 0; i < K1.size(); i++)
     {
         K[i] = K1[i] ^ K2[i];
     }
+    #ifdef DEBUG
+        cout<<"x "<<X<<endl;
+        cout<<"K "<<K<<endl;
+    #endif
+
     PackedZ2<N_COLS> outKX;
     outKX.toeplitzByVec(K,X);
-
-    PackedZ3<256> outKX_Z3;//packed Z3
+    #ifdef DEBUG
+        cout<<"outKX "<<outKX<<endl;
+    #endif
 
     std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
     outKX.toArray(outKX_unsgn);
 
-
+    PackedZ3<256> outKX_Z3;//packed Z3
     //PackedZ3<81> outZ3;//final Z3 output
     outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
 
+    #ifdef DEBUG
+        cout<<"Both outKX and outKX_Z3 must be same"<<endl;
+        cout<<"outKX_Z3 "<<outKX_Z3<<endl;
+    #endif
     //PackedZ2<N_SIZE> hi; //will be initialized to 0
     //outKX_Z3.makeFromBits(hi.bits, outKX.bits);
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
-
+    #ifdef DEBUG
+        cout<<"outZ3 "<<outZ3<<endl;
+    #endif
 }
 
 /*
