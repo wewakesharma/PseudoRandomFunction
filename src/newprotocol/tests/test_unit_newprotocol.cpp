@@ -14,6 +14,23 @@
 #include "newprotocol_test.h"
 #include <chrono>
 
+
+void test_round1(PackedZ2<N_COLS>& X,PackedZ2<N_COLS>& rx, PackedZ2<N_COLS>& x_mask)
+{
+    PackedZ2<N_COLS> X_rx;
+    X_rx = X;
+    X_rx ^= rx;
+    std::cout<<"X "<<X<<std::endl;
+    std::cout<<"rx "<<rx<<std::endl;
+    std::cout<<"X_rx "<<X_rx<<std::endl;
+    std::cout<<"x_mask "<<x_mask<<std::endl;
+    if(X_rx == x_mask)
+        std::cout<<"Round 1: Test passed"<<std::endl;
+    else
+        std::cout<<"Round 1: Test fails"<<std::endl;
+
+}
+
 void test_round3(std::vector<uint64_t>& K, PackedZ2<N_COLS>& X, PackedZ3<N_SIZE>& res1, PackedZ3<N_SIZE>& res2)
 {
     PackedZ2<N_COLS> outKX;

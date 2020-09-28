@@ -399,14 +399,11 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 #endif
 
     //Round 2: Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
-
     PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
     party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, sw1);
     party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, sw2);
 
     compute_wmask(w_mask, w1_mask, w2_mask);
-
-
 
 #ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 ends"<<std::endl;
@@ -416,13 +413,6 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 #ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 begins"<<std::endl;
 #endif
-
-    //Round 3: Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
-
-//    PackedZ3<N_SIZE> z1, z2;
-//    PackedZ3<N_SIZE> res1, res2, res; //stores the mux result of both the parties
-    //PackedZ3<81> y_out_z3; //y_out = y1 + y2
-
 
     party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask);
     party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
@@ -453,7 +443,9 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     std::cout<<"K "<<K<<std::endl;
     std::cout<<"X "<<X<<std::endl;
     std::cout<<"rw "<<rw_global<<std::endl;
+    std::cout<<"w_mask "<<w_mask<<std::endl;
 
+    test_round1(X, rx_global, x_mask);
     test_round2(K, X, rw_global, w_mask);
     test_round3(K,X,res1_global,res2_global);
 
