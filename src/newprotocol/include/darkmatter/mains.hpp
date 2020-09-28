@@ -1,8 +1,9 @@
 #ifndef _EXECUTION_HEADER_H_
 #define _EXECUTION_HEADER_H_
 
-#define DEBUG
+//#define DEBUG
 
+#define UNIT_NP
 
 // Uncomment one and only one
 //#define TEST_PHASE1

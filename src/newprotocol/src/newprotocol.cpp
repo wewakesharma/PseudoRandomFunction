@@ -14,6 +14,7 @@
 #include "Timing.hpp"
 #include <chrono>
 #include "packed_PRF_central.h"
+#include "newprotocol_test.h"
 #include "PRF.hpp"
 
 // in Toeplitz-by-x.hpp
@@ -36,6 +37,7 @@ PackedZ2<N_COLS> rw1_global, rw2_global, rw_global; //random
 PackedZ3<N_SIZE>r0z_global, r1z_global;
 PackedZ3<N_SIZE> r0z1_global, r0z2_global, r1z1_global, r1z2_global;
 
+PackedZ3<N_SIZE> res1_global, res2_global;
 
 /*
  * Preprocessing: Generates rx(and its shares rx1, rx2), rK(its shares rK1, rK2),
@@ -61,8 +63,8 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         for (auto& w : rK2_global) w = randomWord(); //creating 8 random vector for rk2
         rK2_global[rK2_global.size() - 1] &= topelitzMask;
 
-        sw1_global.randomize(); // random rw1[i]
-        sw2_global.randomize(); // random rw2[i]
+        sw1_global.randomize(); // random sw1[i]
+        sw2_global.randomize(); // random sw2[i]
 
 #ifdef DEBUG
         rK1_global= {1,0,0,0,0,0,0,0};
@@ -71,11 +73,9 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         rx1_global.reset();
         rx2_global.reset();
         rx1_global.set(0,1);
-        //rx1_global.set(63,0);
         rx2_global.set(1,1);
         rx2_global.set(2,1);
         rx2_global.set(33,1);
-        //rx2_global.set(63,0);
 
         sw1_global.reset();
         sw2_global.reset();
@@ -87,7 +87,7 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         rx_global ^= rx2_global;
 
         //3.generate random sw1,sw2 and sw = sw1 ^ sw2
-        sw_global = sw1_global; //rw = rw1
+        sw_global = sw1_global; //sw = sw1
         sw_global ^= sw2_global;
 
         for (int i = 0; i < rK_global.size(); i++)
@@ -104,9 +104,9 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         rw_global ^= rw2_global;
 
 #ifdef DEBUG
-        std::cout<<"sw_global "<<rw_global<<std::endl;
-        std::cout<<"sw1_global "<<rw1_global<<std::endl;
-        std::cout<<"sw2_global "<<rw2_global<<std::endl;
+        std::cout<<"rw_global "<<rw_global<<std::endl;
+        std::cout<<"rw1_global "<<rw1_global<<std::endl;
+        std::cout<<"rw2_global "<<rw2_global<<std::endl;
 #endif
 
     }
@@ -217,7 +217,6 @@ void party2_round_1(PackedZ2<N_COLS>& x2_mask, std::vector<uint64_t>& K2_mask,
         K2_mask[word_count] = K2[word_count] ^ rK2[word_count];
     }
 
- //-commented to reduce clutter
 #ifdef DEBUG
     std::cout<<"newprotocol.cpp/party2_round_1():"<<std::endl;
     std::cout<<"x2 "<<x2<<std::endl;
@@ -313,6 +312,10 @@ void party1_round3(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
     res1.mux(r1z1, w_mask.bits); //w_mask selects r0z if it is 0 else r1z
 
+    #ifdef UNIT_NP
+        res1_global = res1;
+    #endif
+
     y1_z3.matByVec(Rmat, res1); //party 1 computes y1 =  M * res1
 #ifdef DEBUG
     std::cout<<"newprotocol.cpp/party1_round3(): "<<std::endl;
@@ -331,31 +334,16 @@ void party2_round3(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
     res2.mux(r1z2, w_mask.bits); //w_mask selects r0z if it is 0 else r1z
 
-    //party computes y2 = M* res2
-    y2_z3.matByVec(Rmat, res2);
+    #ifdef UNIT_NP
+        res2_global = res2;
+    #endif
+
+    y2_z3.matByVec(Rmat, res2); //party 2 computes y2 = M* res2
 #ifdef DEBUG
     std::cout<<"newprotocol.cpp/party2_round3(): "<<std::endl;
     std::cout<<"y2_z3 "<<y2_z3<<std::endl;
 #endif
 }
-
-/*
-void compute_y_out(PackedZ3<81>&  y_out_z3, PackedZ3<81>& y1_z3, PackedZ3<81>& y2_z3)
-{
-    //==============EXPERIMENTAL MOD 3 CALUCLATION(without the loop)==============
-
-    y_out_z3.first = (y1_z3.second.negate() & y2_z3.second.negate()) &
-            (y1_z3.first.negate() && y2_z3.first) | (y1_z3.first & y2_z3.first.negate()) |
-            (y1_z3.second & y1_z3.first.negate()) & (y2_z3.second & y2_z3.first.negate());
-
-    y_out_z3.second = (y1_z3.first.negate() & y2_z3.first.negate()) &
-                     (y1_z3.second.negate() & y2_z3.second) | (y1_z3.second & y2_z3.second.negate()) |
-                     (y1_z3.second.negate() & y1_z3.first) & (y2_z3.second.negate() & y2_z3.first);
-    //====================================================================
-    //calculating y = y1 + y2
-    y_out_z3 = y1_z3;
-    y_out_z3 ^= (y2_z3);
-}*/
 
 /*
  * This function generates the variables and perform computation to simulate centralized
@@ -365,14 +353,13 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
                               std::vector<uint64_t>& K2, PackedZ2<N_COLS>& x2,
                               std::vector<PackedZ3<81> >& Rmat, PackedZ3<81>& y1_z3, PackedZ3<81>& y2_z3, int nTimes)
 {
-    //local declarations=======9/15
     std::vector<uint64_t> rK1(toeplitzWords), rK2(toeplitzWords), rK(toeplitzWords);
     PackedZ2<N_COLS> rx1, rx2, rx; //mask for input
     PackedZ2<N_COLS> sw1, sw2, sw;
     PackedZ2<N_COLS> rw1, rw2, rw;//rw = rK * rx + sw
 
     //declare a variable in Z3 called r0z and r1z
-    PackedZ3<N_SIZE>r0z, r1z;
+    PackedZ3<N_SIZE> r0z, r1z;
     PackedZ3<N_SIZE> r0z1, r0z2, r1z1, r1z2;
 
     PackedZ3<81> y_out_z3;//output of each parties
@@ -392,7 +379,7 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     #endif
 
     //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
-    PackedZ2<N_COLS> x1_mask,x_mask, x2_mask;
+    PackedZ2<N_COLS> x1_mask, x_mask, x2_mask;
     std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toeplitzWords);
 
     party1_round_1(x1_mask,K1_mask,x1,rx1,K1,rK1);
@@ -402,13 +389,10 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     //both the parties are supposed to exchange their mask values
     compute_input_mask(x_mask, K_mask, x1_mask, x2_mask, K1_mask, K2_mask);
 
-
 #ifdef DEBUG
 
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 1 ends"<<std::endl;
 #endif
-
-
 
 #ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 begins"<<std::endl;
@@ -422,43 +406,6 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
     compute_wmask(w_mask, w1_mask, w2_mask);
 
-    //========================experimental-debug================================
-
-    #ifdef DEBUG
-    //Print the value of w_mask by compute_wmask()
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): w_mask using compute mask function"<<w_mask<<std::endl;
-    /*
-     * As an experiment to debug, we will compute w_mask as following
-     * w_mask =  K*x + rw
-     * this value will be plugged into the mux function
-     */
-
-    //merging K and X
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): replacing value of w_mask by direct calculation"<<std::endl;
-    PackedZ2<N_COLS> X = x1; //declare a variable
-    X ^= x2;    //x = x1 + x2
-
-    //2.perform K = k1 + k2 (on matrix)
-    std::vector<uint64_t> K(toeplitzWords);
-    for (int i = 0; i < K1.size(); i++) {
-        K[i] = K1[i] ^ K2[i];
-    }
-    PackedZ2<N_COLS> outKX;
-    outKX.toeplitzByVec(K,X);
-
-    PackedZ2<N_COLS> w_maskComp;
-
-    w_maskComp = outKX;
-    w_maskComp ^= rw_global;
-    if (w_mask == w_maskComp) {
-        std::cout << "in newprotocol.cpp/PRF_new_protocol_central, w_mask = " << w_mask << std::endl;
-        std::cout << "in newprotocol.cpp/PRF_new_protocol_central, w_maskComp = " << w_maskComp << std::endl;
-    }
-
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): w_mask using Kx+rw"<<w_mask<<std::endl;
-
-    #endif
-    //===========================================================================
 
 
 #ifdef DEBUG
@@ -489,9 +436,28 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 #ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
 #endif
-    
-#ifdef NP_TEST
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): NP_TEST is enabled; calling the test function";
+
+#ifdef UNIT_NP
+    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): NP_TEST is enabled; calling the test function"<<std::endl;
+
+    //call the test round 3 unit test function and pass K, X, res1, res2
+    //merge K1, K2 into K and x1, x2 into x
+    PackedZ2<N_COLS> X = x1; //declare a variable
+    X ^= x2;    //x = x1 + x2
+    std::vector<uint64_t> K(toeplitzWords);
+    for (int i = 0; i < K.size(); i++)
+    {
+        K[i] = K1[i] ^ K2[i];
+    }
+
+    std::cout<<"K "<<K<<std::endl;
+    std::cout<<"X "<<X<<std::endl;
+    std::cout<<"rw "<<rw_global<<std::endl;
+
+    test_round2(K, X, rw_global, w_mask);
+    test_round3(K,X,res1_global,res2_global);
+
 #endif
+
 }
 

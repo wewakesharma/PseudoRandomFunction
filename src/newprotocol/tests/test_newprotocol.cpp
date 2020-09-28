@@ -123,10 +123,6 @@ int main()
     std::cout<<"test_newprotocol/main.cpp: Calling the newprotocol test function"<<std::endl;
 #endif
 
-
-
-
-
 //    PRF_packed_centralized_res_compare(K1,x1,K2,x2,Rmat,y1_z3,y2_z3,nTimes);
 
     PackedZ3<81>out_dist_Z3 = y1_z3;
@@ -143,6 +139,3 @@ int main()
 }
 #endif
 
-/*
- * newprotocol_test - tests
- */
