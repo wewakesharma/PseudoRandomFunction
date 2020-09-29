@@ -501,6 +501,33 @@ tests/test_packedMod3.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.s
 .PHONY : tests/test_packedMod3.cpp.s
 
+tests/test_unit_newprotocol.o: tests/test_unit_newprotocol.cpp.o
+
+.PHONY : tests/test_unit_newprotocol.o
+
+# target to build an object file
+tests/test_unit_newprotocol.cpp.o:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o
+.PHONY : tests/test_unit_newprotocol.cpp.o
+
+tests/test_unit_newprotocol.i: tests/test_unit_newprotocol.cpp.i
+
+.PHONY : tests/test_unit_newprotocol.i
+
+# target to preprocess a source file
+tests/test_unit_newprotocol.cpp.i:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.i
+.PHONY : tests/test_unit_newprotocol.cpp.i
+
+tests/test_unit_newprotocol.s: tests/test_unit_newprotocol.cpp.s
+
+.PHONY : tests/test_unit_newprotocol.s
+
+# target to generate assembly for a file
+tests/test_unit_newprotocol.cpp.s:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.s
+.PHONY : tests/test_unit_newprotocol.cpp.s
+
 tests/test_unpacked_PRF.o: tests/test_unpacked_PRF.cpp.o
 
 .PHONY : tests/test_unpacked_PRF.o
@@ -579,6 +606,9 @@ help:
 	@echo "... tests/test_packedMod3.o"
 	@echo "... tests/test_packedMod3.i"
 	@echo "... tests/test_packedMod3.s"
+	@echo "... tests/test_unit_newprotocol.o"
+	@echo "... tests/test_unit_newprotocol.i"
+	@echo "... tests/test_unit_newprotocol.s"
 	@echo "... tests/test_unpacked_PRF.o"
 	@echo "... tests/test_unpacked_PRF.i"
 	@echo "... tests/test_unpacked_PRF.s"

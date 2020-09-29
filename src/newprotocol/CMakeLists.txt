@@ -8,8 +8,8 @@ include_directories(include/darkmatter)
 
 add_executable(newprotocol
         include/darkmatter/mains.hpp
-        include/darkmatter/newprotocol.h
-        include/darkmatter/newprotocol_test.h
+        include/darkmatter/newprotocol.hpp
+        include/darkmatter/newprotocol_test.hpp
         include/darkmatter/OT.hpp
         include/darkmatter/packed_PRF_central.h
         include/darkmatter/packedMod2.hpp
@@ -33,4 +33,5 @@ add_executable(newprotocol
         tests/test_packedMod3.cpp
         tests/test_PRF.cpp
         tests/test_Toeplitz-by-x.cpp
+        tests/test_unit_newprotocol.cpp
         tests/test_unpacked_PRF.cpp)

@@ -239,9 +239,22 @@ CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_Toeplitz-by-x.cpp -o CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.s
 
+CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o: CMakeFiles/newprotocol.dir/flags.make
+CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o: ../tests/test_unit_newprotocol.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_unit_newprotocol.cpp
+
+CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_unit_newprotocol.cpp > CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.i
+
+CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_unit_newprotocol.cpp -o CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.s
+
 CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o: ../tests/test_unpacked_PRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_unpacked_PRF.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.i: cmake_force
@@ -268,6 +281,7 @@ newprotocol_OBJECTS = \
 "CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o" \
+"CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o"
 
 # External object files for target newprotocol
@@ -287,10 +301,11 @@ newprotocol: CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o
+newprotocol: CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/build.make
 newprotocol: CMakeFiles/newprotocol.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable newprotocol"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable newprotocol"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/newprotocol.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

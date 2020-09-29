@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "newprotocol.h"
+#include "newprotocol.hpp"
 #include <cassert>
 #include "packedMod2.hpp"
 #include "packedMod3.hpp"
@@ -14,7 +14,7 @@
 #include "Timing.hpp"
 #include <chrono>
 #include "packed_PRF_central.h"
-#include "newprotocol_test.h"
+#include "newprotocol_test.hpp"
 #include "PRF.hpp"
 
 // in Toeplitz-by-x.hpp
@@ -43,6 +43,12 @@ PackedZ3<N_SIZE> res1_global, res2_global;
  * Preprocessing: Generates rx(and its shares rx1, rx2), rK(its shares rK1, rK2),
  * sw( and its shares sw1, sw2)
  */
+
+PackedZ2<N_COLS> fetch_rw_global()
+{
+    return rw_global;
+}
+
 void preProc_mod2_dm2020(unsigned int nTimes)
 {
 #ifdef DEBUG
@@ -67,20 +73,20 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         sw2_global.randomize(); // random sw2[i]
 
 #ifdef DEBUG
-        rK1_global= {1,0,0,0,0,0,0,0};
-        rK2_global = {0,1,1,0,0,0,0,0};
+        rK1_global= {0,0,0,0,0,0,0,0};
+        rK2_global = {0,0,0,0,0,0,0,0};
 
         rx1_global.reset();
         rx2_global.reset();
-        rx1_global.set(0,1);
-        rx2_global.set(1,1);
-        rx2_global.set(2,1);
-        rx2_global.set(33,1);
+     //   rx1_global.set(0,1);
+     //   rx2_global.set(1,1);
+      //  rx2_global.set(2,1);
+      //  rx2_global.set(33,1);
 
         sw1_global.reset();
         sw2_global.reset();
-        sw1_global.set(0,1);
-        sw2_global.set(1,1);
+   //     sw1_global.set(0,1);
+    //    sw2_global.set(1,1);
 
 #endif
         rx_global = rx1_global; //rx = rx1

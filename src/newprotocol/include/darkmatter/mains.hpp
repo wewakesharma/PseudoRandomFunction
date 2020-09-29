@@ -1,9 +1,9 @@
 #ifndef _EXECUTION_HEADER_H_
 #define _EXECUTION_HEADER_H_
 
-//#define DEBUG
+#define DEBUG
 
-#define UNIT_NP
+//#define UNIT_NP
 
 // Uncomment one and only one
 //#define TEST_PHASE1
@@ -14,6 +14,7 @@
 //#define PACKED_PRF_CENTRAL
 //#define UNPACKED_PRF_CENTRAL
 #define TEST_NP
+#define UNITTEST_ROUND2
 //#define TEST_DM
 
 

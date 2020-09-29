@@ -99,10 +99,10 @@
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/include/darkmatter/mains.hpp">
 			<Option target="newprotocol"/>
 		</Unit>
-		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/include/darkmatter/newprotocol.h">
+		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/include/darkmatter/newprotocol.hpp">
 			<Option target="newprotocol"/>
 		</Unit>
-		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/include/darkmatter/newprotocol_test.h">
+		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/include/darkmatter/newprotocol_test.hpp">
 			<Option target="newprotocol"/>
 		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/include/darkmatter/packedMod2.hpp">
@@ -160,6 +160,9 @@
 			<Option target="newprotocol"/>
 		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_packedMod3.cpp">
+			<Option target="newprotocol"/>
+		</Unit>
+		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_unit_newprotocol.cpp">
 			<Option target="newprotocol"/>
 		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_unpacked_PRF.cpp">
