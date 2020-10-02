@@ -127,8 +127,6 @@ void test_round2_unit(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
 void test_round2(std::vector<uint64_t>& K, PackedZ2<N_COLS>& X,PackedZ2<N_COLS>& rw, PackedZ2<N_COLS>& w_mask)
 {
-
-
     PackedZ2<N_COLS> outKX;
     outKX.toeplitzByVec(K,X);
 

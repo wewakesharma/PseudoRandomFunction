@@ -29,9 +29,9 @@ void party2_round_1(PackedZ2<N_COLS>& x2_mask, std::vector<uint64_t>& K2_mask,
 void compute_input_mask(PackedZ2<N_COLS>& x_mask, std::vector<uint64_t>& K_mask,PackedZ2<N_COLS>& x1_mask,
                         PackedZ2<N_COLS>& x2_mask,std::vector<uint64_t>& K1_mask,std::vector<uint64_t>& K2_mask);
 void party1_round2(PackedZ2<N_COLS>& w1_mask, std::vector<uint64_t>& K_mask, PackedZ2<N_COLS>& x_mask, PackedZ2<N_COLS>& rx1,
-                   std::vector<uint64_t>& rK1, PackedZ2<N_COLS>& sw1);
+                   std::vector<uint64_t>& rK1, PackedZ2<N_COLS>& x1, PackedZ2<N_COLS>& sw1);
 void party2_round2(PackedZ2<N_COLS>& w2_mask, std::vector<uint64_t>& K_mask,PackedZ2<N_COLS>& x_mask, PackedZ2<N_COLS>& rx2,
-                   std::vector<uint64_t>& rK2, PackedZ2<N_COLS>& sw2);
+                   std::vector<uint64_t>& rK2, PackedZ2<N_COLS>& x2, PackedZ2<N_COLS>& sw2);
 void compute_wmask(PackedZ2<N_COLS>& w_mask, PackedZ2<N_COLS>& w1_mask, PackedZ2<N_COLS>& w2_mask);
 PackedZ2<N_COLS> fetch_rw_global();
 

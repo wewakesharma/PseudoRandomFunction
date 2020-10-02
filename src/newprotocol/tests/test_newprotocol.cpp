@@ -66,8 +66,8 @@ void test_round2_unit(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
     //Round 2: Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
     PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
-    party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, sw1);
-    party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, sw2);
+    party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, x1, sw1);
+    party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, x2, sw2);
 
     compute_wmask(w_mask, w1_mask, w2_mask);
 
@@ -84,44 +84,6 @@ void test_round2_unit(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     test_round2(K, X, rw, w_mask);
 }
 
-
-/*
-void PRF_packed_centralized_res_compare(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                                        PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& y1_z3,
-                                        PackedZ3<81>& y2_z3, int nTimes)
-{
-
-    PackedZ3<81> outZ3;//final Z3 outpu;
-
-    PRF_packed_centralized(K1,  x1,  K2,
-                           x2,  Rmat, outZ3, nTimes);
-
-    PackedZ3<81>out_12_Z3 = y1_z3;
-    out_12_Z3.add(y2_z3);//merged output from parameters
-
-    //  out_12_Z3.compute_y_out(out1Z3, out2Z3);
-
-#ifdef DEBUG
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of out_12_Z3"<<std::endl;
-    for(int c = 0; c<81;c++)
-    {
-        std::cout<<out_12_Z3.at(c);
-    }
-    std::cout<<""<<std::endl;
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Output of out_Z3"<<std::endl;
-    for(int c = 0; c<81;c++)
-    {
-        std::cout<<outZ3.at(c);
-    }
-    std::cout<<""<<std::endl;
-#endif
-
-    if(out_12_Z3 == outZ3)
-        cout<<endl<<"PRF packed test: Test passed";
-    else
-        cout<<endl<<"PRF packed test: Test fails";
-}*/
-
 /*
  * Main driver program to start the execution of newprotocol
  * the test code is in newprotocol_test() which is in test_newprotocol.cpp
@@ -135,7 +97,7 @@ int main()
     PackedZ2<N_COLS> x1, x2; //input shares of parties
     PackedZ3<81> y_out_z3, y1_z3, y2_z3;//output of new protocol
 
-#ifdef DEBUG
+#ifdef PRINT_VAL
     std::cout<<"test_newprotocol/main.cpp: Protocol Execution begins"<<std::endl;
 #endif
 
@@ -157,7 +119,6 @@ int main()
         x2.reset();
         x1.set(0,1);
    //     x2.set(1,1);
-
     #endif
 
     //generate a 81 X 256 randomization matrix in Z3.
@@ -176,9 +137,8 @@ int main()
         //std::cout<<"Rmat "<<Rmat<<std::endl;
     #endif
 
-    /*
-     * Centralized implementation of the PRF ((K*x) * Rmat)
-     */
+
+     //Centralized implementation of the PRF ((K*x) * Rmat)
     PackedZ3<81> outZ3Central;//final centralized PRF Z3 output;
     PRF_packed_centralized(K1,  x1,  K2,
                            x2,  Rmat, outZ3Central, nTimes);
@@ -189,9 +149,9 @@ int main()
     //calling the distributed version of the new PRF protocol
     PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nTimes);
 
-#ifdef DEBUG
+#ifdef PRINT_VAL
     std::cout<<"test_newprotocol/main.cpp: Protocol Execution ends"<<std::endl;
-    std::cout<<"test_newprotocol/main.cpp: Calling the newprotocol test function"<<std::endl;
+    std::cout<<"test_newprotocol/main.cpp: Calling the newprotocol test function \n"<<std::endl;
 #endif
 
 //    PRF_packed_centralized_res_compare(K1,x1,K2,x2,Rmat,y1_z3,y2_z3,nTimes);

@@ -51,8 +51,8 @@ PackedZ2<N_COLS> fetch_rw_global()
 
 void preProc_mod2_dm2020(unsigned int nTimes)
 {
-#ifdef DEBUG
-    std::cout<<"newprotocol.cpp/preProc_mod2_dm_2020: Preprocessing begins"<<std::endl;
+#ifdef PRINT_VAL//preprocessing begins
+    std::cout<<"newprotocol.cpp/preProc_mod2_dm_2020: Preprocessing begins \n"<<std::endl;
 #endif
 
     //1.generate mod2 random values for rK, rx and sw
@@ -72,7 +72,7 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         sw1_global.randomize(); // random sw1[i]
         sw2_global.randomize(); // random sw2[i]
 
-#ifdef DEBUG
+#ifdef DEBUG //sets rk1, rK2, rx1, rx2, sw1, sw2
         rK1_global= {0,0,0,0,0,0,0,0};
         rK2_global = {0,0,0,0,0,0,0,0};
 
@@ -108,21 +108,16 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         rw2_global ^= sw2_global;   //sw2 = sw2 ^ rw2
         rw_global = rw1_global; //sw = sw1 ^ sw2
         rw_global ^= rw2_global;
-
-#ifdef DEBUG
+    }
+#ifdef PRINT_VAL//prints the value of rw = rk*rx + sw
         std::cout<<"rw_global "<<rw_global<<std::endl;
         std::cout<<"rw1_global "<<rw1_global<<std::endl;
         std::cout<<"rw2_global "<<rw2_global<<std::endl;
-#endif
-
-    }
-
-#ifdef DEBUG
-    std::cout<<"newprotocol.cpp/preProc_mod2_dm_2020: Preprocessing ends"<<std::endl;
+        std::cout<<"newprotocol.cpp/preProc_mod2_dm_2020: Preprocessing ends \n"<<std::endl;
 #endif
 }
 
-void preProc_mod3_dm2020(unsigned int nTimes)
+void preProc_mod3_dm2020(unsigned int nTimes)//generate r0z and r1z and share them between two parties
 {
     //Cast rw and 1-rw  to mod3; single line assignment of r0z_global and r1z_global
     std::vector<unsigned int> rw_int; //array to act as a bridge between packedZ2 to packedZ3 conversion
@@ -140,7 +135,7 @@ void preProc_mod3_dm2020(unsigned int nTimes)
     r0z1_global.randomize();
     r1z1_global.randomize();
 
-    #ifdef DEBUG
+    #ifdef DEBUG //sets r0z1, r0z2, r1z1, r1z2
         r0z1_global.reset();
         r0z1_global.set(0,2);
         r0z1_global.set(2,2);
@@ -155,9 +150,8 @@ void preProc_mod3_dm2020(unsigned int nTimes)
     r1z2_global.subtract(r1z1_global);
 
 
-#ifdef DEBUG//print the values of r0z, r0z1  and r0z2
+#ifdef PRINT_VAL//print the values of r0z, r0z1  and r0z2
     std::cout<<"newprotocol.cpp/preProc_mod3_dm2020():"<<std::endl;
-
     std::cout<<"sw_global "<<rw_global<<std::endl;
     std::cout<<"r0z "<<r0z_global<<std::endl;
     std::cout<<"r0z1 "<<r0z1_global<<std::endl;
@@ -165,7 +159,7 @@ void preProc_mod3_dm2020(unsigned int nTimes)
     std::cout<<"not_sw_global "<<not_rw_global<<std::endl;
     std::cout<<"r1z "<<r1z_global<<std::endl;
     std::cout<<"r1z1 "<<r1z1_global<<std::endl;
-    std::cout<<"r1z2 "<<r1z2_global<<std::endl;
+    std::cout<<"r1z2 "<<r1z2_global<<"\n"<<std::endl;
 
 #endif
 
@@ -223,13 +217,13 @@ void party2_round_1(PackedZ2<N_COLS>& x2_mask, std::vector<uint64_t>& K2_mask,
         K2_mask[word_count] = K2[word_count] ^ rK2[word_count];
     }
 
-#ifdef DEBUG
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/party2_round_1():"<<std::endl;
     std::cout<<"x2 "<<x2<<std::endl;
     std::cout<<"K2 "<<K2<<std::endl;
     std::cout<<"rK2 "<<rK2<<std::endl;
     std::cout<<"x2_mask "<<x2_mask<<std::endl;
-    std::cout<<"K2_mask "<<K2_mask<<std::endl;
+    std::cout<<"K2_mask "<<K2_mask<<"\n"<<std::endl;
 #endif
 }
 
@@ -244,17 +238,29 @@ void compute_input_mask(PackedZ2<N_COLS>& x_mask, std::vector<uint64_t>& K_mask,
     {
         K_mask[word_count] = K1_mask[word_count] ^ K2_mask[word_count];
     }
-#ifdef DEBUG
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/compute_input_mask(): "<<std::endl;
     std::cout<<"x_mask "<<x_mask<<std::endl;
-    std::cout<<"K_mask "<<K_mask<<std::endl;
+    std::cout<<"K_mask "<<K_mask<<"\n"<<std::endl;
 #endif
 }
 
 void party1_round2(PackedZ2<N_COLS>& w1_mask, std::vector<uint64_t>& K_mask, PackedZ2<N_COLS>& x_mask, PackedZ2<N_COLS>& rx1,
-        std::vector<uint64_t>& rK1, PackedZ2<N_COLS>& sw1)
+        std::vector<uint64_t>& rK1, PackedZ2<N_COLS>& x1, PackedZ2<N_COLS>& sw1)
 {
-    PackedZ2<N_COLS> x_rx1 = x_mask;    //x_rx1 = x_mask - rx1
+    //new code to compute w1_mask
+    PackedZ2<N_COLS> K_mask_x1;
+    K_mask_x1.toeplitzByVec(K_mask,x1);
+
+    PackedZ2<N_COLS> rK1_x_mask;
+    rK1_x_mask.toeplitzByVec(rK1,x_mask);
+
+    w1_mask = K_mask_x1;
+    w1_mask ^= rK1_x_mask;
+    w1_mask ^= sw1;
+
+    //previous buggy code to compute w1_mask
+    /*PackedZ2<N_COLS> x_rx1 = x_mask;    //x_rx1 = x_mask - rx1
     x_rx1 ^= rx1;
 
     PackedZ2<N_COLS> Kx1;   //kx1 = K_mask * x_rx1
@@ -265,18 +271,30 @@ void party1_round2(PackedZ2<N_COLS>& w1_mask, std::vector<uint64_t>& K_mask, Pac
 
     w1_mask = Kx1;//w1 = kx1 - rk_x1
     w1_mask ^= x_rK1;
-    w1_mask ^= sw1;
-#ifdef DEBUG
+    w1_mask ^= sw1;*/
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/party1_round2(): "<<std::endl;
-    std::cout<<"x_rx1"<<x_rx1<<std::endl;
-    std::cout<<"Kx1"<<Kx1<<std::endl;
-    std::cout<<"x_rK1"<<x_rK1<<std::endl;
-    std::cout<<"w1_mask "<<w1_mask<<std::endl;
+    std::cout<<"K_mask * x1"<<K_mask_x1<<std::endl;
+    std::cout<<"rK1 * x_mask"<<rK1_x_mask<<std::endl;
+    std::cout<<"w1_mask "<<w1_mask<<"\n"<<std::endl;
 #endif
 }
 void party2_round2(PackedZ2<N_COLS>& w2_mask, std::vector<uint64_t>& K_mask,PackedZ2<N_COLS>& x_mask, PackedZ2<N_COLS>& rx2,
-                   std::vector<uint64_t>& rK2, PackedZ2<N_COLS>& sw2)
+                   std::vector<uint64_t>& rK2, PackedZ2<N_COLS>& x2, PackedZ2<N_COLS>& sw2)
 {
+    //new code to compute w1_mask
+    PackedZ2<N_COLS> K_mask_x2;
+    K_mask_x2.toeplitzByVec(K_mask,x2);
+
+    PackedZ2<N_COLS> rK2_x_mask;
+    rK2_x_mask.toeplitzByVec(rK2,x_mask);
+
+    w2_mask = K_mask_x2;
+    w2_mask ^= rK2_x_mask;
+    w2_mask ^= sw2;
+
+    //previous buggy code to compute w1_mask
+    /*
     PackedZ2<N_COLS> x_rx2 = x_mask;    //x_rx2 = x_mask - rx2
     x_rx2 ^= rx2;
 
@@ -288,13 +306,12 @@ void party2_round2(PackedZ2<N_COLS>& w2_mask, std::vector<uint64_t>& K_mask,Pack
 
     w2_mask = Kx2; //w2 = kx2 - rk_x2
     w2_mask ^= x_rK2;
-    w2_mask ^= sw2;
-#ifdef DEBUG
+    w2_mask ^= sw2;*/
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/party2_round2(): "<<std::endl;
-    std::cout<<"x_rx2"<<x_rx2<<std::endl;
-    std::cout<<"Kx2"<<Kx2<<std::endl;
-    std::cout<<"x_rK2"<<x_rK2<<std::endl;
-    std::cout<<"w2_mask "<<w2_mask<<std::endl;
+    std::cout<<"K_mask * x2"<<K_mask_x2<<std::endl;
+    std::cout<<"rK2 * x_mask"<<rK2_x_mask<<std::endl;
+    std::cout<<"w2_mask "<<w2_mask<<"\n"<<std::endl;
 #endif
 }
 
@@ -302,7 +319,7 @@ void compute_wmask(PackedZ2<N_COLS>& w_mask, PackedZ2<N_COLS>& w1_mask, PackedZ2
 {
     w_mask = w1_mask;
     w_mask ^= w2_mask;
-    #ifdef DEBUG
+    #ifdef PRINT_VAL
         std::cout<<"newprotocol.cpp/compute_wmask(): "<<std::endl;
         std::cout<<"w_mask "<<w_mask<<std::endl;
     #endif
@@ -317,14 +334,14 @@ void party1_round3(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
 
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
     res1.mux(r1z1, w_mask.bits); //w_mask selects r0z if it is 0 else r1z
+    y1_z3.matByVec(Rmat, res1); //party 1 computes y1 =  M * res1
 
     #ifdef UNIT_NP
         res1_global = res1;
     #endif
 
-    y1_z3.matByVec(Rmat, res1); //party 1 computes y1 =  M * res1
-#ifdef DEBUG
-    std::cout<<"newprotocol.cpp/party1_round3(): "<<std::endl;
+#ifdef PRINT_VAL //prints res1 and y1
+    std::cout<<"\n newprotocol.cpp/party1_round3(): "<<std::endl;
     std::cout<<"res1 "<<res1<<std::endl;
     std::cout<<"y1_z3 "<<y1_z3<<std::endl;
 #endif
@@ -339,14 +356,16 @@ void party2_round3(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
 
     //perform the mux functionality, pass the Packedz3 and converted vector of w_mask
     res2.mux(r1z2, w_mask.bits); //w_mask selects r0z if it is 0 else r1z
+    y2_z3.matByVec(Rmat, res2); //party 2 computes y2 = M* res2
 
     #ifdef UNIT_NP
         res2_global = res2;
     #endif
 
-    y2_z3.matByVec(Rmat, res2); //party 2 computes y2 = M* res2
-#ifdef DEBUG
+
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/party2_round3(): "<<std::endl;
+    std::cout<<"res1 "<<res2<<std::endl;
     std::cout<<"y2_z3 "<<y2_z3<<std::endl;
 #endif
 }
@@ -379,7 +398,7 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     fetchPreproc_party1(rx1,rw1,sw1,rK1,r0z1,r1z1);
     fetchPreproc_party2(rx2,rw2,sw2,rK2, r0z2,r1z2);
 
-    #ifdef DEBUG
+    #ifdef PRINT_VAL
         std::cout<<"in PRF_new_protocol, rx1= "<<rx1<<std::endl;
         std::cout<<"PRF_new_protocol, rx2 "<<rx2<<std::endl;
     #endif
@@ -395,28 +414,20 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     //both the parties are supposed to exchange their mask values
     compute_input_mask(x_mask, K_mask, x1_mask, x2_mask, K1_mask, K2_mask);
 
-#ifdef DEBUG
-
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 1 ends"<<std::endl;
-#endif
-
-#ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 begins"<<std::endl;
 #endif
 
     //Round 2: Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
     PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
-    party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, sw1);
-    party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, sw2);
+    party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, x1, sw1);
+    party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, x2, sw2);
 
     compute_wmask(w_mask, w1_mask, w2_mask);
 
-#ifdef DEBUG
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 ends"<<std::endl;
-#endif
-
-
-#ifdef DEBUG
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 begins"<<std::endl;
 #endif
 
@@ -429,7 +440,7 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     res = res1;
     res ^= res2;*/
 
-#ifdef DEBUG
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
 #endif
 
