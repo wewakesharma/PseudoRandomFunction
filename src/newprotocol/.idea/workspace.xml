@@ -13,22 +13,18 @@
   <component name="ChangeListManager">
     <list default="true" id="644c242a-e514-4e60-bf76-55d2fabdec37" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/DependInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/cmake_clean.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/progress.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/OT.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/OT.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/PRF.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o" afterDir="false" />
@@ -43,18 +39,15 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/newprotocol" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/newprotocol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/newprotocol.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/newprotocol.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/darkmatter/mains.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/include/darkmatter/mains.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/darkmatter/newprotocol.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/darkmatter/newprotocol_test.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/newprotocol.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/newprotocol.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_newprotocol.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_newprotocol.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../~$sign Decision for toeplitz filling.docx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +100,11 @@
       <workItem from="1601400029754" duration="1748000" />
       <workItem from="1601657567637" duration="3001000" />
       <workItem from="1601675559216" duration="2523000" />
+      <workItem from="1601993374419" duration="76000" />
+      <workItem from="1601993453140" duration="10000" />
+      <workItem from="1601993472972" duration="34000" />
+      <workItem from="1601993508532" duration="47000" />
+      <workItem from="1601993557465" duration="1276000" />
     </task>
     <servers />
   </component>
@@ -114,78 +112,73 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1440" height="165" key="GridCell.Tab.0.bottom" timestamp="1601681415003">
+    <state width="1398" height="295" key="GridCell.Tab.0.bottom" timestamp="1601994775743">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="165" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1601681415003" />
+    <state width="1398" height="295" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1601994775743" />
     <state width="1440" height="219" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1601067752451" />
-    <state width="1440" height="165" key="GridCell.Tab.0.center" timestamp="1601681415001">
+    <state width="1398" height="295" key="GridCell.Tab.0.center" timestamp="1601994775734">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="165" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1601681415001" />
+    <state width="1398" height="295" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1601994775734" />
     <state width="1440" height="219" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1601067752450" />
-    <state width="1440" height="165" key="GridCell.Tab.0.left" timestamp="1601681415000">
+    <state width="1398" height="295" key="GridCell.Tab.0.left" timestamp="1601994775617">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="165" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1601681415000" />
+    <state width="1398" height="295" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1601994775617" />
     <state width="1440" height="219" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1601067752449" />
-    <state width="1440" height="165" key="GridCell.Tab.0.right" timestamp="1601681415002">
+    <state width="1398" height="295" key="GridCell.Tab.0.right" timestamp="1601994775740">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="165" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1601681415002" />
+    <state width="1398" height="295" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1601994775740" />
     <state width="1440" height="219" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1601067752451" />
-    <state width="1398" height="295" key="GridCell.Tab.1.bottom" timestamp="1601401896406">
+    <state width="1398" height="295" key="GridCell.Tab.1.bottom" timestamp="1601994775749">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="295" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1601401896406" />
-    <state width="1398" height="295" key="GridCell.Tab.1.center" timestamp="1601401896405">
+    <state width="1398" height="295" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1601994775749" />
+    <state width="1398" height="295" key="GridCell.Tab.1.center" timestamp="1601994775746">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="295" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1601401896405" />
-    <state width="1398" height="295" key="GridCell.Tab.1.left" timestamp="1601401896405">
+    <state width="1398" height="295" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1601994775746" />
+    <state width="1398" height="295" key="GridCell.Tab.1.left" timestamp="1601994775743">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="295" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1601401896405" />
-    <state width="1398" height="295" key="GridCell.Tab.1.right" timestamp="1601401896406">
+    <state width="1398" height="295" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1601994775743" />
+    <state width="1398" height="295" key="GridCell.Tab.1.right" timestamp="1601994775746">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="295" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1601401896406" />
-    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1601069414491">
+    <state width="1398" height="295" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1601994775746" />
+    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1601993553084">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel/0.0.1440.900@0.0.1440.900" timestamp="1601069414491" />
-    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel" timestamp="1601069414489">
+    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel/0.0.1440.900@0.0.1440.900" timestamp="1601993553084" />
+    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel" timestamp="1601993553083">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel/0.0.1440.900@0.0.1440.900" timestamp="1601069414489" />
+    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel/0.0.1440.900@0.0.1440.900" timestamp="1601993553083" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tests/test_newprotocol.cpp</url>
-          <line>164</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/tests/test_newprotocol.cpp</url>
-          <line>166</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tests/test_unit_newprotocol.cpp</url>
-          <line>149</line>
+          <line>147</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tests/test_unit_newprotocol.cpp</url>
-          <line>151</line>
+          <line>149</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/tests/test_newprotocol.cpp</url>
-          <line>83</line>
-          <option name="timeStamp" value="11" />
+          <line>163</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/tests/test_newprotocol.cpp</url>
+          <line>164</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

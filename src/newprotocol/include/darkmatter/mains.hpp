@@ -20,4 +20,9 @@
 //#define TEST_DM
 
 
-#endif // _EXECUTION_HEADER_H_
+#endif // _EXECUTION_HEADER_H
+
+#ifdef UNITTEST_ROUND2
+#define TEST_NP
+#endif
+

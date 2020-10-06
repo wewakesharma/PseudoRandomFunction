@@ -143,9 +143,9 @@ int main()
     PRF_packed_centralized(K1,  x1,  K2,
                            x2,  Rmat, outZ3Central, nTimes);
 
-#ifdef UNITTEST_ROUND2
+//#ifdef UNITTEST_ROUND2
     test_round2_unit(K1,x1,K2, x2,nTimes);
-#endif
+//#endif
     //calling the distributed version of the new PRF protocol
     PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nTimes);
 
