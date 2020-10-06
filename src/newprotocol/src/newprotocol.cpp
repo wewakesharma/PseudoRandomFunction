@@ -102,12 +102,15 @@ void preProc_mod2_dm2020(unsigned int nTimes)
         }
 
         //5.Calculate rw = rk_global * rx_global ^ sw_global
+        rw_global.toeplitzByVec(rK_global,rx_global);
+        rw_global ^= sw_global;
+        /*
         rw1_global.toeplitzByVec(rK1_global,rx1_global); //sw1 = rk1 * rx1
         rw1_global ^= sw1_global;   //sw1 = sw1 ^ rw1
         rw2_global.toeplitzByVec(rK2_global,rx2_global); //sw2 = rk2 * rx2
         rw2_global ^= sw2_global;   //sw2 = sw2 ^ rw2
         rw_global = rw1_global; //sw = sw1 ^ sw2
-        rw_global ^= rw2_global;
+        rw_global ^= rw2_global;*/
     }
 #ifdef PRINT_VAL//prints the value of rw = rk*rx + sw
         std::cout<<"rw_global "<<rw_global<<std::endl;
@@ -166,23 +169,23 @@ void preProc_mod3_dm2020(unsigned int nTimes)//generate r0z and r1z and share th
 }
 
 
-void fetchPreproc_party1(PackedZ2<N_COLS>& rx1, PackedZ2<N_COLS>& rw1, PackedZ2<N_COLS>& sw1,
+void fetchPreproc_party1(PackedZ2<N_COLS>& rx1, PackedZ2<N_COLS>& rw, PackedZ2<N_COLS>& sw1,
                          std::vector<uint64_t>& rK1, PackedZ3<N_SIZE>& r0z1, PackedZ3<N_SIZE>& r1z1)
 {
     rx1 = rx1_global;
     rK1 = rK1_global;
-    rw1 = rw1_global;
+    rw = rw_global;
     sw1 = sw1_global;
     r0z1 = r0z1_global;
     r1z1 = r1z1_global;
 }
 
-void fetchPreproc_party2(PackedZ2<N_COLS>& rx2, PackedZ2<N_COLS>& rw2, PackedZ2<N_COLS>& sw2,
+void fetchPreproc_party2(PackedZ2<N_COLS>& rx2, PackedZ2<N_COLS>& rw, PackedZ2<N_COLS>& sw2,
                          std::vector<uint64_t>& rK2, PackedZ3<N_SIZE>& r0z2, PackedZ3<N_SIZE>& r1z2)
 {
     rx2 = rx2_global;
     rK2 = rK2_global;
-    rw2 = rw2_global;
+    rw = rw_global;
     sw2 = sw2_global;
     r0z2 = r0z2_global;
     r1z2 = r1z2_global;
@@ -395,8 +398,8 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     preProc_mod2_dm2020(nTimes);//it was nRuns * 2 in previous protocol, needs to be changed later
     preProc_mod3_dm2020(nTimes);
 
-    fetchPreproc_party1(rx1,rw1,sw1,rK1,r0z1,r1z1);
-    fetchPreproc_party2(rx2,rw2,sw2,rK2, r0z2,r1z2);
+    fetchPreproc_party1(rx1,rw,sw1,rK1,r0z1,r1z1);
+    fetchPreproc_party2(rx2,rw,sw2,rK2, r0z2,r1z2);
 
     #ifdef PRINT_VAL
         std::cout<<"in PRF_new_protocol, rx1= "<<rx1<<std::endl;
