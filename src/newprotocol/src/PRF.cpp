@@ -45,14 +45,14 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     {
         K[i] = K1[i] ^ K2[i];
     }
-    #ifdef DEBUG
+    #ifdef PRINT_VAL
         cout<<"x "<<X<<endl;
         cout<<"K "<<K<<endl;
     #endif
 
     PackedZ2<N_COLS> outKX;
     outKX.toeplitzByVec(K,X);
-    #ifdef DEBUG
+    #ifdef PRINT_VAL
         cout<<"outKX "<<outKX<<endl;
     #endif
 
@@ -63,7 +63,7 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     //PackedZ3<81> outZ3;//final Z3 output
     outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
 
-    #ifdef DEBUG
+    #ifdef PRINT_VAL
         cout<<"Both outKX and outKX_Z3 must be same"<<endl;
         cout<<"outKX_Z3 "<<outKX_Z3<<endl;
     #endif
@@ -71,7 +71,7 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     //outKX_Z3.makeFromBits(hi.bits, outKX.bits);
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
-    #ifdef DEBUG
+    #ifdef PRINT_VAL
         cout<<"outZ3 "<<outZ3<<endl;
     #endif
 }

@@ -1,7 +1,7 @@
 #ifndef _EXECUTION_HEADER_H_
 #define _EXECUTION_HEADER_H_
 
-#define PRINT_VAL //used to print the intermediate values
+//#define PRINT_VAL //used to print the intermediate values
 
 //#define DEBUG //used to set bits of intermediate values
 

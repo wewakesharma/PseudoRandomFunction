@@ -15,6 +15,7 @@
 
 using namespace std;
 
+/*
 void test_round2_unit(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
                       std::vector<uint64_t>& K2, PackedZ2<N_COLS>& x2,
                       int nTimes)
@@ -39,7 +40,7 @@ void test_round2_unit(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     fetchPreproc_party1(rx1,rw1,sw1,rK1,r0z1,r1z1);
     fetchPreproc_party2(rx2,rw2,sw2,rK2, r0z2,r1z2);
 
-#ifdef DEBUG
+#ifdef PRINT_VAL
     std::cout<<"in PRF_new_protocol, rx1= "<<rx1<<std::endl;
     std::cout<<"PRF_new_protocol, rx2 "<<rx2<<std::endl;
 #endif
@@ -55,12 +56,11 @@ void test_round2_unit(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     //both the parties are supposed to exchange their mask values
     compute_input_mask(x_mask, K_mask, x1_mask, x2_mask, K1_mask, K2_mask);
 
-#ifdef DEBUG
-
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 1 ends"<<std::endl;
 #endif
 
-#ifdef DEBUG
+#ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 begins"<<std::endl;
 #endif
 
@@ -82,17 +82,18 @@ void test_round2_unit(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     rw=fetch_rw_global ();
 
     test_round2(K, X, rw, w_mask);
-}
+}*/
 
 /*
  * Main driver program to start the execution of newprotocol
  * the test code is in newprotocol_test() which is in test_newprotocol.cpp
  */
+
 #ifdef TEST_NP
 int main()
 {
     //declaring the inputs
-    int nTimes = 1;//keep it constant for 1 run
+    int nRuns = 1000000;//keep it constant for 1 run
     std::vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);//key shares of parties
     PackedZ2<N_COLS> x1, x2; //input shares of parties
     PackedZ3<81> y_out_z3, y1_z3, y2_z3;//output of new protocol
@@ -141,13 +142,13 @@ int main()
      //Centralized implementation of the PRF ((K*x) * Rmat)
     PackedZ3<81> outZ3Central;//final centralized PRF Z3 output;
     PRF_packed_centralized(K1,  x1,  K2,
-                           x2,  Rmat, outZ3Central, nTimes);
+                           x2,  Rmat, outZ3Central, nRuns);
 
-//#ifdef UNITTEST_ROUND2
+#ifdef UNITTEST_ROUND2
     test_round2_unit(K1,x1,K2, x2,nTimes);
-//#endif
+#endif
     //calling the distributed version of the new PRF protocol
-    PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nTimes);
+    PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nRuns);
 
 #ifdef PRINT_VAL
     std::cout<<"test_newprotocol/main.cpp: Protocol Execution ends"<<std::endl;
@@ -159,8 +160,11 @@ int main()
     PackedZ3<81>out_dist_Z3 = y1_z3;
     out_dist_Z3.add(y2_z3);//merged output from parameters
 
+#ifdef PRINT_VAL
     std::cout<<"out_dist_Z3 "<<out_dist_Z3<<std::endl;
     std::cout<<"outZ3Central "<<outZ3Central<<std::endl;
+#endif
+
     if(out_dist_Z3 == outZ3Central)
         cout<<endl<<"PRF packed test: Test passed";
     else

@@ -14,7 +14,7 @@
 
 void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
                               std::vector<uint64_t>& K2, PackedZ2<N_COLS>& x2, std::vector<PackedZ3<81> >& Rmat,
-                              PackedZ3<81>& y1_z3, PackedZ3<81>& y2_z3, int nTimes);
+                              PackedZ3<81>& y1_z3, PackedZ3<81>& y2_z3, unsigned int nRuns);
 
 void preProc_mod3_dm2020(unsigned int nTimes);
 void preProc_mod2_dm2020(unsigned int nTimes);
