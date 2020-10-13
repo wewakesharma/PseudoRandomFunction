@@ -386,6 +386,7 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     fetchPreproc_party1(rx1,rw,sw1,rK1,r0z1,r1z1);
     fetchPreproc_party2(rx2,rw,sw2,rK2, r0z2,r1z2);
 
+    std::cout<<" Number of Runs: "<<nRuns<<std::endl;
     #ifdef PRINT_VAL
         std::cout<<"in PRF_new_protocol, rx1= "<<rx1<<std::endl;
         std::cout<<"PRF_new_protocol, rx2 "<<rx2<<std::endl;
@@ -401,11 +402,10 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         party1_round_1(x1_mask,K1_mask,x1,rx1,K1,rK1);
         party2_round_1(x2_mask,K2_mask,x2,rx2,K2,rK2);
 
-        timer_round1 += (std::chrono::system_clock::now() - start_r1).count();
-
         //both the parties are supposed to exchange their mask values
         compute_input_mask(x_mask, K_mask, x1_mask, x2_mask, K1_mask, K2_mask);
 
+        timer_round1 += (std::chrono::system_clock::now() - start_r1).count();
 
 
 #ifdef PRINT_VAL
@@ -421,9 +421,11 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, x1, sw1);
         party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, x2, sw2);
 
+        compute_wmask(w_mask, w1_mask, w2_mask);
+
         timer_round2 += (std::chrono::system_clock::now() - start_r2).count();
 
-        compute_wmask(w_mask, w1_mask, w2_mask);
+
 
 #ifdef PRINT_VAL
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 ends"<<std::endl;
