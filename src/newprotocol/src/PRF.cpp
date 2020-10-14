@@ -28,6 +28,13 @@ static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
+#ifdef LOOKUP
+    void createLookupTable(std::vector<PackedZ3<81> >& Rmat, std::vector<PackedZ3<65536> >& tbls)
+    {
+
+    }
+#endif
+
 void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                             PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81>& outZ3, int nTimes)
 {
@@ -67,8 +74,49 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
         cout<<"Both outKX and outKX_Z3 must be same"<<endl;
         cout<<"outKX_Z3 "<<outKX_Z3<<endl;
     #endif
-    //PackedZ2<N_SIZE> hi; //will be initialized to 0
-    //outKX_Z3.makeFromBits(hi.bits, outKX.bits);
+
+#ifdef LOOKUP //enable in main.hpp to compute using lookup table
+    /*print Rmat information*/
+    //std::cout<<"Rmat size "<<Rmat[255].size()<<std::endl;
+
+    //packing the outKX_Z3 of size 256 to 16 words. Each will have a msb and a lsb.
+    PackedZ3<16> pack_KX; //contains msb and lsb of the new packed input
+
+    for(int word_ptr = 0; word_ptr < 16; word_ptr++)
+    {
+        uint64_t packed_bit = 0;
+        for(int bit_counter = 0; bit_counter < 16; bit_counter++)
+        {
+            packed_bit |= uint64_t(outKX_Z3.at((16 * word_ptr) + bit_counter)<<bit_counter); //take out the z3 bit from outKX_Z3
+        }
+        pack_KX.second.bits[word_ptr] = 0; //msb of the 16bit packed
+        pack_KX.first.bits[word_ptr] = packed_bit; //lsb
+        cout<<pack_KX.first;
+    }
+
+    //pack Rmat from 81 X 256 to 81 X 16.
+    std::vector<PackedZ3<81> > Rmat_packed(16);
+    //Rmat_packed.resize(16);         //this can be done or it can be initialized while declaring
+    for(int vec_counter = 0; vec_counter < 16; vec_counter++)
+    {
+        for(int i = 0; i < 81; i++)
+        {
+            //Rmat_packed[vec_counter] = Rmat[16* vec_counter]
+        }
+    }
+
+
+    //declare a lookup table: 16 Vectors of size 65,536
+    const auto vector_size = 65536; //size of each vector in a lookup table
+
+    const auto vector_count = vector_size;  //number of vector in a lookup table
+    std::cout<<"The size of the vector is "<<vector_size<<std::endl;
+    std::vector<PackedZ3<vector_size> > tbls(16);
+
+    //call createLookupTable(Rmat, tbls)
+    createLookupTable(Rmat,tbls);
+#endif
+
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
     #ifdef PRINT_VAL

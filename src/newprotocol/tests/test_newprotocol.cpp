@@ -89,11 +89,13 @@ void test_round2_unit(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
  * the test code is in newprotocol_test() which is in test_newprotocol.cpp
  */
 
+
+
 #ifdef TEST_NP
 int main()
 {
     //declaring the inputs
-    int nRuns = 1000000;//keep it constant for 1 run
+    int nRuns = 1;
     std::vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);//key shares of parties
     PackedZ2<N_COLS> x1, x2; //input shares of parties
     PackedZ3<81> y_out_z3, y1_z3, y2_z3;//output of new protocol
@@ -127,6 +129,7 @@ int main()
     for (auto &col : Rmat) // iterate over the columns
         col.randomize();
 
+
     #ifdef DEBUG //Rmat first value has been set to one(1)
         //setting Rmat as 1
         for (int i = 0; i < 256; i++)
@@ -143,6 +146,9 @@ int main()
     PackedZ3<81> outZ3Central;//final centralized PRF Z3 output;
     PRF_packed_centralized(K1,  x1,  K2,
                            x2,  Rmat, outZ3Central, nRuns);
+
+
+
 
 #ifdef UNITTEST_ROUND2
     test_round2_unit(K1,x1,K2, x2,nTimes);
