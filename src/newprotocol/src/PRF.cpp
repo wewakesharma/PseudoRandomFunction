@@ -76,35 +76,37 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     #endif
 
 #ifdef LOOKUP //enable in main.hpp to compute using lookup table
-    /*print Rmat information*/
-    //std::cout<<"Rmat size "<<Rmat[255].size()<<std::endl;
 
-    //packing the outKX_Z3 of size 256 to 16 words. Each will have a msb and a lsb.
-    PackedZ3<16> pack_KX; //contains msb and lsb of the new packed input
+        //re-generate Rmat with 16 matrix of size 81 X 16.
+    std::vector<std::vector<PackedZ3<81> > > Rmat16(16);
 
-    for(int word_ptr = 0; word_ptr < 16; word_ptr++)
+    for(int matrix_count = 0; matrix_count < 16; matrix_count++)//go over 16 matrix
     {
-        uint64_t packed_bit = 0;
-        for(int bit_counter = 0; bit_counter < 16; bit_counter++)
-        {
-            packed_bit |= uint64_t(outKX_Z3.at((16 * word_ptr) + bit_counter)<<bit_counter); //take out the z3 bit from outKX_Z3
-        }
-        pack_KX.second.bits[word_ptr] = 0; //msb of the 16bit packed
-        pack_KX.first.bits[word_ptr] = packed_bit; //lsb
-        cout<<pack_KX.first;
+        Rmat16[matrix_count].resize(16);        //resize each matrix to have 16 columns
+        for (auto &col : Rmat16[matrix_count]) // iterate over the columns
+            col.randomize();                    //call the randomize function in packedMod3.hpp
     }
 
-    //pack Rmat from 81 X 256 to 81 X 16.
-    std::vector<PackedZ3<81> > Rmat_packed(16);
-    //Rmat_packed.resize(16);         //this can be done or it can be initialized while declaring
-    for(int vec_counter = 0; vec_counter < 16; vec_counter++)
+#ifdef LOOKUP_DEBUG
+    //printing the values of Rmat16
+    std::cout<<"The number of matrices is "<<Rmat16.size()<<std::endl;
+    for(int i = 0; i< 16;i++)
     {
-        for(int i = 0; i < 81; i++)
+        std::cout<<Rmat16[i]<<std::endl;
+    }
+#endif
+
+    //generate a lookup table with all the possibilities of multiplication of Rmat with 2^16 inputs.
+    std::vector<std::vector<PackedZ3<81> > > lookup_table(16);
+
+    for(int out_vec_counter = 0; out_vec_counter < 16; out_vec_counter++)
+    {
+        lookup_table[out_vec_counter].resize(16); //resize the inner the vector to 16
+        for(int inner_vec = 0; inner_vec < 16; inner_vec++)
         {
-            //Rmat_packed[vec_counter] = Rmat[16* vec_counter]
+
         }
     }
-
 
     //declare a lookup table: 16 Vectors of size 65,536
     const auto vector_size = 65536; //size of each vector in a lookup table
@@ -116,7 +118,6 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     //call createLookupTable(Rmat, tbls)
     createLookupTable(Rmat,tbls);
 #endif
-
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
     #ifdef PRINT_VAL

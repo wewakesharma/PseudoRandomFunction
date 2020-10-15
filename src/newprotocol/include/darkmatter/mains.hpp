@@ -19,7 +19,9 @@
 //#define UNITTEST_ROUND2       //runs the unit test code that checks round 2 only
 //#define TEST_DM
 
+//enable the following two macro definition to enable lookup table
 #define LOOKUP //implementation of the lookup table
+//#define LOOKUP_DEBUG //check the intermediate output of the LOOKUP table implementation
 
 #endif // _EXECUTION_HEADER_H
 
