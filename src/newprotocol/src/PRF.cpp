@@ -28,12 +28,6 @@ static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
-#ifdef LOOKUP
-    void createLookupTable(std::vector<PackedZ3<81> >& Rmat, std::vector<PackedZ3<65536> >& tbls)
-    {
-
-    }
-#endif
 
 void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                             PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81>& outZ3, int nTimes)
@@ -97,26 +91,27 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
 #endif
 
     //generate a lookup table with all the possibilities of multiplication of Rmat with 2^16 inputs.
-    std::vector<std::vector<PackedZ3<81> > > lookup_table(16);
+    std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //table has 16 rows and 65536 columns and each element is PackedZ3
+    PackedZ3<81> temp_result_vec;
 
-    for(int out_vec_counter = 0; out_vec_counter < 16; out_vec_counter++)
+    for(int out_vec_row = 0; out_vec_row < 16; out_vec_row++)//iterates over the number of matrices
     {
-        lookup_table[out_vec_counter].resize(16); //resize the inner the vector to 16
-        for(int inner_vec = 0; inner_vec < 16; inner_vec++)
+        lookup_table[out_vec_row].resize(65536); //This implies each row has 65536 columns.
+        for(int16_t inner_vec_col = 0; inner_vec_col < 65536; inner_vec_col++)
         {
+            temp_result_vec.reset();
+            temp_result_vec.matByVec(Rmat16[out_vec_row],inner_vec_col);
+            lookup_table[out_vec_row][inner_vec_col] = temp_result_vec;
+        }
 
         }
     }
 
     //declare a lookup table: 16 Vectors of size 65,536
     const auto vector_size = 65536; //size of each vector in a lookup table
+    const auto vector_count = 16;  //number of vector in a lookup table
 
-    const auto vector_count = vector_size;  //number of vector in a lookup table
-    std::cout<<"The size of the vector is "<<vector_size<<std::endl;
     std::vector<PackedZ3<vector_size> > tbls(16);
-
-    //call createLookupTable(Rmat, tbls)
-    createLookupTable(Rmat,tbls);
 #endif
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
