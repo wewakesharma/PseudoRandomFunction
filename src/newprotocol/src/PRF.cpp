@@ -29,10 +29,43 @@ static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
-void matByVec16()
+void create_lookup_table(std::vector<std::vector<PackedZ3<81> > >& Rmat16,
+        std::vector<std::vector<PackedZ3<81> > >& lookup_table)//create 16 count of (16 X 81) matrix
+{
+    PackedZ3<81> temp_result_vec;
+    int packed_z3_counter; //go through the packedMod3 bit by bit
+    int matrix_internal_pointer;//once matrix is selected, this pointer traverses through row of each column
+
+    for(int matrix_pointer = 0; matrix_pointer < 16; matrix_pointer++)//iterates over the matrices(0 to 15)
+    {
+        lookup_table[matrix_pointer].resize(65536); //This implies each row has 65536 columns.
+        for(int offset_pointer = 0; offset_pointer < 65536; offset_pointer++)//goes over the columns of lookup table
+        {
+            packed_z3_counter = 0; //reset the counter that goes bit by bit ovre packedmodz3
+            temp_result_vec.reset(); //reset the temporary 81 bit vector which will store the result
+            while(packed_z3_counter < 81)
+            {
+                int sum = 0; //initialize
+                matrix_internal_pointer = 15; //start with 15th row of a matrix
+                while(matrix_internal_pointer > 0)
+                {
+                    sum += ((Rmat16[matrix_pointer][matrix_internal_pointer].at(packed_z3_counter))
+                            * ((offset_pointer>>matrix_internal_pointer) & 1)); //taking each bit of the 16 bit value(0-65535)
+                    matrix_internal_pointer--; //go upward toward the first row
+                }
+                temp_result_vec.set(packed_z3_counter,(sum%3)); //set the value computed after the multiplication
+                packed_z3_counter++;
+            }
+            lookup_table[matrix_pointer][offset_pointer] = temp_result_vec; //set the packedmod3 value as an entry in lookup table
+        }
+    }
+}
+
+/*void use_lookup_table(std::vector<std::vector<PackedZ3<81> > >& lookup_table, uint64_t& random_input16,
+        std::vector<PackedZ3<81> >& result_table)
 {
 
-}
+}*/
 
 
 void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
@@ -75,9 +108,10 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
         cout<<"outKX_Z3 "<<outKX_Z3<<endl;
     #endif
 
+        //===============================LOOKUP IMPLEMENTATION=================
 #ifdef LOOKUP //enable in main.hpp to compute using lookup table
 
-        //re-generate Rmat with 16 matrix of size 81 X 16.
+    //generate Rmat with 16 matrix of size 81 X 16.
     std::vector<std::vector<PackedZ3<81> > > Rmat16(16);
 
     for(int matrix_count = 0; matrix_count < 16; matrix_count++)//go over 16 matrix
@@ -100,58 +134,61 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
 #ifdef LOOKUP
     //generate a lookup table with all the possibilities of multiplication of Rmat with 2^16 inputs.
     std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //table has 16 rows and 65536 columns and each element is PackedZ3
-    PackedZ3<81> temp_result_vec;
-    int packed_z3_counter; //go through the packedMod3 bit by bit
-    int matrix_internal_pointer;//once matrix is selected, this pointer traverses through row of each column
 
-    for(int matrix_pointer = 0; matrix_pointer < 16; matrix_pointer++)//iterates over the matrices(0 to 15)
-    {
-        lookup_table[matrix_pointer].resize(65536); //This implies each row has 65536 columns.
-        for(int offset_pointer = 0; offset_pointer < 65536; offset_pointer++)//goes over the columns of lookup table
-        {
-            packed_z3_counter = 0; //reset the counter that goes bit by bit ovre packedmodz3
-            temp_result_vec.reset(); //reset the temporary 81 bit vector which will store the result
-            while(packed_z3_counter < 81)
-            {
-                int sum = 0; //initialize
-                matrix_internal_pointer = 15; //start with 15th row of a matrix
-                while(matrix_internal_pointer > 0)
-                {
-                    sum += ((Rmat16[matrix_pointer][matrix_internal_pointer].at(packed_z3_counter))
-                            * ((offset_pointer>>matrix_internal_pointer) & 1)); //taking each bit of the 16 bit value(0-65535)
-                    matrix_internal_pointer--; //go upward toward the first row
-                }
-                temp_result_vec.set(packed_z3_counter,(sum%3)); //set the value computed after the multiplication
-                packed_z3_counter++;
-            }
-            lookup_table[matrix_pointer][offset_pointer] = temp_result_vec; //set the packedmod3 value as an entry in lookup table
-        }
-    }
+    create_lookup_table(Rmat16,lookup_table);
     std::cout<<"The lookup table has been generated successfully"<<std::endl;
 
-    //Generate 16 inputs each of size 16 bits.
+    uint64_t random_input16[16]; //16 random words of size 16 bits
     uint64_t random_input64[4]; //4 random words of size 64 bits
-    uint16_t random_input16[16]; //16 random words of size 16 bits
+
     for(int word_count  = 0; word_count < 4; word_count++)
     {
+        random_input64[word_count] = 0;
         random_input64[word_count] = randomWord(0); //randomWord generates 64 bits of input in Z2.
-        random_input16[4*word_count+0] = (random_input64[word_count] & 0xFFFF000000000000);
-        random_input16[4*word_count+1] = (random_input64[word_count] & 0x0000FFFF00000000);
-        random_input16[4*word_count+2] = (random_input64[word_count] & 0x00000000FFFF0000);
-        random_input16[4*word_count+3] = (random_input64[word_count] & 0x000000000000FFFF);
+        random_input16[4*word_count+0] = ((random_input64[word_count]) & 65535);
+        random_input16[4*word_count+1] = ((random_input64[word_count]>>16) & 65535);
+        random_input16[4*word_count+2] = ((random_input64[word_count]>>32) & 65535);
+        random_input16[4*word_count+3] = ((random_input64[word_count]>>48) & 65535);
         //std::cout<<random_input64[i]<<std::endl;
+    }
+
+    std::cout<<"The input has been generated successfully, they are: " <<std::endl;
+
+
+    std::vector<PackedZ3<81> > result_table(16); //stores the result of multiplication using lookup table
+    for(int i =0; i< 16; i++)
+    {
+        result_table[i].reset();
+    }
+    //use_lookup_table(lookup_table, random_input16,result_table);
+    for(int word_count = 0; word_count < 16; word_count++)
+    {
+        uint64_t value = random_input16[word_count];
+        result_table[word_count] = lookup_table[word_count][value];
+    }
+
+    std::cout<<"Printing the output value "<<std::endl;
+    for(int i = 0; i< 16; i++)
+    {
+        std::cout<<result_table[i]<<std::endl;
     }
 
 #endif
 #ifdef LOOKUP_DEBUG
+
+    //print value of inputs generated
+    for(int i = 0; i < 16; i++)
+    {
+        std::cout<<random_input16[i]<<std::endl;
+    }
     //print out the values of lookup table
-    for(int i =0; i < 16;i++)
+    /*for(int i = 1000; i < 1030;i++)
     {
         std::cout<<lookup_table[0][i]<<std::endl;
-    }
+    }*/
 #endif
 
-    //IMPORTANT FOR RUNNING NEW PRTOCOL WITHOUT LOOKUP TABLE: COMMENT IT IF LOOKUP IS USED
+    //IMPORTANT FOR RUNNING NEW PROTOCOL WITHOUT LOOKUP TABLE: COMMENT IT IF LOOKUP IS USED
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
     #ifdef PRINT_VAL
         cout<<"outZ3 "<<outZ3<<endl;

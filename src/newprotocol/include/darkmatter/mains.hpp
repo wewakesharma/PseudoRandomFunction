@@ -3,7 +3,7 @@
 
 //#define PRINT_VAL //used to print the intermediate values
 
-//#define DEBUG //used to set bits of intermediate values
+//#define DEBUG //used to set bits of intermediate values and print the values
 
 //#define UNIT_NP
 
