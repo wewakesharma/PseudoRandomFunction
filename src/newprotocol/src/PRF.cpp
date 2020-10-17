@@ -13,6 +13,7 @@
 #include <chrono>
 #include "packedMod2.hpp"
 #include "packedMod3.hpp"
+#include "utils.hpp"
 
 // in Toeplitz-by-x.hpp
 // #define N_ROWS 256
@@ -106,7 +107,7 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     for(int matrix_pointer = 0; matrix_pointer < 16; matrix_pointer++)//iterates over the matrices(0 to 15)
     {
         lookup_table[matrix_pointer].resize(65536); //This implies each row has 65536 columns.
-        for(int16_t offset_pointer = 0; offset_pointer < 65536; offset_pointer++)//goes over the columns of lookup table
+        for(int offset_pointer = 0; offset_pointer < 65536; offset_pointer++)//goes over the columns of lookup table
         {
             packed_z3_counter = 0; //reset the counter that goes bit by bit ovre packedmodz3
             temp_result_vec.reset(); //reset the temporary 81 bit vector which will store the result
@@ -126,6 +127,21 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
             lookup_table[matrix_pointer][offset_pointer] = temp_result_vec; //set the packedmod3 value as an entry in lookup table
         }
     }
+    std::cout<<"The lookup table has been generated successfully"<<std::endl;
+
+    //Generate 16 inputs each of size 16 bits.
+    uint64_t random_input64[4]; //4 random words of size 64 bits
+    uint16_t random_input16[16]; //16 random words of size 16 bits
+    for(int word_count  = 0; word_count < 4; word_count++)
+    {
+        random_input64[word_count] = randomWord(0); //randomWord generates 64 bits of input in Z2.
+        random_input16[4*word_count+0] = (random_input64[word_count] & 0xFFFF000000000000);
+        random_input16[4*word_count+1] = (random_input64[word_count] & 0x0000FFFF00000000);
+        random_input16[4*word_count+2] = (random_input64[word_count] & 0x00000000FFFF0000);
+        random_input16[4*word_count+3] = (random_input64[word_count] & 0x000000000000FFFF);
+        //std::cout<<random_input64[i]<<std::endl;
+    }
+
 #endif
 #ifdef LOOKUP_DEBUG
     //print out the values of lookup table
@@ -134,6 +150,7 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
         std::cout<<lookup_table[0][i]<<std::endl;
     }
 #endif
+
     //IMPORTANT FOR RUNNING NEW PRTOCOL WITHOUT LOOKUP TABLE: COMMENT IT IF LOOKUP IS USED
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
     #ifdef PRINT_VAL
