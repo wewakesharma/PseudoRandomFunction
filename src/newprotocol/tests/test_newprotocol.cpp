@@ -95,7 +95,7 @@ void test_round2_unit(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 int main()
 {
     //declaring the inputs
-    int nRuns = 1;
+    int nRuns = 1000;
     std::vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);//key shares of parties
     PackedZ2<N_COLS> x1, x2; //input shares of parties
     PackedZ3<81> y_out_z3, y1_z3, y2_z3;//output of new protocol
@@ -172,10 +172,16 @@ int main()
 #endif
 
     if(out_dist_Z3 == outZ3Central)
-        cout<<endl<<"PRF packed test: Test passed";
+        std::cout<<std::endl<<"PRF packed test: Test passed"<<std::endl;
     else
-        cout<<endl<<"PRF packed test: Test fails";
+        std::cout<<std::endl<<"PRF packed test: Test fails"<<std::endl;
 
+
+    //===============================LOOKUP IMPLEMENTATION=================
+#ifdef LOOKUP //enable in main.hpp to compute using lookup table
+independent_lookup_implementation(nRuns);
+exec_lookup_timing();
+#endif
     return 0;
 }
 #endif

@@ -24,6 +24,11 @@ using namespace std;
 long timerPRF = 0;
 long timer_phase3 = 0;
 
+#ifdef LOOKUP_TIME
+long timer_create_lookup = 0;
+long timer_use_lookup = 0;
+#endif
+
 // A place to store the results from pre-processing
 static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
@@ -47,7 +52,7 @@ void create_lookup_table(std::vector<std::vector<PackedZ3<81> > >& Rmat16,
             {
                 int sum = 0; //initialize
                 matrix_internal_pointer = 15; //start with 15th row of a matrix
-                while(matrix_internal_pointer > 0)
+                while(matrix_internal_pointer >= 0)
                 {
                     sum += ((Rmat16[matrix_pointer][matrix_internal_pointer].at(packed_z3_counter))
                             * ((offset_pointer>>matrix_internal_pointer) & 1)); //taking each bit of the 16 bit value(0-65535)
@@ -108,22 +113,30 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
         cout<<"outKX_Z3 "<<outKX_Z3<<endl;
     #endif
 
-        //===============================LOOKUP IMPLEMENTATION=================
-#ifdef LOOKUP //enable in main.hpp to compute using lookup table
+    //IMPORTANT FOR RUNNING NEW PROTOCOL WITHOUT LOOKUP TABLE: COMMENT IT IF LOOKUP IS USED
+    outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
+    #ifdef PRINT_VAL
+        cout<<"outZ3 "<<outZ3<<endl;
+    #endif
+}
 
-    //generate Rmat with 16 matrix of size 81 X 16.
-    std::vector<std::vector<PackedZ3<81> > > Rmat16(16);
+#ifdef LOOKUP
+void independent_lookup_implementation(int nRuns)
+{
 
-    for(int matrix_count = 0; matrix_count < 16; matrix_count++)//go over 16 matrix
-    {
-        Rmat16[matrix_count].resize(16);        //resize each matrix to have 16 columns
-        for (auto &col : Rmat16[matrix_count]) // iterate over the columns
-            col.randomize();                    //call the randomize function in packedMod3.hpp
-    }
-#endif
+        //generate Rmat with 16 matrix of size 81 X 16.
+        std::vector<std::vector<PackedZ3<81> > > Rmat16(16);
+
+        for(int matrix_count = 0; matrix_count < 16; matrix_count++)//go over 16 matrix
+        {
+            Rmat16[matrix_count].resize(16);        //resize each matrix to have 16 columns
+            for (auto &col : Rmat16[matrix_count]) // iterate over the columns
+                col.randomize();                    //call the randomize function in packedMod3.hpp
+        }
+
 
 #ifdef LOOKUP_DEBUG
-    //printing the values of Rmat16
+        //printing the values of Rmat16
     std::cout<<"The number of matrices is "<<Rmat16.size()<<std::endl;
     for(int i = 0; i< 16;i++)
     {
@@ -132,68 +145,90 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
 #endif
 
 #ifdef LOOKUP
-    //generate a lookup table with all the possibilities of multiplication of Rmat with 2^16 inputs.
-    std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //table has 16 rows and 65536 columns and each element is PackedZ3
+        //generate a lookup table with all the possibilities of multiplication of Rmat with 2^16 inputs.
+        std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //table has 16 rows and 65536 columns and each element is PackedZ3
 
-    create_lookup_table(Rmat16,lookup_table);
-    std::cout<<"The lookup table has been generated successfully"<<std::endl;
-
-    uint64_t random_input16[16]; //16 random words of size 16 bits
-    uint64_t random_input64[4]; //4 random words of size 64 bits
-
-    for(int word_count  = 0; word_count < 4; word_count++)
-    {
-        random_input64[word_count] = 0;
-        random_input64[word_count] = randomWord(0); //randomWord generates 64 bits of input in Z2.
-        random_input16[4*word_count+0] = ((random_input64[word_count]) & 65535);
-        random_input16[4*word_count+1] = ((random_input64[word_count]>>16) & 65535);
-        random_input16[4*word_count+2] = ((random_input64[word_count]>>32) & 65535);
-        random_input16[4*word_count+3] = ((random_input64[word_count]>>48) & 65535);
-        //std::cout<<random_input64[i]<<std::endl;
-    }
-
-    std::cout<<"The input has been generated successfully, they are: " <<std::endl;
-
-
-    std::vector<PackedZ3<81> > result_table(16); //stores the result of multiplication using lookup table
-    for(int i =0; i< 16; i++)
-    {
-        result_table[i].reset();
-    }
-    //use_lookup_table(lookup_table, random_input16,result_table);
-    for(int word_count = 0; word_count < 16; word_count++)
-    {
-        uint64_t value = random_input16[word_count];
-        result_table[word_count] = lookup_table[word_count][value];
-    }
-
-    std::cout<<"Printing the output value "<<std::endl;
-    for(int i = 0; i< 16; i++)
-    {
-        std::cout<<result_table[i]<<std::endl;
-    }
-
+#ifdef LOOKUP_TIME
+        std::chrono::time_point<std::chrono::system_clock> start_create_lookup = std::chrono::system_clock::now();
 #endif
+        create_lookup_table(Rmat16,lookup_table);
+
+#ifdef LOOKUP_TIME
+        timer_create_lookup += (std::chrono::system_clock::now() - start_create_lookup).count();
+#endif
+
 #ifdef LOOKUP_DEBUG
-
-    //print value of inputs generated
-    for(int i = 0; i < 16; i++)
-    {
-        std::cout<<random_input16[i]<<std::endl;
-    }
-    //print out the values of lookup table
-    /*for(int i = 1000; i < 1030;i++)
-    {
-        std::cout<<lookup_table[0][i]<<std::endl;
-    }*/
+        std::cout<<"The lookup table has been generated successfully"<<std::endl;
 #endif
 
-    //IMPORTANT FOR RUNNING NEW PROTOCOL WITHOUT LOOKUP TABLE: COMMENT IT IF LOOKUP IS USED
-    outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
-    #ifdef PRINT_VAL
-        cout<<"outZ3 "<<outZ3<<endl;
-    #endif
+    for(int iteration_count = 0; iteration_count < nRuns; iteration_count++)//running use of lookup table nRuns times
+    {
+        uint64_t random_input16[16]; //16 random words of size 16 bits
+        uint64_t random_input64[4]; //4 random words of size 64 bits
+
+        for(int word_count  = 0; word_count < 4; word_count++)
+        {
+            random_input64[word_count] = 0;
+            random_input64[word_count] = randomWord(0); //randomWord generates 64 bits of input in Z2.
+            random_input16[4*word_count+0] = ((random_input64[word_count]) & 65535);
+            random_input16[4*word_count+1] = ((random_input64[word_count]>>16) & 65535);
+            random_input16[4*word_count+2] = ((random_input64[word_count]>>32) & 65535);
+            random_input16[4*word_count+3] = ((random_input64[word_count]>>48) & 65535);
+            //std::cout<<random_input64[i]<<std::endl;
+        }
+
+#ifdef LOOKUP_DEBUG
+        std::cout<<"The input has been generated successfully, they are: " <<std::endl;
+#endif
+
+
+        std::vector<PackedZ3<81> > result_table(16); //stores the result of multiplication using lookup table
+        for(int i =0; i< 16; i++)
+        {
+            result_table[i].reset();
+        }
+
+
+#ifdef LOOKUP_TIME
+        std::chrono::time_point<std::chrono::system_clock> start_use_lookup = std::chrono::system_clock::now();
+#endif
+        //use_lookup_table(lookup_table, random_input16,result_table);
+        for(int word_count = 0; word_count < 16; word_count++)
+        {
+            uint64_t value = random_input16[word_count];
+            result_table[word_count] = lookup_table[word_count][value];
+        }
+
+        //add up the 16 count of packedmod3 values
+        PackedZ3<81> result_sum;
+        result_sum = result_table[0];
+        for(int count = 1; count < 16; count++)
+        {
+            result_sum += result_table[count];
+        }
+
+#ifdef LOOKUP_TIME
+        timer_use_lookup += (std::chrono::system_clock::now() - start_use_lookup).count();
+#endif
+
+#ifdef LOOKUP_DEBUG
+        std::cout<<"Printing the output value "<<std::endl;
+    std::cout<<"The final output is "<<result_sum<<std::endl;
+#endif
+
+#endif
+    }
+
 }
+#endif
+
+#ifdef LOOKUP_TIME
+void exec_lookup_timing()
+{
+    std::cout<<"Time to create a lookup table(just once) "<<timer_create_lookup<<std::endl;
+    std::cout<<"Time elapsed in using lookup table "<<timer_use_lookup<<std::endl;
+}
+#endif
 
 /*
  * PRF without the pre-processing

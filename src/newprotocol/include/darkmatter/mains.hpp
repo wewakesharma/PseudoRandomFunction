@@ -21,7 +21,8 @@
 
 //enable the following two macro definition to enable LOOKUP table
 #define LOOKUP //implementation of the lookup table
-#define LOOKUP_DEBUG //check the intermediate output of the LOOKUP table implementation
+//#define LOOKUP_DEBUG //check the intermediate output of the LOOKUP table implementation
+#define LOOKUP_TIME //times the lookup table for multiple run by calling PRF_centralised in a loop
 
 #endif // _EXECUTION_HEADER_H
 
