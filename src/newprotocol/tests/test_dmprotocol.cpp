@@ -12,8 +12,6 @@
 
 using namespace std;
 
-
-
 #ifdef TEST_DM
 int main()
 {
