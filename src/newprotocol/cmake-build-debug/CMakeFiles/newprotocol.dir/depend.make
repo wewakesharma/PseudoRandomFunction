@@ -11,6 +11,7 @@ CMakeFiles/newprotocol.dir/src/OT.cpp.o: ../src/OT.cpp
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/OT.hpp
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/Timing.hpp
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
+CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/lookup_functions.h
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/mains.hpp
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/packedMod2.hpp
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../include/darkmatter/packedMod3.hpp
@@ -24,6 +25,20 @@ CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o: ../include/darkmatter/packed
 CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o: ../include/darkmatter/packedMod3.hpp
 CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o: ../include/darkmatter/utils.hpp
 CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o: ../src/Toeplitz-by-x.cpp
+
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/OT.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/PRF.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/Timing.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/lookup_functions.h
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/mains.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/newprotocol.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/newprotocol_test.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/packedMod2.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/packedMod3.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/packed_PRF_central.h
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../include/darkmatter/utils.hpp
+CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../src/lookup_functions.cpp
 
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/OT.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/PRF.hpp
@@ -97,6 +112,18 @@ CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/pa
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/packedMod3.hpp
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/utils.hpp
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../tests/test_dmprotocol.cpp
+
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/OT.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/PRF.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/Timing.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/mains.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/newprotocol.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/newprotocol_test.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/packedMod2.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/packedMod3.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/utils.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../tests/test_lookup.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/OT.hpp
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/PRF.hpp

@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol
+CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -203,6 +203,33 @@ src/Toeplitz-by-x.s: src/Toeplitz-by-x.cpp.s
 src/Toeplitz-by-x.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.s
 .PHONY : src/Toeplitz-by-x.cpp.s
+
+src/lookup_functions.o: src/lookup_functions.cpp.o
+
+.PHONY : src/lookup_functions.o
+
+# target to build an object file
+src/lookup_functions.cpp.o:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o
+.PHONY : src/lookup_functions.cpp.o
+
+src/lookup_functions.i: src/lookup_functions.cpp.i
+
+.PHONY : src/lookup_functions.i
+
+# target to preprocess a source file
+src/lookup_functions.cpp.i:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.i
+.PHONY : src/lookup_functions.cpp.i
+
+src/lookup_functions.s: src/lookup_functions.cpp.s
+
+.PHONY : src/lookup_functions.s
+
+# target to generate assembly for a file
+src/lookup_functions.cpp.s:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.s
+.PHONY : src/lookup_functions.cpp.s
 
 src/newprotocol.o: src/newprotocol.cpp.o
 
@@ -420,6 +447,33 @@ tests/test_dmprotocol.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.s
 .PHONY : tests/test_dmprotocol.cpp.s
 
+tests/test_lookup.o: tests/test_lookup.cpp.o
+
+.PHONY : tests/test_lookup.o
+
+# target to build an object file
+tests/test_lookup.cpp.o:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o
+.PHONY : tests/test_lookup.cpp.o
+
+tests/test_lookup.i: tests/test_lookup.cpp.i
+
+.PHONY : tests/test_lookup.i
+
+# target to preprocess a source file
+tests/test_lookup.cpp.i:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.i
+.PHONY : tests/test_lookup.cpp.i
+
+tests/test_lookup.s: tests/test_lookup.cpp.s
+
+.PHONY : tests/test_lookup.s
+
+# target to generate assembly for a file
+tests/test_lookup.cpp.s:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.s
+.PHONY : tests/test_lookup.cpp.s
+
 tests/test_newprotocol.o: tests/test_newprotocol.cpp.o
 
 .PHONY : tests/test_newprotocol.o
@@ -573,6 +627,9 @@ help:
 	@echo "... src/Toeplitz-by-x.o"
 	@echo "... src/Toeplitz-by-x.i"
 	@echo "... src/Toeplitz-by-x.s"
+	@echo "... src/lookup_functions.o"
+	@echo "... src/lookup_functions.i"
+	@echo "... src/lookup_functions.s"
 	@echo "... src/newprotocol.o"
 	@echo "... src/newprotocol.i"
 	@echo "... src/newprotocol.s"
@@ -597,6 +654,9 @@ help:
 	@echo "... tests/test_dmprotocol.o"
 	@echo "... tests/test_dmprotocol.i"
 	@echo "... tests/test_dmprotocol.s"
+	@echo "... tests/test_lookup.o"
+	@echo "... tests/test_lookup.i"
+	@echo "... tests/test_lookup.s"
 	@echo "... tests/test_newprotocol.o"
 	@echo "... tests/test_newprotocol.i"
 	@echo "... tests/test_newprotocol.s"

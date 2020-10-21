@@ -131,6 +131,8 @@ void independent_lookup_implementation(int nRuns)
         std::cout<<"The lookup table has been generated successfully"<<std::endl;
 #endif
 
+    PackedZ3<81> totalTime;
+
     for(int iteration_count = 0; iteration_count < nRuns; iteration_count++)//running use of lookup table nRuns times
     {
         uint64_t random_input16[16]; //16 random words of size 16 bits
@@ -179,6 +181,9 @@ void independent_lookup_implementation(int nRuns)
 
 #ifdef LOOKUP_TIME
         timer_use_lookup += (std::chrono::system_clock::now() - start_use_lookup).count();
+
+        totalTime+= result_sum;
+
 #endif
 
 #ifdef LOOKUP_DEBUG
@@ -188,7 +193,8 @@ void independent_lookup_implementation(int nRuns)
 
 #endif
     }
-
+    cout << "in independent_lookup_implementation, " << "total Time=" << totalTime << endl;
+    cout << "in independent_lookup_implementation, " << "nruns-" << nRuns << endl;
 }
 #endif
 
