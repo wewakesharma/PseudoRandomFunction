@@ -26,9 +26,10 @@
  * Test Case 2: {LOOKUP_TEST, [LOOKUP_TIME], [LOOKUP_DEBUG]}       ==> unit test of lookup table
  */
 
-#define LOOKUP //implementation of the lookup table
+//#define LOOKUP //implementation of the lookup table
 //#define LOOKUP_DEBUG //check the intermediate output of the LOOKUP table implementation
-#define LOOKUP_TIME //times the lookup table for multiple run by calling PRF_centralised in a loop
+//#define LOOKUP_TIME //times the lookup table for multiple run by calling PRF_centralised in a loop
+//#define LOOKUP_PRINT_VAL //prints the intermediate values
 //#define LOOKUP_TEST //enable to perform unit testing on LOOKUP table, IMPORTANT NOTE: LOOKUP and TEST_NP
 
 

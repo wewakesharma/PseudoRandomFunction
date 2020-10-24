@@ -16,30 +16,59 @@
 #include "newprotocol.hpp"
 #include "newprotocol_test.hpp"
 #include <chrono>
+#include "lookup_functions.h"
 
-using namespace std;
+//using namespace std;
 
+/*
 void reformat_input(std::vector<uint64_t>& outKX_input, PackedZ2<256>& outKX)//converts 256 bit input(PackedZ2) to 16 vector of 16 bits each
 {
-    for(int i =0 ; i< 256; i++){
-        std::cout<<outKX.at(i);
-    }
+#ifdef LOOKUP_PRINT_VAL
     std::cout<<std::endl<<"Getting inside the loop"<<std::endl;
+#endif
     for(int base_counter = 0; base_counter < 16; base_counter++)
     {
         uint64_t input_word = 0;
         for(int offset_counter = 0; offset_counter < 16; offset_counter++)
         {
-            input_word |= ((outKX.at(16*base_counter+offset_counter) & 1) << offset_counter);
+            input_word |= ((outKX.at(16*base_counter+offset_counter)) << offset_counter);
         }
         outKX_input[base_counter] = input_word;
     }
 }
 
-void reformat_Rmat()
+void reformat_Rmat(std::vector<vector<PackedZ3<81> > >& Rmat16, std::vector<PackedZ3<81> >& Rmat)
 {
-
+    for(int outer_vector = 0; outer_vector < 16; outer_vector++)
+    {
+        Rmat16[outer_vector].resize(16);
+        for(int inner_vector = 0; inner_vector < 16; inner_vector++)
+        {
+            Rmat16[outer_vector][inner_vector] = Rmat[16*outer_vector+inner_vector];
+        }
+    }
 }
+
+
+void uselookup(PackedZ3<81>& result_sum, std::vector<uint64_t>& outKX_input, std::vector<std::vector<PackedZ3<81> > >& lookup_table)
+{
+    std::vector<PackedZ3<81> > result_table(16); //stores the result of multiplication using lookup table
+
+
+    for(int word_count = 0; word_count < 16; word_count++)
+    {
+        uint64_t value = outKX_input[word_count];
+        result_table[word_count] = lookup_table[word_count][value];
+    }
+
+    //add up the 16 count of packedmod3 values
+    result_sum = result_table[0];
+    for(int count = 1; count < 16; count++)
+    {
+        result_sum += result_table[count];
+    }
+}*/
+
 
 #ifdef LOOKUP_TEST
 int main() {
@@ -93,16 +122,36 @@ int main() {
     std::vector<uint64_t> outKX_input(16); //16 vectors each as a word of size 16 bits. Total containing 256 bits.
     reformat_input(outKX_input, outKX);
 
+#ifdef LOOKUP_PRINT_VAL
     for(int i = 0; i< 16; i++)
     {
         std::cout<<"The input is "<<std::endl;
         std::cout<<outKX_input[i]<<std::endl;
     }
+#endif
+
     //converting the Rmat format
+    std::vector<std::vector<PackedZ3<81> > > Rmat16(16);
+    reformat_Rmat(Rmat16, Rmat);
+
+    //call the lookup table generator
+    std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //table has 16 rows and 65536 columns and each element is PackedZ3
+    create_lookup_table(Rmat16,lookup_table);
+
+    PackedZ3<81> outZ3_lookup;
+    uselookup(outZ3_lookup, outKX_input, lookup_table);
 
 
+#ifdef LOOKUP_PRINT_VAL
+    std::cout<<"The final value(lookup) is "<<outZ3_lookup<<std::endl;
+    std::cout<<"The final value(matByVec) is "<<outZ3<<std::endl;
+#endif
+
+    if(outZ3 == outZ3_lookup)
+        std::cout<<"Lookup table test status: Test passed"<<std::endl;
+    else
+        std::cout<<"Lookup table test status: Test failed"<<std::endl;
     return 0;
-
 }
 
 #endif
