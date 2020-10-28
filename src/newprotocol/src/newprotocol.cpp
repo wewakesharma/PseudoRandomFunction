@@ -16,13 +16,15 @@
 #include "packed_PRF_central.h"
 #include "newprotocol_test.hpp"
 #include "PRF.hpp"
+#include "lookup_functions.h"
 
 long timer_round1 = 0;
 long timer_round2 = 0;
 long timer_round3 = 0;
 
-// Declaring the Keys and inputs of two parties (GLOBAL)
-
+// Declaring the global variables for lookup implementation
+std::vector<std::vector<PackedZ3<81> > > Rmat16(16); //Rmat16 vector of size 16 X 16 X 81 (GLOBAL)
+std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //lookup table
 
 //Declaring shares of key and input masks of two parties
 std::vector<uint64_t> rK1_global(toeplitzWords), rK2_global(toeplitzWords), rK_global(toeplitzWords);
@@ -340,13 +342,83 @@ void party2_round3(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
         res2_global = res2;
     #endif
 
-
 #ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/party2_round3(): "<<std::endl;
     std::cout<<"res1 "<<res2<<std::endl;
     std::cout<<"y2_z3 "<<y2_z3<<std::endl;
 #endif
 }
+
+//====================================Round 3 lookup implementation=======NEEDS DEBUGGING=========
+/*
+void party1_round3_lookup(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
+                          PackedZ3<N_SIZE>& r1z1, std::vector<PackedZ3<81> >& Rmat,PackedZ2<N_COLS>& w_mask)
+{
+#ifdef PRINT_VAL
+    std::cout<<"newprotocol.cpp/party1_round3_lookup: inside the function"<<std::endl;
+#endif
+    PackedZ3<81> result_sum_lsb;
+    PackedZ3<81> result_sum_msb;
+    std::vector<uint64_t> lsb_input;
+    std::vector<uint64_t> msb_input;
+    PackedZ2<256> temp_res_msb;
+    PackedZ2<256> temp_res_lsb;
+
+    std::chrono::time_point<std::chrono::system_clock> start_r3 = std::chrono::system_clock::now();
+    //PARTY 1: calculates the value of mux(w', r0z1, r1z1)
+    PackedZ3<N_SIZE> res1;
+    res1 = r0z1; //copy the contents of r0z to res1.
+    res1.mux(r1z1, w_mask.bits); //w_mask selects r0z if it is 0 else r1z
+
+    std::cout<<"res1 "<<res1.lsbs()<<std::endl;
+
+    temp_res_lsb = res1.lsbs();
+    reformat_input(lsb_input,temp_res_lsb);
+
+    temp_res_msb = res1.msbs();
+    reformat_input(msb_input,temp_res_msb);
+#ifdef PRINT_VAL
+    std::cout<<"lsb_input(party 1): "<<lsb_input<<std::endl;
+    std::cout<<"msb_input(party 1): "<<msb_input<<std::endl;
+#endif
+    //call the use lookup table
+    uselookup(result_sum_lsb,lsb_input,lookup_table);
+    uselookup(result_sum_msb,msb_input,lookup_table);
+    //perform subtraction
+    y1_z3 = result_sum_lsb;
+    y1_z3.subtract(result_sum_msb);
+    timer_round3 += (std::chrono::system_clock::now() - start_r3).count();
+}
+void party2_round3_lookup(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
+                          PackedZ3<N_SIZE>& r1z2, std::vector<PackedZ3<81> >& Rmat,PackedZ2<N_COLS>& w_mask)
+{
+    PackedZ3<81> result_sum_lsb;
+    PackedZ3<81> result_sum_msb;
+    std::vector<uint64_t> lsb_input;
+    std::vector<uint64_t> msb_input;
+
+    std::chrono::time_point<std::chrono::system_clock> start_r3 = std::chrono::system_clock::now();
+    //party 2 calculates the value of mux(w', r0z, r1z)
+    PackedZ3<N_SIZE> res2;
+    res2 = r0z2;
+    res2.mux(r1z2, w_mask.bits); //w_mask selects r0z if it is 0 else r1z
+
+    reformat_input(lsb_input,res2.lsbs());
+    reformat_input(msb_input,res2.msbs());
+#ifdef PRINT_VAL
+    std::cout<<"lsb_input(party 2): "<<lsb_input<<std::endl;
+    std::cout<<"msb_input(party 2): "<<msb_input<<std::endl;
+#endif
+    //separate the input into msb and lsb
+    //call the use lookup table
+    uselookup(result_sum_lsb,lsb_input,lookup_table);
+    uselookup(result_sum_msb,msb_input,lookup_table);
+    //perform subtraction
+    y2_z3 = result_sum_lsb;
+    y2_z3.subtract(result_sum_msb);
+    timer_round3 += (std::chrono::system_clock::now() - start_r3).count();
+}*/
+//================================================================================
 
 void display_exec_timing()
 {
@@ -385,6 +457,8 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
     fetchPreproc_party1(rx1,rw,sw1,rK1,r0z1,r1z1);
     fetchPreproc_party2(rx2,rw,sw2,rK2, r0z2,r1z2);
+    reformat_Rmat(Rmat16, Rmat);
+    create_lookup_table(Rmat16, lookup_table);
 
     std::cout<<" Number of Runs: "<<nRuns<<std::endl;
     #ifdef PRINT_VAL
@@ -425,11 +499,9 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
         timer_round2 += (std::chrono::system_clock::now() - start_r2).count();
 
-
-
 #ifdef PRINT_VAL
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 ends"<<std::endl;
-    std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 begins"<<std::endl;
+        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 begins"<<std::endl;
 #endif
 
         std::chrono::time_point<std::chrono::system_clock> start_r3 = std::chrono::system_clock::now();

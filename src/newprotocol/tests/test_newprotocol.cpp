@@ -12,6 +12,7 @@
 #include "newprotocol.hpp"
 #include "newprotocol_test.hpp"
 #include <chrono>
+#include "lookup_functions.h"
 
 using namespace std;
 
@@ -153,6 +154,7 @@ int main()
 #ifdef UNITTEST_ROUND2
     test_round2_unit(K1,x1,K2, x2,nTimes);
 #endif
+    std::cout<<"Executing new protocol"<<std::endl;
     //calling the distributed version of the new PRF protocol
     PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nRuns);
 
@@ -161,8 +163,10 @@ int main()
     std::cout<<"test_newprotocol/main.cpp: Calling the newprotocol test function \n"<<std::endl;
 #endif
 
-//    PRF_packed_centralized_res_compare(K1,x1,K2,x2,Rmat,y1_z3,y2_z3,nTimes);
-
+/*
+ * Code to compare the output of New protocol with the centralized implementation
+ */
+/*
     PackedZ3<81>out_dist_Z3 = y1_z3;
     out_dist_Z3.add(y2_z3);//merged output from parameters
 
@@ -175,7 +179,7 @@ int main()
         std::cout<<std::endl<<"PRF packed test: Test passed"<<std::endl;
     else
         std::cout<<std::endl<<"PRF packed test: Test fails"<<std::endl;
-
+*/
 
     //===============================LOOKUP IMPLEMENTATION=================
 #ifdef LOOKUP //enable in main.hpp to compute using lookup table
