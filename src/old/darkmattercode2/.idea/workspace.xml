@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="darkmattercode2" targetName="darkmattercode2" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e7f40025-2c70-4b44-a818-2d0a173303df" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../darkmattercode/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../darkmattercode/CMakeLists.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1g0ISxvm1MzhmJJQujcsiDWYht2" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="darkmattercode2" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="darkmattercode2" TARGET_NAME="darkmattercode2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="darkmattercode2" RUN_TARGET_NAME="darkmattercode2">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e7f40025-2c70-4b44-a818-2d0a173303df" name="Default Changelist" comment="" />
+      <created>1597245086226</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1597245086226</updated>
+      <workItem from="1597245088279" duration="70000" />
+      <workItem from="1597245160861" duration="2141000" />
+      <workItem from="1597417505893" duration="6506000" />
+      <workItem from="1597429574381" duration="951000" />
+      <workItem from="1597674753439" duration="411000" />
+      <workItem from="1598241632912" duration="147000" />
+      <workItem from="1598287628443" duration="835000" />
+      <workItem from="1598289690096" duration="333000" />
+      <workItem from="1598290054777" duration="30000" />
+      <workItem from="1598290085821" duration="118000" />
+      <workItem from="1598290250192" duration="855000" />
+      <workItem from="1598291300041" duration="61000" />
+      <workItem from="1598306937394" duration="3995000" />
+      <workItem from="1598315829932" duration="64000" />
+      <workItem from="1598315895410" duration="13000" />
+      <workItem from="1598315928130" duration="22000" />
+      <workItem from="1598315952352" duration="52000" />
+      <workItem from="1598316005144" duration="10785000" />
+      <workItem from="1598456343454" duration="1548000" />
+      <workItem from="1598458575611" duration="4572000" />
+      <workItem from="1598466944712" duration="1073000" />
+      <workItem from="1598535945285" duration="929000" />
+      <workItem from="1598625580893" duration="125000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="452" y="259" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1598457211027">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="452" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1598457211027" />
+    <state width="1398" height="42" key="GridCell.Tab.0.bottom" timestamp="1598464087882">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="42" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1598464087882" />
+    <state width="1360" height="231" key="GridCell.Tab.0.bottom/30.23.1410.877@30.23.1410.877" timestamp="1597430861156" />
+    <state width="1360" height="231" key="GridCell.Tab.0.bottom/36.23.1404.877@36.23.1404.877" timestamp="1598291106917" />
+    <state width="1398" height="42" key="GridCell.Tab.0.center" timestamp="1598464087875">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="42" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1598464087875" />
+    <state width="1360" height="231" key="GridCell.Tab.0.center/30.23.1410.877@30.23.1410.877" timestamp="1597430861155" />
+    <state width="1360" height="231" key="GridCell.Tab.0.center/36.23.1404.877@36.23.1404.877" timestamp="1598291106917" />
+    <state width="1398" height="42" key="GridCell.Tab.0.left" timestamp="1598464087858">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="42" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1598464087858" />
+    <state width="1360" height="231" key="GridCell.Tab.0.left/30.23.1410.877@30.23.1410.877" timestamp="1597430861155" />
+    <state width="1360" height="231" key="GridCell.Tab.0.left/36.23.1404.877@36.23.1404.877" timestamp="1598291106916" />
+    <state width="1398" height="42" key="GridCell.Tab.0.right" timestamp="1598464087877">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="42" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1598464087877" />
+    <state width="1360" height="231" key="GridCell.Tab.0.right/30.23.1410.877@30.23.1410.877" timestamp="1597430861156" />
+    <state width="1360" height="231" key="GridCell.Tab.0.right/36.23.1404.877@36.23.1404.877" timestamp="1598291106917" />
+    <state width="1398" height="241" key="GridCell.Tab.1.bottom" timestamp="1598464097782">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="241" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1598464097782" />
+    <state width="1360" height="286" key="GridCell.Tab.1.bottom/30.23.1410.877@30.23.1410.877" timestamp="1597430861081" />
+    <state width="1360" height="178" key="GridCell.Tab.1.bottom/36.23.1404.877@36.23.1404.877" timestamp="1598291106910" />
+    <state width="1398" height="241" key="GridCell.Tab.1.center" timestamp="1598464097780">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="241" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1598464097780" />
+    <state width="1360" height="286" key="GridCell.Tab.1.center/30.23.1410.877@30.23.1410.877" timestamp="1597430861080" />
+    <state width="1360" height="178" key="GridCell.Tab.1.center/36.23.1404.877@36.23.1404.877" timestamp="1598291106909" />
+    <state width="1398" height="241" key="GridCell.Tab.1.left" timestamp="1598464097779">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="241" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1598464097779" />
+    <state width="1360" height="286" key="GridCell.Tab.1.left/30.23.1410.877@30.23.1410.877" timestamp="1597430861080" />
+    <state width="1360" height="178" key="GridCell.Tab.1.left/36.23.1404.877@36.23.1404.877" timestamp="1598291106909" />
+    <state width="1398" height="241" key="GridCell.Tab.1.right" timestamp="1598464097781">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="241" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1598464097781" />
+    <state width="1360" height="286" key="GridCell.Tab.1.right/30.23.1410.877@30.23.1410.877" timestamp="1597430861081" />
+    <state width="1360" height="178" key="GridCell.Tab.1.right/36.23.1404.877@36.23.1404.877" timestamp="1598291106910" />
+    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1598625826521">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel/0.0.1440.900@0.0.1440.900" timestamp="1598625826521" />
+    <state width="632" height="199" key="ImportCMakeProjectWizard.bottomPanel/30.23.1410.877@30.23.1410.877" timestamp="1597430858936" />
+    <state width="630" height="199" key="ImportCMakeProjectWizard.bottomPanel/33.23.1407.877@33.23.1407.877" timestamp="1597245155930" />
+    <state width="631" height="199" key="ImportCMakeProjectWizard.bottomPanel/35.23.1405.877@35.23.1405.877" timestamp="1598315891400" />
+    <state width="630" height="199" key="ImportCMakeProjectWizard.bottomPanel/36.23.1404.877@36.23.1404.877" timestamp="1598290081221" />
+    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel" timestamp="1598625826517">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel/0.0.1440.900@0.0.1440.900" timestamp="1598625826517" />
+    <state width="632" height="464" key="ImportCMakeProjectWizard.topPanel/30.23.1410.877@30.23.1410.877" timestamp="1597430858935" />
+    <state width="630" height="464" key="ImportCMakeProjectWizard.topPanel/33.23.1407.877@33.23.1407.877" timestamp="1597245155929" />
+    <state width="631" height="464" key="ImportCMakeProjectWizard.topPanel/35.23.1405.877@35.23.1405.877" timestamp="1598315891399" />
+    <state width="630" height="464" key="ImportCMakeProjectWizard.topPanel/36.23.1404.877@36.23.1404.877" timestamp="1598290081220" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="timerPRF" language="ObjectiveC" />
+        <watch expression="start_seconds" language="ObjectiveC" />
+        <watch expression="start" language="ObjectiveC" />
+        <watch expression="mat.size()" language="ObjectiveC" />
+        <watch expression="nWords" language="ObjectiveC" />
+        <watch expression="nWords" language="ObjectiveC" />
+        <watch expression="wIdx" language="ObjectiveC" />
+        <watch expression="mat.size()" language="ObjectiveC" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>

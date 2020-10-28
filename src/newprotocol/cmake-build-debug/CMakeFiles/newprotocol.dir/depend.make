@@ -44,6 +44,7 @@ CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/OT.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/PRF.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/Timing.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
+CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/lookup_functions.h
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/mains.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/newprotocol.hpp
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../include/darkmatter/newprotocol_test.hpp
@@ -117,6 +118,7 @@ CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/OT.hpp
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/PRF.hpp
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/Timing.hpp
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
+CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/lookup_functions.h
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/mains.hpp
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/newprotocol.hpp
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../include/darkmatter/newprotocol_test.hpp
@@ -129,6 +131,7 @@ CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/O
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/PRF.hpp
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/Timing.hpp
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
+CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/lookup_functions.h
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/mains.hpp
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/newprotocol.hpp
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../include/darkmatter/newprotocol_test.hpp

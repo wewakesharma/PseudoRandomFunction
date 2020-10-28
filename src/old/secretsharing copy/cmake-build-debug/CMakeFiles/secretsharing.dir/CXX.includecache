@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/secretsharing/utilspacked.cpp
+iostream
+-
+random
+-
+bitset
+-
+cmath
+-
+chrono
+-
+ctime
+-
+cstdlib
+-
+assert.h
+-
+

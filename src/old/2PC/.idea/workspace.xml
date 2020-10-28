@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="2PC" targetName="2PC" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1faa92c9-dd67-41f0-82db-e0e4e8129e50" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectId" id="1fmPRAPXrxS3LLjJ3HdCqiOeOWS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="2PC" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="2PC" TARGET_NAME="2PC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="2PC" RUN_TARGET_NAME="2PC">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1faa92c9-dd67-41f0-82db-e0e4e8129e50" name="Default Changelist" comment="" />
+      <created>1596820284289</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1596820284289</updated>
+      <workItem from="1596820286837" duration="183000" />
+      <workItem from="1596820474558" duration="2122000" />
+      <workItem from="1596822790982" duration="78000" />
+      <workItem from="1596824245513" duration="54000" />
+      <workItem from="1597070218216" duration="1074000" />
+      <workItem from="1597071486832" duration="169000" />
+      <workItem from="1597071660632" duration="44000" />
+      <workItem from="1597071762686" duration="282000" />
+      <workItem from="1597072066217" duration="4786000" />
+      <workItem from="1597110116900" duration="1215000" />
+      <workItem from="1597430864414" duration="20000" />
+      <workItem from="1597431316296" duration="1252000" />
+      <workItem from="1597589872577" duration="2960000" />
+      <workItem from="1597680436493" duration="1186000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="631" height="199" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1597430882104">
+      <screen x="30" y="23" width="1410" height="877" />
+    </state>
+    <state width="631" height="199" key="ImportCMakeProjectWizard.bottomPanel/30.23.1410.877@30.23.1410.877" timestamp="1597430882104" />
+    <state width="628" height="199" key="ImportCMakeProjectWizard.bottomPanel/35.23.1405.877@35.23.1405.877" timestamp="1596820467518" />
+    <state width="631" height="464" key="ImportCMakeProjectWizard.topPanel" timestamp="1597430882104">
+      <screen x="30" y="23" width="1410" height="877" />
+    </state>
+    <state width="631" height="464" key="ImportCMakeProjectWizard.topPanel/30.23.1410.877@30.23.1410.877" timestamp="1597430882104" />
+    <state width="628" height="464" key="ImportCMakeProjectWizard.topPanel/35.23.1405.877@35.23.1405.877" timestamp="1596820467514" />
+  </component>
+</project>

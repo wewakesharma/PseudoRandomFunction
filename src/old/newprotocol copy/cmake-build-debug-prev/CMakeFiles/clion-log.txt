@@ -1,0 +1,4 @@
+Cannot generate into /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug
+It is already used for project /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol
+
+Please either delete it manually or select another generation directory
