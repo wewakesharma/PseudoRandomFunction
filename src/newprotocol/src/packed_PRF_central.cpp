@@ -107,12 +107,13 @@ void PRF_packed(int nTimes,  int nRuns, int nStages)
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
 
-    auto start = std::chrono::system_clock::now();
+    auto start_prf = std::chrono::system_clock::now();
 
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
         PRF_packed_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
     }
+    timer_PRF_packed += (std::chrono::system_clock::now() - start_prf).count();
 }
 
 
@@ -121,4 +122,5 @@ void display_times(int nRuns)
     std::cout<<"Time in ms for p1, "<<nRuns << " runs = " << timer_packed_cent_p1<<  std::endl;
     std::cout<<"Time in ms for p2, "<<nRuns << " runs = " << timer_packed_cent_p2<<  std::endl;
     std::cout<<"Time in ms for p3,  "<<nRuns << " runs = " <<timer_packed_cent_p3 << std::endl;
+    std::cout<<"Time in ms for centralized PRF,  "<<nRuns << " runs = " <<timer_PRF_packed << std::endl;
 }

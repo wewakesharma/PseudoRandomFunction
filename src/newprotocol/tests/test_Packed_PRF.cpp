@@ -32,8 +32,7 @@ int main(int argc,char* argv[] )  {
         stepsToRun = 3;
 
     int ntimes = 1;
-    nRuns = 1;//REMOVE IT
-    //nRuns = 1000;
+    nRuns = 1000; //number of times the program runs
 
     using Clock = std::chrono::system_clock;
     using Duration = Clock::duration;
