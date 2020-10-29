@@ -42,7 +42,10 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         K[i] = K1[i] ^ K2[i];
     }
     PackedZ2<N_COLS> outKX;
-    auto start_p1 = chrono::system_clock::now();
+
+    auto start_unpacked_prf = chrono::system_clock::now(); //starting the clock for unpacked
+
+    auto start_p1 = chrono::system_clock::now(); //starting the phase 1 timing
     outKX.toeplitzByVec(K,X);
     timer_unpacked_cent_p1 += (std::chrono::system_clock::now() - start_p1).count();
 
@@ -52,7 +55,6 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
     {
         KtimesX[cnt] = outKX.at(cnt);
     }
-
 
     /*
      * Uncomment this part to perform KX naively
@@ -110,7 +112,8 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
     }
     timer_unpacked_cent_p3 += (std::chrono::system_clock::now() - start_p3).count();
 
-    /*
+    timer_PRF_unpacked += (std::chrono::system_clock::now() - start_unpacked_prf).count();;
+#ifdef PRINT_VAL
     cout<<std::endl;
     //printing the generated randomization matrix
     for(int i = 0;i<81;i++)
@@ -120,7 +123,8 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
             cout<<K_unpack[i][j];
         }
         cout<<std::endl;
-    }*/
+    }
+#endif
 }
 
 void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
@@ -168,7 +172,8 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
 
 void display_time_unpacked(int nRuns)
 {
-    std::cout<<std::endl<<"Time to execute unpacked phase 1 in ms for "<<nRuns << " runs = " << timer_unpacked_cent_p1<<  std::endl;
-    std::cout<<"Time to generate randomization matrix in ms for "<<nRuns << " runs = " <<timer_unpacked_cent_rand_Z3 << std::endl;
-    std::cout<<"Time to execute unpakced phase 3 in ms for "<<nRuns << " runs = " <<timer_unpacked_cent_p3 << std::endl;
+    std::cout<<std::endl<<"Time to execute unpacked phase 1(K * X) for "<<nRuns << " runs = " << timer_unpacked_cent_p1<<  std::endl;
+    std::cout<<"Time to generate (81 X 256)randomization matrix for "<<nRuns << " runs = " <<timer_unpacked_cent_rand_Z3 << std::endl;
+    std::cout<<"Time to execute unpacked phase 3(Rmat*(K * X)) for "<<nRuns << " runs = " <<timer_unpacked_cent_p3 << std::endl;
+    std::cout<<"Time to execute entire unpacked PRF for "<<nRuns<<" runs = "<<timer_PRF_unpacked<<std::endl;
 }

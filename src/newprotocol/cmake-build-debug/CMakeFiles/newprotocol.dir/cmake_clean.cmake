@@ -15,6 +15,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o"
+  "CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o"
   "newprotocol"

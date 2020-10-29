@@ -34,6 +34,7 @@ int main(int argc,char* argv[] )  {
     int ntimes = 1;
     nRuns = 1000; //number of times the program runs
 
+    std::cout<<"Running Packed PRF Centralized for "<<nRuns<<" times."<<std::endl;
     using Clock = std::chrono::system_clock;
     using Duration = Clock::duration;
     std::cout << Duration::period::num << " , " << Duration::period::den << '\n';

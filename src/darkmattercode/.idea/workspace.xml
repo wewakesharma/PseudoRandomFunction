@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="darkmattercode" targetName="darkmattercode" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dfa39a2c-4ad6-41c2-9af4-3f90a8d46ce5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/CXX.includecache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/src/OT.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/src/PRF.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/src/Toeplitz-by-x.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/src/packed_PRF_central.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/src/unpacked_PRF_central.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/tests/test_OT.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/tests/test_PRF.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/tests/test_Packed_PRF.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/tests/test_Toeplitz-by-x.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/tests/test_packedMod2.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/tests/test_packedMod3.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/darkmattercode2.dir/tests/test_unpacked_PRF.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/darkmattercode.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/darkmattercode.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-packed-prf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-prf" beforeDir="false" afterPath="$PROJECT_DIR$/test-prf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_unpacked_PRF" beforeDir="false" afterPath="$PROJECT_DIR$/test_unpacked_PRF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_PRF.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_PRF.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_Packed_PRF.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_Packed_PRF.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_unpacked_PRF.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_unpacked_PRF.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../~$sign Decision for toeplitz filling.docx" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1geP0kjE5EuOsbhMHvsJZDXqFY3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+  </component>
+  <component name="RunManager">
+    <configuration name="darkmattercode" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="darkmattercode" TARGET_NAME="darkmattercode" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="darkmattercode" RUN_TARGET_NAME="darkmattercode">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dfa39a2c-4ad6-41c2-9af4-3f90a8d46ce5" name="Default Changelist" comment="" />
+      <created>1598471864006</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598471864006</updated>
+      <workItem from="1598471866051" duration="999000" />
+      <workItem from="1598677380864" duration="1069000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1440" height="153" key="GridCell.Tab.0.bottom" timestamp="1598473142463">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="153" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1598473142463" />
+    <state width="1440" height="153" key="GridCell.Tab.0.center" timestamp="1598473142461">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="153" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1598473142461" />
+    <state width="1440" height="153" key="GridCell.Tab.0.left" timestamp="1598473142460">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="153" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1598473142460" />
+    <state width="1440" height="153" key="GridCell.Tab.0.right" timestamp="1598473142462">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1440" height="153" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1598473142462" />
+  </component>
+</project>

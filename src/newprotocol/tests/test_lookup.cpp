@@ -20,56 +20,6 @@
 
 //using namespace std;
 
-/*
-void reformat_input(std::vector<uint64_t>& outKX_input, PackedZ2<256>& outKX)//converts 256 bit input(PackedZ2) to 16 vector of 16 bits each
-{
-#ifdef LOOKUP_PRINT_VAL
-    std::cout<<std::endl<<"Getting inside the loop"<<std::endl;
-#endif
-    for(int base_counter = 0; base_counter < 16; base_counter++)
-    {
-        uint64_t input_word = 0;
-        for(int offset_counter = 0; offset_counter < 16; offset_counter++)
-        {
-            input_word |= ((outKX.at(16*base_counter+offset_counter)) << offset_counter);
-        }
-        outKX_input[base_counter] = input_word;
-    }
-}
-
-void reformat_Rmat(std::vector<vector<PackedZ3<81> > >& Rmat16, std::vector<PackedZ3<81> >& Rmat)
-{
-    for(int outer_vector = 0; outer_vector < 16; outer_vector++)
-    {
-        Rmat16[outer_vector].resize(16);
-        for(int inner_vector = 0; inner_vector < 16; inner_vector++)
-        {
-            Rmat16[outer_vector][inner_vector] = Rmat[16*outer_vector+inner_vector];
-        }
-    }
-}
-
-
-void uselookup(PackedZ3<81>& result_sum, std::vector<uint64_t>& outKX_input, std::vector<std::vector<PackedZ3<81> > >& lookup_table)
-{
-    std::vector<PackedZ3<81> > result_table(16); //stores the result of multiplication using lookup table
-
-
-    for(int word_count = 0; word_count < 16; word_count++)
-    {
-        uint64_t value = outKX_input[word_count];
-        result_table[word_count] = lookup_table[word_count][value];
-    }
-
-    //add up the 16 count of packedmod3 values
-    result_sum = result_table[0];
-    for(int count = 1; count < 16; count++)
-    {
-        result_sum += result_table[count];
-    }
-}*/
-
-
 #ifdef LOOKUP_TEST
 int main() {
     //declare the variables

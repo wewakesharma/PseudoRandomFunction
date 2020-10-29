@@ -28,7 +28,7 @@ static std::vector< PackedZ2<N_COLS> > rxs;
 
 void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                           PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
-                          PackedZ3<81>& out2Z3, int i)
+                          PackedZ3<81>& out2Z3, int runs)
 {
     //1.perform X = x1+ x2 (on vectors)
     PackedZ2<N_COLS> X = x1; //declare a variable
@@ -44,6 +44,8 @@ void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vecto
         K[i] = K1[i] ^ K2[i];
     }
     PackedZ2<N_COLS> outKX;
+
+    auto start_prf = std::chrono::system_clock::now();
 
     auto start_p1 = chrono::system_clock::now();
     outKX.toeplitzByVec(K,X);
@@ -65,6 +67,8 @@ void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vecto
     auto start_p3 = chrono::system_clock::now();
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
     timer_packed_cent_p3 += (std::chrono::system_clock::now() - start_p3).count();
+
+    timer_PRF_packed += (std::chrono::system_clock::now() - start_prf).count();
 
     PackedZ3<81>out_12_Z3 = out1Z3;
     out_12_Z3.add(out2Z3);//merged output from parameters
@@ -92,9 +96,6 @@ void PRF_packed(int nTimes,  int nRuns, int nStages)
 
     // Choose random K1, K2, x1, x2, we will be computing
     // (K1 xor K2) \times (x1 xor x2)
-
-    //TODO: write randomize Toeplitzß
-
     for (auto &w : K1) w = randomWord();
     K1[K1.size() - 1] &= topelitzMask; // turn off extra bits at the end
 
@@ -107,20 +108,17 @@ void PRF_packed(int nTimes,  int nRuns, int nStages)
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
 
-    auto start_prf = std::chrono::system_clock::now();
-
-    //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
         PRF_packed_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
     }
-    timer_PRF_packed += (std::chrono::system_clock::now() - start_prf).count();
+
 }
 
 
 void display_times(int nRuns)
 {
-    std::cout<<"Time in ms for p1, "<<nRuns << " runs = " << timer_packed_cent_p1<<  std::endl;
-    std::cout<<"Time in ms for p2, "<<nRuns << " runs = " << timer_packed_cent_p2<<  std::endl;
-    std::cout<<"Time in ms for p3,  "<<nRuns << " runs = " <<timer_packed_cent_p3 << std::endl;
-    std::cout<<"Time in ms for centralized PRF,  "<<nRuns << " runs = " <<timer_PRF_packed << std::endl;
+    std::cout<<"Time for phase 1(K*X), "<<nRuns << " runs = " << timer_packed_cent_p1<<  std::endl;
+    std::cout<<"Time for phase 2(casting w from Z2 to Z3), "<<nRuns << " runs = " << timer_packed_cent_p2<<  std::endl;
+    std::cout<<"Time for phase 3(Randomization multiplication) "<<nRuns << " runs = " <<timer_packed_cent_p3 << std::endl;
+    std::cout<<"Time for entire packed centralized PRF,  "<<nRuns << " runs = " <<timer_PRF_packed << std::endl;
 }
