@@ -18,7 +18,7 @@
 
 int main()  {
 
-    long timer_packed_PRF_lookup = 0;
+    long timer_packed_PRF_lookup = 0; //time the entire PRF computation nRuns times using lookup table
     long timer_packed_cent_p1 = 0;
     long timer_packed_cent_p3 = 0;
     long timer_packed_cent_p2 = 0;
@@ -81,11 +81,15 @@ int main()  {
         reformat_input(outKX_input, outKX);
 
         PackedZ3<81> outZ3_lookup;
+
+        auto start_prf_p3 = std::chrono::system_clock::now();
         uselookup(outZ3_lookup, outKX_input, lookup_table);
+        timer_packed_cent_p3 += (std::chrono::system_clock::now() - start_prf_p3).count();
+
     }
 
-
     timer_packed_PRF_lookup += (std::chrono::system_clock::now() - start_prf_lookup).count();
-    std::cout<<"Time for "<<nRuns<<" runs of lookup table "<<timer_packed_PRF_lookup<<std::endl;
+    std::cout<<"Time for "<<nRuns<<" runs of calling/accessing lookup table "<<timer_packed_cent_p3<<std::endl;
+    std::cout<<"Time for "<<nRuns<<" runs of entire PRF using lookup table "<<timer_packed_PRF_lookup<<std::endl;
 }
 #endif
