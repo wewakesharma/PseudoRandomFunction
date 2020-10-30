@@ -10,7 +10,7 @@
 // Uncomment one and only one
 
 //#define PACKED_PRF_CENTRAL //packed centralized PRF with matbyvec multiplication
-#define PACKED_PRF_CENTRAL_LOOKUP //packed centralized PRF with lookup table
+//#define PACKED_PRF_CENTRAL_LOOKUP //packed centralized PRF with lookup table
 //#define UNPACKED_PRF_CENTRAL  //unpacked centralized PRF, everything performed naively
 
 //#define TEST_PHASE1
@@ -19,7 +19,7 @@
 //#define TEST_PRF
 //#define TEST_SC
 
-//#define TEST_NP                 //runs the new protocol(full)
+#define TEST_NP                 //runs the new protocol(full)
 //#define UNITTEST_ROUND2       //runs the unit test code that checks round 2 only
 //#define TEST_DM
 

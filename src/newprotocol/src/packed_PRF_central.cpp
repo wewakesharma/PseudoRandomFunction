@@ -27,7 +27,7 @@ static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
 void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                          PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
+                          PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& outZ3,
                           PackedZ3<81>& out2Z3, int runs)
 {
     //1.perform X = x1+ x2 (on vectors)
@@ -63,15 +63,15 @@ void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vecto
  //   outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
     timer_packed_cent_p2 += (std::chrono::system_clock::now() - start_p2).count();
 
-    PackedZ3<81> outZ3;//final Z3 output
+    //PackedZ3<81> outZ3;//final Z3 output
     auto start_p3 = chrono::system_clock::now();
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
     timer_packed_cent_p3 += (std::chrono::system_clock::now() - start_p3).count();
 
     timer_PRF_packed += (std::chrono::system_clock::now() - start_prf).count();
 
-    PackedZ3<81>out_12_Z3 = out1Z3;
-    out_12_Z3.add(out2Z3);//merged output from parameters
+    //PackedZ3<81>out_12_Z3 = out1Z3;
+    //out_12_Z3.add(out2Z3);//merged output from parameters
 
 }
 
@@ -106,10 +106,11 @@ void PRF_packed(int nTimes,  int nRuns, int nStages)
     x2.randomize();
 
     PackedZ3<81> out1Z3;                     // 81-vector
-    PackedZ3<81> out2Z3;                     // 81-vector
+    PackedZ3<81> outZ3;                     // 81-vector
 
     for (int i = 0; i < nRuns; i++) {
-        PRF_packed_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
+        PRF_packed_test(K1, x1, K2, x2, Rmat, out1Z3, outZ3, i);
+        cout << "in packed_PRF_central.cpp, PRF_packed function, " << "out1Z3=" << outZ3 << endl;
     }
 
 }

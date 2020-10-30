@@ -511,6 +511,8 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
         timer_round3 += (std::chrono::system_clock::now() - start_r3).count();
 
+        std::cout << "in PRF_new_protocol, y1_z3=" << y1_z3 << ", y2_z3= " << y2_z3 << std:: endl;
+
 #ifdef PRINT_VAL
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
 #endif

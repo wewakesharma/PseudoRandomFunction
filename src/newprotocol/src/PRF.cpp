@@ -316,77 +316,8 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
 
     timerPRF += (chrono::system_clock::now() - start).count();
 
+    cout << "in prf.cpp, PRF_DM_wpreproc function, " << "out1Z3=" << out1Z3 << ", out2Z3=" << out2Z3 << endl;
 
 
-    /*
-        for (int i = 0; i < nRuns; i++) {
-        // First run, a protocol for K1 times x2
-        topelitz_Party2_1(x2, 2*i);
-        topelitz_Party1(out1_A, K1, 2*i);
-        topelitz_Party2_2(out1_B, x2, 2*i);
-
-        // Second run, a protocol for K2 times x1
-        topelitz_Party2_1(x1, 2*i+1);
-        topelitz_Party1(out2_B, K2, 2*i+1);
-        topelitz_Party2_2(out2_A, x1, 2*i+1);
-
-        // Party1 computes locally K1 times x1, and adds to out1_A,out2_A
-        out1_A.add(out2_A);           // out1 ^= out2
-        out2_A.toeplitzByVec(K1, x1); // K1 times x1
-        out1_A.add(out2_A);           // sum of all terms
-
-        // Party2 computes locally K2 times x2, and adds to out1_B,out2_N
-        out1_B.add(out2_B);           // out1 ^= out2
-        out2_B.toeplitzByVec(K2, x2); // K2 times x2
-        out1_B.add(out2_B);           // sum of all terms
-    } //run nRuns = 1M times
-
-    chrono::duration<double> elapsed_seconds_part1 = chrono::system_clock::now() - start;
-
-    cout << "number of runs= " << nRuns <<  ", elapsed time for AX+B phase:  " << elapsed_seconds_part1.count() << endl ;
-
-    if (nStages == 1)
-        return; //we're done here
-    //at this point we have the outputs of each party
-
-        //============================OT evaluation==========================
-
-    PackedZ2<N_SIZE>& y1 = out1_A;
-    PackedZ2<N_SIZE>& y2 = out1_B;
-    PackedZ3<N_SIZE> out1, out2;
-
-    chrono::time_point<std::chrono::system_clock> start2 = chrono::system_clock::now();
-
-
-    for (int i = 0; i < nRuns; i++) {
-        SC_Party2_1(y2, i);
-        SC_Party1(y1, out1, i);
-        SC_Party2_2(y2, out2, i);
-        }
-
-    //test the results
-
-    chrono::duration<double> elapsed_seconds_SC = chrono::system_clock::now() - start2;
-
-    cout << endl << "elapsed time for SC  phase:  " << elapsed_seconds_SC.count() << "  s\n";
-
-    if (nStages == 2)
-        return; //we're done here
-
-    //phase 3 implementation
-  //Here we start the next phase were we deal with Z3 numbers
-    // fill with random Z3 elements
-
-    chrono::time_point<std::chrono::system_clock> start3 = chrono::system_clock::now();
-
-    for (int i = 0; i < nRuns; i++) {
-        out1Z3.matByVec(Rmat, out1); // compute matrix-by-vector multiply
-        out2Z3.matByVec(Rmat, out2); // compute matrix-by-vector multiply
-    }
-
-    chrono::duration<double> elapsed_seconds_P3 = chrono::system_clock::now() - start3;
-
-    cout << endl << "elapsed time for Phase3  phase:  " << elapsed_seconds_P3.count() << "  s\n";
-*/
 }
 
