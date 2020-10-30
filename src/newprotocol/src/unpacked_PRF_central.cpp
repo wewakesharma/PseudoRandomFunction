@@ -27,8 +27,8 @@ static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
 void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                          PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
-                          PackedZ3<81>& out2Z3, int i)
+                          PackedZ2<N_COLS>& x2, uint64_t randMat[81][256], PackedZ3<81>& out1Z3,
+                          PackedZ3<81>& out2Z3, int i, int outMod3[81])
 {
     //1.perform X = x1+ x2 (on vectors)
     PackedZ2<N_COLS> X = x1; //declare a variable
@@ -42,6 +42,7 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         K[i] = K1[i] ^ K2[i];
     }
     PackedZ2<N_COLS> outKX;
+
 
     auto start_unpacked_prf = chrono::system_clock::now(); //starting the clock for unpacked
 
@@ -60,42 +61,15 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
      * Uncomment this part to perform KX naively
      */
     //3a. Unpack K and X and perform their multiplication using naive method
+    /*
     uint64_t X_unpack[256];
     for(int i = 0; i < N_COLS;i++)
     {
         X_unpack[i] = (uint64_t)X.at(i);
     }
-    uint64_t randMat[81][256];
 
-    auto start_randZ3 = chrono::system_clock::now();
-    //3b. Take outKX and multiply it with 81X256 Z3 matrix
-    int nColsGenerated;
-    int wLen = 64;
-    int rows = 0;
+*/
 
-    while(rows < 81) {
-        nColsGenerated = 0;
-        while (nColsGenerated < 256) {
-            uint64_t wGen = randomWord();
-            //k is the index within the wGen, which holds a random 64 bit word
-            for (int k = 0; k < wLen; k = k + 2) {
-                uint64_t bit1 = (wGen >> k) & 1;
-                uint64_t bit2 = (wGen >> (k + 1)) & 1;
-                if (!((bit1 == 1) & (bit2 == 1)))
-                {
-                    //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
-                    randMat[rows][nColsGenerated]=(bit1<<1 | bit2);
-                    nColsGenerated++;
-                    //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
-                    if (nColsGenerated == wLen) {
-                        break; //go to the next item
-                    }
-                }
-            }
-        }
-    rows++;
-    }
-    timer_unpacked_cent_rand_Z3 += (std::chrono::system_clock::now() - start_randZ3).count();
 
     //4.Multiply KtimesX with K_unpack
 
@@ -112,9 +86,10 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
     }
     timer_unpacked_cent_p3 += (std::chrono::system_clock::now() - start_p3).count();
 
+    timer_PRF_unpacked += (std::chrono::system_clock::now() - start_unpacked_prf).count();;
+
     cout << "in PRF_unpacked_central" << "out_mod3=" << out_mod3 << endl;
 
-    timer_PRF_unpacked += (std::chrono::system_clock::now() - start_unpacked_prf).count();;
 #ifdef PRINT_VAL
     cout<<std::endl;
     //printing the generated randomization matrix
@@ -165,17 +140,52 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
 
+    //generating the random matrix
+    auto start_randZ3 = chrono::system_clock::now();
+    //3b. Take outKX and multiply it with 81X256 Z3 matrix
+    int nColsGenerated;
+    int wLen = 64;
+    int rows = 0;
+
+    uint64_t randMat[81][256];
+
+    while(rows < 81) {
+        nColsGenerated = 0;
+        while (nColsGenerated < 256) {
+            uint64_t wGen = randomWord();
+            //k is the index within the wGen, which holds a random 64 bit word
+            for (int k = 0; k < wLen; k = k + 2) {
+                uint64_t bit1 = (wGen >> k) & 1;
+                uint64_t bit2 = (wGen >> (k + 1)) & 1;
+                if (!((bit1 == 1) & (bit2 == 1)))
+                {
+                    //assign the next bits generated to their locations in the random matrices, the location is nBitsFound
+                    randMat[rows][nColsGenerated]=(bit1<<1 | bit2);
+                    nColsGenerated++;
+                    //if we reached the end of the random matrix word, we need to go to the next word. We will then generate a new random word to fill it
+                    if (nColsGenerated == wLen) {
+                        break; //go to the next item
+                    }
+                }
+            }
+        }
+        rows++;
+    }
+    timer_unpacked_cent_rand_Z3 += (std::chrono::system_clock::now() - start_randZ3).count();
+
+    int out_mod3[81];
 
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
-        PRF_unpacked_central(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
+        PRF_unpacked_central(K1, x1, K2, x2, randMat, out1Z3, out2Z3, i, out_mod3);
     }
+
 }
 
 void display_time_unpacked(int nRuns)
 {
     std::cout<<std::endl<<"Time to execute unpacked phase 1(K * X) for "<<nRuns << " runs = " << timer_unpacked_cent_p1<<  std::endl;
-    std::cout<<"Time to generate (81 X 256)randomization matrix for "<<nRuns << " runs = " <<timer_unpacked_cent_rand_Z3 << std::endl;
+    std::cout<<"Time to generate (81 X 256)randomization matrix for "<<1 << " runs = " <<timer_unpacked_cent_rand_Z3 << std::endl;
     std::cout<<"Time to execute unpacked phase 3(Rmat*(K * X)) for "<<nRuns << " runs = " <<timer_unpacked_cent_p3 << std::endl;
     std::cout<<"Time to execute entire unpacked PRF for "<<nRuns<<" runs = "<<timer_PRF_unpacked<<std::endl;
 }

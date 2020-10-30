@@ -69,26 +69,32 @@ int main()  {
     create_lookup_table(Rmat16,lookup_table);
     std::cout<<"Generation of lookup table.....COMPLETE"<<std::endl;
 
-    auto start_prf_lookup = std::chrono::system_clock::now();
+
 
     for(int run_count = 0; run_count < nRuns; run_count++)
     {
         PackedZ2<N_COLS> outKX;
+
+        auto start_prf_lookup = std::chrono::system_clock::now();
+
         outKX.toeplitzByVec(K,X);   //K * X
 
         //converting the input format
         std::vector<uint64_t> outKX_input(16); //16 vectors each as a word of size 16 bits. Total containing 256 bits.
-        reformat_input(outKX_input, outKX);
+        reformat_input(outKX_input, outKX);  //phase 2
 
         PackedZ3<81> outZ3_lookup;
 
         auto start_prf_p3 = std::chrono::system_clock::now();
         uselookup(outZ3_lookup, outKX_input, lookup_table);
         timer_packed_cent_p3 += (std::chrono::system_clock::now() - start_prf_p3).count();
+        timer_packed_PRF_lookup += (std::chrono::system_clock::now() - start_prf_lookup).count();
+
+        std::cout << "in test_packed_PRF_central_lookup, main function, " << "outZ3_lookup=" << outZ3_lookup << std::endl;
 
     }
 
-    timer_packed_PRF_lookup += (std::chrono::system_clock::now() - start_prf_lookup).count();
+
     std::cout<<"Time for "<<nRuns<<" runs of calling/accessing lookup table "<<timer_packed_cent_p3<<std::endl;
     std::cout<<"Time for "<<nRuns<<" runs of entire PRF using lookup table "<<timer_packed_PRF_lookup<<std::endl;
 }

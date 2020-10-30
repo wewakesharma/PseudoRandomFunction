@@ -10,8 +10,8 @@
 // Uncomment one and only one
 
 //#define PACKED_PRF_CENTRAL //packed centralized PRF with matbyvec multiplication
-//#define PACKED_PRF_CENTRAL_LOOKUP //packed centralized PRF with lookup table
-#define UNPACKED_PRF_CENTRAL  //unpacked centralized PRF, everything performed naively
+#define PACKED_PRF_CENTRAL_LOOKUP //packed centralized PRF with lookup table
+//#define UNPACKED_PRF_CENTRAL  //unpacked centralized PRF, everything performed naively
 
 //#define TEST_PHASE1
 //#define TEST_PackedMod2
