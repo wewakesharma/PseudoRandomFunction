@@ -112,6 +112,8 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
     }
     timer_unpacked_cent_p3 += (std::chrono::system_clock::now() - start_p3).count();
 
+    cout << "in PRF_unpacked_central" << "out_mod3=" << out_mod3 << endl;
+
     timer_PRF_unpacked += (std::chrono::system_clock::now() - start_unpacked_prf).count();;
 #ifdef PRINT_VAL
     cout<<std::endl;
@@ -143,8 +145,8 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
     for (auto &col : Rmat) // iterate over the columns
         col.randomize();
 
-    preProc_Toeplitz_by_x(nRuns * 2); // pre-processing for two runs
-    preProc_OT(nRuns); //preprocess for OT, generate ra, rn, rx, and z
+   // preProc_Toeplitz_by_x(nRuns * 2); // pre-processing for two runs
+   // preProc_OT(nRuns); //preprocess for OT, generate ra, rn, rx, and z
 
     // Choose random K1, K2, x1, x2, we will be computing
     // (K1 xor K2) \times (x1 xor x2)
