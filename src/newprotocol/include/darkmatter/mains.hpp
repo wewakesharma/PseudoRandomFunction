@@ -18,9 +18,22 @@
 
 /*
  * Decentralized implementation flags
+ *
+ * Options:
+
+PACKED_PRF_CENTRAL = 1.   - centralized packed PRF, both phases 2 and 3 are packed (no lookup table), key is Toeplitz:
+
+UNPACKED_PRF_CENTRALIZED = 1. - Centralized naïve version unpacked
+
+PACKED_PRF_CENTRAL_LOOKUP = 1 , centralized using lookup table
+
+TEST_PRF= 1, Distributed dark matter version, packed, no lookup table
+
+TEST_NP = 1, New protocol, packed, no lookup table
+
  */
-#define TEST_PRF
-//#define TEST_NP                 //runs the new protocol(full)
+//#define TEST_PRF
+#define TEST_NP                 //runs the new protocol(full)
 
 
 //#define TEST_PHASE1

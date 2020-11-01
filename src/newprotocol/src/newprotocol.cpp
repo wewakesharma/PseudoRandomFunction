@@ -441,7 +441,18 @@ void display_exec_timing()
         time_unit_multiplier = 0.001; //make nanosecond to microsecond
     else if(Duration::period::den == 1000000)
         time_unit_multiplier = 1;   //keep the unit as microsecond
+/*
+    std::cout<<"timer_round1_p1: "<<(timer_round1_p1 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"timer_round1_p2): "<<(timer_round1_p2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"timer_round1_mask: "<<(timer_round1_mask * time_unit_multiplier)<<" microseconds"<<std::endl;
 
+    std::cout<<"timer_round2_p1: "<<(timer_round2_p1 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"timer_round2_p2: "<<(timer_round2_p2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Ttimer_round2_mask: "<<(timer_round2_mask * time_unit_multiplier)<<" microseconds"<<std::endl;
+
+    std::cout<<"timer_round3_p1: "<<(timer_round3_p1 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"timer_round3_p2: "<<(timer_round3_p2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+  */
     timer_round1 = std::max(timer_round1_p1, timer_round1_p2) + timer_round1_mask;
     timer_round2 = std::max(timer_round2_p1, timer_round2_p2) + timer_round2_mask;
     timer_round3 = std::max(timer_round3_p1, timer_round3_p2);
@@ -504,6 +515,8 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
     PackedZ3<81> out;
 
+    PackedZ3<81> y1_z3_dummy;
+
     for(unsigned int i = 0; i< nRuns;i++)
     {
         //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
@@ -557,7 +570,9 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
         timer_round3_p2 += (std::chrono::system_clock::now() - start_r3_p2).count();
 
-        std::cout << "in PRF_new_protocol, y1_z3=" << y1_z3 << ", y2_z3= " << y2_z3 << std:: endl;
+        y1_z3_dummy += y1_z3;
+        y1_z3_dummy+= y2_z3;
+
 
 #ifdef PRINT_VAL
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
@@ -587,6 +602,8 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
 #endif
     } //end of for loop, nTimes
+
+    std::cout << "in PRF_new_protocol, y1_z3_dummy=" << y1_z3_dummy <<  std:: endl;
 
     //print the execution timings
     display_exec_timing();
