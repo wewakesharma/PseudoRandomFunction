@@ -308,10 +308,13 @@ void SC_Party2_2(const PackedZ2<N_SIZE>& y2, PackedZ3<N_SIZE>& out, int index)
     timerSCP2 += (std::chrono::system_clock::now() - start).count();
 }
 
-void display_SC_runtime()
+void display_SC_runtime(float& time_unit_multiplier)
 {
     std::cout<<std::endl<<"Share Conversion execution time "<<std::endl;
-    std::cout<<"Party 1: " << timerSCP1 <<std::endl;
-    std::cout<<"Party 2: "<<timerSCP2<<std::endl;
+    std::cout<<"Party 1: " << (timerSCP1* time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Party 2: "<<(timerSCP2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 2(Share Conversion): "<<
+             ((timerSCP1 + timerSCP2) * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for phase 2: "<<(1000/((timerSCP1 + timerSCP2) * time_unit_multiplier)*1000000)<<std::endl;
 }
 

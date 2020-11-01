@@ -32,9 +32,10 @@ add_executable(newprotocol
         tests/test_newprotocol.cpp
         tests/test_OT.cpp
         tests/test_Packed_PRF.cpp
+        tests/test_packed_PRF_central_lookup.cpp
         tests/test_packedMod2.cpp
         tests/test_packedMod3.cpp
         tests/test_PRF.cpp
         tests/test_Toeplitz-by-x.cpp
         tests/test_unit_newprotocol.cpp
-        tests/test_unpacked_PRF.cpp tests/test_packed_PRF_central_lookup.cpp)
+        tests/test_unpacked_PRF.cpp)

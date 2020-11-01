@@ -9,17 +9,27 @@
 
 // Uncomment one and only one
 
+/*
+ * Centralized implementation flags
+ */
 //#define PACKED_PRF_CENTRAL //packed centralized PRF with matbyvec multiplication
 //#define PACKED_PRF_CENTRAL_LOOKUP //packed centralized PRF with lookup table
 //#define UNPACKED_PRF_CENTRAL  //unpacked centralized PRF, everything performed naively
 
+/*
+ * Decentralized implementation flags
+ */
+#define TEST_PRF
+//#define TEST_NP                 //runs the new protocol(full)
+
+
 //#define TEST_PHASE1
 //#define TEST_PackedMod2
 //#define TEST_PackedMod3
-//#define TEST_PRF
+
 //#define TEST_SC
 
-#define TEST_NP                 //runs the new protocol(full)
+
 //#define UNITTEST_ROUND2       //runs the unit test code that checks round 2 only
 //#define TEST_DM
 

@@ -35,13 +35,20 @@ static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 
-
-/*void use_lookup_table(std::vector<std::vector<PackedZ3<81> > >& lookup_table, uint64_t& random_input16,
-        std::vector<PackedZ3<81> >& result_table)
+void display_Phase3_runtime(float& time_unit_multiplier)
 {
+    std::cout<<"\nTime to execute phase 3: "<<
+             (timer_phase3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for phase 3: "<<(1000/(timer_phase3*time_unit_multiplier)*1000000)<<std::endl;
 
-}*/
+}
+void display_PRF_runtime(float& time_unit_multiplier)
+{
+    std::cout<<"\nTime to execute entire PRF protocol: "<<
+             (timerPRF * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for entire PRF: "<<(1000/(timerPRF*time_unit_multiplier)*1000000)<<std::endl;
 
+}
 
 void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                             PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81>& outZ3, int nTimes)
@@ -214,6 +221,7 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
         PackedZ3<81>& out2Z3, int i)
 {
+    auto start_prf = std::chrono::system_clock::now();
         PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
 
         topelitz_Party2_1(x2, 2*i);
@@ -225,24 +233,24 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         topelitz_Party1(out2_B, K2, 2*i+1);
         topelitz_Party2_2(out2_A, x1, 2*i+1);
 
-        chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
+        chrono::time_point<std::chrono::system_clock> start_p1 = chrono::system_clock::now();
 
         // Party1 computes locally K1 times x1, and adds to out1_A,out2_A
         out1_A.add(out2_A);           // out1 ^= out2
         out2_A.toeplitzByVec(K1, x1); // K1 times x1
         out1_A.add(out2_A);           // sum of all terms
 
-        timerAxpBP1 += (chrono::system_clock::now() - start).count();
+        timerAxpBP1 += (chrono::system_clock::now() - start_p1).count();
 
 
-        start = chrono::system_clock::now();
+        auto start_p2 = chrono::system_clock::now();
 
         // Party2 computes locally K2 times x2, and adds to out1_B,out2_N
         out1_B.add(out2_B);           // out1 ^= out2
         out2_B.toeplitzByVec(K2, x2); // K2 times x2
         out1_B.add(out2_B);           // sum of all terms
 
-        timerAxpBP2 += (chrono::system_clock::now() - start).count();
+        timerAxpBP2 += (chrono::system_clock::now() - start_p2).count();
 
         //end of phase 1
 
@@ -256,12 +264,14 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 
         //end of phase 2
 
-    start = chrono::system_clock::now();
+    auto start_p3 = chrono::system_clock::now();
 
     out1Z3.matByVec(Rmat, out1); // compute matrix-by-vector multiply
     out2Z3.matByVec(Rmat, out2); // compute matrix-by-vector multiply
 
-    timer_phase3 += (std::chrono::system_clock::now() - start).count();
+    timer_phase3 += (std::chrono::system_clock::now() - start_p3).count();
+
+    timerPRF += (chrono::system_clock::now() - start_prf).count();
 }
 
 /*
@@ -304,20 +314,13 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
 
-    auto start = std::chrono::system_clock::now();
-
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
 
         PRF_DM(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
     //    PRF_packed_centralized_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
         //PRF_unpacked_test() /* just a placeholder*/
+        cout <<"out1Z3=" << out1Z3 << "\n out2Z3=" << out2Z3 << endl;
     }
-
-    timerPRF += (chrono::system_clock::now() - start).count();
-
-    cout << "in prf.cpp, PRF_DM_wpreproc function, " << "out1Z3=" << out1Z3 << ", out2Z3=" << out2Z3 << endl;
-
-
 }
 

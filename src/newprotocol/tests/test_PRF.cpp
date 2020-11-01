@@ -34,37 +34,26 @@ int main(int argc,char* argv[] )  {
 
     int ntimes = 1;
 
-    using Clock = std::chrono::system_clock;
-    using Duration = Clock::duration;
-    std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
-
+    std::cout<<"Executing Darkmatter PRF protocol..."<<std::endl;
     PRF_DM_wpreproc(ntimes, nRuns, stepsToRun);
 
-    display_AXplusB_runtime();
-    display_SC_runtime();
-    display_Phase3_runtime();
-    display_PRF_runtime();
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+    float time_unit_multiplier = 1;
+    if(Duration::period::den == 1000000000)
+        time_unit_multiplier = 0.001; //make nanosecond to microsecond
+    else if(Duration::period::den == 1000000)
+        time_unit_multiplier = 1;   //keep the unit as microsecond
+
+    display_AXplusB_runtime(time_unit_multiplier);
+    display_SC_runtime(time_unit_multiplier);
+    display_Phase3_runtime(time_unit_multiplier);
+    display_PRF_runtime(time_unit_multiplier);
 
 }
 
 #endif
-
-
-
-void display_Phase3_runtime()
-{
-    cout<<endl<<"phase 3 timing "<<endl;
-    cout<< timer_phase3 <<endl;
-
-}
-void display_PRF_runtime()
-{
-    cout<<endl<<"PRFTimer= "<<endl;
-    cout << timerPRF <<endl;
-
-}
-
-
 
 /*
 #ifdef TEST_SC

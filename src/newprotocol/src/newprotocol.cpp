@@ -18,6 +18,17 @@
 #include "PRF.hpp"
 #include "lookup_functions.h"
 
+long timer_round1_p1 = 0;
+long timer_round1_p2 = 0;
+long timer_round1_mask = 0;
+
+long timer_round2_p1 = 0;
+long timer_round2_p2 = 0;
+long timer_round2_mask = 0;
+
+long timer_round3_p1 = 0;
+long timer_round3_p2 = 0;
+
 long timer_round1 = 0;
 long timer_round2 = 0;
 long timer_round3 = 0;
@@ -424,10 +435,24 @@ void display_exec_timing()
 {
     using Clock = std::chrono::system_clock;
     using Duration = Clock::duration;
-    std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
-    std::cout<<"Time taken by round 1: "<<timer_round1<<std::endl;
-    std::cout<<"Time taken by round 2: "<<timer_round2<<std::endl;
-    std::cout<<"Time taken by round 3: "<<timer_round3<<std::endl;
+    //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+    float time_unit_multiplier = 1;
+    if(Duration::period::den == 1000000000)
+        time_unit_multiplier = 0.001; //make nanosecond to microsecond
+    else if(Duration::period::den == 1000000)
+        time_unit_multiplier = 1;   //keep the unit as microsecond
+
+    timer_round1 = std::max(timer_round1_p1, timer_round1_p2) + timer_round1_mask;
+    timer_round2 = std::max(timer_round2_p1, timer_round2_p2) + timer_round2_mask;
+    timer_round3 = std::max(timer_round3_p1, timer_round3_p2);
+
+    std::cout<<"Time to execute phase 1(both party runs simultaneously): "<<(timer_round1 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 2(both party runs simultaneously): "<<(timer_round2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 3(both party runs simultaneously): "<<(timer_round3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"============================================================"<<std::endl;
+    std::cout<<"Number of rounds per second for phase 1 "<<(1000/(timer_round1*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for phase 2 "<<(1000/(timer_round2*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for phase 3 "<<(1000/(timer_round3*time_unit_multiplier)*1000000)<<std::endl;
 }
 
 /*
@@ -465,21 +490,38 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         std::cout<<"in PRF_new_protocol, rx1= "<<rx1<<std::endl;
         std::cout<<"PRF_new_protocol, rx2 "<<rx2<<std::endl;
     #endif
+
+    std::chrono::time_point<std::chrono::system_clock> start_r1_p1;
+    std::chrono::time_point<std::chrono::system_clock> start_r1_p2;
+    std::chrono::time_point<std::chrono::system_clock> start_r1_mask;
+
+    std::chrono::time_point<std::chrono::system_clock> start_r2_p1;
+    std::chrono::time_point<std::chrono::system_clock> start_r2_p2;
+    std::chrono::time_point<std::chrono::system_clock> start_r2_mask;
+
+    std::chrono::time_point<std::chrono::system_clock> start_r3_p1;
+    std::chrono::time_point<std::chrono::system_clock> start_r3_p2;
+
+    PackedZ3<81> out;
+
     for(unsigned int i = 0; i< nRuns;i++)
     {
         //3. Parties locally compute [x'] = [x] + [rx] and [K'] = [K] + [rk]
         PackedZ2<N_COLS> x1_mask, x_mask, x2_mask;
         std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toeplitzWords);
 
-        std::chrono::time_point<std::chrono::system_clock> start_r1 = std::chrono::system_clock::now();
-
+        start_r1_p1 = std::chrono::system_clock::now();
         party1_round_1(x1_mask,K1_mask,x1,rx1,K1,rK1);
-        party2_round_1(x2_mask,K2_mask,x2,rx2,K2,rK2);
+        timer_round1_p1 += (std::chrono::system_clock::now() - start_r1_p1).count();
 
+        start_r1_p2 = std::chrono::system_clock::now();
+        party2_round_1(x2_mask,K2_mask,x2,rx2,K2,rK2);
+        timer_round1_p2 += (std::chrono::system_clock::now() - start_r1_p2).count();
+
+        start_r1_mask = std::chrono::system_clock::now();
         //both the parties are supposed to exchange their mask values
         compute_input_mask(x_mask, K_mask, x1_mask, x2_mask, K1_mask, K2_mask);
-
-        timer_round1 += (std::chrono::system_clock::now() - start_r1).count();
+        timer_round1_mask += (std::chrono::system_clock::now() - start_r1_mask).count();
 
 
 #ifdef PRINT_VAL
@@ -490,26 +532,30 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         //Round 2: Both parties compute w' = [k'x'] - k'[rx] - rk.x' + [rk * rk + rw]
         PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
 
-        std::chrono::time_point<std::chrono::system_clock> start_r2 = std::chrono::system_clock::now();
-
+        start_r2_p1 = std::chrono::system_clock::now();
         party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, x1, sw1);
+        timer_round2_p1 += (std::chrono::system_clock::now() - start_r2_p1).count();
+
+        start_r2_p2 = std::chrono::system_clock::now();
         party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, x2, sw2);
+        timer_round2_p2 += (std::chrono::system_clock::now() - start_r2_p2).count();
 
+        start_r2_mask = std::chrono::system_clock::now();
         compute_wmask(w_mask, w1_mask, w2_mask);
-
-        timer_round2 += (std::chrono::system_clock::now() - start_r2).count();
+        timer_round2_mask += (std::chrono::system_clock::now() - start_r2_mask).count();
 
 #ifdef PRINT_VAL
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 2 ends"<<std::endl;
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 begins"<<std::endl;
 #endif
 
-        std::chrono::time_point<std::chrono::system_clock> start_r3 = std::chrono::system_clock::now();
-
+        start_r3_p1 = std::chrono::system_clock::now();
         party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask);
-        party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
+        timer_round3_p1 += (std::chrono::system_clock::now() - start_r3_p1).count();
 
-        timer_round3 += (std::chrono::system_clock::now() - start_r3).count();
+        start_r3_p2 = std::chrono::system_clock::now();
+        party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
+        timer_round3_p2 += (std::chrono::system_clock::now() - start_r3_p2).count();
 
         std::cout << "in PRF_new_protocol, y1_z3=" << y1_z3 << ", y2_z3= " << y2_z3 << std:: endl;
 
