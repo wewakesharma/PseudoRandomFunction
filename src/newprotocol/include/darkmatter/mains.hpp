@@ -14,7 +14,7 @@
  */
 //#define PACKED_PRF_CENTRAL //packed centralized PRF with matbyvec multiplication
 //#define PACKED_PRF_CENTRAL_LOOKUP //packed centralized PRF with lookup table
-//#define UNPACKED_PRF_CENTRAL  //unpacked centralized PRF, everything performed naively
+#define UNPACKED_PRF_CENTRAL  //unpacked centralized PRF, everything performed naively
 
 /*
  * Decentralized implementation flags
@@ -33,7 +33,7 @@ TEST_NP = 1, New protocol, packed, no lookup table
 
  */
 //#define TEST_PRF
-#define TEST_NP                 //runs the new protocol(full)
+//#define TEST_NP                 //runs the new protocol(full)
 
 
 //#define TEST_PHASE1

@@ -22,6 +22,9 @@ int main()  {
     long timer_packed_cent_p1 = 0;
     long timer_packed_cent_p3 = 0;
     long timer_packed_cent_p2 = 0;
+
+    PackedZ3<81> outZ3_dummy;
+
     int nRuns = 1000; //number of times the program runs
 
     std::cout<<"Running Packed PRF Centralized with LOOKUP tables for "<<nRuns<<" times."<<std::endl;
@@ -90,12 +93,21 @@ int main()  {
         timer_packed_cent_p3 += (std::chrono::system_clock::now() - start_prf_p3).count();
         timer_packed_PRF_lookup += (std::chrono::system_clock::now() - start_prf_lookup).count();
 
-        std::cout << "in test_packed_PRF_central_lookup, main function, " << "outZ3_lookup=" << outZ3_lookup << std::endl;
-
+        //std::cout << "in test_packed_PRF_central_lookup, main function, " << "outZ3_lookup=" << outZ3_lookup << std::endl;
+        outZ3_dummy += outZ3_lookup;
     }
 
-
-    std::cout<<"Time for "<<nRuns<<" runs of calling/accessing lookup table "<<timer_packed_cent_p3<<std::endl;
-    std::cout<<"Time for "<<nRuns<<" runs of entire PRF using lookup table "<<timer_packed_PRF_lookup<<std::endl;
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+    float time_unit_multiplier = 1;
+    if(Duration::period::den == 1000000000)
+        time_unit_multiplier = 0.001; //make nanosecond to microsecond
+    else if(Duration::period::den == 1000000)
+        time_unit_multiplier = 1;   //keep the unit as microsecond
+    std::cout<<"Time for "<<nRuns<<" runs of calling/accessing lookup table "<<(timer_packed_cent_p3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time for "<<nRuns<<" runs of entire PRF using lookup table "<<(timer_packed_PRF_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for accessing lookup table "<<(1000/(timer_packed_cent_p3*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for running entire PRF using lookup table "<<(1000/(timer_packed_PRF_lookup*time_unit_multiplier)*1000000)<<std::endl;
 }
 #endif

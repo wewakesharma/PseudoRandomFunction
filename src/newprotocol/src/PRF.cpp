@@ -34,6 +34,7 @@ long timer_use_lookup = 0;
 static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
+PackedZ3<81> out_dummy;
 
 void display_Phase3_runtime(float& time_unit_multiplier)
 {
@@ -221,6 +222,7 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
         PackedZ3<81>& out2Z3, int i)
 {
+
     auto start_prf = std::chrono::system_clock::now();
         PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
 
@@ -272,6 +274,9 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
     timer_phase3 += (std::chrono::system_clock::now() - start_p3).count();
 
     timerPRF += (chrono::system_clock::now() - start_prf).count();
+
+    out_dummy += out1Z3;
+    out_dummy += out2Z3;
 }
 
 /*
@@ -320,7 +325,7 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
         PRF_DM(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
     //    PRF_packed_centralized_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
         //PRF_unpacked_test() /* just a placeholder*/
-        cout <<"out1Z3=" << out1Z3 << "\n out2Z3=" << out2Z3 << endl;
+        //cout <<"out1Z3=" << out1Z3 << "\n out2Z3=" << out2Z3 << endl;
     }
 }
 

@@ -25,6 +25,7 @@ long timer_unpacked_cent_p3 = 0;
 static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
+int out_mod3_dummy[81];
 
 void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                           PackedZ2<N_COLS>& x2, uint64_t randMat[81][256], PackedZ3<81>& out1Z3,
@@ -88,7 +89,11 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
 
     timer_PRF_unpacked += (std::chrono::system_clock::now() - start_unpacked_prf).count();;
 
-    cout << "in PRF_unpacked_central" << "out_mod3=" << out_mod3 << endl;
+    for(int dummy_i = 0; dummy_i < 81; dummy_i++)
+    {
+        out_mod3_dummy[dummy_i] = out_mod3[dummy_i];
+    }
+    //cout << "in PRF_unpacked_central" << "out_mod3=" << out_mod3 << endl;
 
 #ifdef PRINT_VAL
     cout<<std::endl;
@@ -184,8 +189,19 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
 
 void display_time_unpacked(int nRuns)
 {
-    std::cout<<std::endl<<"Time to execute unpacked phase 1(K * X) for "<<nRuns << " runs = " << timer_unpacked_cent_p1<<  std::endl;
-    std::cout<<"Time to generate (81 X 256)randomization matrix for "<<1 << " runs = " <<timer_unpacked_cent_rand_Z3 << std::endl;
-    std::cout<<"Time to execute unpacked phase 3(Rmat*(K * X)) for "<<nRuns << " runs = " <<timer_unpacked_cent_p3 << std::endl;
-    std::cout<<"Time to execute entire unpacked PRF for "<<nRuns<<" runs = "<<timer_PRF_unpacked<<std::endl;
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+    float time_unit_multiplier = 1;
+    if(Duration::period::den == 1000000000)
+        time_unit_multiplier = 0.001; //make nanosecond to microsecond
+    else if(Duration::period::den == 1000000)
+        time_unit_multiplier = 1;   //keep the unit as microsecond
+    std::cout<<std::endl<<"Time to execute unpacked phase 1(K * X) for "<<nRuns << " runs = " <<(timer_unpacked_cent_p1  * time_unit_multiplier)<<" microseconds"<<  std::endl;
+    std::cout<<"Time to generate (81 X 256)randomization matrix for "<<1 << " runs = " <<(timer_unpacked_cent_rand_Z3  * time_unit_multiplier)<<" microseconds" << std::endl;
+    std::cout<<"Time to execute unpacked phase 3(Rmat*(K * X)) for "<<nRuns << " runs = " <<(timer_unpacked_cent_p3  * time_unit_multiplier)<<" microseconds" << std::endl;
+    std::cout<<"Time to execute entire unpacked PRF for "<<nRuns<<" runs = "<<(timer_PRF_unpacked  * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for unpacked phase 1(K * X) "<<(1000/(timer_unpacked_cent_p1*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for unpacked phase 3(Rmat*(K * X)) "<<(1000/(timer_unpacked_cent_p3*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for entire unpacked PRF "<<(1000/(timer_PRF_unpacked*time_unit_multiplier)*1000000)<<std::endl;
 }

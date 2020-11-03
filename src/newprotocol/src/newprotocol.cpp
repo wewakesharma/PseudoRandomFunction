@@ -464,6 +464,15 @@ void display_exec_timing()
     std::cout<<"Number of rounds per second for phase 1 "<<(1000/(timer_round1*time_unit_multiplier)*1000000)<<std::endl;
     std::cout<<"Number of rounds per second for phase 2 "<<(1000/(timer_round2*time_unit_multiplier)*1000000)<<std::endl;
     std::cout<<"Number of rounds per second for phase 3 "<<(1000/(timer_round3*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"=========================breaking down the timings==================================="<<std::endl;
+    std::cout<<"Time to execute phase 1 party 1: "<<(timer_round1_p1 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 1 party 2: "<<(timer_round1_p2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 1 mask: "<<(timer_round1_mask * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 2 party 1: "<<(timer_round2_p1 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 2 party 2: "<<(timer_round2_p2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 2 mask: "<<(timer_round2_mask * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 3 party 1: "<<(timer_round3_p1 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 3 party 2: "<<(timer_round3_p2 * time_unit_multiplier)<<" microseconds"<<std::endl;
 }
 
 /*

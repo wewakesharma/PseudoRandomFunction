@@ -107,10 +107,12 @@ void PRF_packed(int nTimes,  int nRuns, int nStages)
 
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> outZ3;                     // 81-vector
+    PackedZ3<81> outZ3_dummy;
 
     for (int i = 0; i < nRuns; i++) {
         PRF_packed_test(K1, x1, K2, x2, Rmat, out1Z3, outZ3, i);
-        cout << "in packed_PRF_central.cpp, PRF_packed function, " << "out1Z3=" << outZ3 << endl;
+        //cout << "in packed_PRF_central.cpp, PRF_packed function, " << "out1Z3=" << outZ3 << endl;
+        outZ3_dummy+=outZ3;
     }
 
 }
@@ -118,8 +120,20 @@ void PRF_packed(int nTimes,  int nRuns, int nStages)
 
 void display_times(int nRuns)
 {
-    std::cout<<"Time for phase 1(K*X), "<<nRuns << " runs = " << timer_packed_cent_p1<<  std::endl;
-    std::cout<<"Time for phase 2(casting w from Z2 to Z3), "<<nRuns << " runs = " << timer_packed_cent_p2<<  std::endl;
-    std::cout<<"Time for phase 3(Randomization multiplication) "<<nRuns << " runs = " <<timer_packed_cent_p3 << std::endl;
-    std::cout<<"Time for entire packed centralized PRF,  "<<nRuns << " runs = " <<timer_PRF_packed << std::endl;
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+    float time_unit_multiplier = 1;
+    if(Duration::period::den == 1000000000)
+        time_unit_multiplier = 0.001; //make nanosecond to microsecond
+    else if(Duration::period::den == 1000000)
+        time_unit_multiplier = 1;   //keep the unit as microsecond
+    std::cout<<"Time for phase 1(K*X), "<<nRuns << " runs = " << (timer_packed_cent_p1 * time_unit_multiplier)<<" microseconds"<<  std::endl;
+    std::cout<<"Time for phase 2(casting w from Z2 to Z3), "<<nRuns << " runs = " << (timer_packed_cent_p2 * time_unit_multiplier)<<" microseconds"<<  std::endl;
+    std::cout<<"Time for phase 3(Randomization multiplication) "<<nRuns << " runs = " <<(timer_packed_cent_p3 * time_unit_multiplier)<<" microseconds" << std::endl;
+    std::cout<<"Time for entire packed centralized PRF,  "<<nRuns << " runs = " <<(timer_PRF_packed  * time_unit_multiplier)<<" microseconds"<< std::endl;
+    std::cout<<"Number of rounds per second for phase 1(K*X) "<<(1000/(timer_packed_cent_p1*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for phase 2(casting w from Z2 to Z3) "<<(1000/(timer_packed_cent_p2*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for phase 3(Randomization multiplication) "<<(1000/(timer_packed_cent_p3*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for entire packed centralized PRF "<<(1000/(timer_PRF_packed*time_unit_multiplier)*1000000)<<std::endl;
 }
