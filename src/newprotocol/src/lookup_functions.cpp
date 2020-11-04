@@ -77,7 +77,7 @@ void create_lookup_table(std::vector<std::vector<PackedZ3<81> > >& Rmat16,
             }
             lookup_table[matrix_pointer][offset_pointer] = temp_result_vec; //set the packedmod3 value as an entry in lookup table
         }
-        cout << "in create_lookup_table, matrix_pointer=" << matrix_pointer << endl;
+ //       cout << "in create_lookup_table, matrix_pointer=" << matrix_pointer << endl;
     }
     cout << "in create_lookup_table, after all 16 rounds" << endl;
 }
