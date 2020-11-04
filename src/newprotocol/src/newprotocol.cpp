@@ -361,7 +361,7 @@ void party2_round3(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
 }
 
 //====================================Round 3 lookup implementation=======NEEDS DEBUGGING=========
-/*
+
 void party1_round3_lookup(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
                           PackedZ3<N_SIZE>& r1z1, std::vector<PackedZ3<81> >& Rmat,PackedZ2<N_COLS>& w_mask)
 {
@@ -428,7 +428,7 @@ void party2_round3_lookup(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
     y2_z3 = result_sum_lsb;
     y2_z3.subtract(result_sum_msb);
     timer_round3 += (std::chrono::system_clock::now() - start_r3).count();
-}*/
+}
 //================================================================================
 
 void display_exec_timing()
@@ -572,11 +572,12 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 #endif
 
         start_r3_p1 = std::chrono::system_clock::now();
-        party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask);
+        //party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask);
+        party1_round3_lookup(y1_z3,r0z1,r1z1,Rmat,w_mask);
         timer_round3_p1 += (std::chrono::system_clock::now() - start_r3_p1).count();
 
         start_r3_p2 = std::chrono::system_clock::now();
-        party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
+        party2_round3_lookup(y2_z3,r0z2,r1z2,Rmat,w_mask);
         timer_round3_p2 += (std::chrono::system_clock::now() - start_r3_p2).count();
 
         y1_z3_dummy += y1_z3;
