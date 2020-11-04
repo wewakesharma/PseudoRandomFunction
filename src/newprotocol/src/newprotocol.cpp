@@ -371,7 +371,9 @@ void party1_round3_lookup(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
     PackedZ3<81> result_sum_lsb;
     PackedZ3<81> result_sum_msb;
     std::vector<uint64_t> lsb_input;
+    lsb_input.resize(16);
     std::vector<uint64_t> msb_input;
+    msb_input.resize(16);
     PackedZ2<256> temp_res_msb;
     PackedZ2<256> temp_res_lsb;
 
@@ -408,6 +410,8 @@ void party2_round3_lookup(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
     std::vector<uint64_t> lsb_input;
     std::vector<uint64_t> msb_input;
 
+    lsb_input.resize(16);
+    msb_input.resize(16);
     std::chrono::time_point<std::chrono::system_clock> start_r3 = std::chrono::system_clock::now();
     //party 2 calculates the value of mux(w', r0z, r1z)
     PackedZ3<N_SIZE> res2;
