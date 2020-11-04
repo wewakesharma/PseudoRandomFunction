@@ -79,7 +79,7 @@ void create_lookup_table(std::vector<std::vector<PackedZ3<81> > >& Rmat16,
         }
  //       cout << "in create_lookup_table, matrix_pointer=" << matrix_pointer << endl;
     }
-    cout << "in create_lookup_table, after all 16 rounds" << endl;
+ //   cout << "in create_lookup_table, after all 16 rounds" << endl;
 }
 
 
