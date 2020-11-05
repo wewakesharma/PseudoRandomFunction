@@ -1,12 +1,6 @@
 #ifndef _EXECUTION_HEADER_H_
 #define _EXECUTION_HEADER_H_
 
-//#define PRINT_VAL //used to print the intermediate values
-
-//#define DEBUG //used to set bits of intermediate values and print the values
-
-//#define UNIT_NP
-
 // Uncomment one and only one
 
 /*
@@ -33,17 +27,28 @@ TEST_NP = 1, New protocol, packed, no lookup table
 
 TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
  */
-//#define TEST_PRF
-//#define TEST_NP                 //runs the new protocol(full)
-#define TEST_NP_LOOKUP
 
+
+//#define TEST_PRF
+//#define TEST_NP                 //runs the new protocol using MATBYVEC
+#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
+
+
+/*
+ * DEBUGGING OPTIONS
+ */
+//#define PRINT_VAL //used to print the intermediate values
+//#define DEBUG //used to set bits of intermediate values and print the values
+
+
+/*
+ * UNIT TEST FLAGS
+ */
+//#define UNIT_NP
 //#define TEST_PHASE1
 //#define TEST_PackedMod2
 //#define TEST_PackedMod3
-
 //#define TEST_SC
-
-
 //#define UNITTEST_ROUND2       //runs the unit test code that checks round 2 only
 //#define TEST_DM
 
@@ -63,6 +68,7 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
 
 #endif // _EXECUTION_HEADER_H
 
+//===========================DO NOT TOUCH the following code: TEST_NP_LOOKUP REQUIRES TEST_NP==============
 #ifdef TEST_NP_LOOKUP
 #define TEST_NP
 #endif
