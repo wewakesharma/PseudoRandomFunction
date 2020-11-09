@@ -44,13 +44,13 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
 /*
  * UNIT TEST FLAGS
  */
-//#define UNIT_NP
-//#define TEST_PHASE1
-//#define TEST_PackedMod2
-//#define TEST_PackedMod3
-//#define TEST_SC
-//#define UNITTEST_ROUND2       //runs the unit test code that checks round 2 only
-//#define TEST_DM
+//#define UNIT_NP    //testing whole new protocol, packed distributed, no lookup table
+//#define TEST_PHASE1         //test AX+B class
+//#define TEST_PackedMod2    //test class packedMod2
+//#define TEST_PackedMod3    //test class packedMod3
+//#define TEST_SC     //Not used anymore
+//#define UNITTEST_ROUND2       //for dark matter protocol - runs the unit test code that checks round 2 only
+//#define TEST_DM     //test the whole dark matter protocol, packed distributed, no lookup table
 
 
 /*
