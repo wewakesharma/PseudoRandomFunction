@@ -53,6 +53,7 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
 //#define TEST_DM     //test the whole dark matter protocol, packed distributed, no lookup table
 
 
+
 /*
  * All headers of LOOKUP table implementation, to be used with TEST_NP enabled EXCEPT LOOKUP_TEST
  * Test Case 1: {TEST_NP, LOOKUP, [LOOKUP_TIME], [LOOKUP_DEBUG]}   ==> execute newprotocol implementation with lookup table
