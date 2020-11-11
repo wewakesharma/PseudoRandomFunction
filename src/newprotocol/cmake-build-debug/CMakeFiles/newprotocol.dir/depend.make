@@ -106,6 +106,7 @@ CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o: ../include/darkmatter
 CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o: ../tests/test_Toeplitz-by-x.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/OT.hpp
+CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/PRF.hpp
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/Timing.hpp
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/mains.hpp

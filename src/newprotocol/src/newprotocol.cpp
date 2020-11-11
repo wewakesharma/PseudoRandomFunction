@@ -616,30 +616,6 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 #ifdef PRINT_VAL
         std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): Round 3 ends"<<std::endl;
 #endif
-
-#ifdef UNIT_NP
-        std::cout<<"newprotocol.cpp/PRF_new_protocol_central(): NP_TEST is enabled; calling the test function"<<std::endl;
-
-    //call the test round 3 unit test function and pass K, X, res1, res2
-    //merge K1, K2 into K and x1, x2 into x
-    PackedZ2<N_COLS> X = x1; //declare a variable
-    X ^= x2;    //x = x1 + x2
-    std::vector<uint64_t> K(toeplitzWords);
-    for (int i = 0; i < K.size(); i++)
-    {
-        K[i] = K1[i] ^ K2[i];
-    }
-
-    std::cout<<"K "<<K<<std::endl;
-    std::cout<<"X "<<X<<std::endl;
-    std::cout<<"rw "<<rw_global<<std::endl;
-    std::cout<<"w_mask "<<w_mask<<std::endl;
-
-    test_round1(X, rx_global, x_mask);
-    test_round2(K, X, rw_global, w_mask);
-    test_round3(K,X,res1_global,res2_global);
-
-#endif
     } //end of for loop, nTimes
 
     std::cout << "in PRF_new_protocol, y1_z3_dummy=" << y1_z3_dummy <<  std:: endl;

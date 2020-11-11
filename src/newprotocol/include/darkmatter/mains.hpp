@@ -12,8 +12,28 @@
 
 /*
  * Decentralized implementation flags
- *
- * Options:
+ */
+
+//#define TEST_PRF
+//#define TEST_NP                 //runs the new protocol using MATBYVEC
+//#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
+
+
+/*
+ * UNIT TEST FLAGS
+ */
+//#define UNIT_NP    //testing distributed new protocol, no lookup table
+//#define UNIT_NP_LOOKUP    //testing distributed new protocol with lookup table
+//#define UNIT_DM     //test the distributed dark matter protocol, no lookup table PROBLEM!
+
+//#define TEST_PHASE1         //test AX+B class
+//#define TEST_PackedMod2    //test class packedMod2
+//#define TEST_PackedMod3    //test class packedMod3
+//#define TEST_SC     //Not used anymore
+//#define UNITTEST_ROUND2       //for dark matter protocol - runs the unit test code that checks round 2 only
+
+
+ /* Options:
 
 PACKED_PRF_CENTRAL = 1.   - centralized packed PRF, both phases 2 and 3 are packed (no lookup table), key is Toeplitz:
 
@@ -29,9 +49,6 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
  */
 
 
-//#define TEST_PRF
-//#define TEST_NP                 //runs the new protocol using MATBYVEC
-#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
 
 
 /*
@@ -40,23 +57,8 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
 //#define PRINT_VAL //used to print the intermediate values
 //#define DEBUG //used to set bits of intermediate values and print the values
 
-
 /*
- * UNIT TEST FLAGS
- */
-//#define UNIT_NP    //testing whole new protocol, packed distributed, no lookup table
-//#define TEST_PHASE1         //test AX+B class
-//#define TEST_PackedMod2    //test class packedMod2
-//#define TEST_PackedMod3    //test class packedMod3
-//#define TEST_SC     //Not used anymore
-//#define UNITTEST_ROUND2       //for dark matter protocol - runs the unit test code that checks round 2 only
-//#define TEST_DM     //test the whole dark matter protocol, packed distributed, no lookup table
-
-
-
-/*
- * All headers of LOOKUP table implementation, to be used with TEST_NP enabled EXCEPT LOOKUP_TEST
- * Test Case 1: {TEST_NP, LOOKUP, [LOOKUP_TIME], [LOOKUP_DEBUG]}   ==> execute newprotocol implementation with lookup table
+ * Test Case 1: {TEST_NP_LOOKUP, [LOOKUP_TIME], [LOOKUP_DEBUG]}   ==> execute newprotocol implementation with lookup table
  * Test Case 2: {LOOKUP_TEST, [LOOKUP_TIME], [LOOKUP_DEBUG]}       ==> unit test of lookup table
  */
 
@@ -72,6 +74,11 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
 //===========================DO NOT TOUCH the following code: TEST_NP_LOOKUP REQUIRES TEST_NP==============
 #ifdef TEST_NP_LOOKUP
 #define TEST_NP
+#endif
+
+
+#ifdef UNIT_NP_LOOKUP
+#define TEST_NP_LOOKUP
 #endif
 
 #ifdef UNITTEST_ROUND2

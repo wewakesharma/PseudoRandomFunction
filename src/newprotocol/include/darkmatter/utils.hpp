@@ -42,4 +42,5 @@ inline uint64_t randomWord(uint64_t seed=0)
 }
 
 
+
 #endif // DARKMATTER_UTILS_H
