@@ -20,7 +20,7 @@
 
 //using namespace std;
 
-#ifdef LOOKUP_TEST
+#ifdef UNIT_LOOKUP
 int main() {
     //declare the variables
     int nTimes = 1;
