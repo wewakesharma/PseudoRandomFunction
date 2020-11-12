@@ -21,12 +21,12 @@ long timerSCP2 = 0;
 
 // A place to store the results from pre-processing
 
-static std::vector< PackedZ2<N_SIZE> > rxs;
+static std::vector< PackedZ2<N_SIZE> > rxps;
 static std::vector< PackedPairZ2<N_SIZE> > raps, rbps, zps;
 
 // Methods for returning data from pre-processing
 static PackedZ2<N_SIZE>& get_rx_PP(int index) {
-    return rxs.at(index);
+    return rxps.at(index);
 }
 static PackedPairZ2<N_SIZE>& get_z_PP(int index) {
     return zps.at(index);
@@ -74,18 +74,18 @@ void preProc_OT(unsigned int nTimes) {
     raps.resize(nTimes);
     rbps.resize(nTimes);
     zps.resize(nTimes);
-    rxs.resize(nTimes);
+    rxps.resize(nTimes);
 
     // generate (ra, rb, rx, rz) tuples, as many as needed
     for (unsigned int i = 0; i < nTimes; i++) {
         randomize(raps[i]);  // random ra[i]'s
         randomize(rbps[i]);  // random rb[i]'s
-        rxs[i].randomize();  // random rx[i]'s
+        rxps[i].randomize();  // random rx[i]'s
 
         zps[i] = rbps[i];   // rb
-        zps[i] &= rxs[i];   // rb*rx
+        zps[i] &= rxps[i];   // rb*rx
 
-        auto notRx = rxs[i];
+        auto notRx = rxps[i];
         notRx.negate();
         auto temp = raps[i]; // ra
         temp &= notRx;       // ra*(~rx)

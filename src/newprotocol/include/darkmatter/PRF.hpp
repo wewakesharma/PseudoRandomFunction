@@ -6,8 +6,21 @@
 #include "packedMod2.hpp" // defines PackedZ2
 #include "packedMod3.hpp" // defines PackedPairZ2 and PackedZ3
 #include "Toeplitz-by-x.hpp" //defines N_COLS
+#include "OT.hpp"
 
 #define N_SIZE 256
+
+//extern variable for initGlobals
+extern std::vector<uint64_t> mA_global;
+
+//extern variable for preProc_Toeplitz_by_x
+extern std::vector< std::vector<uint64_t> > rAs;
+extern std::vector< PackedZ2<N_ROWS> > rbs, rzs;
+extern std::vector< PackedZ2<N_COLS> > rxs;
+
+//extern variable for preProc_OT
+extern std::vector< PackedZ2<N_SIZE> > rxps;
+extern std::vector< PackedPairZ2<N_SIZE> > raps, rbps, zps;
 
 void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages);
 void PRF_packed_unit_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
