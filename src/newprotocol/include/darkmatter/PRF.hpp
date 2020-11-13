@@ -9,6 +9,8 @@
 #include "OT.hpp"
 
 #define N_SIZE 256
+#define N_COLS 256
+#define N_ROWS 256
 
 //extern variable for initGlobals
 extern std::vector<uint64_t> mA_global;

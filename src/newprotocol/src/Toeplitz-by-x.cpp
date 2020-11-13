@@ -16,8 +16,8 @@ long timerAxpBP1 = 0;
 long timerAxpBP2 = 0;
 
 // in Toeplitz-by-x.hpp
-// #define N_ROWS 256
-// #define N_COLS 256
+ #define N_ROWS 256
+ #define N_COLS 256
 
 uint64_t topelitzMask; // mask to remove extra bits in the rAs
 const unsigned int toeplitzWords = (N_ROWS+N_COLS-1+63)/64;

@@ -43,7 +43,7 @@ int main()
     initGlobals();  // initialize some global variables
     preProc_Toeplitz_by_x(2); // pre-processing for two runs
     preProc_OT(1); //preprocess for OT, generate ra, rn, rx, and z
-    PRF_DM(K1,x1,K2,x2,Rmat,y1_z3, y2_z3,1);
+    PRF_DM(K1,x1,K2,x2,Rmat,y1_z3, y2_z3,0);
     y_out_z3 = y1_z3;
     y_out_z3.add(y2_z3);
 
