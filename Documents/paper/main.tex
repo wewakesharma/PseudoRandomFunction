@@ -1,0 +1,27 @@
+\newif \ifcomments \commentstrue
+\newif \iffull \fulltrue
+
+\fulltrue   % Only full version for now
+
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper,margin=1in,bmargin=1.5in]{geometry}
+\usepackage{setspace}
+
+\input{preamble}
+\bibliography{references.bib}
+
+
+%----------------------------------------%
+
+\begin{document}
+\title{Crypto Dark Matter++}
+\author{}
+\date{}
+
+\maketitle
+
+\input{Sections/all}
+
+\end{document}
+
