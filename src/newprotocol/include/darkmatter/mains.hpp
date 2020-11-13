@@ -14,7 +14,7 @@
  * Decentralized implementation flags
  */
 
-#define TEST_PRF              //runs the dark matter protocol
+//#define TEST_PRF              //runs the dark matter protocol
 //#define TEST_NP                 //runs the new protocol using MATBYVEC
 //#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
 
@@ -24,7 +24,7 @@
  */
 //#define UNIT_NP    //testing distributed new protocol, no lookup table
 //#define UNIT_NP_LOOKUP    //testing distributed new protocol with lookup table
-//#define UNIT_DM     //test the distributed dark matter protocol, no lookup table PROBLEM!
+#define UNIT_DM     //test the distributed dark matter protocol, no lookup table PROBLEM!
 
 //#define UNIT_LOOKUP           //tests the lookup table implementation
 

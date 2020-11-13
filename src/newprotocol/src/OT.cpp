@@ -21,8 +21,8 @@ long timerSCP2 = 0;
 
 // A place to store the results from pre-processing
 
-static std::vector< PackedZ2<N_SIZE> > rxps;
-static std::vector< PackedPairZ2<N_SIZE> > raps, rbps, zps;
+std::vector< PackedZ2<N_SIZE> > rxps;
+std::vector< PackedPairZ2<N_SIZE> > raps, rbps, zps;
 
 // Methods for returning data from pre-processing
 static PackedZ2<N_SIZE>& get_rx_PP(int index) {
