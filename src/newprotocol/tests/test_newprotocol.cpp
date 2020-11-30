@@ -156,6 +156,7 @@ int main()
     test_round2_unit(K1,x1,K2, x2,nTimes);
 #endif
     std::cout<<"Executing new protocol"<<std::endl;
+
     //calling the distributed version of the new PRF protocol
     PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nRuns);
 

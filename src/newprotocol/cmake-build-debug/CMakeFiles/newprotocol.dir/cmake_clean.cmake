@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/newprotocol.dir/src/OPRF.cpp.o"
   "CMakeFiles/newprotocol.dir/src/OT.cpp.o"
   "CMakeFiles/newprotocol.dir/src/PRF.cpp.o"
   "CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o"
@@ -13,6 +14,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o"
+  "CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o"
