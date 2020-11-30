@@ -84,6 +84,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/include/darkmatter/OPRF.h">
+			<Option target="newprotocol"/>
+		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/include/darkmatter/OT.hpp">
 			<Option target="newprotocol"/>
 		</Unit>
@@ -124,9 +127,6 @@
 			<Option target="newprotocol"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/OPRF.cpp">
-			<Option target="newprotocol"/>
-		</Unit>
-		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/OPRF.h">
 			<Option target="newprotocol"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/OT.cpp">

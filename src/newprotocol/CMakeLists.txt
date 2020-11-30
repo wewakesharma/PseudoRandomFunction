@@ -11,6 +11,7 @@ add_executable(newprotocol
         include/darkmatter/mains.hpp
         include/darkmatter/newprotocol.hpp
         include/darkmatter/newprotocol_test.hpp
+        include/darkmatter/OPRF.h
         include/darkmatter/OT.hpp
         include/darkmatter/packed_PRF_central.h
         include/darkmatter/packedMod2.hpp
@@ -22,6 +23,7 @@ add_executable(newprotocol
         include/darkmatter/utils.hpp
         src/lookup_functions.cpp
         src/newprotocol.cpp
+        src/OPRF.cpp
         src/OT.cpp
         src/packed_PRF_central.cpp
         src/PRF.cpp
@@ -30,6 +32,7 @@ add_executable(newprotocol
         tests/test_dmprotocol.cpp
         tests/test_lookup.cpp
         tests/test_newprotocol.cpp
+        tests/test_oprf.cpp
         tests/test_OT.cpp
         tests/test_Packed_PRF.cpp
         tests/test_packed_PRF_central_lookup.cpp
@@ -38,4 +41,4 @@ add_executable(newprotocol
         tests/test_PRF.cpp
         tests/test_Toeplitz-by-x.cpp
         tests/test_unit_newprotocol.cpp
-        tests/test_unpacked_PRF.cpp tests/test_oprf.cpp src/OPRF.cpp include/darkmatter/OPRF.h)
+        tests/test_unpacked_PRF.cpp)

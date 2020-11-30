@@ -18,29 +18,112 @@
 #include "lookup_functions.h"
 #include "OPRF.h"
 
+//=========variables for preprocessing===========
+std::vector<uint64_t> rK_global(toeplitzWords);
+PackedZ2<N_COLS> rq_global, rx_global, v_global;
+PackedZ2<N_COLS> rw1_global, rw2_global, rw_global; //rw1 is rw for server and rw2 is rw for client, rw = rw1 + rw2
+PackedZ3<N_COLS> p_server, p_client;
+
+//========variables for round 1============
+PackedZ2<N_COLS> mx_global, mq_global;
+std::vector<uint64_t> mK_global(toeplitzWords);
+PackedZ2<N_COLS> ws_mask, wc_mask;
+
+
+
 void preproc_TrustedParty()
 {
-    //generate rK, rq, rx
-    std::vector<uint64_t> rK(toeplitzWords);
-    PackedZ2<N_COLS> rq, rx, v;
+    //generate rK, rq, rx, v and rw
+    for (auto &w : rK_global) w = randomWord();
+    rK_global[rK_global.size() - 1] &= topelitzMask; // turn off extra bits at the end
+    rq_global.randomize();                  //generate random values for rq
+    rx_global.randomize();                  //generate random values for rx
 
-    for (auto &w : rK) w = randomWord();
-    rK[rK.size() - 1] &= topelitzMask; // turn off extra bits at the end
-    rq.randomize();
-    rx.randomize();
+    v_global.toeplitzByVec(rK_global,rx_global);
+    v_global.add(rq_global);                    //compute v = rK * rx + rq
 
-    v.toeplitzByVec(rK,rx);
-    v.add(rq);
+    rw1_global.randomize();
+    rw2_global.randomize();
+    rw_global = rw1_global;
+    rw_global.add(rw2_global);      //rw = rw1 + rw2
 
+    //convert p from rw (mod2 -> mod3)
+}
+
+void fetch_server(std::vector<uint64_t>& rK, PackedZ2<N_COLS>& q,
+                  PackedZ2<N_COLS>& rq,PackedZ2<N_COLS>& rw1) //copy global values to local variables
+{
+    rK = rK_global;
+    q.randomize();  //randomly generate q and send it to server
+    rq = rq_global;
+    rw1 = rw1_global;
+}
+
+void fetch_client(PackedZ2<N_COLS>& rx,PackedZ2<N_COLS>& rw2)//copy global values to local variables
+{
+    rx = rx_global;
+    rw2 = rw2_global;
+}
+
+//Round 1 starts here
+void client_round1(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& rx)
+{
+    PackedZ2<N_COLS> mx;
+    mx = x;
+    mx.add(rx);
+    mx_global = mx;     //this emulates as mx being sent from client to server
+}
+
+void server_round1(std::vector<uint64_t>& K,std::vector<uint64_t>& rK,
+                   PackedZ2<N_COLS>& q, PackedZ2<N_COLS>& rq)
+{
+    //fetch mx first
+    PackedZ2<N_COLS> mx;
+    mx = mx_global;
+    //mK_global = K ^ rK;
+    for(int i = 0; i < toeplitzWords; i++)
+    {
+        mK_global[i] = K[i] ^ rK[i];
+    }
+    mq_global.toeplitzByVec(rK,mx);
+    mq_global.add(q);
+    mq_global.add(rq);
+    ws_mask = q;                //w_mask for server
+    ws_mask.add(rw1_global);        //ws_mask = q + rw1
+
+}
+
+void client_round1_final(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& v,PackedZ2<N_COLS>& rw2)
+{
+    //fetch mK-global,mq_global,
+    std::vector<uint64_t> mK;
+    PackedZ2<N_COLS> mq;
+    mK = mK_global;
+    mq = mq_global;
+
+    wc_mask.toeplitzByVec(mK,x);    //w_mask for client
+    wc_mask.add(mq);
+    wc_mask.add(v);
+    wc_mask.add(rw2);   //wc_mask = (mK * x) + mq + v + rw2
 }
 
 void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<PackedZ3<81> >& Rmat,
                    PackedZ3<81>& y_out_z3, unsigned int nRuns)
 {
+
+    std::vector<uint64_t> rK(toeplitzWords);
+    PackedZ2<N_COLS> rq, rx, v, rw, q, rw1, rw2;
+
     //preprocess the input
-    preproc_TrustedParty();
-    //server_step1
-    //client_step1
+    preproc_TrustedParty();         //generates rK, rx, rq and v.
+
+    fetch_server(rK, q, rq, rw1);
+    fetch_client(rx, rw2);
+
+
+    client_round1(x,rx);
+    server_round1(K, rK, q, rq);
+    client_round1_final(x,v,rw2);
     //server_step2
     //client_step2
     //server_step3
