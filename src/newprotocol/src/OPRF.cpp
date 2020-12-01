@@ -13,16 +13,17 @@
 #include "Timing.hpp"
 #include <chrono>
 #include "packed_PRF_central.h"
-#include "newprotocol_test.hpp"
-#include "PRF.hpp"
+//#include "newprotocol_test.hpp"
+#include "PRF.hpp"      //keep it for testing the output with PRF_centralized
 #include "lookup_functions.h"
 #include "OPRF.h"
 
 //=========variables for preprocessing===========
-std::vector<uint64_t> rK_global(toeplitzWords);
-PackedZ2<N_COLS> rq_global, rx_global, v_global;
-PackedZ2<N_COLS> rw1_global, rw2_global, rw_global; //rw1 is rw for server and rw2 is rw for client, rw = rw1 + rw2
-PackedZ3<N_COLS> p_server, p_client;
+std::vector<uint64_t> rKglobal(toeplitzWords);
+PackedZ2<N_COLS> rq_global, rxglobal, v_global;
+PackedZ2<N_COLS> rw1global, rw2global, rwglobal; //rw1 is rw for server and rw2 is rw for client, rw = rw1 + rw2
+
+PackedZ3<N_COLS> p_server, p_client, p;    //p_server is p0 and p_client is p1 in documentation
 
 //========variables for round 1============
 PackedZ2<N_COLS> mx_global, mq_global;
@@ -34,35 +35,42 @@ PackedZ2<N_COLS> ws_mask, wc_mask;
 void preproc_TrustedParty()
 {
     //generate rK, rq, rx, v and rw
-    for (auto &w : rK_global) w = randomWord();
-    rK_global[rK_global.size() - 1] &= topelitzMask; // turn off extra bits at the end
+    for (auto &w : rKglobal) w = randomWord();
+    rKglobal[rKglobal.size() - 1] &= topelitzMask; // turn off extra bits at the end
     rq_global.randomize();                  //generate random values for rq
-    rx_global.randomize();                  //generate random values for rx
+    rxglobal.randomize();                  //generate random values for rx
 
-    v_global.toeplitzByVec(rK_global,rx_global);
+    v_global.toeplitzByVec(rKglobal,rxglobal);
     v_global.add(rq_global);                    //compute v = rK * rx + rq
 
-    rw1_global.randomize();
-    rw2_global.randomize();
-    rw_global = rw1_global;
-    rw_global.add(rw2_global);      //rw = rw1 + rw2
+    rw1global.randomize();
+    rw2global.randomize();
+    rwglobal = rw1global;
+    rwglobal.add(rw2global);      //rw = rw1 + rw2
 
     //convert p from rw (mod2 -> mod3)
+    for(int n_count = 0; n_count < N_COLS; n_count++)
+    {
+        p.second.set(n_count,0);
+        p.first.set(n_count,rwglobal.at(n_count));
+    }
+    std::cout<<"Value of rw: "<<rwglobal<<std::endl;
+    std::cout<<"Value of p: "<<p<<std::endl;
 }
 
 void fetch_server(std::vector<uint64_t>& rK, PackedZ2<N_COLS>& q,
                   PackedZ2<N_COLS>& rq,PackedZ2<N_COLS>& rw1) //copy global values to local variables
 {
-    rK = rK_global;
+    rK = rKglobal;
     q.randomize();  //randomly generate q and send it to server
     rq = rq_global;
-    rw1 = rw1_global;
+    rw1 = rw1global;
 }
 
 void fetch_client(PackedZ2<N_COLS>& rx,PackedZ2<N_COLS>& rw2)//copy global values to local variables
 {
-    rx = rx_global;
-    rw2 = rw2_global;
+    rx = rxglobal;
+    rw2 = rw2global;
 }
 
 //Round 1 starts here
@@ -89,8 +97,7 @@ void server_round1(std::vector<uint64_t>& K,std::vector<uint64_t>& rK,
     mq_global.add(q);
     mq_global.add(rq);
     ws_mask = q;                //w_mask for server
-    ws_mask.add(rw1_global);        //ws_mask = q + rw1
-
+    ws_mask.add(rw1global);        //ws_mask = q + rw1
 }
 
 void client_round1_final(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& v,PackedZ2<N_COLS>& rw2)
@@ -124,8 +131,9 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
     client_round1(x,rx);
     server_round1(K, rK, q, rq);
     client_round1_final(x,v,rw2);
-    //server_step2
-    //client_step2
+
+
+
     //server_step3
     //client_step3
 }
