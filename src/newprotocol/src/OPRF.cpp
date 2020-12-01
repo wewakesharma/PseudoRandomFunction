@@ -219,4 +219,17 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
 
     y_out_z3 = y_server;
     y_out_z3.add(y_client);
+
+    //Performing first verification.
+    PackedZ2<N_COLS> w;
+    w = ws_mask;
+    w.add(wc_mask);
+
+    //The above must be equal to KX +rw
+    PackedZ2<N_COLS> KX;
+    KX.toeplitzByVec(K,x);
+    KX.add(rwglobal);
+
+    std::cout<<"Output w "<<w<<std::endl;
+    std::cout<<"KX + rw "<<KX<<std::endl;
 }
