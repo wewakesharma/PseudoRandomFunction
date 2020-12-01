@@ -41,6 +41,6 @@ int main()
         col.randomize();
 
     oblivious_PRF(K,x,Rmat,y_out_z3,nRuns);   //driver code that will initiate the protocol.
-
+    std::cout<<"The output of 23-OPRF is "<<y_out_z3;
     return 0;
 }

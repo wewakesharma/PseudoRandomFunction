@@ -28,7 +28,7 @@ PackedZ3<N_COLS> p_server, p_client, p;    //p_server is p0 and p_client is p1 i
 //========variables for round 1============
 PackedZ2<N_COLS> mx_global, mq_global;
 std::vector<uint64_t> mK_global(toeplitzWords);
-PackedZ2<N_COLS> ws_mask, wc_mask;
+
 
 
 
@@ -48,29 +48,46 @@ void preproc_TrustedParty()
     rwglobal = rw1global;
     rwglobal.add(rw2global);      //rw = rw1 + rw2
 
-    //convert p from rw (mod2 -> mod3)
+    //convert p from rw and p_server from rw1 (mod2 -> mod3)
     for(int n_count = 0; n_count < N_COLS; n_count++)
     {
         p.second.set(n_count,0);
         p.first.set(n_count,rwglobal.at(n_count));
+
+        /*p_server.second.set(n_count,0);
+        p_server.first.set(n_count,rw1global.at(n_count));*/
+        p_server.randomize();   //randomly generate p_server
+
+        p_client = p;
+        p_client.subtract(p_server);
+
     }
+
+/*
     std::cout<<"Value of rw: "<<rwglobal<<std::endl;
+    std::cout<<"Value of rw1: "<<rw1global<<std::endl;
+    std::cout<<"Value of rw2: "<<rw2global<<std::endl;
     std::cout<<"Value of p: "<<p<<std::endl;
+    std::cout<<"Value of p_server: "<<p_server<<std::endl;
+    std::cout<<"Value of p_client: "<<p_client<<std::endl;
+*/
 }
 
 void fetch_server(std::vector<uint64_t>& rK, PackedZ2<N_COLS>& q,
-                  PackedZ2<N_COLS>& rq,PackedZ2<N_COLS>& rw1) //copy global values to local variables
+                  PackedZ2<N_COLS>& rq,PackedZ2<N_COLS>& rw1, PackedZ3<N_COLS>& p_server_local) //copy global values to local variables
 {
     rK = rKglobal;
     q.randomize();  //randomly generate q and send it to server
     rq = rq_global;
     rw1 = rw1global;
+    p_server_local = p_server;
 }
 
-void fetch_client(PackedZ2<N_COLS>& rx,PackedZ2<N_COLS>& rw2)//copy global values to local variables
+void fetch_client(PackedZ2<N_COLS>& rx,PackedZ2<N_COLS>& rw2, PackedZ3<N_COLS>& p_client_local)//copy global values to local variables
 {
     rx = rxglobal;
     rw2 = rw2global;
+    p_client_local = p_client;
 }
 
 //Round 1 starts here
@@ -82,7 +99,7 @@ void client_round1(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& rx)
     mx_global = mx;     //this emulates as mx being sent from client to server
 }
 
-void server_round1(std::vector<uint64_t>& K,std::vector<uint64_t>& rK,
+void server_round1(PackedZ2<N_COLS>& ws_mask, std::vector<uint64_t>& K,std::vector<uint64_t>& rK,
                    PackedZ2<N_COLS>& q, PackedZ2<N_COLS>& rq)
 {
     //fetch mx first
@@ -100,7 +117,7 @@ void server_round1(std::vector<uint64_t>& K,std::vector<uint64_t>& rK,
     ws_mask.add(rw1global);        //ws_mask = q + rw1
 }
 
-void client_round1_final(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& v,PackedZ2<N_COLS>& rw2)
+void client_round1_final(PackedZ2<N_COLS>& wc_mask, PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& v,PackedZ2<N_COLS>& rw2)
 {
     //fetch mK-global,mq_global,
     std::vector<uint64_t> mK;
@@ -113,6 +130,72 @@ void client_round1_final(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& v,PackedZ2<N_COLS
     wc_mask.add(v);
     wc_mask.add(rw2);   //wc_mask = (mK * x) + mq + v + rw2
 }
+//================END OF ROUND 1=========================
+
+void server_round2(PackedZ3<81>& y_server, PackedZ2<N_COLS>& ws_mask, PackedZ3<N_COLS>& p_server_local, std::vector<PackedZ3<81> >& Rmat)
+{
+    //compute z_server
+    PackedZ3<N_COLS> z_server;
+    PackedZ3<N_COLS> w_pserver;
+    PackedZ3<N_COLS> ws_mod3;
+
+
+    //trying mux
+    w_pserver.reset();              //==> Apparently MUX works
+    w_pserver.mux(p_server_local,ws_mask.bits);
+
+    for(int n_count = 0; n_count < N_COLS; n_count++)//converting ws_mask from mod2 to mod3
+    {
+        ws_mod3.second.set(n_count,0);
+        ws_mod3.first.set(n_count,ws_mask.at(n_count));
+    }
+
+    /*
+    std::cout<<"p_server"<<p_server<<std::endl;
+    std::cout<<"ws_mask"<<ws_mask<<std::endl;
+    std::cout<<"w_pserver"<<w_pserver<<std::endl;*/
+
+    z_server = p_server_local;
+    z_server.add(ws_mod3);
+    z_server.add(w_pserver);
+
+    //compute y_server
+    y_server.matByVec(Rmat,z_server);
+}
+
+
+void client_round2(PackedZ3<81>& y_client, PackedZ2<N_COLS>& wc_mask, PackedZ3<N_COLS>& p_client_local, std::vector<PackedZ3<81> >& Rmat)
+{
+    //compute z_server
+    PackedZ3<N_COLS> z_client;
+    PackedZ3<N_COLS> w_pclient;
+    PackedZ3<N_COLS> wc_mod3;
+
+
+    //trying mux
+    w_pclient.reset();              //==> Apparently MUX works
+    w_pclient.mux(p_client_local,wc_mask.bits);
+
+    for(int n_count = 0; n_count < N_COLS; n_count++)//converting wc_mask from mod2 to mod3
+    {
+        wc_mod3.second.set(n_count,0);
+        wc_mod3.first.set(n_count,wc_mask.at(n_count));
+    }
+
+    /*
+    std::cout<<"p_server"<<p_server<<std::endl;
+    std::cout<<"ws_mask"<<ws_mask<<std::endl;
+    std::cout<<"w_pserver"<<w_pserver<<std::endl;*/
+
+    z_client = p_client_local;
+    z_client.add(wc_mod3);
+    z_client.add(w_pclient);
+
+    //compute y_server
+    y_client.matByVec(Rmat,z_client);
+}
+
+
 
 void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<PackedZ3<81> >& Rmat,
                    PackedZ3<81>& y_out_z3, unsigned int nRuns)
@@ -120,20 +203,24 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
 
     std::vector<uint64_t> rK(toeplitzWords);
     PackedZ2<N_COLS> rq, rx, v, rw, q, rw1, rw2;
+    PackedZ3<N_COLS> p_server_local, p_client_local;
+    PackedZ2<N_COLS> ws_mask, wc_mask;
+    PackedZ3<81> y_server,y_client;
 
     //preprocess the input
     preproc_TrustedParty();         //generates rK, rx, rq and v.
 
-    fetch_server(rK, q, rq, rw1);
-    fetch_client(rx, rw2);
+    fetch_server(rK, q, rq, rw1,p_server_local);
+    fetch_client(rx, rw2,p_client_local);
 
 
     client_round1(x,rx);
-    server_round1(K, rK, q, rq);
-    client_round1_final(x,v,rw2);
+    server_round1(ws_mask, K, rK, q, rq);
+    client_round1_final(wc_mask, x,v,rw2);
 
+    server_round2(y_server, ws_mask, p_server_local,Rmat);
+    client_round2(y_client, wc_mask, p_client_local,Rmat);
 
-
-    //server_step3
-    //client_step3
+    y_out_z3 = y_server;
+    y_out_z3.add(y_client);
 }
