@@ -91,7 +91,7 @@ void fetch_client(PackedZ2<N_COLS>& rx,PackedZ2<N_COLS>& rw2, PackedZ3<N_COLS>& 
 }
 
 //Round 1 starts here
-void client_round1(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& rx)
+void client_round1(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& rx)    //performs mx = x - rx
 {
     PackedZ2<N_COLS> mx;
     mx = x;
@@ -100,7 +100,7 @@ void client_round1(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& rx)
 }
 
 void server_round1(PackedZ2<N_COLS>& ws_mask, std::vector<uint64_t>& K,std::vector<uint64_t>& rK,
-                   PackedZ2<N_COLS>& q, PackedZ2<N_COLS>& rq)
+                   PackedZ2<N_COLS>& q, PackedZ2<N_COLS>& rq)   //performs mK = K - rK and mq = rK*mx + q + rq, also w' = q+rw1
 {
     //fetch mx first
     PackedZ2<N_COLS> mx;
@@ -117,7 +117,8 @@ void server_round1(PackedZ2<N_COLS>& ws_mask, std::vector<uint64_t>& K,std::vect
     ws_mask.add(rw1global);        //ws_mask = q + rw1
 }
 
-void client_round1_final(PackedZ2<N_COLS>& wc_mask, PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& v,PackedZ2<N_COLS>& rw2)
+void client_round1_final(PackedZ2<N_COLS>& wc_mask, PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& v,
+        PackedZ2<N_COLS>& rw2)  //computes w' = (mK*x) + mq + v + rw2
 {
     //fetch mK-global,mq_global,
     std::vector<uint64_t> mK;
@@ -140,7 +141,7 @@ void server_round2(PackedZ3<81>& y_server, PackedZ2<N_COLS>& ws_mask, PackedZ3<N
     PackedZ3<N_COLS> ws_mod3;
 
 
-    //trying mux
+    //trying mux for (w' * p_server)
     w_pserver.reset();              //==> Apparently MUX works
     w_pserver.mux(p_server_local,ws_mask.bits);
 
@@ -172,31 +173,26 @@ void client_round2(PackedZ3<81>& y_client, PackedZ2<N_COLS>& wc_mask, PackedZ3<N
     PackedZ3<N_COLS> wc_mod3;
 
 
-    //trying mux
+    //trying mux for (w' * p_client)
     w_pclient.reset();              //==> Apparently MUX works
     w_pclient.mux(p_client_local,wc_mask.bits);
 
-    for(int n_count = 0; n_count < N_COLS; n_count++)//converting wc_mask from mod2 to mod3
-    {
-        wc_mod3.second.set(n_count,0);
-        wc_mod3.first.set(n_count,wc_mask.at(n_count));
-    }
-
     /*
-    std::cout<<"p_server"<<p_server<<std::endl;
-    std::cout<<"ws_mask"<<ws_mask<<std::endl;
-    std::cout<<"w_pserver"<<w_pserver<<std::endl;*/
+    std::cout<<"p_client"<<p_client<<std::endl;
+    std::cout<<"wc_mask"<<wc_mask<<std::endl;
+    std::cout<<"w_pclient"<<w_pclient<<std::endl;*/
 
     z_client = p_client_local;
-    z_client.add(wc_mod3);
-    z_client.add(w_pclient);
+    z_client.add(w_pclient);            //z_client = p_client + (w' * p_client)
 
     //compute y_server
-    y_client.matByVec(Rmat,z_client);
+    y_client.matByVec(Rmat,z_client);   //y = Rmat * z_client
 }
 
 
-
+/*
+ * Driver function: this is the main function which calls other functions
+ */
 void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<PackedZ3<81> >& Rmat,
                    PackedZ3<81>& y_out_z3, unsigned int nRuns)
 {

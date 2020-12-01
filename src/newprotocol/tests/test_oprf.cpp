@@ -26,7 +26,7 @@ int main()
     int nRuns = 1000;       //number of runs
     std::vector<uint64_t> K(toeplitzWords);//key shares of parties
     PackedZ2<N_COLS> x; //input shares of parties
-    PackedZ3<81> y_out_z3, y1_z3, y2_z3;//output of new protocol
+    PackedZ3<81> y_out_z3, y1_z3, y2_z3, outZ3;//output of new protocol
 
     //generate the input
     randomWord(1); // use seed=1
@@ -41,6 +41,24 @@ int main()
         col.randomize();
 
     oblivious_PRF(K,x,Rmat,y_out_z3,nRuns);   //driver code that will initiate the protocol.
-    std::cout<<"The output of 23-OPRF is "<<y_out_z3;
+    std::cout<<"The output of 23-OPRF is "<<y_out_z3<<std::endl;
+
+    /* centralized implementation
+     * BEGIN
+     */
+    PackedZ2<N_COLS> outKX;
+    outKX.toeplitzByVec(K,x);
+    std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
+    outKX.toArray(outKX_unsgn);
+
+    PackedZ3<256> outKX_Z3;//packed Z3
+    //PackedZ3<81> outZ3;//final Z3 output
+    outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
+    outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
+    /*
+     * END
+     */
+    std::cout<<"Output of centralized PRF "<<outZ3<<std::endl;
+
     return 0;
 }
