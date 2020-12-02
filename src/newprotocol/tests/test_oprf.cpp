@@ -33,12 +33,26 @@ int main()
     for (auto &w : K) w = randomWord();
     K[K.size() - 1] &= topelitzMask; // turn off extra bits at the end
 
+#ifdef DEBUG
+    K={0,0,0,0,0,0,0,0};
+
     x.randomize();
+    x.reset();
+    x.set(0,0);
+#endif
 
     //generate a 81 X 256 randomization matrix in Z3.
     std::vector<PackedZ3<81> > Rmat(256);
     for (auto &col : Rmat) // iterate over the columns
         col.randomize();
+
+#ifdef DEBUG
+    for (int i = 0; i < 256; i++)
+    {
+        Rmat[i].reset();
+    }
+    Rmat[0].set(0,1);
+#endif
 
     oblivious_PRF(K,x,Rmat,y_out_z3,nRuns);   //driver code that will initiate the protocol.
     std::cout<<"The output of 23-OPRF is "<<y_out_z3<<std::endl;
@@ -55,6 +69,10 @@ int main()
     //PackedZ3<81> outZ3;//final Z3 output
     outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
+    if (outZ3==y_out_z3)
+        std::cout << "in test_oprf.cpp, main, test PASSES. ";
+    else
+        std::cout << "in test_oprf.cpp, main, test FAILS. ";
     /*
      * END
      */

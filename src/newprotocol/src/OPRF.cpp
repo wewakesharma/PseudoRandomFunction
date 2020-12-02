@@ -40,11 +40,22 @@ void preproc_TrustedParty()     //preprocessing part where rK, rx, rq, v, and rw
     rq_global.randomize();                  //generate random values for rq
     rxglobal.randomize();                  //generate random values for rx
 
+#ifdef DEBUG
+    rxglobal.reset();
+    rq_global.reset();
+    rKglobal={0,0,0,0,0,0,0,0};
+#endif
     v_global.toeplitzByVec(rKglobal,rxglobal);
     v_global.add(rq_global);                    //compute v = rK * rx + rq
 
     rw1global.randomize();
     rw2global.randomize();
+#ifdef DEBUG
+    rw1global.reset();
+    rw2global.reset();
+    rw1global.set(0,1);
+#endif
+
     rwglobal = rw1global;
     rwglobal.add(rw2global);      //rw = rw1 + rw2
 
@@ -56,6 +67,9 @@ void preproc_TrustedParty()     //preprocessing part where rK, rx, rq, v, and rw
 
         p_server.randomize();   //randomly generate p_server
 
+#ifdef DEBUG
+    p_server.reset();
+#endif
         p_client = p;
         p_client.subtract(p_server);
 
