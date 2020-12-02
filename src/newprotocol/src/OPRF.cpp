@@ -90,6 +90,11 @@ void fetch_server(std::vector<uint64_t>& rK, PackedZ2<N_COLS>& q,
 {
     rK = rKglobal;
     q.randomize();  //randomly generate q and send it to server
+
+#ifdef DEBUG
+    q.reset();
+#endif
+
     rq = rq_global;
     rw1 = rw1global;
     p_server_local = p_server;
