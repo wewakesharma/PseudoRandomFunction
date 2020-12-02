@@ -58,7 +58,8 @@ int main()
     /*
      * END
      */
+#ifdef OPRF_PRINT_VAL
     std::cout<<"Output of centralized PRF "<<outZ3<<std::endl;
-
+#endif
     return 0;
 }

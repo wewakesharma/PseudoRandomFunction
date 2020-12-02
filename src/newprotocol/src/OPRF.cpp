@@ -23,7 +23,7 @@ std::vector<uint64_t> rKglobal(toeplitzWords);
 PackedZ2<N_COLS> rq_global, rxglobal, v_global;
 PackedZ2<N_COLS> rw1global, rw2global, rwglobal; //rw1 is rw for server and rw2 is rw for client, rw = rw1 + rw2
 
-PackedZ3<N_COLS> p_server, p_client, p;    //p_server is p0 and p_client is p1 in documentation
+PackedZ3<N_COLS> p_server, p_client, p;    //p_server is p0 and p_client is p1 in documentation. p = p_server + p_client(mod3)
 
 //========variables for round 1============
 PackedZ2<N_COLS> mx_global, mq_global;
@@ -32,7 +32,7 @@ std::vector<uint64_t> mK_global(toeplitzWords);
 
 
 
-void preproc_TrustedParty()
+void preproc_TrustedParty()     //preprocessing part where rK, rx, rq, v, and rw are generated
 {
     //generate rK, rq, rx, v and rw
     for (auto &w : rKglobal) w = randomWord();
@@ -51,11 +51,9 @@ void preproc_TrustedParty()
     //convert p from rw and p_server from rw1 (mod2 -> mod3)
     for(int n_count = 0; n_count < N_COLS; n_count++)
     {
-        p.second.set(n_count,0);
-        p.first.set(n_count,rwglobal.at(n_count));
+        p.second.set(n_count,0);                    //setting msb bit as 0
+        p.first.set(n_count,rwglobal.at(n_count));      //set lsb bit equal to rw_global(so, p = rw)
 
-        /*p_server.second.set(n_count,0);
-        p_server.first.set(n_count,rw1global.at(n_count));*/
         p_server.randomize();   //randomly generate p_server
 
         p_client = p;
@@ -63,14 +61,14 @@ void preproc_TrustedParty()
 
     }
 
-/*
-    std::cout<<"Value of rw: "<<rwglobal<<std::endl;
+#ifdef OPRF_PRINT_VAL
     std::cout<<"Value of rw1: "<<rw1global<<std::endl;
     std::cout<<"Value of rw2: "<<rw2global<<std::endl;
+    std::cout<<"Value of rw: "<<rwglobal<<std::endl;
     std::cout<<"Value of p: "<<p<<std::endl;
-    std::cout<<"Value of p_server: "<<p_server<<std::endl;
-    std::cout<<"Value of p_client: "<<p_client<<std::endl;
-*/
+    std::cout<<" p_server: "<<p_server<<std::endl;
+    std::cout<<" p_client: "<<p_client<<std::endl;
+#endif
 }
 
 void fetch_server(std::vector<uint64_t>& rK, PackedZ2<N_COLS>& q,
@@ -97,6 +95,9 @@ void client_round1(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& rx)    //performs mx = 
     mx = x;
     mx.add(rx);
     mx_global = mx;     //this emulates as mx being sent from client to server
+#ifdef OPRF_PRINT_VAL
+    std::cout<<"mx: "<<mx<<std::endl;
+#endif
 }
 
 void server_round1(PackedZ2<N_COLS>& ws_mask, std::vector<uint64_t>& K,std::vector<uint64_t>& rK,
@@ -106,15 +107,28 @@ void server_round1(PackedZ2<N_COLS>& ws_mask, std::vector<uint64_t>& K,std::vect
     PackedZ2<N_COLS> mx;
     mx = mx_global;
     //mK_global = K ^ rK;
-    for(int i = 0; i < toeplitzWords; i++)
+    for(int count = 0; count < mK_global.size(); count++)//since K and rK are of same size take any one of them for bound condition
     {
-        mK_global[i] = K[i] ^ rK[i];
+        mK_global[count] = K[count] ^ rK[count];
     }
-    mq_global.toeplitzByVec(rK,mx);
+
+    mq_global.toeplitzByVec(rK,mx);                     //rK*mx
+#ifdef OPRF_PRINT_VAL
+    std::cout<<"(rK*mx) "<<mq_global<<std::endl;
+#endif
     mq_global.add(q);
-    mq_global.add(rq);
-    ws_mask = q;                //w_mask for server
-    ws_mask.add(rw1global);        //ws_mask = q + rw1
+    mq_global.add(rq);          //mq = rK*mx + q + rq
+    ws_mask = q;
+    ws_mask.add(rw1global);        //w_mask for server(ws_mask) = q + rw1
+    /*
+     * priniting some values
+     */
+    std::cout<<"mx "<<mx<<std::endl;
+    std::cout<<"q"<<q<<std::endl;
+    std::cout<<"rq"<<rq<<std::endl;
+    std::cout<<"rw1global"<<rw1global<<std::endl;
+    std::cout<<"ws_mask"<<ws_mask<<std::endl;
+
 }
 
 void client_round1_final(PackedZ2<N_COLS>& wc_mask, PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& v,
@@ -128,8 +142,17 @@ void client_round1_final(PackedZ2<N_COLS>& wc_mask, PackedZ2<N_COLS>& x,PackedZ2
 
     wc_mask.toeplitzByVec(mK,x);    //w_mask for client
     wc_mask.add(mq);
-    wc_mask.add(v);
+    wc_mask.add(v_global);
     wc_mask.add(rw2);   //wc_mask = (mK * x) + mq + v + rw2
+
+#ifdef OPRF_PRINT_VAL
+
+    std::cout<<"x "<<x<<std::endl;
+    std::cout<<"mq "<<mq<<std::endl;
+    std::cout<<"v_global "<<v_global<<std::endl;
+    std::cout<<"rw2 "<<rw2<<std::endl;
+    std::cout<<"wc_mask "<<wc_mask<<std::endl;
+#endif
 }
 //================END OF ROUND 1=========================
 
@@ -210,8 +233,8 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
     fetch_client(rx, rw2,p_client_local);
 
 
-    client_round1(x,rx);
-    server_round1(ws_mask, K, rK, q, rq);
+    client_round1(x,rx);        //computes mx=x-rx
+    server_round1(ws_mask, K, rK, q, rq);   //computes mq, mK and w' = q+rw
     client_round1_final(wc_mask, x,v,rw2);
 
     server_round2(y_server, ws_mask, p_server_local,Rmat);
@@ -230,6 +253,8 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
     KX.toeplitzByVec(K,x);
     KX.add(rwglobal);
 
+#ifdef OPRF_PRINT_VAL
     std::cout<<"Output w "<<w<<std::endl;
     std::cout<<"KX + rw "<<KX<<std::endl;
+#endif
 }
