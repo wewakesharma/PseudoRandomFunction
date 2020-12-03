@@ -76,12 +76,13 @@ void preproc_TrustedParty()     //preprocessing part where rK, rx, rq, v, and rw
     }
 
 #ifdef OPRF_PRINT_VAL
+    std::cout<<"OPRF.cpp/preproc_TrustedParty()"<<std::endl;
     std::cout<<"Value of rw1: "<<rw1global<<std::endl;
     std::cout<<"Value of rw2: "<<rw2global<<std::endl;
     std::cout<<"Value of rw: "<<rwglobal<<std::endl;
     std::cout<<"Value of p: "<<p<<std::endl;
     std::cout<<" p_server: "<<p_server<<std::endl;
-    std::cout<<" p_client: "<<p_client<<std::endl;
+    std::cout<<" p_client: "<<p_client<<std::endl<<std::endl;
 #endif
 }
 
@@ -138,7 +139,8 @@ void client_round1(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& rx)    //performs mx = 
     mx.add(rx);
     send_mx(mx);         //this emulates as mx being sent from client to server
 #ifdef OPRF_PRINT_VAL
-    std::cout<<"mx: "<<mx<<std::endl;
+    std::cout<<"OPRF.cpp/client_round1():"<<std::endl;
+    std::cout<<"mx: "<<mx<<std::endl<<std::endl;
 #endif
 }
 
@@ -159,23 +161,27 @@ void server_round1(PackedZ2<N_COLS>& ws_mask, std::vector<uint64_t>& K, std::vec
 
     mq.toeplitzByVec(rK,mx);                     //rK*mx
 #ifdef OPRF_PRINT_VAL
-    std::cout<<"(rK*mx) "<<mq_global<<std::endl;
+    std::cout<<"(rK*mx) "<<mq<<std::endl;
 #endif
     mq.add(q);
     mq.add(rq);          //mq = rK*mx + q + rq
     //send_mK_mq(mK, mq);
+#ifdef OPRF_PRINT_VAL
+    std::cout<<"mq "<<mq<<std::endl;
+#endif
     mK_global = mK;
     mq_global = mq;
     ws_mask = q;
     ws_mask.add(rw1global);        //w_mask for server(ws_mask) = q + rw1
-    /*
-     * priniting some values
-     */
+
+#ifdef OPRF_PRINT_VAL
+    std::cout<<"OPRF.cpp/server_round1()"<<std::endl;
     std::cout<<"mx "<<mx<<std::endl;
     std::cout<<"q"<<q<<std::endl;
     std::cout<<"rq"<<rq<<std::endl;
     std::cout<<"rw1global"<<rw1global<<std::endl;
-    std::cout<<"ws_mask"<<ws_mask<<std::endl;
+    std::cout<<"ws_mask"<<ws_mask<<std::endl<<std::endl;
+#endif
 
 }
 
@@ -197,12 +203,12 @@ void client_round1_final(PackedZ2<N_COLS>& wc_mask, PackedZ2<N_COLS>& x,PackedZ2
     wc_mask.add(rw2);   //wc_mask = (mK * x) + mq + v + rw2
 
 #ifdef OPRF_PRINT_VAL
-
+    std::cout<<"OPRF.cpp/client_round1_final()"<<std::endl;
     std::cout<<"x "<<x<<std::endl;
     std::cout<<"mq "<<mq<<std::endl;
     std::cout<<"v_global "<<v_global<<std::endl;
     std::cout<<"rw2 "<<rw2<<std::endl;
-    std::cout<<"wc_mask "<<wc_mask<<std::endl;
+    std::cout<<"wc_mask "<<wc_mask<<std::endl<<std::endl;
 #endif
 }
 //================END OF ROUND 1=========================
@@ -231,13 +237,15 @@ void server_round2(PackedZ3<81>& y_server, PackedZ2<N_COLS>& ws_mask,
 
     //compute y_server = Rmat * z_server
     y_server.matByVec(Rmat,z_server);
+
 #ifdef OPRF_PRINT_VAL
+    std::cout<<"OPRF.cpp/server_round2(): Printing values for server round 2:"<<std::endl;
     std::cout<<"p_server"<<p_server_local<<std::endl;
     std::cout<<"ws_mask"<<ws_mask<<std::endl;
     std::cout<<"ws_mod3"<<ws_mod3<<std::endl;
     std::cout<<"w_pserver"<<w_pserver<<std::endl;
     std::cout<<"z_server"<<z_server<<std::endl;
-    std::cout<<"y_server"<<y_server<<std::endl;
+    std::cout<<"y_server"<<y_server<<std::endl<<std::endl;
 #endif
 }
 
@@ -255,16 +263,22 @@ void client_round2(PackedZ3<81>& y_client, PackedZ2<N_COLS>& wc_mask,
     w_pclient.reset();              //==> Apparently MUX works
     w_pclient.mux(p_client_local,wc_mask.bits);
 
-#ifdef OPRF_PRINT_VAL
-    std::cout<<"p_client"<<p_client<<std::endl;
-    std::cout<<"wc_mask"<<wc_mask<<std::endl;
-    std::cout<<"w_pclient"<<w_pclient<<std::endl;
-#endif
+
     z_client = p_client_local;
     z_client.add(w_pclient);            //z_client = p_client + (w' * p_client)
 
     //compute y_server
     y_client.matByVec(Rmat,z_client);   //y = Rmat * z_client
+
+#ifdef OPRF_PRINT_VAL
+    std::cout<<"OPRF.cpp/client_round2(): Printing values for client round 2:"<<std::endl;
+    std::cout<<"p_client"<<p_client<<std::endl;
+    std::cout<<"wc_mask"<<wc_mask<<std::endl;
+    std::cout<<"wc_mod3"<<wc_mod3<<std::endl;
+    std::cout<<"w_pclient"<<w_pclient<<std::endl;
+    std::cout<<"z_client"<<z_client<<std::endl;
+    std::cout<<"y_client"<<y_client<<std::endl<<std::endl;
+#endif
 }
 
 
@@ -311,4 +325,9 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
     std::cout<<"Output w "<<w<<std::endl;
     std::cout<<"KX + rw "<<KX<<std::endl;
 #endif
+
+    if(w == KX)
+        std::cout<<"Round 1 verification test status : PASS"<<std::endl<<std::endl;
+    else
+        std::cout<<"Round 1 verification test status : FAIL"<<std::endl<<std::endl;
 }

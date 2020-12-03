@@ -54,6 +54,16 @@ int main()
     Rmat[0].set(0,1);
 #endif
 
+#ifdef OPRF_PRINT_VAL
+    std::cout<<"test_oprf.cpp/main(): printing the input values "<<std::endl;
+    std::cout<<"x: "<<x<<std::endl;
+    for(int i =0; i< K.size();i++)
+    {
+        std::cout<<K[i]<<" \t";
+    }
+    std::cout<<std::endl;
+#endif
+
     oblivious_PRF(K,x,Rmat,y_out_z3,nRuns);   //driver code that will initiate the protocol.
     std::cout<<"The output of 23-OPRF is "<<y_out_z3<<std::endl;
 
@@ -69,15 +79,16 @@ int main()
     //PackedZ3<81> outZ3;//final Z3 output
     outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
     outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
-    if (outZ3==y_out_z3)
-        std::cout << "in test_oprf.cpp, main, test PASSES. ";
-    else
-        std::cout << "in test_oprf.cpp, main, test FAILS. ";
-    /*
-     * END
-     */
 #ifdef OPRF_PRINT_VAL
     std::cout<<"Output of centralized PRF "<<outZ3<<std::endl;
 #endif
+    if (outZ3==y_out_z3)
+        std::cout << "in test_oprf.cpp, main, test PASSES. "<<std::endl;
+    else
+        std::cout << "in test_oprf.cpp, main, test FAILS. "<<std::endl;
+    /*
+     * END
+     */
+
     return 0;
 }
