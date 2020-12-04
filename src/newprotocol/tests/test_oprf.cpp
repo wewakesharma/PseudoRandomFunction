@@ -33,10 +33,10 @@ int main()
     for (auto &w : K) w = randomWord();
     K[K.size() - 1] &= topelitzMask; // turn off extra bits at the end
 
+    x.randomize();
+
 #ifdef DEBUG
     K={0,0,0,0,0,0,0,0};
-
-    x.randomize();
     x.reset();
     x.set(0,0);
 #endif
@@ -57,10 +57,13 @@ int main()
 #ifdef OPRF_PRINT_VAL
     std::cout<<"test_oprf.cpp/main(): printing the input values "<<std::endl;
     std::cout<<"x: "<<x<<std::endl;
+    std::cout<<"K: ";
     for(int i =0; i< K.size();i++)
     {
         std::cout<<K[i]<<" \t";
     }
+    std::cout<<std::endl;
+    //std::cout<<"Rmat "<<Rmat<<std::endl;
     std::cout<<std::endl;
 #endif
 

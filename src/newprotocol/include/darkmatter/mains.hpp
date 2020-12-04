@@ -14,7 +14,7 @@
  * Decentralized implementation flags
  */
 
-#define DEBUG
+//#define DEBUG
 
 //#define TEST_PRF              //runs the dark matter protocol
 //#define TEST_NP                 //runs the new protocol using MATBYVEC

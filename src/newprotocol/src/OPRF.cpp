@@ -29,6 +29,8 @@ PackedZ3<N_COLS> p_server, p_client, p;    //p_server is p0 and p_client is p1 i
 static PackedZ2<N_COLS> mx_global, mq_global;
 static std::vector<uint64_t> mK_global(toeplitzWords);
 
+//=========variable for round 2=====
+PackedZ2<N_COLS> ws_global, wc_global, w_global;
 
 
 
@@ -53,7 +55,8 @@ void preproc_TrustedParty()     //preprocessing part where rK, rx, rq, v, and rw
 #ifdef DEBUG
     rw1global.reset();
     rw2global.reset();
-    rw1global.set(0,1);
+    //rw1global.set(0,1);
+    rw2global.set(0,1);
 #endif
 
     rwglobal = rw1global;
@@ -130,7 +133,23 @@ void recv_mK_mq(std::vector<uint64_t>& mK, PackedZ2<N_COLS>& mq)
     mK = mK_global;
     mq = mq_global;
 }
+void send_ws(PackedZ2<N_COLS>& ws_mask)
+{
+    ws_global = ws_mask;
+}
+void recv_ws(PackedZ2<N_COLS>& ws_mask)
+{
+     ws_mask = ws_global;
+}
+void send_wc(PackedZ2<N_COLS>& wc_mask)
+{
+    wc_global = wc_mask;
+}
 
+void recv_wc(PackedZ2<N_COLS>& wc_mask)
+{
+    wc_mask = wc_global;
+}
 //Round 1 starts here
 void client_round1(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& rx)    //performs mx = x - rx
 {
@@ -171,8 +190,11 @@ void server_round1(PackedZ2<N_COLS>& ws_mask, std::vector<uint64_t>& K, std::vec
 #endif
     mK_global = mK;
     mq_global = mq;
+
     ws_mask = q;
     ws_mask.add(rw1global);        //w_mask for server(ws_mask) = q + rw1
+
+    send_ws(ws_mask);   //sending ws_mask to client
 
 #ifdef OPRF_PRINT_VAL
     std::cout<<"OPRF.cpp/server_round1()"<<std::endl;
@@ -202,6 +224,7 @@ void client_round1_final(PackedZ2<N_COLS>& wc_mask, PackedZ2<N_COLS>& x,PackedZ2
     wc_mask.add(v);
     wc_mask.add(rw2);   //wc_mask = (mK * x) + mq + v + rw2
 
+    send_wc(wc_mask);   //sending wc_mask to server
 #ifdef OPRF_PRINT_VAL
     std::cout<<"OPRF.cpp/client_round1_final()"<<std::endl;
     std::cout<<"x "<<x<<std::endl;
@@ -216,23 +239,30 @@ void client_round1_final(PackedZ2<N_COLS>& wc_mask, PackedZ2<N_COLS>& x,PackedZ2
 void server_round2(PackedZ3<81>& y_server, PackedZ2<N_COLS>& ws_mask,
         PackedZ3<N_COLS>& p_server_local, std::vector<PackedZ3<81> >& Rmat)//computing z = w' + p1 + (w' * p1)
 {
+    PackedZ2<N_COLS> wc_mask,w_mask;
     //compute z_server
     PackedZ3<N_COLS> z_server;
     PackedZ3<N_COLS> w_pserver;
-    PackedZ3<N_COLS> ws_mod3;
+    PackedZ3<N_COLS> w_mod3;
+
+    //receiving wc_mask
+    recv_wc(wc_mask);
+    //computing w_mask = wc_mask + ws_mask
+    w_mask = ws_mask;
+    w_mask.add(wc_mask);
 
     //trying mux for (w' * p_server)
     w_pserver.reset();
-    w_pserver.mux(p_server_local,ws_mask.bits);
+    w_pserver.mux(p_server_local,w_mask.bits);
 
     for(int n_count = 0; n_count < N_COLS; n_count++)//converting ws_mask from mod2 to mod3
     {
-        ws_mod3.second.set(n_count,0);                  //setting msb as zero(0)
-        ws_mod3.first.set(n_count,ws_mask.at(n_count));     //ws_mask converted for compatibility reasons
+        w_mod3.second.set(n_count,0);                  //setting msb as zero(0)
+        w_mod3.first.set(n_count,w_mask.at(n_count));     //ws_mask converted for compatibility reasons
     }
 
     z_server = p_server_local;  //computing z_server = p + w' + (p * w')
-    z_server.add(ws_mod3);
+    z_server.add(w_mod3);
     z_server.add(w_pserver);
 
     //compute y_server = Rmat * z_server
@@ -242,7 +272,8 @@ void server_round2(PackedZ3<81>& y_server, PackedZ2<N_COLS>& ws_mask,
     std::cout<<"OPRF.cpp/server_round2(): Printing values for server round 2:"<<std::endl;
     std::cout<<"p_server"<<p_server_local<<std::endl;
     std::cout<<"ws_mask"<<ws_mask<<std::endl;
-    std::cout<<"ws_mod3"<<ws_mod3<<std::endl;
+    std::cout<<"wc_mask"<<wc_mask<<std::endl;
+    std::cout<<"w_mod3"<<w_mod3<<std::endl;
     std::cout<<"w_pserver"<<w_pserver<<std::endl;
     std::cout<<"z_server"<<z_server<<std::endl;
     std::cout<<"y_server"<<y_server<<std::endl<<std::endl;
@@ -253,16 +284,22 @@ void server_round2(PackedZ3<81>& y_server, PackedZ2<N_COLS>& ws_mask,
 void client_round2(PackedZ3<81>& y_client, PackedZ2<N_COLS>& wc_mask,
         PackedZ3<N_COLS>& p_client_local, std::vector<PackedZ3<81> >& Rmat) //computing z = p2 + (w' * p2)
 {
+    PackedZ2<N_COLS> ws_mask,w_mask;
     //compute z_server
     PackedZ3<N_COLS> z_client;
     PackedZ3<N_COLS> w_pclient;
-    PackedZ3<N_COLS> wc_mod3;
+    //PackedZ3<N_COLS> wc_mod3;
 
+
+    //receiving ws_mask
+    recv_ws(ws_mask);
+    //computing w_mask = wc_mask + ws_mask
+    w_mask = wc_mask;
+    w_mask.add(ws_mask);
 
     //trying mux for (w' * p_client)
     w_pclient.reset();              //==> Apparently MUX works
-    w_pclient.mux(p_client_local,wc_mask.bits);
-
+    w_pclient.mux(p_client_local,w_mask.bits);
 
     z_client = p_client_local;
     z_client.add(w_pclient);            //z_client = p_client + (w' * p_client)
@@ -273,8 +310,9 @@ void client_round2(PackedZ3<81>& y_client, PackedZ2<N_COLS>& wc_mask,
 #ifdef OPRF_PRINT_VAL
     std::cout<<"OPRF.cpp/client_round2(): Printing values for client round 2:"<<std::endl;
     std::cout<<"p_client"<<p_client<<std::endl;
+    std::cout<<"ws_mask"<<ws_mask<<std::endl;
     std::cout<<"wc_mask"<<wc_mask<<std::endl;
-    std::cout<<"wc_mod3"<<wc_mod3<<std::endl;
+    std::cout<<"w_mask"<<w_mask<<std::endl;
     std::cout<<"w_pclient"<<w_pclient<<std::endl;
     std::cout<<"z_client"<<z_client<<std::endl;
     std::cout<<"y_client"<<y_client<<std::endl<<std::endl;
