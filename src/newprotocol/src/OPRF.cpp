@@ -18,6 +18,19 @@
 #include "lookup_functions.h"
 #include "OPRF.h"
 
+//=========variables for timings=========
+long timer_client_r1 = 0;
+long timer_server_r1 = 0;
+long timer_client_final = 0;
+
+long timer_client_r2 = 0;
+long timer_server_r2 = 0;
+
+long timer_round1_oprf = 0;
+long timer_round2_oprf = 0;
+
+long timer_oprf = 0;
+
 //=========variables for preprocessing===========
 std::vector<uint64_t> rKglobal(toeplitzWords);
 PackedZ2<N_COLS> rq_global, rxglobal, v_global;
@@ -319,6 +332,38 @@ void client_round2(PackedZ3<81>& y_client, PackedZ2<N_COLS>& wc_mask,
 #endif
 }
 
+void display_oprf_timings()
+{
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+    float time_unit_multiplier = 1;
+    if(Duration::period::den == 1000000000)
+        time_unit_multiplier = 0.001; //make nanosecond to microsecond
+    else if(Duration::period::den == 1000000)
+        time_unit_multiplier = 1;   //keep the unit as microsecond
+
+    timer_round1_oprf = timer_client_r1 + timer_server_r1 + timer_client_final;
+    timer_round2_oprf = std::max(timer_server_r2, timer_client_r2);
+    timer_oprf = timer_round1_oprf + timer_round2_oprf;
+
+    std::cout<<"Time to execute step 1: "<<(timer_round1_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute step 2(both party runs simultaneously): "<<(timer_round2_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"============================================================"<<std::endl;
+    std::cout<<"Number of rounds per second for step 1 "<<(1000/(timer_round1_oprf*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for step 2 "<<(1000/(timer_round2_oprf*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for entire PRF "<<(1000/(timer_oprf*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"=========================Breaking down the timings by parties for each round==================================="<<std::endl;
+    std::cout<<"Time to execute client step 1: "<<(timer_client_r1 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute server step 1: "<<(timer_server_r1 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute client step 1 final: "<<(timer_client_final * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute client step 2: "<<(timer_client_r2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute server step 2: "<<(timer_server_r2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"=========================TOTAL TIME==================================="<<std::endl;
+    std::cout<<"Time to execute entire new protocol PRF: "<<(timer_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
+
+}
+
 
 /*
  * Driver function: this is the main function which calls other functions
@@ -327,11 +372,14 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
                    PackedZ3<81>& y_out_z3, unsigned int nRuns)
 {
 
+    std::chrono::time_point<std::chrono::system_clock> start_client_r1, start_server_r1, start_client_final;
+    std::chrono::time_point<std::chrono::system_clock> start_server_r2, start_client_r2, start_timer_oprf;
+
     std::vector<uint64_t> rK(toeplitzWords);
     PackedZ2<N_COLS> rq, rx, v, rw, q, rw1, rw2;
     PackedZ3<N_COLS> p_server_local, p_client_local;
     PackedZ2<N_COLS> ws_mask, wc_mask;
-    PackedZ3<81> y_server,y_client;
+    PackedZ3<81> y_server,y_client, y_dummy;
 
     //preprocess the input
     preproc_TrustedParty();         //generates rK, rx, rq and v.
@@ -339,16 +387,39 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
     fetch_server(rK, q, rq, rw1,p_server_local);
     fetch_client(rx, rw2,v, p_client_local);
 
-    client_round1(x,rx);        //computes mx=x-rx
-    server_round1(ws_mask, K, rK, q, rq);   //computes mq, mK and w' = q+rw
-    client_round1_final(wc_mask, x,v,rw2);
+    std::cout<<" Number of Runs: "<<nRuns<<std::endl;
 
-    server_round2(y_server, ws_mask, p_server_local,Rmat);
-    client_round2(y_client, wc_mask, p_client_local,Rmat);
+    //start_timer_oprf = std::chrono::system_clock::now();
 
-    y_out_z3 = y_server;
-    y_out_z3.add(y_client);
+    for(unsigned int i = 0; i< nRuns;i++) {
 
+        start_client_r1 = std::chrono::system_clock::now();
+        client_round1(x, rx);        //computes mx=x-rx
+        timer_client_r1 += (std::chrono::system_clock::now() - start_client_r1).count();
+
+        start_server_r1 = std::chrono::system_clock::now();
+        server_round1(ws_mask, K, rK, q, rq);   //computes mq, mK and w' = q+rw
+        timer_server_r1 += (std::chrono::system_clock::now() - start_server_r1).count();
+
+        start_client_final = std::chrono::system_clock::now();
+        client_round1_final(wc_mask, x, v, rw2);
+        timer_client_final += (std::chrono::system_clock::now() - start_client_final).count();
+
+        start_server_r2 = std::chrono::system_clock::now();
+        server_round2(y_server, ws_mask, p_server_local, Rmat);
+        timer_server_r2 += (std::chrono::system_clock::now() - start_server_r2).count();
+
+        start_client_r2 = std::chrono::system_clock::now();
+        client_round2(y_client, wc_mask, p_client_local, Rmat);
+        y_out_z3 = y_server;
+        y_out_z3.add(y_client);
+        timer_client_r2 += (std::chrono::system_clock::now() - start_client_r2).count();
+
+        y_dummy = y_out_z3;
+    }
+
+    display_oprf_timings();
+#ifdef OPRF_PRINT_VAL
     //Performing first verification.
     PackedZ2<N_COLS> w;
     w = ws_mask;
@@ -358,14 +429,11 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
     PackedZ2<N_COLS> KX;
     KX.toeplitzByVec(K,x);
     KX.add(rwglobal);
-
-#ifdef OPRF_PRINT_VAL
     std::cout<<"Output w "<<w<<std::endl;
     std::cout<<"KX + rw "<<KX<<std::endl;
-#endif
-
     if(w == KX)
         std::cout<<"Round 1 verification test status : PASS"<<std::endl<<std::endl;
     else
         std::cout<<"Round 1 verification test status : FAIL"<<std::endl<<std::endl;
+#endif
 }

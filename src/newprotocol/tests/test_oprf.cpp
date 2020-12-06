@@ -18,7 +18,24 @@
 
 using namespace std;
 
-#define TEST_OPRF
+#ifdef TEST_OPRF
+
+void centralPRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<PackedZ3<81> >& Rmat,
+                PackedZ3<81>& outZ3)
+{
+    /* centralized implementation
+     * BEGIN
+     */
+    PackedZ2<N_COLS> outKX;
+    outKX.toeplitzByVec(K,x);
+    std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
+    outKX.toArray(outKX_unsgn);
+
+    PackedZ3<256> outKX_Z3;//packed Z3
+    //PackedZ3<81> outZ3;//final Z3 output
+    outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
+    outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
+}
 
 int main()
 {
@@ -68,30 +85,17 @@ int main()
 #endif
 
     oblivious_PRF(K,x,Rmat,y_out_z3,nRuns);   //driver code that will initiate the protocol.
-    std::cout<<"The output of 23-OPRF is "<<y_out_z3<<std::endl;
 
-    /* centralized implementation
-     * BEGIN
-     */
-    PackedZ2<N_COLS> outKX;
-    outKX.toeplitzByVec(K,x);
-    std::vector<unsigned int> outKX_unsgn;//unsigned int of outKX i.e.(K*x)
-    outKX.toArray(outKX_unsgn);
+    centralPRF(K,x,Rmat,outZ3); //centralized implementation for testing
 
-    PackedZ3<256> outKX_Z3;//packed Z3
-    //PackedZ3<81> outZ3;//final Z3 output
-    outKX_Z3.fromArray(outKX_unsgn);//converting unsigned int to PackedZ2
-    outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
 #ifdef OPRF_PRINT_VAL
     std::cout<<"Output of centralized PRF "<<outZ3<<std::endl;
-#endif
+    std::cout<<"The output of 23-OPRF is "<<y_out_z3<<std::endl;
     if (outZ3==y_out_z3)
         std::cout << "in test_oprf.cpp, main, test PASSES. "<<std::endl;
     else
         std::cout << "in test_oprf.cpp, main, test FAILS. "<<std::endl;
-    /*
-     * END
-     */
-
+#endif
     return 0;
 }
+#endif
