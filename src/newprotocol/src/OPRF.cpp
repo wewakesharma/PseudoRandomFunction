@@ -415,10 +415,11 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
         y_out_z3.add(y_client);
         timer_client_r2 += (std::chrono::system_clock::now() - start_client_r2).count();
 
-        y_dummy = y_out_z3;
+        y_dummy += y_out_z3;
     }
-
+    std::cout << "inside oblivious_PRF, y_dummy=" << y_dummy << std::endl;
     display_oprf_timings();
+
 #ifdef OPRF_PRINT_VAL
     //Performing first verification.
     PackedZ2<N_COLS> w;

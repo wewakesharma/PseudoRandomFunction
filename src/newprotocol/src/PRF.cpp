@@ -319,13 +319,18 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
 
+    PackedZ3<81> outSum;
+    outSum.reset();
+
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
 
         PRF_DM(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
     //    PRF_packed_centralized_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
         //PRF_unpacked_test() /* just a placeholder*/
+        outSum+= out1Z3;
         //cout <<"out1Z3=" << out1Z3 << "\n out2Z3=" << out2Z3 << endl;
     }
+    cout << "in PRF_DM_wpreproc, outSum=" << outSum << endl;
 }
 
