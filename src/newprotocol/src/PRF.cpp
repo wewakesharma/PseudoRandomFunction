@@ -23,7 +23,18 @@
 using namespace std;
 
 long timerPRF = 0;
+long timerAxpBP1 = 0;
+long timerAxpBP2 = 0;
+
+long timerOTP1 = 0;
+long timerOTP2 = 0;
+
+long timerSCP1 = 0;
+long timerSCP2 = 0;
+
 long timer_phase3 = 0;
+long timer_phase31 = 0;
+long timer_phase32 = 0;
 
 #ifdef LOOKUP_TIME
 long timer_create_lookup = 0;
@@ -35,21 +46,6 @@ static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 PackedZ3<81> out_dummy;
-
-void display_Phase3_runtime(float& time_unit_multiplier)
-{
-    std::cout<<"\nTime to execute phase 3: "<<
-             (timer_phase3 * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"Number of rounds per second for phase 3: "<<(1000/(timer_phase3*time_unit_multiplier)*1000000)<<std::endl;
-
-}
-void display_PRF_runtime(float& time_unit_multiplier)
-{
-    std::cout<<"\nTime to execute entire PRF protocol: "<<
-             (timerPRF * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"Number of rounds per second for entire PRF: "<<(1000/(timerPRF*time_unit_multiplier)*1000000)<<std::endl;
-
-}
 
 void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                             PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81>& outZ3, int nTimes)
@@ -218,6 +214,48 @@ void exec_lookup_timing()
  * PRF without the pre-processing
  */
 
+void display_timing()
+{
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+    float time_unit_multiplier = 1;
+    if(Duration::period::den == 1000000000)
+        time_unit_multiplier = 0.001; //make nanosecond to microsecond
+    else if(Duration::period::den == 1000000)
+        time_unit_multiplier = 1;   //keep the unit as microsecond
+
+    cout<<endl<<"AX + B execution time "<<endl;
+    cout<<"Party 1: " << (timerAxpBP1 * time_unit_multiplier)<<" microseconds"<<endl;
+    cout<<"Party 2: "<<(timerAxpBP2 * time_unit_multiplier)<<" microseconds"<<endl;
+    std::cout<<"Time to execute phase 1 (K*X): "<<
+             ((timerAxpBP1 + timerAxpBP2) * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for phase 1: "<<(1000/((timerAxpBP1 + timerAxpBP2)*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"====================================================="<<std::endl;
+    std::cout<<std::endl<<"Share Conversion execution time "<<std::endl;
+    std::cout<<"Party 1: " << (timerSCP1* time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Party 2: "<<(timerSCP2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 2(Share Conversion): "<<
+             ((timerSCP1 + timerSCP2) * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for phase 2: "<<(1000/((timerSCP1 + timerSCP2) * time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"====================================================="<<std::endl;
+    timer_phase3 = std::max(timer_phase31,timer_phase32);
+    std::cout<<"\nTime to execute phase 3: "<<
+             (timer_phase3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for phase 3: "<<(1000/(timer_phase3*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"====================================================="<<std::endl;
+    timerPRF = (timerAxpBP1 + timerAxpBP2) + (timerSCP1 + timerSCP2) + timer_phase3;
+    std::cout<<"\nTime to execute entire PRF protocol: "<<
+             (timerPRF * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for entire PRF: "<<(1000/(timerPRF*time_unit_multiplier)*1000000)<<std::endl;
+
+/*
+    timer_round1 = std::max(timer_round1_p1, timer_round1_p2) + timer_round1_mask;
+    timer_round2 = std::max(timer_round2_p1, timer_round2_p2) + timer_round2_mask;
+    timer_round3 = std::max(timer_round3_p1, timer_round3_p2);
+    timer_np_prf = timer_round1 + timer_round2 + timer_round3;*/
+}
+
 void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
         PackedZ3<81>& out2Z3, int i)
@@ -266,14 +304,19 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 
         //end of phase 2
 
-    auto start_p3 = chrono::system_clock::now();
+    auto start_p31 = chrono::system_clock::now();
 
     out1Z3.matByVec(Rmat, out1); // compute matrix-by-vector multiply
+
+    timer_phase31 += (std::chrono::system_clock::now() - start_p31).count();
+
+    auto start_p32 = chrono::system_clock::now();
+
     out2Z3.matByVec(Rmat, out2); // compute matrix-by-vector multiply
 
-    timer_phase3 += (std::chrono::system_clock::now() - start_p3).count();
+    timer_phase32 += (std::chrono::system_clock::now() - start_p32).count();
 
-    timerPRF += (chrono::system_clock::now() - start_prf).count();
+    //timerPRF += (chrono::system_clock::now() - start_prf).count();
 
     out_dummy += out1Z3;
     out_dummy += out2Z3;
@@ -332,5 +375,6 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
         //cout <<"out1Z3=" << out1Z3 << "\n out2Z3=" << out2Z3 << endl;
     }
     cout << "in PRF_DM_wpreproc, outSum=" << outSum << endl;
+    display_timing();
 }
 

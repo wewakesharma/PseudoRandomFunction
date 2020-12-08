@@ -37,6 +37,7 @@ int main(int argc,char* argv[] )  {
     std::cout<<"Executing Darkmatter PRF protocol..."<<std::endl;
     PRF_DM_wpreproc(ntimes, nRuns, stepsToRun);
 
+    /*
     using Clock = std::chrono::system_clock;
     using Duration = Clock::duration;
     //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
@@ -49,7 +50,7 @@ int main(int argc,char* argv[] )  {
     display_AXplusB_runtime(time_unit_multiplier);
     display_SC_runtime(time_unit_multiplier);
     display_Phase3_runtime(time_unit_multiplier);
-    display_PRF_runtime(time_unit_multiplier);
+    display_PRF_runtime(time_unit_multiplier);*/
 
 }
 

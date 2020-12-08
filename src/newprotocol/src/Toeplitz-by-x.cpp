@@ -12,8 +12,8 @@
 
 using namespace std;
 
-long timerAxpBP1 = 0;
-long timerAxpBP2 = 0;
+extern long timerAxpBP1;
+extern long timerAxpBP2;
 
 // in Toeplitz-by-x.hpp
  #define N_ROWS 256
@@ -185,13 +185,4 @@ void topelitz_Party2_2(PackedZ2<N_ROWS>& out, PackedZ2<N_COLS>& x,
     // out is the output of this party
 }
 
-void display_AXplusB_runtime(float& time_unit_multiplier)
-{
 
-    cout<<endl<<"AX + B execution time "<<endl;
-    cout<<"Party 1: " << (timerAxpBP1 * time_unit_multiplier)<<" microseconds"<<endl;
-    cout<<"Party 2: "<<(timerAxpBP2 * time_unit_multiplier)<<" microseconds"<<endl;
-    std::cout<<"Time to execute phase 1 (K*X): "<<
-    ((timerAxpBP1 + timerAxpBP2) * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"Number of rounds per second for phase 1: "<<(1000/((timerAxpBP1 + timerAxpBP2)*time_unit_multiplier)*1000000)<<std::endl;
-}
