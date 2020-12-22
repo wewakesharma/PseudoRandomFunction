@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol
+CMAKE_SOURCE_DIR = /Users/vivek/Documents/Github/PseudoRandomFunction/src/newprotocol
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vivek/Documents/Github/PseudoRandomFunction/src/newprotocol/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/Github/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles /Users/vivek/Documents/Github/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/Github/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -122,33 +122,6 @@ newprotocol: cmake_check_build_system
 newprotocol/fast:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/build
 .PHONY : newprotocol/fast
-
-src/OPRF.o: src/OPRF.cpp.o
-
-.PHONY : src/OPRF.o
-
-# target to build an object file
-src/OPRF.cpp.o:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/OPRF.cpp.o
-.PHONY : src/OPRF.cpp.o
-
-src/OPRF.i: src/OPRF.cpp.i
-
-.PHONY : src/OPRF.i
-
-# target to preprocess a source file
-src/OPRF.cpp.i:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/OPRF.cpp.i
-.PHONY : src/OPRF.cpp.i
-
-src/OPRF.s: src/OPRF.cpp.s
-
-.PHONY : src/OPRF.s
-
-# target to generate assembly for a file
-src/OPRF.cpp.s:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/OPRF.cpp.s
-.PHONY : src/OPRF.cpp.s
 
 src/OT.o: src/OT.cpp.o
 
@@ -528,33 +501,6 @@ tests/test_newprotocol.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.s
 .PHONY : tests/test_newprotocol.cpp.s
 
-tests/test_oprf.o: tests/test_oprf.cpp.o
-
-.PHONY : tests/test_oprf.o
-
-# target to build an object file
-tests/test_oprf.cpp.o:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o
-.PHONY : tests/test_oprf.cpp.o
-
-tests/test_oprf.i: tests/test_oprf.cpp.i
-
-.PHONY : tests/test_oprf.i
-
-# target to preprocess a source file
-tests/test_oprf.cpp.i:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.i
-.PHONY : tests/test_oprf.cpp.i
-
-tests/test_oprf.s: tests/test_oprf.cpp.s
-
-.PHONY : tests/test_oprf.s
-
-# target to generate assembly for a file
-tests/test_oprf.cpp.s:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.s
-.PHONY : tests/test_oprf.cpp.s
-
 tests/test_packedMod2.o: tests/test_packedMod2.cpp.o
 
 .PHONY : tests/test_packedMod2.o
@@ -699,9 +645,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... newprotocol"
-	@echo "... src/OPRF.o"
-	@echo "... src/OPRF.i"
-	@echo "... src/OPRF.s"
 	@echo "... src/OT.o"
 	@echo "... src/OT.i"
 	@echo "... src/OT.s"
@@ -744,9 +687,6 @@ help:
 	@echo "... tests/test_newprotocol.o"
 	@echo "... tests/test_newprotocol.i"
 	@echo "... tests/test_newprotocol.s"
-	@echo "... tests/test_oprf.o"
-	@echo "... tests/test_oprf.i"
-	@echo "... tests/test_oprf.s"
 	@echo "... tests/test_packedMod2.o"
 	@echo "... tests/test_packedMod2.i"
 	@echo "... tests/test_packedMod2.s"
