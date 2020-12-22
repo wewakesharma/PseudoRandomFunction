@@ -15,6 +15,7 @@ using namespace std;
 int main()
 {
 	unsigned char fx[crypto_core_ed25519_BYTES];
+	unsigned char v[crypto_core_ed25519_BYTES];
 
 	//===============printing unit of time===================
 	using Clock = std::chrono::system_clock;
@@ -27,14 +28,15 @@ int main()
         time_unit_multiplier = 1;
 	//======================================================
 	
-std::chrono::time_point<std::chrono::system_clock> start_timer;
-start_timer = std::chrono::system_clock::now();
+	std::chrono::time_point<std::chrono::system_clock> start_timer;
+	start_timer = std::chrono::system_clock::now();
 
-
-	for(int i = 0; i< 1000; i++)
-	{
-		// -------- First party -------- Send blinded p(x)
-		unsigned char x[crypto_core_ed25519_UNIFORMBYTES];
+	if (sodium_init() == -1) {
+        return 1;
+    }
+	
+	// -------- First party -------- Send blinded p(x)
+	unsigned char x[crypto_core_ed25519_UNIFORMBYTES];
 	randombytes_buf(x, sizeof x);
 
 	// Compute px = p(x), an EC point representative for x
@@ -53,9 +55,11 @@ start_timer = std::chrono::system_clock::now();
 	unsigned char k[crypto_core_ed25519_SCALARBYTES];
 	randombytes_buf(k, sizeof k);
 
-	// Compute v = g^k
-	unsigned char v[crypto_core_ed25519_BYTES];
-	crypto_scalarmult_ed25519_base(v, k);
+	for(int i = 0; i< 1000; i++)	//LOOP
+	{
+		// Compute v = g^k
+		crypto_scalarmult_ed25519_base(v, k);
+	}
 
 	// Compute b = a^k
 	unsigned char b[crypto_core_ed25519_BYTES];
@@ -74,7 +78,7 @@ start_timer = std::chrono::system_clock::now();
 	//              = (p(x) * g)^k * g^(-k) = p(x)^k
 	//unsigned char fx[crypto_core_ed25519_BYTES];
 	crypto_core_ed25519_add(fx, b, vir);
-	}
+
 
 timer_scalar_mult += (std::chrono::system_clock::now() - start_timer).count();
 
