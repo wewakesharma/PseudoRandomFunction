@@ -26,8 +26,14 @@ long timer_client_final = 0;
 long timer_client_r2 = 0;
 long timer_server_r2 = 0;
 
+long timer_w_mask = 0;
+
+long timer_client_r3 = 0;
+long timer_server_r3 = 0;
+
 long timer_round1_oprf = 0;
 long timer_round2_oprf = 0;
+long timer_round3_oprf = 0;
 
 long timer_oprf = 0;
 
@@ -39,11 +45,13 @@ PackedZ2<N_COLS> rw1global, rw2global, rwglobal; //rw1 is rw for server and rw2 
 PackedZ3<N_COLS> p_server, p_client, p;    //p_server is p0 and p_client is p1 in documentation. p = p_server + p_client(mod3)
 
 //========variables for round 1============
-static PackedZ2<N_COLS> mx_global, mq_global;
-static std::vector<uint64_t> mK_global(toeplitzWords);
+
+static PackedZ2<N_COLS> x_mask_global;
+static std::vector<uint64_t>K_mask_global(toeplitzWords);
 
 //=========variable for round 2=====
-PackedZ2<N_COLS> ws_global, wc_global, w_global;
+PackedZ2<N_COLS> ws_global, wc_global;  //server and client share of w'
+PackedZ2<N_COLS> w_global;              //w' = ws' + wc'(accesssible to both client and server)
 
 
 
@@ -125,28 +133,26 @@ void fetch_client(PackedZ2<N_COLS>& rx,PackedZ2<N_COLS>& rw2, PackedZ2<N_COLS>& 
     p_client_local = p_client;
 }
 
-void send_mx(PackedZ2<N_COLS>& mx)
+void send_x_mask(PackedZ2<N_COLS>& x_mask)
 {
-    mx_global = mx;
+    x_mask_global = x_mask;
 }
 
-void recv_mx(PackedZ2<N_COLS>& mx)
+void recv_x_mask(PackedZ2<N_COLS>& x_mask)
 {
-    mx = mx_global;
+    x_mask = x_mask_global;
 }
 
-void send_mK_mq(const std::vector<uint64_t>& mK, const PackedZ2<N_COLS>& mq)
+void send_K_mask(const std::vector<uint64_t>& K_mask)   //save computed wc_mask in a global variable
 {
-    mK_global = mK;
-    mq_global = mq;
+    K_mask_global = K_mask;
 }
 
-void recv_mK_mq(std::vector<uint64_t>& mK, PackedZ2<N_COLS>& mq)
+void recv_K_mask(std::vector<uint64_t>& K_mask)
 {
-    mK = mK_global;
-    mq = mq_global;
+    K_mask = K_mask_global;
 }
-void send_ws(PackedZ2<N_COLS>& ws_mask)
+void send_ws(PackedZ2<N_COLS>& ws_mask)     //save computed wc_mask in a global variable
 {
     ws_global = ws_mask;
 }
@@ -154,7 +160,7 @@ void recv_ws(PackedZ2<N_COLS>& ws_mask)
 {
      ws_mask = ws_global;
 }
-void send_wc(PackedZ2<N_COLS>& wc_mask)
+void send_wc(PackedZ2<N_COLS>& wc_mask) //save computed wc_mask in a global variable
 {
     wc_global = wc_mask;
 }
@@ -163,112 +169,122 @@ void recv_wc(PackedZ2<N_COLS>& wc_mask)
 {
     wc_mask = wc_global;
 }
+void recv_w_mask(PackedZ2<N_COLS>& w_mask)
+{
+    w_mask = w_global;
+}
+
 //Round 1 starts here
 void client_round1(PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& rx)    //performs mx = x - rx
 {
-    PackedZ2<N_COLS> mx;
-    mx = x;
-    mx.add(rx);
-    send_mx(mx);         //this emulates as mx being sent from client to server
+    PackedZ2<N_COLS> x_mask;
+    x_mask = x;
+    x_mask.add(rx);
+    send_x_mask(x_mask);         //saves the calculated value of K ^ rK by client
 #ifdef OPRF_PRINT_VAL
     std::cout<<"OPRF.cpp/client_round1():"<<std::endl;
-    std::cout<<"mx: "<<mx<<std::endl<<std::endl;
+    std::cout<<"x_mask: "<<x_mask<<std::endl<<std::endl;
 #endif
 }
 
-void server_round1(PackedZ2<N_COLS>& ws_mask, std::vector<uint64_t>& K, std::vector<uint64_t>& rK,
-                   PackedZ2<N_COLS>& q, PackedZ2<N_COLS>& rq)   //performs mK = K - rK and mq = rK*mx + q + rq, also w' = q+rw1
+void server_round1(std::vector<uint64_t>& K, std::vector<uint64_t>& rK)   //performs mK = K - rK and mq = rK*mx + q + rq, also w' = q+rw1
 {
-    //fetch mx first
-    PackedZ2<N_COLS> mx, mq;
-    std::vector<uint64_t> mK;
+    std::vector<uint64_t> K_mask;
 
-    recv_mx(mx);
-
-    mK.resize(toeplitzWords);
-    for(int count = 0; count < mK.size(); count++)//since K and rK are of same size take any one of them for bound condition
+    K_mask.resize(toeplitzWords);
+    for(int count = 0; count < K_mask.size(); count++)//since K and rK are of same size take any one of them for bound condition
     {
-        mK[count] = K[count] ^ rK[count];
+        K_mask[count] = K[count] ^ rK[count];
     }
-
-    mq.toeplitzByVec(rK,mx);                     //rK*mx
-#ifdef OPRF_PRINT_VAL
-    std::cout<<"(rK*mx) "<<mq<<std::endl;
-#endif
-    mq.add(q);
-    mq.add(rq);          //mq = rK*mx + q + rq
-    //send_mK_mq(mK, mq);
-#ifdef OPRF_PRINT_VAL
-    std::cout<<"mq "<<mq<<std::endl;
-#endif
-    mK_global = mK;
-    mq_global = mq;
-
-    ws_mask = q;
-    ws_mask.add(rw1global);        //w_mask for server(ws_mask) = q + rw1
-
-    send_ws(ws_mask);   //sending ws_mask to client
+    send_K_mask(K_mask);        //saves the calculated value of K ^ rK by server
 
 #ifdef OPRF_PRINT_VAL
-    std::cout<<"OPRF.cpp/server_round1()"<<std::endl;
-    std::cout<<"mx "<<mx<<std::endl;
-    std::cout<<"q"<<q<<std::endl;
-    std::cout<<"rq"<<rq<<std::endl;
-    std::cout<<"rw1global"<<rw1global<<std::endl;
-    std::cout<<"ws_mask"<<ws_mask<<std::endl<<std::endl;
+    //std::cout<<"(rK*mx) "<<mq<<std::endl;
 #endif
 
 }
 
-void client_round1_final(PackedZ2<N_COLS>& wc_mask, PackedZ2<N_COLS>& x,PackedZ2<N_COLS>& v,
-        PackedZ2<N_COLS>& rw2)  //computes w' = (mK*x) + mq + v + rw2
-{
-
-    std::vector<uint64_t> mK(toeplitzWords);
-    PackedZ2<N_COLS> mq;
-
-    mK.resize(toeplitzWords);
-    recv_mK_mq(mK, mq);     //fetch mK-global,mq_global,
-    /*mK = mK_global;
-    mq = mq_global;*/
-
-    wc_mask.toeplitzByVec(mK,x);    //w_mask for client
-    wc_mask.add(mq);
-    wc_mask.add(v);
-    wc_mask.add(rw2);   //wc_mask = (mK * x) + mq + v + rw2
-
-    send_wc(wc_mask);   //sending wc_mask to server
-#ifdef OPRF_PRINT_VAL
-    std::cout<<"OPRF.cpp/client_round1_final()"<<std::endl;
-    std::cout<<"x "<<x<<std::endl;
-    std::cout<<"mq "<<mq<<std::endl;
-    std::cout<<"v_global "<<v_global<<std::endl;
-    std::cout<<"rw2 "<<rw2<<std::endl;
-    std::cout<<"wc_mask "<<wc_mask<<std::endl<<std::endl;
-#endif
-}
 //================END OF ROUND 1=========================
 
-void server_round2(PackedZ3<81>& y_server, PackedZ2<N_COLS>& ws_mask,
-        PackedZ3<N_COLS>& p_server_local, std::vector<PackedZ3<81> >& Rmat)//computing z = w' + p1 + (w' * p1)
+void server_round2(std::vector<uint64_t>& K, PackedZ2<N_COLS>& rq, PackedZ2<N_COLS>& rw1)//computing ws_mask = K*x_mask - rq + rw1
 {
+
+    //step 1: declare local x_mask and receive x_mask from global variable
+    PackedZ2<N_COLS> x_mask, ws_mask;
+    recv_x_mask(x_mask);
+
+    //step2: compute K*x_mask
+    PackedZ2<N_COLS> K_x_mask;
+    K_x_mask.toeplitzByVec(K,x_mask);
+
+    //step3: subtract and add rq and rw1 respectively.
+    ws_mask = K_x_mask;
+    ws_mask.add(rq);
+    ws_mask.add(rw1);  //ws_mask = K*x_mask - rq + rw1
+
+    //step4: send/save ws_mask as global value
+    send_ws(ws_mask);
+
+
     PackedZ2<N_COLS> wc_mask,w_mask;
+
+#ifdef OPRF_PRINT_VAL
+    std::cout<<"OPRF.cpp/server_round2(): Printing values for server round 2:"<<std::endl;
+
+#endif
+}
+
+
+void client_round2(PackedZ2<N_COLS>& rx, PackedZ2<N_COLS>& v, PackedZ2<N_COLS>& rw2) //computing wc = (K_mask * rx) + v + rw2
+{
+    PackedZ2<N_COLS> wc_mask;
+    std::vector<uint64_t> K_mask(toeplitzWords);
+    K_mask.resize(toeplitzWords);
+
+    //step 1: receive K_mask
+    recv_K_mask(K_mask);
+
+    //step2: compute K_mask * rx
+    PackedZ2<N_COLS> K_mask_rx;
+    K_mask_rx.toeplitzByVec(K_mask, rx);
+
+    //step3: add v and rw2 to the result of step 2
+    wc_mask = K_mask_rx;
+    wc_mask.add(v);
+    wc_mask.add(rw2);       //wc_mask = K*rx + v +rw2
+
+    //step4: send/save wc_mask as global value
+    send_wc(wc_mask);
+
+#ifdef OPRF_PRINT_VAL
+    std::cout<<"OPRF.cpp/client_round2(): Printing values for client round 2:"<<std::endl;
+
+#endif
+}
+
+void compute_w_mask()   //fetch ws_mask and wc_mask and compute their addition
+{
+    w_global = ws_global;
+    w_global.add(wc_global);//w = wc + ws
+}
+
+void server_round3(PackedZ3<81>& y_server, PackedZ3<N_COLS>& p_server_local, std::vector<PackedZ3<81> >& Rmat)
+{
+    //receive w_mask
+    PackedZ2<N_COLS> w_mask;
+    recv_w_mask(w_mask);
+
     //compute z_server
     PackedZ3<N_COLS> z_server;
     PackedZ3<N_COLS> w_pserver;
     PackedZ3<N_COLS> w_mod3;
 
-    //receiving wc_mask
-    recv_wc(wc_mask);
-    //computing w_mask = wc_mask + ws_mask
-    w_mask = ws_mask;
-    w_mask.add(wc_mask);
 
     //trying mux for (w' * p_server)
     w_pserver.reset();
     w_pserver.mux(p_server_local,w_mask.bits);
 
-    for(int n_count = 0; n_count < N_COLS; n_count++)//converting ws_mask from mod2 to mod3
+    for(int n_count = 0; n_count < N_COLS; n_count++)//converting w_mask from mod2 to mod3
     {
         w_mod3.second.set(n_count,0);                  //setting msb as zero(0)
         w_mod3.first.set(n_count,w_mask.at(n_count));     //ws_mask converted for compatibility reasons
@@ -282,49 +298,39 @@ void server_round2(PackedZ3<81>& y_server, PackedZ2<N_COLS>& ws_mask,
     y_server.matByVec(Rmat,z_server);
 
 #ifdef OPRF_PRINT_VAL
-    std::cout<<"OPRF.cpp/server_round2(): Printing values for server round 2:"<<std::endl;
+    std::cout<<"OPRF.cpp/server_round3(): Printing values for server round 3:"<<std::endl;
     std::cout<<"p_server"<<p_server_local<<std::endl;
-    std::cout<<"ws_mask"<<ws_mask<<std::endl;
-    std::cout<<"wc_mask"<<wc_mask<<std::endl;
+    std::cout<<"w_mask"<<w_mask<<std::endl;
     std::cout<<"w_mod3"<<w_mod3<<std::endl;
     std::cout<<"w_pserver"<<w_pserver<<std::endl;
     std::cout<<"z_server"<<z_server<<std::endl;
     std::cout<<"y_server"<<y_server<<std::endl<<std::endl;
 #endif
 }
-
-
-void client_round2(PackedZ3<81>& y_client, PackedZ2<N_COLS>& wc_mask,
-        PackedZ3<N_COLS>& p_client_local, std::vector<PackedZ3<81> >& Rmat) //computing z = p2 + (w' * p2)
+void client_round3(PackedZ3<81>& y_client, PackedZ3<N_COLS>& p_client_local, std::vector<PackedZ3<81> >& Rmat)
 {
-    PackedZ2<N_COLS> ws_mask,w_mask;
-    //compute z_server
-    PackedZ3<N_COLS> z_client;
-    PackedZ3<N_COLS> w_pclient;
-    //PackedZ3<N_COLS> wc_mod3;
+    //receive w_mask
+    PackedZ2<N_COLS> w_mask;
+    recv_w_mask(w_mask);
+
+       //compute z_client
+       PackedZ3<N_COLS> z_client;
+       PackedZ3<N_COLS> w_pclient;
 
 
-    //receiving ws_mask
-    recv_ws(ws_mask);
-    //computing w_mask = wc_mask + ws_mask
-    w_mask = wc_mask;
-    w_mask.add(ws_mask);
+       //trying mux for (w' * p_client)
+       w_pclient.reset();              //==> Apparently MUX works
+       w_pclient.mux(p_client_local,w_mask.bits);
 
-    //trying mux for (w' * p_client)
-    w_pclient.reset();              //==> Apparently MUX works
-    w_pclient.mux(p_client_local,w_mask.bits);
+       z_client = p_client_local;
+       z_client.add(w_pclient);            //z_client = p_client + (w' * p_client)
 
-    z_client = p_client_local;
-    z_client.add(w_pclient);            //z_client = p_client + (w' * p_client)
-
-    //compute y_server
-    y_client.matByVec(Rmat,z_client);   //y = Rmat * z_client
+       //compute y_server
+       y_client.matByVec(Rmat,z_client);   //y = Rmat * z_client
 
 #ifdef OPRF_PRINT_VAL
-    std::cout<<"OPRF.cpp/client_round2(): Printing values for client round 2:"<<std::endl;
+    std::cout<<"OPRF.cpp/client_round3(): Printing values for client round 3:"<<std::endl;
     std::cout<<"p_client"<<p_client<<std::endl;
-    std::cout<<"ws_mask"<<ws_mask<<std::endl;
-    std::cout<<"wc_mask"<<wc_mask<<std::endl;
     std::cout<<"w_mask"<<w_mask<<std::endl;
     std::cout<<"w_pclient"<<w_pclient<<std::endl;
     std::cout<<"z_client"<<z_client<<std::endl;
@@ -344,7 +350,8 @@ void display_oprf_timings()
         time_unit_multiplier = 1;   //keep the unit as microsecond
 
     timer_round1_oprf = timer_client_r1 + timer_server_r1 + timer_client_final;
-    timer_round2_oprf = std::max(timer_server_r2, timer_client_r2);
+    timer_round2_oprf = std::max(timer_server_r2, timer_client_r2) + timer_w_mask;
+    timer_round3_oprf = std::max(timer_server_r3, timer_client_r3);
     timer_oprf = timer_round1_oprf + timer_round2_oprf;
 
     std::cout<<"Time to execute step 1: "<<(timer_round1_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
@@ -372,13 +379,20 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
                    PackedZ3<81>& y_out_z3, unsigned int nRuns)
 {
 
-    std::chrono::time_point<std::chrono::system_clock> start_client_r1, start_server_r1, start_client_final;
-    std::chrono::time_point<std::chrono::system_clock> start_server_r2, start_client_r2, start_timer_oprf;
+    std::chrono::time_point<std::chrono::system_clock> start_client_r1, start_server_r1,start_server_r3,start_client_r3;
+    std::chrono::time_point<std::chrono::system_clock> start_server_r2, start_client_r2, start_w_mask, start_timer_oprf;
 
     std::vector<uint64_t> rK(toeplitzWords);
-    PackedZ2<N_COLS> rq, rx, v, rw, q, rw1, rw2;
+    PackedZ2<N_COLS> rq, rx, v, rw, q, rw1, rw2;    //local variables fetched through preprocessing
     PackedZ3<N_COLS> p_server_local, p_client_local;
+
+    //local variables for round 1
+    PackedZ2<N_COLS> x_mask;
+    std::vector<uint64_t> K_mask(toeplitzWords);
+
+    //local variable for round 2
     PackedZ2<N_COLS> ws_mask, wc_mask;
+
     PackedZ3<81> y_server,y_client, y_dummy;
 
     //preprocess the input
@@ -391,29 +405,41 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
 
     //start_timer_oprf = std::chrono::system_clock::now();
 
-    for(unsigned int i = 0; i< nRuns;i++) {
+    for(unsigned int i = 0; i< 1;i++) {
 
         start_client_r1 = std::chrono::system_clock::now();
-        client_round1(x, rx);        //computes mx=x-rx
+        client_round1(x, rx);        //computes x_mask = x ^ rx
         timer_client_r1 += (std::chrono::system_clock::now() - start_client_r1).count();
 
         start_server_r1 = std::chrono::system_clock::now();
-        server_round1(ws_mask, K, rK, q, rq);   //computes mq, mK and w' = q+rw
+        server_round1(K, rK);   //computes k_mask = K ^ rK
         timer_server_r1 += (std::chrono::system_clock::now() - start_server_r1).count();
 
-        start_client_final = std::chrono::system_clock::now();
-        client_round1_final(wc_mask, x, v, rw2);
-        timer_client_final += (std::chrono::system_clock::now() - start_client_final).count();
-
         start_server_r2 = std::chrono::system_clock::now();
-        server_round2(y_server, ws_mask, p_server_local, Rmat);
+        server_round2(K,rq, rw1);   //computes ws' = K*x' -rq + rw1
         timer_server_r2 += (std::chrono::system_clock::now() - start_server_r2).count();
 
         start_client_r2 = std::chrono::system_clock::now();
-        client_round2(y_client, wc_mask, p_client_local, Rmat);
+        client_round2(rx, v, rw2);      //computes wc' = K'*x + v + rw2
+        timer_client_r2 += (std::chrono::system_clock::now() - start_client_r2).count();
+
+        start_w_mask = std::chrono::system_clock::now();
+        compute_w_mask();
+        timer_w_mask += (std::chrono::system_clock::now() - start_w_mask).count();
+
+
+        start_server_r3 = std::chrono::system_clock::now();
+        server_round3(y_server,p_server_local, Rmat);
+        timer_server_r3 += (std::chrono::system_clock::now() - start_server_r3).count();
+
+        start_client_r3 = std::chrono::system_clock::now();
+        client_round3(y_client,p_client_local, Rmat);
+        timer_client_r3 += (std::chrono::system_clock::now() - start_client_r3).count();
+
+
         y_out_z3 = y_server;
         y_out_z3.add(y_client);
-        timer_client_r2 += (std::chrono::system_clock::now() - start_client_r2).count();
+
 
         y_dummy += y_out_z3;
     }
@@ -423,8 +449,8 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
 #ifdef OPRF_PRINT_VAL
     //Performing first verification.
     PackedZ2<N_COLS> w;
-    w = ws_mask;
-    w.add(wc_mask);
+    w = ws_global;
+    w.add(wc_global);
 
     //The above must be equal to KX +rw
     PackedZ2<N_COLS> KX;
