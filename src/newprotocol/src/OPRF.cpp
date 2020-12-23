@@ -349,23 +349,30 @@ void display_oprf_timings()
     else if(Duration::period::den == 1000000)
         time_unit_multiplier = 1;   //keep the unit as microsecond
 
-    timer_round1_oprf = timer_client_r1 + timer_server_r1 + timer_client_final;
+    timer_round1_oprf = timer_client_r1 + timer_server_r1;
     timer_round2_oprf = std::max(timer_server_r2, timer_client_r2) + timer_w_mask;
     timer_round3_oprf = std::max(timer_server_r3, timer_client_r3);
-    timer_oprf = timer_round1_oprf + timer_round2_oprf;
+    timer_oprf = timer_round1_oprf + timer_round2_oprf + timer_round3_oprf;
 
     std::cout<<"Time to execute step 1: "<<(timer_round1_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"Time to execute step 2(both party runs simultaneously): "<<(timer_round2_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute step 2: "<<(timer_round2_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute step 3: "<<(timer_round3_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"============================================================"<<std::endl;
     std::cout<<"Number of rounds per second for step 1 "<<(1000/(timer_round1_oprf*time_unit_multiplier)*1000000)<<std::endl;
     std::cout<<"Number of rounds per second for step 2 "<<(1000/(timer_round2_oprf*time_unit_multiplier)*1000000)<<std::endl;
+    std::cout<<"Number of rounds per second for step 3 "<<(1000/(timer_round3_oprf*time_unit_multiplier)*1000000)<<std::endl;
     std::cout<<"Number of rounds per second for entire PRF "<<(1000/(timer_oprf*time_unit_multiplier)*1000000)<<std::endl;
     std::cout<<"=========================Breaking down the timings by parties for each round==================================="<<std::endl;
     std::cout<<"Time to execute client step 1: "<<(timer_client_r1 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Time to execute server step 1: "<<(timer_server_r1 * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"Time to execute client step 1 final: "<<(timer_client_final * time_unit_multiplier)<<" microseconds"<<std::endl;
+
     std::cout<<"Time to execute client step 2: "<<(timer_client_r2 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Time to execute server step 2: "<<(timer_server_r2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute combining w_mask: "<<(timer_w_mask * time_unit_multiplier)<<" microseconds"<<std::endl;
+
+    std::cout<<"Time to execute client step 3: "<<(timer_client_r3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute server step 3: "<<(timer_server_r3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+
     std::cout<<"=========================TOTAL TIME==================================="<<std::endl;
     std::cout<<"Time to execute entire new protocol PRF: "<<(timer_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
 
@@ -405,7 +412,7 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
 
     //start_timer_oprf = std::chrono::system_clock::now();
 
-    for(unsigned int i = 0; i< 1;i++) {
+    for(unsigned int i = 0; i< nRuns;i++) {
 
         start_client_r1 = std::chrono::system_clock::now();
         client_round1(x, rx);        //computes x_mask = x ^ rx
@@ -439,7 +446,6 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
 
         y_out_z3 = y_server;
         y_out_z3.add(y_client);
-
 
         y_dummy += y_out_z3;
     }

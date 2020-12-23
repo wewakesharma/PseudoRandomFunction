@@ -60,7 +60,7 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
  */
 //#define PRINT_VAL //used to print the intermediate values
 //#define DEBUG //used to set bits of intermediate values and print the values in new protocol
-#define OPRF_PRINT_VAL    //enable to print intermediate values in 23OPRF
+//#define OPRF_PRINT_VAL    //enable to print intermediate values in 23OPRF
 
 
 #endif // _EXECUTION_HEADER_H
