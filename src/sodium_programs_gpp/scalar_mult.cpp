@@ -28,8 +28,6 @@ int main()
         time_unit_multiplier = 1;
 	//======================================================
 	
-	std::chrono::time_point<std::chrono::system_clock> start_timer;
-	start_timer = std::chrono::system_clock::now();
 
 	if (sodium_init() == -1) {
         return 1;
@@ -55,11 +53,14 @@ int main()
 	unsigned char k[crypto_core_ed25519_SCALARBYTES];
 	randombytes_buf(k, sizeof k);
 
+	std::chrono::time_point<std::chrono::system_clock> start_timer;
+	start_timer = std::chrono::system_clock::now();
 	for(int i = 0; i< 1000; i++)	//LOOP
 	{
 		// Compute v = g^k
 		crypto_scalarmult_ed25519_base(v, k);
 	}
+	timer_scalar_mult += (std::chrono::system_clock::now() - start_timer).count();
 
 	// Compute b = a^k
 	unsigned char b[crypto_core_ed25519_BYTES];
@@ -80,7 +81,7 @@ int main()
 	crypto_core_ed25519_add(fx, b, vir);
 
 
-timer_scalar_mult += (std::chrono::system_clock::now() - start_timer).count();
+
 
 
 std::cout<<fx<<std::endl;
