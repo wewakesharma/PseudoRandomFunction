@@ -14,7 +14,6 @@
 /**
  * PackedZ2 - a packed vector of Z_2 elements
  *
- * represented as two vectors for the msb's and lsb's.
  **/
 template <size_t SIZE>
 class PackedZ2 {

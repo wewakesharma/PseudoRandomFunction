@@ -15,6 +15,12 @@
 
 /**************** A pair of packed vectors mod 2 *******************/
 
+/*
+ * Each trinary vector is represneted by two vector, the LSB and MSB's:
+ * first vector =LSB
+ * Second vector = MSB
+ */
+
 template <size_t SIZE>
 using PackedPairZ2 = std::pair< PackedZ2<SIZE>, PackedZ2<SIZE>  >;
 
