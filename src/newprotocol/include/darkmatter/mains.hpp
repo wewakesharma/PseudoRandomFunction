@@ -21,6 +21,7 @@
 //#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
 #define TEST_OPRF               //runs the packed distributed 2-3OPRF
 
+
 /*
  * UNIT TEST FLAGS
  */

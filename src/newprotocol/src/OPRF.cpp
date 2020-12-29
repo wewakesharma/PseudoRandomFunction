@@ -37,6 +37,8 @@ long timer_round3_oprf = 0;
 
 long timer_oprf = 0;
 
+int OPRF_NOLOOKUPTABLE = 1; //set to 1 if no lookup table is required
+
 //=========variables for preprocessing===========
 std::vector<uint64_t> rKglobal(toeplitzWords);
 PackedZ2<N_COLS> rq_global, rxglobal, v_global;
@@ -294,8 +296,13 @@ void server_round3(PackedZ3<81>& y_server, PackedZ3<N_COLS>& p_server_local, std
     z_server.add(w_mod3);
     z_server.add(w_pserver);
 
+    if (OPRF_NOLOOKUPTABLE)
     //compute y_server = Rmat * z_server
-    y_server.matByVec(Rmat,z_server);
+        y_server.matByVec(Rmat,z_server);
+    else
+    {
+        //TODO: replace with lookup table
+    }
 
 #ifdef OPRF_PRINT_VAL
     std::cout<<"OPRF.cpp/server_round3(): Printing values for server round 3:"<<std::endl;
