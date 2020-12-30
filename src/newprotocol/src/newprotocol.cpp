@@ -32,8 +32,12 @@ long timer_round3_p2 = 0;
 long timer_round1 = 0;
 long timer_round2 = 0;
 long timer_round3 = 0;
-long timer_round3_mux = 0;
-long timer_round3_lookup = 0;
+
+long timer_p1_mux = 0;
+long timer_p2_mux = 0;
+long timer_p1_lookup = 0;
+long timer_p2_lookup = 0;
+
 
 long timer_np_prf = 0;
 
@@ -387,9 +391,9 @@ void party1_round3_lookup(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
     res1 = r0z1; //copy the contents of r0z to res1.
     res1.mux(r1z1, w_mask.bits); //w_mask selects r0z if it is 0 else r1z
 
-    timer_round3_mux += (std::chrono::system_clock::now() - start_r3_mux).count();
+    timer_p1_mux += (std::chrono::system_clock::now() - start_r3_mux).count();
 
-    temp_res_lsb = res1.lsbs();
+    temp_res_lsb = res1.lsbs(); //reformatting is not a part of timing, since it is expected to be offline
     temp_res_msb = res1.msbs();
     reformat_input(lsb_input,temp_res_lsb);
     reformat_input(msb_input,temp_res_msb);
@@ -405,10 +409,10 @@ void party1_round3_lookup(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
     //perform subtraction
     y1_z3 = result_sum_lsb;
     y1_z3.subtract(result_sum_msb);
-    timer_round3_lookup += (std::chrono::system_clock::now() - start_r3_lookup).count();
+    timer_p1_lookup += (std::chrono::system_clock::now() - start_r3_lookup).count();
 
-    timer_round3 += timer_round3_mux;
-    timer_round3 += timer_round3_lookup;
+    //timer_round3 += timer_mux;
+    //timer_round3 += timer_lookup;
 }
 void party2_round3_lookup(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
                           PackedZ3<N_SIZE>& r1z2, std::vector<PackedZ3<81> >& Rmat,PackedZ2<N_COLS>& w_mask)
@@ -426,7 +430,7 @@ void party2_round3_lookup(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
     PackedZ3<N_SIZE> res2;
     res2 = r0z2;
     res2.mux(r1z2, w_mask.bits); //w_mask selects r0z if it is 0 else r1z
-    timer_round3_mux += (std::chrono::system_clock::now() - start_r3_mux).count();
+    timer_p2_mux += (std::chrono::system_clock::now() - start_r3_mux).count();
 
     reformat_input(lsb_input,res2.lsbs());
     reformat_input(msb_input,res2.msbs());
@@ -442,10 +446,10 @@ void party2_round3_lookup(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
     y2_z3 = result_sum_lsb;
     y2_z3.subtract(result_sum_msb);
 
-    timer_round3_lookup += (std::chrono::system_clock::now() - start_r3_lookup).count();
+    timer_p2_lookup += (std::chrono::system_clock::now() - start_r3_lookup).count();
 
-    timer_round3 += timer_round3_mux;
-    timer_round3 += timer_round3_lookup;
+    //timer_round3 += timer_mux;
+    //timer_round3 += timer_lookup;
 }
 
 #endif
@@ -463,9 +467,19 @@ void display_exec_timing()  //displays the timing for each round, each party in 
     else if(Duration::period::den == 1000000)
         time_unit_multiplier = 1;   //keep the unit as microsecond
 
+
+
+
     timer_round1 = std::max(timer_round1_p1, timer_round1_p2) + timer_round1_mask;
     timer_round2 = std::max(timer_round2_p1, timer_round2_p2) + timer_round2_mask;
+
+#ifndef TEST_NP_LOOKUP//if lookup is disabled
     timer_round3 = std::max(timer_round3_p1, timer_round3_p2);
+#endif
+#ifdef TEST_NP_LOOKUP//if lookup is enabled
+    timer_round3 = std::max((timer_p1_mux + timer_p1_lookup), (timer_p2_mux + timer_p2_lookup));
+#endif
+
     timer_np_prf = timer_round1 + timer_round2 + timer_round3;
 
     std::cout<<"Time to execute phase 1(both party runs simultaneously): "<<(timer_round1 * time_unit_multiplier)<<" microseconds"<<std::endl;
@@ -483,8 +497,14 @@ void display_exec_timing()  //displays the timing for each round, each party in 
     std::cout<<"Time to execute phase 2 party 1: "<<(timer_round2_p1 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Time to execute phase 2 party 2: "<<(timer_round2_p2 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Time to execute phase 2 mask: "<<(timer_round2_mask * time_unit_multiplier)<<" microseconds"<<std::endl;
+#ifndef TEST_NP_LOOKUP
     std::cout<<"Time to execute phase 3 party 1: "<<(timer_round3_p1 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Time to execute phase 3 party 2: "<<(timer_round3_p2 * time_unit_multiplier)<<" microseconds"<<std::endl;
+#endif
+#ifdef TEST_NP_LOOKUP
+    std::cout<<"Time to execute phase 3 party 1: "<<((timer_p1_lookup + timer_p1_mux) * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute phase 3 party 2: "<<((timer_p2_lookup + timer_p2_mux) * time_unit_multiplier)<<" microseconds"<<std::endl;
+#endif
     std::cout<<"=========================TOTAL TIME==================================="<<std::endl;
     std::cout<<"Time to execute entire new protocol PRF: "<<(timer_np_prf * time_unit_multiplier)<<" microseconds"<<std::endl;
 
@@ -600,13 +620,13 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 #endif
 
 #ifdef TEST_NP_LOOKUP// if TEST_NP is enabled run the new protocol
-        start_r3_p1 = std::chrono::system_clock::now();
+        //start_r3_p1 = std::chrono::system_clock::now();
         party1_round3_lookup(y1_z3,r0z1,r1z1,Rmat,w_mask);
-        timer_round3_p1 += (std::chrono::system_clock::now() - start_r3_p1).count();
+        //timer_round3_p1 += (std::chrono::system_clock::now() - start_r3_p1).count();
 
-        start_r3_p2 = std::chrono::system_clock::now();
+        //start_r3_p2 = std::chrono::system_clock::now();
         party2_round3_lookup(y2_z3,r0z2,r1z2,Rmat,w_mask);
-        timer_round3_p2 += (std::chrono::system_clock::now() - start_r3_p2).count();
+        //timer_round3_p2 += (std::chrono::system_clock::now() - start_r3_p2).count();
 #endif
 
         y1_z3_dummy += y1_z3;

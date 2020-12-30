@@ -19,7 +19,8 @@
 //#define TEST_PRF              //runs the dark matter protocol
 //#define TEST_NP                 //runs the new protocol using MATBYVEC
 //#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
-#define TEST_OPRF               //runs the packed distributed 2-3OPRF
+//#define TEST_OPRF               //runs the packed distributed 2-3OPRF using matByVec()
+#define TEST_OPRF_LOOKUP    //runs the OPRF protococl using LOOKUP table(only difference is in round 3 compared to OPRF
 
 
 /*
@@ -67,16 +68,21 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
 #endif // _EXECUTION_HEADER_H
 
 //===========================DO NOT TOUCH the following code: TEST_NP_LOOKUP REQUIRES TEST_NP==============
+
 #ifdef TEST_NP_LOOKUP
 #define TEST_NP
 #endif
 
-
 #ifdef UNIT_NP_LOOKUP
 #define TEST_NP_LOOKUP
+#endif
+
+#ifdef TEST_OPRF_LOOKUP
+#define TEST_OPRF
 #endif
 
 #ifdef UNITTEST_ROUND2
 #define TEST_NP
 #endif
 
+//======================================================================================

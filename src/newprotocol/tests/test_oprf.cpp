@@ -83,7 +83,12 @@ int main()
     //std::cout<<"Rmat "<<Rmat<<std::endl;
     std::cout<<std::endl;
 #endif
-
+#ifndef TEST_OPRF_LOOKUP//lookup table disabled
+    std::cout<<"Executing 23-OPRF without lookup table:"<<std::endl;
+#endif
+#ifdef TEST_OPRF_LOOKUP//lookup table enabled
+    std::cout<<"Executing 23-OPRF with lookup table:"<<std::endl;
+#endif
     oblivious_PRF(K,x,Rmat,y_out_z3,nRuns);   //driver code that will initiate the protocol.
 
     centralPRF(K,x,Rmat,outZ3); //centralized implementation for testing

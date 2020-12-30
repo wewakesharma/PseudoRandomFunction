@@ -33,11 +33,25 @@ long timer_server_r3 = 0;
 
 long timer_round1_oprf = 0;
 long timer_round2_oprf = 0;
-long timer_round3_oprf = 0;
 
-long timer_oprf = 0;
+long timer_round3_oprf = 0; //timer_round3_oprf = max((timer_server_mux + timer_server_lookup), (timer_client_mux + timer_client_lookup))
 
-int OPRF_NOLOOKUPTABLE = 1; //set to 1 if no lookup table is required
+long timer_server_mux = 0;
+long timer_server_lookup = 0;
+
+long timer_client_mux = 0;
+long timer_client_lookup = 0;
+
+
+long timer_oprf = 0;        //timer_oprf = timer_round1_oprf + timer_round2_oprf + timer_round3_oprf
+
+#ifdef TEST_OPRF_LOOKUP
+// Declaring the global variables for lookup implementation
+std::vector<std::vector<PackedZ3<81> > > Rmat_16(16); //Rmat_16 vector of size 16 X 16 X 81 (GLOBAL)
+std::vector<std::vector<PackedZ3<81> > > lookup_table_oprf(16); //lookup table
+#endif
+
+//int OPRF_NOLOOKUPTABLE = 1; //set to 1 if no lookup table is required
 
 //=========variables for preprocessing===========
 std::vector<uint64_t> rKglobal(toeplitzWords);
@@ -296,13 +310,15 @@ void server_round3(PackedZ3<81>& y_server, PackedZ3<N_COLS>& p_server_local, std
     z_server.add(w_mod3);
     z_server.add(w_pserver);
 
-    if (OPRF_NOLOOKUPTABLE)
     //compute y_server = Rmat * z_server
-        y_server.matByVec(Rmat,z_server);
+    y_server.matByVec(Rmat,z_server);
+
+    /*if (OPRF_NOLOOKUPTABLE)
+
     else
     {
         //TODO: replace with lookup table
-    }
+    }*/
 
 #ifdef OPRF_PRINT_VAL
     std::cout<<"OPRF.cpp/server_round3(): Printing values for server round 3:"<<std::endl;
@@ -345,6 +361,123 @@ void client_round3(PackedZ3<81>& y_client, PackedZ3<N_COLS>& p_client_local, std
 #endif
 }
 
+//====================================Round 3 lookup implementation=======NEEDS DEBUGGING=========
+#ifdef TEST_OPRF_LOOKUP
+void server_round3_lookup(PackedZ3<81>& y_server, PackedZ3<N_COLS>& p_server_local, std::vector<PackedZ3<81> >& Rmat)
+{
+#ifdef PRINT_VAL
+    std::cout<<"OPRF.cpp/server_round3_lookup: inside the function"<<std::endl;
+#endif
+    PackedZ3<81> result_sum_lsb;
+    PackedZ3<81> result_sum_msb;    //stores the msb result of the lookup table
+    std::vector<uint64_t> lsb_input;    //z_server's lsb value
+    lsb_input.resize(16);
+    std::vector<uint64_t> msb_input;    //z_server's msb value
+    msb_input.resize(16);
+    PackedZ2<256> temp_z_server_msb;
+    PackedZ2<256> temp_z_server_lsb;
+
+    //receive w_mask
+    PackedZ2<N_COLS> w_mask;
+    recv_w_mask(w_mask);
+
+    //compute z_server
+    PackedZ3<N_COLS> z_server;
+    PackedZ3<N_COLS> w_pserver;
+    PackedZ3<N_COLS> w_mod3;
+
+    std::chrono::time_point<std::chrono::system_clock> start_server_mux = std::chrono::system_clock::now();
+    //mux for (w' * p_server)
+    w_pserver.reset();
+    w_pserver.mux(p_server_local,w_mask.bits);
+
+    timer_server_mux += (std::chrono::system_clock::now() - start_server_mux).count();
+
+    for(int n_count = 0; n_count < N_COLS; n_count++)//converting w_mask from mod2 to mod3
+    {
+        w_mod3.second.set(n_count,0);                  //setting msb as zero(0)
+        w_mod3.first.set(n_count,w_mask.at(n_count));     //ws_mask converted for compatibility reasons
+    }
+
+    z_server = p_server_local;  //computing z_server = p + w' + (p * w')
+    z_server.add(w_mod3);
+    z_server.add(w_pserver);
+
+
+    //reformat z_server as the input
+    temp_z_server_lsb = z_server.lsbs();
+    temp_z_server_msb = z_server.msbs();
+    reformat_input(lsb_input,temp_z_server_lsb);
+    reformat_input(msb_input,temp_z_server_msb);
+
+#ifdef PRINT_VAL
+    std::cout<<"lsb_input(party 1): "<<lsb_input<<std::endl;
+    std::cout<<"msb_input(party 1): "<<msb_input<<std::endl;
+#endif
+    std::chrono::time_point<std::chrono::system_clock> start_server_lookup = std::chrono::system_clock::now();
+    //call the use lookup table
+    uselookup(result_sum_lsb,lsb_input,lookup_table_oprf);
+    uselookup(result_sum_msb,msb_input,lookup_table_oprf);
+    //perform subtraction
+    y_server = result_sum_lsb;
+    y_server.subtract(result_sum_msb);
+    timer_server_lookup += (std::chrono::system_clock::now() - start_server_lookup).count();
+
+}
+void client_round3_lookup(PackedZ3<81>& y_client, PackedZ3<N_COLS>& p_client_local, std::vector<PackedZ3<81> >& Rmat)
+{
+    PackedZ3<81> result_sum_lsb;
+    PackedZ3<81> result_sum_msb;    //stores the msb result of the lookup table
+    std::vector<uint64_t> lsb_input;    //z_server's lsb value
+    lsb_input.resize(16);
+    std::vector<uint64_t> msb_input;    //z_server's msb value
+    msb_input.resize(16);
+    PackedZ2<256> temp_z_client_msb;
+    PackedZ2<256> temp_z_client_lsb;
+
+    //receive w_mask
+    PackedZ2<N_COLS> w_mask;
+    recv_w_mask(w_mask);
+
+    //compute z_client
+    PackedZ3<N_COLS> z_client;
+    PackedZ3<N_COLS> w_pclient;
+
+
+    std::chrono::time_point<std::chrono::system_clock> start_client_mux = std::chrono::system_clock::now();
+    //trying mux for (w' * p_client)
+    w_pclient.reset();              //==> Apparently MUX works
+    w_pclient.mux(p_client_local,w_mask.bits);
+
+    z_client = p_client_local;
+    z_client.add(w_pclient);            //z_client = p_client + (w' * p_client)
+
+    timer_client_mux += (std::chrono::system_clock::now() - start_client_mux).count();
+
+    //reformat z_server as the input
+    temp_z_client_lsb = z_client.lsbs();
+    temp_z_client_msb = z_client.msbs();
+    reformat_input(lsb_input,temp_z_client_lsb);
+    reformat_input(msb_input,temp_z_client_msb);
+#ifdef PRINT_VAL
+    std::cout<<"lsb_input(client): "<<lsb_input<<std::endl;
+    std::cout<<"msb_input(client): "<<msb_input<<std::endl;
+#endif
+    std::chrono::time_point<std::chrono::system_clock> start_client_lookup = std::chrono::system_clock::now();
+    //call the use lookup table
+    uselookup(result_sum_lsb,lsb_input,lookup_table_oprf);
+    uselookup(result_sum_msb,msb_input,lookup_table_oprf);
+    //perform subtraction
+    y_client = result_sum_lsb;
+    y_client.subtract(result_sum_msb);
+
+    timer_client_lookup += (std::chrono::system_clock::now() - start_client_lookup).count();
+
+}
+
+#endif
+//================================================================================
+
 void display_oprf_timings()
 {
     using Clock = std::chrono::system_clock;
@@ -356,9 +489,15 @@ void display_oprf_timings()
     else if(Duration::period::den == 1000000)
         time_unit_multiplier = 1;   //keep the unit as microsecond
 
-    timer_round1_oprf = timer_client_r1 + timer_server_r1;
+#ifdef TEST_OPRF_LOOKUP//if lookup table is enabled
+    timer_client_r3 = timer_client_mux + timer_client_lookup;
+    timer_server_r3 = timer_server_mux + timer_server_lookup;
+#endif
+
+    timer_round1_oprf = std::max(timer_client_r1, timer_server_r1);
     timer_round2_oprf = std::max(timer_server_r2, timer_client_r2) + timer_w_mask;
     timer_round3_oprf = std::max(timer_server_r3, timer_client_r3);
+
     timer_oprf = timer_round1_oprf + timer_round2_oprf + timer_round3_oprf;
 
     std::cout<<"Time to execute step 1: "<<(timer_round1_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
@@ -378,7 +517,15 @@ void display_oprf_timings()
     std::cout<<"Time to execute combining w_mask: "<<(timer_w_mask * time_unit_multiplier)<<" microseconds"<<std::endl;
 
     std::cout<<"Time to execute client step 3: "<<(timer_client_r3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+#ifdef TEST_OPRF_LOOKUP
+    std::cout<<"Time to execute client mux: "<<(timer_client_mux * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute client lookup: "<<(timer_client_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
+#endif
     std::cout<<"Time to execute server step 3: "<<(timer_server_r3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+#ifdef TEST_OPRF_LOOKUP
+    std::cout<<"Time to execute server mux: "<<(timer_server_mux * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute server lookup: "<<(timer_server_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
+#endif
 
     std::cout<<"=========================TOTAL TIME==================================="<<std::endl;
     std::cout<<"Time to execute entire new protocol PRF: "<<(timer_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
@@ -417,8 +564,15 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
 
     std::cout<<" Number of Runs: "<<nRuns<<std::endl;
 
+#ifdef TEST_OPRF_LOOKUP //reformat Rmat and create a lookup table only if LOOKUP implementation is required
+    reformat_Rmat(Rmat_16, Rmat); //convert (81 X 256) matrix to (16 x 16 X 81) matrix
+    create_lookup_table(Rmat_16, lookup_table_oprf);//(a lookup table of 16 X 2^16) is generated
+#endif
+
+
     //start_timer_oprf = std::chrono::system_clock::now();
 
+    //nRuns = 1;//delete it
     for(unsigned int i = 0; i< nRuns;i++) {
 
         start_client_r1 = std::chrono::system_clock::now();
@@ -441,7 +595,7 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
         compute_w_mask();
         timer_w_mask += (std::chrono::system_clock::now() - start_w_mask).count();
 
-
+#ifndef TEST_OPRF_LOOKUP //if TEST_OPRF_Lookup is not enabled run the matbyVec version
         start_server_r3 = std::chrono::system_clock::now();
         server_round3(y_server,p_server_local, Rmat);
         timer_server_r3 += (std::chrono::system_clock::now() - start_server_r3).count();
@@ -449,7 +603,12 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
         start_client_r3 = std::chrono::system_clock::now();
         client_round3(y_client,p_client_local, Rmat);
         timer_client_r3 += (std::chrono::system_clock::now() - start_client_r3).count();
+#endif
 
+#ifdef TEST_OPRF_LOOKUP
+        server_round3_lookup(y_server,p_server_local,Rmat);
+        client_round3_lookup(y_client,p_client_local,Rmat);
+#endif
 
         y_out_z3 = y_server;
         y_out_z3.add(y_client);
