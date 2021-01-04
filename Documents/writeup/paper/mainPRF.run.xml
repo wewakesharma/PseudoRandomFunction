@@ -44,11 +44,11 @@
   <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>main.aux</file>
-      <file>main-blx.bib</file>
+      <file>mainPRF.aux</file>
+      <file>mainPRF-blx.bib</file>
     </provides>
     <requires type="dynamic">
-      <file>main.bbl</file>
+      <file>mainPRF.bbl</file>
     </requires>
     <requires type="static">
       <file>blx-dm.def</file>
@@ -68,20 +68,20 @@
     <cmdline>
       <binary>bibtex</binary>
       <option>-min-crossrefs 2</option>
-      <infile>main</infile>
+      <infile>mainPRF</infile>
     </cmdline>
     <input>
-      <file>main.aux</file>
+      <file>mainPRF.aux</file>
     </input>
     <output>
-      <file>main.bbl</file>
+      <file>mainPRF.bbl</file>
     </output>
     <provides type="dynamic">
-      <file>main.bbl</file>
+      <file>mainPRF.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>main.aux</file>
-      <file>main-blx.bib</file>
+      <file>mainPRF.aux</file>
+      <file>mainPRF-blx.bib</file>
     </requires>
     <requires type="editable">
       <file>references.bib</file>

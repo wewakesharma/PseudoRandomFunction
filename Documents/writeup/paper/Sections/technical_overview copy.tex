@@ -1,0 +1,383 @@
+%!TEX root = ../main.tex
+
+\section{Technical Overview of Results}
+\label{sec:technical_overview}
+
+\subsection{Protocols Implemented}
+
+We implemented the PRF from the dark matter paper \cite{darkmatter} and a new PRF protocol, which provides improved performance over the previous one.
+
+\subsubsection{PRF}
+
+\paragraph{Dark Matter Protocol}
+
+The protocol was introduced in \cite{darkmatter}. The main details of the protocols are described below. In this setting, both the input and the key are secret shared.
+The protocols described below are two-party PRFs.
+
+%add  a description of the protocol
+
+\begin{algorithm}
+\caption{2-Party dark matter PRF}
+\label{2PartyDarkMatter}
+	
+
+	Input: ${K_{m\times n} }(i)$ and $\vec{Inp}(i_n)$ key and user input of each user,\\
+	$(i = 1...2, n,m = 256)$\\ 
+	Output: $user 1: K \times x + SVec, user2: -SVec$\\   %SVec = salt vectorx`
+	
+		\begin{algorithmic}
+			
+\STATE Preprocessing:
+
+		Output: 	user 1: $\vec{R_a}, \vec{r_b}$ - generated randomness \\
+						 user 2: $\vec{r_x} $- generated randomness \\
+
+\STATE Stage\ 1: calculate $a \times b \plus c$
+
+	          	\begin{enumerate}
+	
+	\item user 2 $\vec{m_x} = \vec{x} -\vec{r_x}  ->  $  user 1
+	
+	\item user 1  $ <-   \vec{M_a} =  \vec{A} - \vec{r_A}   $ user 2
+	
+	\item user 2 $ \vec{m_b} = \vec{R_a} \times \vec{m_x} + \vec{b}  - \vec{r_b}  -> $ user 1
+\end{enumerate}
+
+
+\STATE Stage\ 2: Oblivious Transfer
+
+\STATE stage 3: $Z_3$ randomization  
+
+\end{algorithmic}
+
+\end{algorithm}
+
+\begin{algorithm}
+%	\begin{algorithmic}
+	\caption{Pre-processing}
+
+%\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+\caption{Distirbuted calculation of Ax+B}
+	
+	input: user 1: ${\vec{A}, \vec{b}, {\vec R_a}, \vec{r_b} } $ \\
+	          user 2: ${\vec{x}, \vec{r_x},  \vec{z} }$
+	          
+
+	          
+	Output: $user 1: \vec{-b} $
+				 $user 2: \vec{M_a} \times \vec{x} + \vec{m_b} + \vec{z} = \vec{A} \vec{x} + \vec{b}$
+
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Oblivious transfer}
+\begin{algorithmic}
+	
+		\STATE TOADDHERE
+	
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+	\caption{$Z_3$ randomization}
+	\begin{algorithmic}
+		
+			\STATE TOADDHERE
+		
+\end{algorithmic}
+	\end{algorithm}
+
+
+%add table with parameters, including communication
+
+\paragraph{New Protocol}
+
+\begin{algorithm}
+	\caption{2-Party dark matter PRF}
+	\begin{algorithmic}
+		
+		\STATE Preprocessing
+		
+		\STATE Stage\ 1: calculate $a /times b /plus c$
+		
+		\STATE Stage\ 2: Oblivious Transfer
+		
+		\STATE stage 3: $Z_3$ randomization  
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{Pre-processing}
+	\begin{algorithmic}
+		
+		\STATE TOADDHERE
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{Distirbuted calculation of Ax+B}
+	\begin{algorithmic}
+		
+		\STATE TOADDHERE
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{Oblivious transfer}
+	\begin{algorithmic}
+		
+		\STATE TOADDHERE
+		
+	\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+	\caption{$Z_3$ randomization}
+	\begin{algorithmic}
+		
+		\STATE TOADDHERE
+		
+	\end{algorithmic}
+\end{algorithm}
+
+%add  a description of the protocol
+
+%add table with parameters, including communication
+
+\subsection{oPRF}
+This is an implementation of the new protocol by Mahimna Kelkar. This protocol is an improvement over the oPRF described in \cite{darkmatter}. In this protocol, one party has the input and another party has the key.
+
+\begin{algorithm}
+	\caption{2-Party dark matter PRF}
+	\begin{algorithmic}
+		
+		\STATE Preprocessing
+		
+		\STATE Stage\ 1: calculate $a /times b /plus c$
+		
+		\STATE Stage\ 2: Oblivious Transfer
+		
+		\STATE stage 3: $Z_3$ randomization  
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{Pre-processing}
+	\begin{algorithmic}
+		
+		\STATE TOADDHERE
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{Distirbuted calculation of Ax+B}
+	\begin{algorithmic}
+		
+		\STATE TOADDHERE
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{Oblivious transfer}
+	\begin{algorithmic}
+		
+		\STATE TOADDHERE
+		
+	\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+	\caption{$Z_3$ randomization}
+	\begin{algorithmic}
+		
+		\STATE TOADDHERE
+		
+	\end{algorithmic}
+\end{algorithm}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iffalse
+
+\begin{algorithm}
+	\caption{Choosing Best Matching Key using Time-Frequency Algorithm}          
+	% give the algorithm a caption
+	\label{TimeFreqAlg}
+	%\begin{algorithmic}                    % enter the algorithmic environment
+	
+	Input: $\vec{x}(press)$ and $\vec{x}(release)$ key press and release signals of the test sample,\\
+	$~~~~~~~~~~\vec{y}_i(j,press)$,$\vec{y}_i(j,release)$ - training data for alphabet letter $i$,
+	$(i = 1...26, j = 1...n)$\\ 
+	Output: $A$ index of best matching alphabet key\\
+	
+	\begin{enumerate}
+		
+		\item $W \gets$ Output of Algorithm ~\ref{CrossCorrelationAlg}  
+		
+		\item $Z \gets$ Output of Algorithm ~\ref{FrequencyDistanceAlg}
+		
+		\item $minDTF = \sqrt{2}$
+		
+		\item for $\i= 1..26$ do
+		
+		\item \hspace{5mm} $\displaystyle DTF_i = \sqrt{DF_i^2 + (1-C_i)^2} = \sqrt{W^2 + Z^2}$
+		
+		\item \hspace{5mm} if $DTF_i < minDTF$
+		\item \hspace{10mm} $minDTF = DTF_i$
+		\item \hspace{10mm} $A_{min} = i$
+		\item \hspace{5mm} end if
+		\item end for
+		\item Output: $\displaystyle A=A_{min}$
+		
+	\end{enumerate}
+	
+	%\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}
+	%\captionof{algorithm}{Test Sample-Alphabet Letter Cross-Correlation\label{CrossCorrelationAlg}}
+	%\caption{Test}
+	\caption{Test Sample-Alphabet Letter Cross-Correlation} 
+	
+	\label{CrossCorrelationAlg}
+	%\begin{algorithmic}                    % enter the algorithmic environment
+	
+	
+	% give the algorithm a caption
+	
+	Input: $\vec{x}(press)$ and $\vec{x}(release)$ key press and release signals of the test sample,\\
+	$~~~~~~~~~~\vec{y}_i(j,press)$,$\vec{y}_i(j,release)$ - training data for alphabet letter $i$,
+	$(i = 1...26, j = 1...n)$\\ 
+	Output: $C_i$ Correlation between the test sample and each alphabet letter $i$\\
+	
+	\begin{enumerate}
+		
+		\item Normalize $\vec{x}(press)$ and  $\vec{x}(release)$according to the energy
+		%TH 8/24/12
+		% (Equation ~\eqref{equ:SigEnergyNorm})
+		
+		\item for $j= 1 ..n$, $i = 1 ..26$ do
+		
+		\item \hspace{5mm} Normalize $\vec{y}_i(j,press)$ and $\vec{y}_i(j,release)$ according to the energy 
+		%TH 8/24/12
+		%(Equation ~\eqref{equ:SigEnergyNorm})
+		
+		\item \hspace{5mm} $C_i(j,press) =  \max_{}(\textsf{Cross\mbox{-}Corr}(\vec{x}(press),\vec{y_i(j,press)}))= $\\
+		$$= 1 - \left[\max_{r}(\sum_{m=0}^{N-n}\overline{x(press)(m)} \cdot y_i(j,press)(m+r) )\right]$$
+		%\item $~~~\vec{Y}_i(j,release) =\vec{YFull}_i(j,release)$ coefficients in the [0.4-22.05] kHz range
+		
+		\item \hspace{5mm} $C_i(j,release) =  \max_{}(\textsf{Cross\mbox{-}Corr}(\vec{x}(release),\vec{y_i(j,release)}))=$\\ 
+		$$= 1 - \left[\max_{r}(\sum_{m=0}^{N-n}\overline{x(release)(m)} \cdot y_i(j,release)(m+r) )\right]$$
+		
+		\item \hspace{5mm} $\displaystyle C_i(j) = 0.5 \cdot (C_i(j,press)+C_i(j,release))$
+		
+		\item end for
+		
+		%\item Normalize all frequency signals according to the energy (Equation ~\eqref{equ:SigEnergyNorm})
+		
+		\item  Output: $\displaystyle\left( C_i = \frac{1}{n} \sum_{j = 1}^n C_i(j) \right)_{i=1}^{26}$
+		
+		%\item $~~~f(\vec{X},\vec{Y}) = {\|{\vec{X} - \vec{Y}}\|}$
+		%\item $~~~DF_i = D_i(f,\vec{X}(press),\vec{X}(release),\vec{Y}_i(1,press),...,\vec{Y}_i(n,press),\vec{Y}_i(1,release),...,\vec{Y}_i(n,release))$
+	\end{enumerate}
+	
+	%\end{algorithmic}
+	
+	%\caption{Test Sample-Alphabet Letter Cross-Correlation} 
+\end{algorithm}
+%\end{multicols*}{2}
+%\end{algorithmic}
+
+\fi
+
+\subsection{Parameters}
+The input variable to the PRF functions are the key $K$ which is of size $m x n$ and each input is a vector of size $n$. In phase 3 of the algorithm, a randomization matrix is used which is of size $r x n = 81 x 256$, resulting in entropy of 128 bits.
+
+\subsection{Optimizations}
+
+\subsubsection{packing in Z2}
+
+Bit-wise packing: to optimize the run-time, each 64 bits were condensed into a word. Since each key is of size $m x n$ and each input is a vactor of size $n$, it is possible to pack each 64 rows into one word. This may result in time saving of up to $x64$ of the run-time.
+
+
+
+\subsubsection{Packing in Z3}
+
+Two methods were implemented for packing in Z2:
+
+1.  Packing in two vectors - one LSB's and one MSB's. To optimize the run-time, packing in Z3 was implemented. For this, each number in Z3 was implemented as two vectors of LSB and MSB. 
+
+2.  This was done for the multiplication of the matrix times the output vector from phase 3. Since each number is a trinary number, their multiplication of each row by the output vector can be any number between -256 to 256. To explore this option, we represented each number by 9 bits, and packed 7 numbers into each word. This was expected to result in time saving of up to $x7$. Testing this option indeed proved to be significantly slower than the first method of packing. We therefore continued using the first method of packing instead.
+
+\subsection{Building Blocks}
+
+\subsubsection{AX plus B}
+
+\subsubsection{Oblivious Transfer}
+
+\subsection{Mux in Z3}
+
+\subsubsection{Randomization in Z3}
+
+\section{Analysis}
+
+Below are computation and communication results for the protocol.
+
+
+\section{Run-time Results}
+
+The system was tested on AWS environment, on Ubuntu Server 18.04 with t2.medium. For testing, the code was run in a loop 1000 times. Below are run-time results. The results include both centralized and distributed version. The packing indicates both the $Z_2$ and $Z_3$ packing.
+
+%add table
+\begin{table}[htbp]
+	%[h]
+	\begin{center}
+		%\begin{minipage}{10cm}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\textbf{Protocol} & \textbf{Packed }  &  \textbf{$Z_3$ lookup table} & \textbf{Rounds/sec} & Runtime($\mu$ sec)\\
+			\hline
+			\hline
+			\textbf{Centralized}  & N  & N  &  50K&	20.2 \\
+			\hline
+			\textbf{Centralized} & Y  &  N & 65.4K &	18.5 \\
+			\hline
+			\textbf{Distributed dark matter} & Y	& N &  24K & 40.56	\\
+			\hline
+			\textbf{Distributed new protocol} & Y & N &	49K &  20.20\\
+			\hline
+			\textbf{Distributed new protocol} & Y & Y & 70K &  14.17	\\
+			\hline
+			
+		\end{tabular}
+		
+		\vspace{-1mm}
+		\caption{Run-time of different protocols}
+		\label{RuntimeTable}
+		%\end{minipage}
+	\end{center}
+	\vspace{-5mm}
+\end{table}
+
+
+
+
+
+
+

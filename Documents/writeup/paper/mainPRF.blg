@@ -1,0 +1,64 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: mainPRF.aux
+The style file: biblatex.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: mainPRF-blx.bib
+Database file #2: references.bib
+Biblatex version: 3.8
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+You've used 3 entries,
+            6268 wiz_defined-function locations,
+            1190 strings with 8933 characters,
+and the built_in function-call counts, 10399 in all, are:
+= -- 669
+> -- 162
+< -- 41
++ -- 275
+- -- 66
+* -- 682
+:= -- 1184
+add.period$ -- 0
+call.type$ -- 3
+change.case$ -- 14
+chr.to.int$ -- 30
+cite$ -- 4
+duplicate$ -- 1123
+empty$ -- 1017
+format.name$ -- 91
+if$ -- 2116
+int.to.chr$ -- 0
+int.to.str$ -- 3
+missing$ -- 0
+newline$ -- 75
+num.names$ -- 41
+pop$ -- 739
+preamble$ -- 1
+purify$ -- 23
+quote$ -- 0
+skip$ -- 290
+stack$ -- 0
+substring$ -- 1105
+swap$ -- 259
+text.length$ -- 57
+text.prefix$ -- 2
+top$ -- 1
+type$ -- 90
+warning$ -- 0
+while$ -- 163
+width$ -- 0
+write$ -- 73
