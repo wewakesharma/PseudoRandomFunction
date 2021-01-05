@@ -393,16 +393,17 @@ void party1_round3_lookup(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
 
     timer_p1_mux += (std::chrono::system_clock::now() - start_r3_mux).count();
 
-    temp_res_lsb = res1.lsbs(); //reformatting is not a part of timing, since it is expected to be offline
-    temp_res_msb = res1.msbs();
-    reformat_input(lsb_input,temp_res_lsb);
-    reformat_input(msb_input,temp_res_msb);
 
 #ifdef PRINT_VAL
     std::cout<<"lsb_input(party 1): "<<lsb_input<<std::endl;
     std::cout<<"msb_input(party 1): "<<msb_input<<std::endl;
 #endif
     std::chrono::time_point<std::chrono::system_clock> start_r3_lookup = std::chrono::system_clock::now();
+
+    temp_res_lsb = res1.lsbs(); //reformatting is not a part of timing, since it is expected to be offline
+    temp_res_msb = res1.msbs();
+    reformat_input(lsb_input,temp_res_lsb);
+    reformat_input(msb_input,temp_res_msb);
     //call the use lookup table
     uselookup(result_sum_lsb,lsb_input,lookup_table);
     uselookup(result_sum_msb,msb_input,lookup_table);
@@ -432,13 +433,15 @@ void party2_round3_lookup(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
     res2.mux(r1z2, w_mask.bits); //w_mask selects r0z if it is 0 else r1z
     timer_p2_mux += (std::chrono::system_clock::now() - start_r3_mux).count();
 
+
+    std::chrono::time_point<std::chrono::system_clock> start_r3_lookup = std::chrono::system_clock::now();
+
     reformat_input(lsb_input,res2.lsbs());
     reformat_input(msb_input,res2.msbs());
 #ifdef PRINT_VAL
     std::cout<<"lsb_input(party 2): "<<lsb_input<<std::endl;
     std::cout<<"msb_input(party 2): "<<msb_input<<std::endl;
 #endif
-    std::chrono::time_point<std::chrono::system_clock> start_r3_lookup = std::chrono::system_clock::now();
     //call the use lookup table
     uselookup(result_sum_lsb,lsb_input,lookup_table);
     uselookup(result_sum_msb,msb_input,lookup_table);

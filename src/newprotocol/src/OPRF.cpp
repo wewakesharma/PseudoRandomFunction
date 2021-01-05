@@ -391,8 +391,6 @@ void server_round3_lookup(PackedZ3<81>& y_server, PackedZ3<N_COLS>& p_server_loc
     w_pserver.reset();
     w_pserver.mux(p_server_local,w_mask.bits);
 
-    timer_server_mux += (std::chrono::system_clock::now() - start_server_mux).count();
-
     for(int n_count = 0; n_count < N_COLS; n_count++)//converting w_mask from mod2 to mod3
     {
         w_mod3.second.set(n_count,0);                  //setting msb as zero(0)
@@ -403,6 +401,14 @@ void server_round3_lookup(PackedZ3<81>& y_server, PackedZ3<N_COLS>& p_server_loc
     z_server.add(w_mod3);
     z_server.add(w_pserver);
 
+    timer_server_mux += (std::chrono::system_clock::now() - start_server_mux).count();
+
+
+#ifdef PRINT_VAL
+    std::cout<<"lsb_input(party 1): "<<lsb_input<<std::endl;
+    std::cout<<"msb_input(party 1): "<<msb_input<<std::endl;
+#endif
+    std::chrono::time_point<std::chrono::system_clock> start_server_lookup = std::chrono::system_clock::now();
 
     //reformat z_server as the input
     temp_z_server_lsb = z_server.lsbs();
@@ -410,11 +416,6 @@ void server_round3_lookup(PackedZ3<81>& y_server, PackedZ3<N_COLS>& p_server_loc
     reformat_input(lsb_input,temp_z_server_lsb);
     reformat_input(msb_input,temp_z_server_msb);
 
-#ifdef PRINT_VAL
-    std::cout<<"lsb_input(party 1): "<<lsb_input<<std::endl;
-    std::cout<<"msb_input(party 1): "<<msb_input<<std::endl;
-#endif
-    std::chrono::time_point<std::chrono::system_clock> start_server_lookup = std::chrono::system_clock::now();
     //call the use lookup table
     uselookup(result_sum_lsb,lsb_input,lookup_table_oprf);
     uselookup(result_sum_msb,msb_input,lookup_table_oprf);
@@ -454,16 +455,17 @@ void client_round3_lookup(PackedZ3<81>& y_client, PackedZ3<N_COLS>& p_client_loc
 
     timer_client_mux += (std::chrono::system_clock::now() - start_client_mux).count();
 
-    //reformat z_server as the input
-    temp_z_client_lsb = z_client.lsbs();
-    temp_z_client_msb = z_client.msbs();
-    reformat_input(lsb_input,temp_z_client_lsb);
-    reformat_input(msb_input,temp_z_client_msb);
+
 #ifdef PRINT_VAL
     std::cout<<"lsb_input(client): "<<lsb_input<<std::endl;
     std::cout<<"msb_input(client): "<<msb_input<<std::endl;
 #endif
     std::chrono::time_point<std::chrono::system_clock> start_client_lookup = std::chrono::system_clock::now();
+    //reformat z_server as the input
+    temp_z_client_lsb = z_client.lsbs();
+    temp_z_client_msb = z_client.msbs();
+    reformat_input(lsb_input,temp_z_client_lsb);
+    reformat_input(msb_input,temp_z_client_msb);
     //call the use lookup table
     uselookup(result_sum_lsb,lsb_input,lookup_table_oprf);
     uselookup(result_sum_msb,msb_input,lookup_table_oprf);
