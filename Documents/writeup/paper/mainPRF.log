@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  6 JAN 2021 17:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  6 JAN 2021 17:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -785,11 +785,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 16--22
 
  []
 
-<images/picture1.jpg, id=82, 656.4525pt x 390.45876pt>
-File: images/picture1.jpg Graphic file (type jpg)
-<use images/picture1.jpg>
-Package pdftex.def Info: images/picture1.jpg  used on input line 32.
-(pdftex.def)             Requested size: 375.80544pt x 223.52898pt.
+<images/picture2.jpg, id=82, 835.12pt x 349.305pt>
+File: images/picture2.jpg Graphic file (type jpg)
+<use images/picture2.jpg>
+Package pdftex.def Info: images/picture2.jpg  used on input line 32.
+(pdftex.def)             Requested size: 375.80544pt x 157.19112pt.
 [1
 
 {/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
@@ -829,9 +829,9 @@ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.172 \paragraph
-                {Bit slicing:} this was done by representing a vector over $...
- <./images/picture1.jpg>] [3]
+l.174 A
+        few operations, such as addition, subtraction and multiplication mod...
+ <./images/picture2.jpg>] [3]
 Underfull \hbox (badness 10000) in paragraph at lines 174--176
 
  []
@@ -883,7 +883,7 @@ Here is how much of TeX's memory you used:
  19645 multiletter control sequences out of 15000+600000
  12174 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,9n,45p,917b,1294s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,9n,45p,917b,1251s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -897,7 +897,7 @@ texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/te
 xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/tex
 live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texl
 ive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on mainPRF.pdf (7 pages, 185689 bytes).
+Output written on mainPRF.pdf (7 pages, 183055 bytes).
 PDF statistics:
  248 PDF objects out of 1000 (max. 8388607)
  222 compressed objects within 3 object streams
