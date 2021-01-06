@@ -24,9 +24,17 @@ We use capital letters for matrices, and $\vec{x}$ notation for vectors \\
 \paragraph{Original Distributed Input Distributed Output (DIDO) PRF Protocol}
 
 The protocol was introduced in \cite{darkmatter}. The main details of the protocols are described below (\ref{2PartyDarkMatter}). In this setting, both the input and the key are secret shared additively between the two parties. Both the protocol presented in this paper and the original protocol are two-party PRFs.
-
+Example can be shown in \figref{algorithm1}
 %add  a description of the protocol
 
+\begin{figure*}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/picture1.jpg}
+	\vspace{-2mm}
+	\caption{Algorithm1}
+	\label{algorithm1.fig}
+	\vspace{-5mm}
+\end{figure*}
 
 
 \begin{algorithm}
@@ -37,16 +45,16 @@ The protocol was introduced in \cite{darkmatter}. The main details of the protoc
 	Input: ${K_{m\times n} }(i)$ and $\vec{Inp}(i_n)$ key and user input of each user,\\
 	$(i = 1...2, n,m = 256)$\\ 
 	Output: user 1: $\vec{K} \times x + \vec{r}$\\
-	user2: $\neg \vec{r}$\\   %SVec = salt vectorx`
+	user2: $-  \vec{r}$\\   %SVec = salt vectorx`
 	
 		\begin{algorithmic}
 			
-\STATE Preprocessing:
+\STATE \textbf{Preprocessing}:
 
 		Output: 	user 1: $\vec{R_a}, \vec{r_b}$ - pre-shared randomness \\
 						 user 2: $\vec{r_x} $- pre-share randomness \\
 
-\STATE Stage\ 1: calculate $a \times b \plus c$
+\STATE  \textbf{Stage\ 1}: calculate $a \times b \plus c$
 
 	input: user 1: ${\vec{A}, \vec{b}, {\vec R_a}, \vec{r_b} } $ \\
 			  user 2: ${\vec{x}, \vec{r_x},  \vec{z} }$ \\
@@ -60,10 +68,10 @@ The protocol was introduced in \cite{darkmatter}. The main details of the protoc
 	\item user 2 $ \vec{m_b} = \vec{R_a} \times \vec{m_x} + \vec{b}  - \vec{r_b}  \rightarrow $ user 1
 \end{enumerate}
 
-	Output: $user 1: \vec{\neg b} $  \\
+	Output: $user 1: \vec{- b} $  \\
                  $user 2: \vec{M_a} \times \vec{x} + \vec{m_b} + \vec{z} = \vec{A} \vec{x} + \vec{b}$ \\
 
-\STATE Stage\ 2: Oblivious Transfer
+\STATE  \textbf{Stage\ 2}: Oblivious Transfer
 input: 	 user 1:  $\vec{r_1}, \vec{r_2}, \vec{r_a}, \vec{r_b}$ - vectors in $Z_3$
 			user 2:  $\vec{x}, \vec{r_x}$ - vectors in $Z_2$, $\vec{z} $ - vector in $Z_3$
 			
@@ -71,17 +79,17 @@ input: 	 user 1:  $\vec{r_1}, \vec{r_2}, \vec{r_a}, \vec{r_b}$ - vectors in $Z_3
 			\begin{enumerate}
 				\item user 1  $ \leftarrow   \vec{m_x} = \vec{x} \oplus \vec{r_x}$   user 2
 			 
-				\item user 1:  $  \vec{m_1} = \vec(\neg m_x)  \vec{r_a} + \vec{m_x} \vec{r_b} + \vec{r_1}   \rightarrow $   user 2
+				\item user 1:  $  \vec{m_1} = \vec(- m_x)  \vec{r_a} + \vec{m_x} \vec{r_b} + \vec{r_1}   \rightarrow $   user 2
 				
-				\item user 1:  $  \vec{m_2} = \vec(m_x)  \vec{r_a} + \vec{\neg m_x} \vec{r_b} + \vec{r_2}  \rightarrow $   user 2
+				\item user 1:  $  \vec{m_2} = \vec(m_x)  \vec{r_a} + \vec{- m_x} \vec{r_b} + \vec{r_2}  \rightarrow $   user 2
 				
 				
 			\end{enumerate}
 			
-output:  user 2: $\vec{w}:= \vec{x} \times \vec{m_2}+ \neg \vec{x}  \times \vec{m_1} - \vec{z}$
+output:  user 2: $\vec{w}:= \vec{x} \times \vec{m_2}+ - \vec{x}  \times \vec{m_1} - \vec{z}$
 					
 
-\STATE stage 3: $Z_3$ randomization  
+\STATE  \textbf{stage 3}: $Z_3$ randomization  
 
 \end{algorithmic}
 
@@ -233,8 +241,8 @@ The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg
 
 	\begin{enumerate}
 		\item for each word $i$
-	    \item $\vec{LSB[i]} =( \vec{l_2} \land \vec{s[i]}) | (\vec{l_1} \land \vec{\neg s[i]})$
-	    		    \item $\vec{MSB[i]} =( \vec{m_2} \land \vec{s[i]}) | (\vec{m_1} \land \vec{\neg s[i]})$
+	    \item $\vec{LSB[i]} =( \vec{l_2} \land \vec{s[i]}) | (\vec{l_1} \land \vec{- s[i]})$
+	    		    \item $\vec{MSB[i]} =( \vec{m_2} \land \vec{s[i]}) | (\vec{m_1} \land \vec{- s[i]})$
 		
 	\end{enumerate}
 	
