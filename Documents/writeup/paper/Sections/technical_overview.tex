@@ -95,14 +95,21 @@ output:  user 2: $\vec{w}:= \vec{x} \times \vec{m_2}+ \neg \vec{x}  \times \vec{
 \paragraph{Our improved (DIDO) PRF protocol}
 
 \begin{algorithm}
-	\caption{2-Party DSISK PRF}
+	\caption{2-Party Distributed PRF (Shared input and Shared Key)}
 	\begin{algorithmic}
+		\STATE Input: $x \in \mathbb{Z}_{2}^{n}$
+		\STATE Key: $K \in \mathbb{Z}_{2}^{m \times n}$
+		\STATE Output: $y \in \mathbb{Z}_{3}^{t}$
+		\STATE Preprocessing: Generate correlated randomness $r_{x}, s_{w} \in \mathbb{Z}_{2}^{n}. and R_{k} \in \mathbb{Z}_{2}^{m \times n}$\\
+		and compute $ r_{w} = R_{k} \cdot r_{x} \oplus s_{w}$
 		
-		\STATE Preprocessing
+		\STATE Stage 1: Mask the inputs: Both the parties mask their shares of input and key they hold and the mask are shared.\\
+		$K_{i}^{\textrm'} = K_{i} + Rk_{i}$ and 
+		$x_{i}^{\textrm'} = x_{i} + rx_{i}$ and 
 		
-		\STATE Stage 1: calculate $a \times b \plus c$
 		
-		\STATE Stage 2: Oblivious Transfer
+		\STATE Stage 2: Merging the shares, each party computes $w^{\textrm'} = K \times x + rw$. This is done as follows\\
+		
 		
 		\STATE stage 3: $Z_3$ randomization  
 		
@@ -269,13 +276,13 @@ Table \ref{CommCosts} includes the computation and communication results for the
 			\hline
 			\textbf{Centralized}  & N  & N  &  & 0	 \\
 			\hline
-			\textbf{Centralized} & Y  &  N & &	 \\
+			\textbf{Centralized} & Y  &  N & & 0 \\
 			\hline
 			\textbf{Original (DIDO) PRF protocol} & Y	& N &   & 	\\
 			\hline
-			\textbf{Our  (DIDO) PRF algorithm} & Y & N &	 &  \\
+			\textbf{Our  (DIDO) PRF algorithm} & Y & N &	 & (4n + 2m) \\
 			\hline
-			\textbf{Our  (DIDO) PRF algorithm} & Y & Y &  &  	\\
+			\textbf{Our  (DIDO) PRF algorithm} & Y & Y &  &  (4n + 2m)	\\
 			\hline
 			\textbf{Our OPRF} & Y & N &  &  	\\
 			\hline
@@ -301,7 +308,7 @@ We compare our run-time to discrete-log based PRFs. To this end, we use the lib 
 
 \section{Experimental Results}
 
-The system was tested on AWS environment, on Ubuntu Server 18.04 with t2.medium. For testing, the code was run in a loop 1000 times. Below are run-time results. The results include both centralized and distributed version. The packing indicates both the $Z_2$ and $Z_3$ packing.
+The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. To record the timings, the code was run in a loop 1000 times. Below are run-time results for running a single instance of PRF in microsecond. The results include both centralized and distributed versions of the PRF. In order to increase efficiency, packing and lookup tables were used. The packing indicates both the $Z_2$ and $Z_3$ packing.
 
 %add table
 \begin{table}[htbp]
@@ -313,21 +320,23 @@ The system was tested on AWS environment, on Ubuntu Server 18.04 with t2.medium.
 			\textbf{Protocol} & \textbf{Packed }  &  \textbf{$Z_3$ lookup table} & \textbf{Rounds/sec} & Runtime($\mu$ sec)\\
 			\hline
 			\hline
-			\textbf{Centralized}  & N  & N  &  50K&	20.2 \\
+			\textbf{Centralized weak PRF}  & N  & N  &  50K&	20.2 \\
 			\hline
-			\textbf{Centralized} & Y  &  N & 65.4K &	18.5 \\
+			\textbf{Centralized weak PRF} & Y  &  N & 65.4K &	18.5 \\
 			\hline
-			\textbf{Original distributed dark matter} & Y	& N &  24K & 40.56	\\
+			\textbf{Centralized weak PRF} & Y  &  Y & 165K &	6.08 \\
 			\hline
-			\textbf{This protocol} & Y & N &	49K &  20.20\\
+			\textbf{Original distributed dark matter} & Y & N &  24K & 40.56	\\
 			\hline
-			\textbf{This protocol} & Y & Y & 83K &  12.00	\\
+			\textbf{DIDO} & Y & N & 49K &  20.20\\
+			\hline
+			\textbf{DIDO} & Y & Y & 82K &  12.12	\\
 			\hline
 			\textbf{oPRF} & Y & N & 53K &  18.66	\\
 			\hline
-			\textbf{oPRF} & Y & Y & 11.76K &  8.50	\\
+			\textbf{oPRF} & Y & Y & 104K &  9.52	\\
 			\hline
-			\textbf{Discrete log-based PRF} &  - & - & 34K & 29.56 \\
+			\textbf{Discrete log-based PRF} &  - & - & 35K & 28.69 \\
 			\hline
 			
 		\end{tabular}
