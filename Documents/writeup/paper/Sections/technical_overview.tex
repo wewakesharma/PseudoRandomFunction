@@ -236,9 +236,9 @@ The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg
 		
 \begin{enumerate}
 
-	\item $\vec{T} = (\vec{l_1} \lor \vec{m_2}) \oplus (\vec{l_2} | \vec{m_1})$;
-	\item $MSB_{res} = ( \vec{l_1} \lor \vec{l_2} ) \oplus  \vec{T} $;
-	\item $LSB_{res} = (\vec{m_1} \lor \vec{m_2} ) \oplus \vec{T} $;
+	\item $\vec{T} = (\vec{l_1} \BitOr \vec{m_2}) \oplus (\vec{l_2} \BitOr \vec{m_1})$;
+	\item $MSB_{res} = ( \vec{l_1} \BitOr \vec{l_2} ) \oplus  \vec{T} $;
+	\item $LSB_{res} = (\vec{m_1} \BitOr \vec{m_2} ) \oplus \vec{T} $;
 	
 	\end{enumerate}
 	
@@ -272,8 +272,8 @@ The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg
 		$\vec{l_2}, \vec{m_2}$ - LSB and LSB vectors of value 2
 		
 			\begin{enumerate}
-	\item  $\vec{LSB_{res}} = ((\vec{l_1} \land (\vec{l_2}) \land     ((\vec{m_1} \land (\vec{m_2})       $
-	\item	$\vec{MSB_{res}}= ((\vec{l_1} \land (\vec{m_2}) \land     ((\vec{m_1} \land (\vec{l_2})       $
+	\item  $\vec{LSB_{res}} = ((\vec{l_1} \BitAnd (\vec{l_2}) \land     ((\vec{m_1} \BitAnd (\vec{m_2})       $
+	\item	$\vec{MSB_{res}}= ((\vec{l_1} \BitAnd (\vec{m_2}) \land     ((\vec{m_1} \BitAnd (\vec{l_2})       $
 
 	\end{enumerate}
 		
