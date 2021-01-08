@@ -198,6 +198,36 @@ The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg
 
 % TODO: replace with a table
 
+\begin{table}[ht]
+\caption{Multi-row table}
+\begin{center}
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Operations} & \textbf{Methods}\\
+    \hline
+    \multirow{3}{*}{Addition} & $\vec{T} = (\vec{l_1} \lor \vec{m_2}) \oplus (\vec{l_2} \lor \vec{m_1})$;\\
+    & $MSB_{res} = ( \vec{l_1} \lor \vec{l_2} ) \oplus  \vec{T} $; \\
+    &$LSB_{res} = (\vec{m_1} \lor \vec{m_2} ) \oplus \vec{T} $; \\
+    \hline
+    \multirow{3}{*}{Subtraction} & $\vec{T} = (\vec{l_1} \lor \vec{m_2}) \oplus (\vec{l_2} \lor \vec{m_1})$;\\
+    & $MSB_{res} = ( \vec{l_1} \lor \vec{l_2} ) \oplus  \vec{T} $; \\
+    &$LSB_{res} = (\vec{m_1} \lor \vec{m_2} ) \oplus \vec{T} $; \\
+    \hline
+\multirow{3}{*}{Multiplication} & $\vec{T} = (\vec{l_1} \lor \vec{m_2}) \oplus (\vec{l_2} \lor \vec{m_1})$;\\
+    & $MSB_{res} = ( \vec{l_1} \lor \vec{l_2} ) \oplus  \vec{T} $; \\
+    &$LSB_{res} = (\vec{m_1} \lor \vec{m_2} ) \oplus \vec{T} $; \\
+    \hline
+\multirow{3}{*}{MUX} & $\vec{T} = (\vec{l_1} \lor \vec{m_2}) \oplus (\vec{l_2} \lor \vec{m_1})$;\\
+    & $MSB_{res} = ( \vec{l_1} \lor \vec{l_2} ) \oplus  \vec{T} $; \\
+    &$LSB_{res} = (\vec{m_1} \lor \vec{m_2} ) \oplus \vec{T} $; \\
+    \hline
+
+\end{tabular}
+\end{center}
+\label{tab:multicol}
+\end{table}
+
+%======================================
 \begin{algorithm}
 	\caption{Addition in $Z_3$}
 		\label{alg:algpack1}  Item 1:
