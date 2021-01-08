@@ -29,10 +29,10 @@ Example can be shown in \figref{algorithm1}
 
 \begin{figure*}[ht]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/picture2.jpg}
+	\includegraphics[width=0.8\textwidth]{images/old_protocol.jpg}
 	\vspace{-2mm}
-	\caption{Algorithm1}
-	\label{algorithm1.fig}
+	\caption{Old wPRF protocol}
+	\label{old_protocol.fig}
 	\vspace{-5mm}
 \end{figure*}
 
@@ -102,6 +102,15 @@ output:  user 2: $\vec{w}:= \vec{x} \times \vec{m_2}+ - \vec{x}  \times \vec{m_1
 
 \paragraph{Our improved (DIDO) PRF protocol}
 
+\begin{figure*}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/sisk.jpg}
+	\vspace{-2mm}
+	\caption{Distributed Input Distributed Output wPRF protocol}
+	\label{sisk.fig}
+	\vspace{-5mm}
+\end{figure*}
+
 \begin{algorithm}
 	\caption{2-Party Distributed PRF (Shared input and Shared Key)}
 	\begin{algorithmic}
@@ -132,6 +141,16 @@ output:  user 2: $\vec{w}:= \vec{x} \times \vec{m_2}+ - \vec{x}  \times \vec{m_1
 
 \subsection{OPRF}
 This is a new OPRF protocol, which improved the performance over the original OPRF protocol descirbed in \cite{darkmatter}. In this setting, one party has the input and another party has the key.
+
+\begin{figure*}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/oprf.jpg}
+	\vspace{-2mm}
+	\caption{oPRF protocol}
+	\label{oprf.fig}
+	\vspace{-5mm}
+\end{figure*}
+
 
 \begin{algorithm}
 	\caption{2-Party oPRF}
