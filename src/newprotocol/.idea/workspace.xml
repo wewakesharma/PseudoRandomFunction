@@ -13,13 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="644c242a-e514-4e60-bf76-55d2fabdec37" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/Sections/technical_overview.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/Sections/technical_overview.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF-blx.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF-blx.bib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.aux" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.aux" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.synctex.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/preamble.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/preamble.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +153,7 @@
       <workItem from="1609307810699" duration="85000" />
       <workItem from="1609348584676" duration="4861000" />
       <workItem from="1609862705177" duration="1208000" />
-      <workItem from="1610122628076" duration="420000" />
+      <workItem from="1610122628076" duration="792000" />
     </task>
     <servers />
   </component>

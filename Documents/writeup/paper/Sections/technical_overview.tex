@@ -21,10 +21,10 @@ $r$ - random vector in $Z_3$]
 We use capital letters for matrices, and $\vec{x}$ notation for vectors \\
 
 
-\paragraph{Original Distributed Input Distributed Output (DIDO) PRF Protocol}
+\paragraph{Original - Distributed Input Distributed Output (DIDO) - PRF Protocol}
 
-The protocol was introduced in \cite{darkmatter}. The main details of the protocols are described below (\ref{2PartyDarkMatter}). In this setting, both the input and the key are secret shared additively between the two parties. Both the protocol presented in this paper and the original protocol are two-party PRFs.
-Example can be shown in \figref{algorithm1}
+The protocol was introduced in \cite{darkmatter}. The main details of the protocols are described below (\ref{2PartyDarkMatter}). In this setting, both the input and the key are secret shared additively between the two parties. Both the protocol presented in this paper and the original protocol are two-party PRFs. For our implementation, randomization was added in phase 3 to provide $Z_3$ output with 128-bit entropy. 
+The protocol is described in \figref{algorithm1}.
 %add  a description of the protocol
 
 \begin{figure*}[ht]
