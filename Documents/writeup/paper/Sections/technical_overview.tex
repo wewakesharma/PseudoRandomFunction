@@ -198,6 +198,10 @@ The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg
 
 % TODO: replace with a table
 
+input:   $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
+					$\vec{l_2}, \vec{m_2}$ - LSB and MSB vectors of value 2
+					$\vec{select}$ - binary vector
+
 \begin{table}[ht]
 \caption{Multi-row table}
 \begin{center}
@@ -205,21 +209,19 @@ The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg
     \hline
     \textbf{Operations} & \textbf{Methods}\\
     \hline
-    \multirow{3}{*}{Addition} & $\vec{T} = (\vec{l_1} \lor \vec{m_2}) \oplus (\vec{l_2} \lor \vec{m_1})$;\\
-    & $MSB_{res} = ( \vec{l_1} \lor \vec{l_2} ) \oplus  \vec{T} $; \\
-    &$LSB_{res} = (\vec{m_1} \lor \vec{m_2} ) \oplus \vec{T} $; \\
+    \multirow{3}{*}{Addition} & $\vec{T} = (\vec{l_1} \BitOr \vec{m_2}) \oplus (\vec{l_2} \BitOr \vec{m_1})$;\\
+    & $MSB_{res} = ( \vec{l_1} \BitOr \vec{l_2} ) \oplus  \vec{T} $; \\
+    & $LSB_{res} = (\vec{m_1} \BitOr \vec{m_2} ) \oplus \vec{T} $; \\
     \hline
-    \multirow{3}{*}{Subtraction} & $\vec{T} = (\vec{l_1} \lor \vec{m_2}) \oplus (\vec{l_2} \lor \vec{m_1})$;\\
-    & $MSB_{res} = ( \vec{l_1} \lor \vec{l_2} ) \oplus  \vec{T} $; \\
-    &$LSB_{res} = (\vec{m_1} \lor \vec{m_2} ) \oplus \vec{T} $; \\
+    \multirow{3}{*}{Subtraction} & $\vec{T} = (\vec{l_1} \BitOr \vec{m_2}) \oplus (\vec{l_2} \BitOr \vec{m_1})$;\\
+    & $MSB_{res} = (\vec{l_1} \BitOr \vec{m_2} ) \BitAnd \vec{T}$;\\
+    & $LSB_{res} = (\vec{m_1} \BitOr \vec{l_2} ) \BitAnd \vec{T}$; \\
     \hline
-\multirow{3}{*}{Multiplication} & $\vec{T} = (\vec{l_1} \lor \vec{m_2}) \oplus (\vec{l_2} \lor \vec{m_1})$;\\
-    & $MSB_{res} = ( \vec{l_1} \lor \vec{l_2} ) \oplus  \vec{T} $; \\
-    &$LSB_{res} = (\vec{m_1} \lor \vec{m_2} ) \oplus \vec{T} $; \\
+\multirow{3}{*}{Multiplication} & $\vec{MSB_{res}}= ((\vec{l_1} \BitAnd (\vec{m_2}) \BitAnd     ((\vec{m_1} \BitAnd (\vec{l_2})$; \\
+    & $\vec{LSB_{res}} = ((\vec{l_1} \BitAnd (\vec{l_2}) \BitAnd     ((\vec{m_1} \BitAnd (\vec{m_2})$;\\
     \hline
-\multirow{3}{*}{MUX} & $\vec{T} = (\vec{l_1} \lor \vec{m_2}) \oplus (\vec{l_2} \lor \vec{m_1})$;\\
-    & $MSB_{res} = ( \vec{l_1} \lor \vec{l_2} ) \oplus  \vec{T} $; \\
-    &$LSB_{res} = (\vec{m_1} \lor \vec{m_2} ) \oplus \vec{T} $; \\
+\multirow{3}{*}{MUX} & $\vec{MSB[i]} =( \vec{m_2} \BitAnd \vec{s[i]}) \BitOr (\vec{m_1} \BitAnd \vec{- s[i]})$; \\
+    & $\vec{LSB[i]} =( \vec{l_2} \BitAnd \vec{s[i]}) \BitOr (\vec{l_1} \BitAnd \vec{- s[i]})$; \\
     \hline
 
 \end{tabular}
@@ -228,6 +230,7 @@ The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg
 \end{table}
 
 %======================================
+\iffalse%Start of comment
 \begin{algorithm}
 	\caption{Addition in $Z_3$}
 		\label{alg:algpack1}  Item 1:
@@ -297,7 +300,7 @@ The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg
 	
 \end{algorithm}
 
-
+\fi%END of comment
 
 \paragraph{Integer packing:} this was explored as an alternative to the bit slicing.  Since each number is a trinary number, the multiplication of each row by the output vector can be any number between -256 to 256. To explore this option, we represented each number by 9 bits, and packed 7 numbers into each word. This was expected to result in time saving of up to $\times 7$. Testing this option indeed proved to be significantly slower than the first method of packing. We therefore continued using the first packing method of packing instead.
 Note: Since each trinary number can be either 0,1 or 2, we can add up to 255 numbers and never exceed 510. Moreover, if we take a random sample, we can add 256 numbers and the probability of carryover is negligible. We use this to multiply a packed trinary vector with a trinary matrix with 256 columns (see algorithm below).
