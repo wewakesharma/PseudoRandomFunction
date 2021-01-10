@@ -1,9 +1,10 @@
 %!TEX root = ../main.tex
+\section{New Protocol}
 
-\section{Technical Overview of Results}
-\label{sec:technical_overview}
+%TODO: here we should describe the protocols implemented
+%should be rewritten
 
-\subsection{Protocols Implemented}
+\iffalse
 
 In this work we implemented a few distributed protocols of the PRF introduced by Boneh et. Al  \cite{darkmatter}:
 
@@ -11,7 +12,8 @@ $PRF_k(x) = R \times (K \times x \mod 2)  \mod 3 $
 
 where $R$ is a randomization matrix in $Z_3$, $K$ is an $m \times n$ key and $x$ is an $n$-length vector. Specifically, we present a new protocol for implementing this PRF. The protocol uses a shared input and output which provides improved performance over the original protocol described in \cite{darkmatter}. For context, we also implement the original protocol \cite{darkmatter} . We also introduce an improved OPRF (Oblivious PRF) protocol, in which one party has the input and one has the key. Below are  details of the protocols.
 
-\subsubsection{PRF}
+\subsection{PRF}
+
 
 \paragraph{notations:} below are the notations we use to describe the protocols: \\
 $K$ is the key, represented by an $m \times n$ matrix \\
@@ -20,6 +22,7 @@ $R_x, r_k$ - pre-shared randomness for key $K$ and input $x$ \\
 $r$ - random vector in $Z_3$]
 We use capital letters for matrices, and $\vec{x}$ notation for vectors \\
 
+\section{Appendix}
 
 \paragraph{Original - Distributed Input Distributed Output (DIDO) - PRF Protocol}
 
@@ -29,7 +32,7 @@ The protocol is described in \figref{algorithm1}.
 
 \begin{figure*}[ht]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/old_protocol.jpg}
+	\includegraphics[width=1.2\textwidth]{images/old_protocol2.pdf}
 	\vspace{-2mm}
 	\caption{Old wPRF protocol}
 	\label{old_protocol.fig}
@@ -38,61 +41,61 @@ The protocol is described in \figref{algorithm1}.
 
 
 \begin{algorithm}
-\caption{2-Party dark matter PRF}
-\label{2PartyDarkMatter}
-
-
+	\caption{2-Party dark matter PRF}
+	\label{2PartyDarkMatter}
+	
+	
 	Input: ${K_{m\times n} }(i)$ and $\vec{Inp}(i_n)$ key and user input of each user,\\
 	$(i = 1...2, n,m = 256)$\\ 
 	Output: user 1: $\vec{K} \times x + \vec{r}$\\
 	user2: $-  \vec{r}$\\   %SVec = salt vectorx`
 	
-		\begin{algorithmic}
-			
-\STATE \textbf{Preprocessing}:
-
+	\begin{algorithmic}
+		
+		\STATE \textbf{Preprocessing}:
+		
 		Output: 	user 1: $\vec{R_a}, \vec{r_b}$ - pre-shared randomness \\
-						 user 2: $\vec{r_x} $- pre-share randomness \\
-
-\STATE  \textbf{Stage\ 1}: calculate $a \times b \plus c$
-
-	input: user 1: ${\vec{A}, \vec{b}, {\vec R_a}, \vec{r_b} } $ \\
-			  user 2: ${\vec{x}, \vec{r_x},  \vec{z} }$ \\
-
-	  \begin{enumerate}
-	
-	\item user 2 $\vec{m_x} = \vec{x} -\vec{r_x}  \rightarrow  $  user 1
-	
-	\item user 1  $ \leftarrow   \vec{M_a} =  \vec{A} - \vec{r_A}   $ user 2
-	
-	\item user 2 $ \vec{m_b} = \vec{R_a} \times \vec{m_x} + \vec{b}  - \vec{r_b}  \rightarrow $ user 1
-\end{enumerate}
-
-	Output: $user 1: \vec{- b} $  \\
-                 $user 2: \vec{M_a} \times \vec{x} + \vec{m_b} + \vec{z} = \vec{A} \vec{x} + \vec{b}$ \\
-
-\STATE  \textbf{Stage\ 2}: Oblivious Transfer
-input: 	 user 1:  $\vec{r_1}, \vec{r_2}, \vec{r_a}, \vec{r_b}$ - vectors in $Z_3$
-			user 2:  $\vec{x}, \vec{r_x}$ - vectors in $Z_2$, $\vec{z} $ - vector in $Z_3$
+		user 2: $\vec{r_x} $- pre-share randomness \\
+		
+		\STATE  \textbf{Stage\ 1}: calculate $a \times b \plus c$
+		
+		input: user 1: ${\vec{A}, \vec{b}, {\vec R_a}, \vec{r_b} } $ \\
+		user 2: ${\vec{x}, \vec{r_x},  \vec{z} }$ \\
+		
+		\begin{enumerate}
+			
+			\item user 2 $\vec{m_x} = \vec{x} -\vec{r_x}  \rightarrow  $  user 1
+			
+			\item user 1  $ \leftarrow   \vec{M_a} =  \vec{A} - \vec{r_A}   $ user 2
+			
+			\item user 2 $ \vec{m_b} = \vec{R_a} \times \vec{m_x} + \vec{b}  - \vec{r_b}  \rightarrow $ user 1
+		\end{enumerate}
+		
+		Output: $user 1: \vec{- b} $  \\
+		$user 2: \vec{M_a} \times \vec{x} + \vec{m_b} + \vec{z} = \vec{A} \vec{x} + \vec{b}$ \\
+		
+		\STATE  \textbf{Stage\ 2}: Oblivious Transfer
+		input: 	 user 1:  $\vec{r_1}, \vec{r_2}, \vec{r_a}, \vec{r_b}$ - vectors in $Z_3$
+		user 2:  $\vec{x}, \vec{r_x}$ - vectors in $Z_2$, $\vec{z} $ - vector in $Z_3$
+		
+		
+		\begin{enumerate}
+			\item user 1  $ \leftarrow   \vec{m_x} = \vec{x} \oplus \vec{r_x}$   user 2
+			
+			\item user 1:  $  \vec{m_1} = \vec(- m_x)  \vec{r_a} + \vec{m_x} \vec{r_b} + \vec{r_1}   \rightarrow $   user 2
+			
+			\item user 1:  $  \vec{m_2} = \vec(m_x)  \vec{r_a} + \vec{- m_x} \vec{r_b} + \vec{r_2}  \rightarrow $   user 2
 			
 			
-			\begin{enumerate}
-				\item user 1  $ \leftarrow   \vec{m_x} = \vec{x} \oplus \vec{r_x}$   user 2
-			 
-				\item user 1:  $  \vec{m_1} = \vec(- m_x)  \vec{r_a} + \vec{m_x} \vec{r_b} + \vec{r_1}   \rightarrow $   user 2
-				
-				\item user 1:  $  \vec{m_2} = \vec(m_x)  \vec{r_a} + \vec{- m_x} \vec{r_b} + \vec{r_2}  \rightarrow $   user 2
-				
-				
-			\end{enumerate}
-			
-output:  user 2: $\vec{w}:= \vec{x} \times \vec{m_2}+ - \vec{x}  \times \vec{m_1} - \vec{z}$
-					
-
-\STATE  \textbf{stage 3}: $Z_3$ randomization  
-
-\end{algorithmic}
-
+		\end{enumerate}
+		
+		output:  user 2: $\vec{w}:= \vec{x} \times \vec{m_2}+ - \vec{x}  \times \vec{m_1} - \vec{z}$
+		
+		
+		\STATE  \textbf{stage 3}: $Z_3$ randomization  
+		
+	\end{algorithmic}
+	
 \end{algorithm}
 
 
@@ -167,6 +170,11 @@ This is a new OPRF protocol, which improved the performance over the original OP
 	\end{algorithmic}
 \end{algorithm}
 
+\fi
+
+
+\section{Implementation}
+\label{sec:technical_overview}
 
 
 
@@ -178,17 +186,15 @@ The input variable to the PRF functions are the key $K$ which is of size $m \tim
 To save storage space, the key was implemented as a Toeplitz matrix, requiring $2 \cdot n$ bits of storage space.
 In phase 3 of the algorithm, a randomization matrix is used which is of size $r \times n = 81 \times 256$, resulting in entropy of 128 bits.
 
-\subsection{Optimizations}
-
-\subsubsection{packing in $Z_2$}
+\subsection{representing $Z_2$ vector}
 
 Bit slicing: this bit-wise packing technique was used to optimize the run-time, each 64 bits were represented by a word. Since each key is of size $m \times n$ and each input is a vactor of size $n$, it is possible to pack each 64 rows into $m$ words. This may result in time saving of up to $\times 64$ of the run-time.
 
-\subsubsection{Packing in $Z_3$}
+\subsection{Representing $Z_3$ vector}
 
 To optimize the randomization in $Z_3$, which requires a matrix-vector multiplication in the last phase of the PRF calculation, we implement two optimization methods:
 
-\paragraph{Bit slicing:} this was done by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. 
+\subsubsection{Bit slicing and operations:} this was done by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. 
 
 A few operations, such as addition, subtraction and multiplication mod 3 required extra calculations. One of the properties that were utilized to implement this was:\\
 mult-by-2 $\mod 3  \leftrightarrow$ negation $ \mod 3 \leftrightarrow$ swap the MSB and LSB\\
@@ -203,7 +209,7 @@ input:   $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
 					$\vec{select}$ - binary vector
 
 \begin{table}[ht]
-\caption{Multi-row table}
+\caption{Operations in $Z_3$}
 \begin{center}
 \begin{tabular}{|c|c|}
     \hline
@@ -302,8 +308,8 @@ input:   $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
 
 \fi%END of comment
 
-\paragraph{Integer packing:} this was explored as an alternative to the bit slicing.  Since each number is a trinary number, the multiplication of each row by the output vector can be any number between -256 to 256. To explore this option, we represented each number by 9 bits, and packed 7 numbers into each word. This was expected to result in time saving of up to $\times 7$. Testing this option indeed proved to be significantly slower than the first method of packing. We therefore continued using the first packing method of packing instead.
-Note: Since each trinary number can be either 0,1 or 2, we can add up to 255 numbers and never exceed 510. Moreover, if we take a random sample, we can add 256 numbers and the probability of carryover is negligible. We use this to multiply a packed trinary vector with a trinary matrix with 256 columns (see algorithm below).
+\subsubsection{Integer packing and operations:} this was explored as an alternative to the bit slicing.  Since each number is a trinary number, the multiplication of each row by the output vector can be any number between -256 to 256. To explore this option, we represented each number by 9 bits, and packed 7 numbers into each word. This was expected to result in time saving of up to $\times 7$. Testing this option indeed proved to be significantly slower than the first method of packing. We therefore continued using the first packing method of packing instead.
+Note: Since each trinary number can be either 0,1 or 2, we can add up to 255 numbers and never exceed 511. Moreover, if we take a random sample, we can add 256 numbers and the probability of carryover is negligible. We use this to multiply a packed trinary vector with a trinary matrix with 256 columns (see algorithm below).
 	
 	$x_0 \dots x_6 \epsilon Z_3 = {0,1,2}$
 	
@@ -312,7 +318,7 @@ Note: Since each trinary number can be either 0,1 or 2, we can add up to 255 num
 
 %TODO: IS THIS CORRECT? CHECK AND CORRECT
 
-\paragraph{Using a lookup table: }
+\paragraph{Matrix multiplication - using a lookup table: }
 List of things to be written\\
 
 \textbf{Comment 1: What is lookup table, explain with context?}\\
@@ -332,7 +338,7 @@ Lookup table is a matrix whose elements are precomputed product value of packed 
 To this end, the randomization matrix is assumed to be constant and divided into 16 matrices of size $81 \times 16$. A lookup table of size $16 x 2^{256}$ is created during the pre-processing stage. During runtime, the input is divided to MSB and LSB, and each consecutive 16 bits (16 rows in the matrix) are used as separate input to the lookup table.
 
 
-
+\subsection{Putting it all together}
 
 
 \section{Analysis}

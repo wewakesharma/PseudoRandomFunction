@@ -2,17 +2,17 @@
 \BOOKMARK [2][-]{subsection.1.1}{Applications}{section.1}% 2
 \BOOKMARK [1][-]{section.2}{Background}{}% 3
 \BOOKMARK [1][-]{section.3}{Related Work}{}% 4
-\BOOKMARK [1][-]{section.4}{Technical Overview of Results}{}% 5
-\BOOKMARK [2][-]{subsection.4.1}{Protocols Implemented}{section.4}% 6
-\BOOKMARK [3][-]{subsubsection.4.1.1}{PRF}{subsection.4.1}% 7
-\BOOKMARK [2][-]{subsection.4.2}{OPRF}{section.4}% 8
-\BOOKMARK [2][-]{subsection.4.3}{Parameters}{section.4}% 9
-\BOOKMARK [2][-]{subsection.4.4}{Optimizations}{section.4}% 10
-\BOOKMARK [3][-]{subsubsection.4.4.1}{packing in Z2}{subsection.4.4}% 11
-\BOOKMARK [3][-]{subsubsection.4.4.2}{Packing in Z3}{subsection.4.4}% 12
-\BOOKMARK [1][-]{section.5}{Analysis}{}% 13
-\BOOKMARK [1][-]{section.6}{Benchmarking}{}% 14
-\BOOKMARK [1][-]{section.7}{Experimental Results}{}% 15
-\BOOKMARK [1][-]{section.8}{Conclusion and Future Work}{}% 16
-\BOOKMARK [1][-]{section.9}{Acknowledgement}{}% 17
-\BOOKMARK [1][-]{section.10}{References}{}% 18
+\BOOKMARK [1][-]{section.4}{New Protocol}{}% 5
+\BOOKMARK [1][-]{section.5}{Implementation}{}% 6
+\BOOKMARK [2][-]{subsection.5.1}{Parameters}{section.5}% 7
+\BOOKMARK [2][-]{subsection.5.2}{representing Z2 vector}{section.5}% 8
+\BOOKMARK [2][-]{subsection.5.3}{Representing Z3 vector}{section.5}% 9
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Bit slicing and operations:}{subsection.5.3}% 10
+\BOOKMARK [3][-]{subsubsection.5.3.2}{Integer packing and operations:}{subsection.5.3}% 11
+\BOOKMARK [2][-]{subsection.5.4}{Putting it all together}{section.5}% 12
+\BOOKMARK [1][-]{section.6}{Analysis}{}% 13
+\BOOKMARK [1][-]{section.7}{Benchmarking}{}% 14
+\BOOKMARK [1][-]{section.8}{Experimental Results}{}% 15
+\BOOKMARK [1][-]{section.9}{Conclusion and Future Work}{}% 16
+\BOOKMARK [1][-]{section.10}{Acknowledgement}{}% 17
+\BOOKMARK [1][-]{section.11}{References}{}% 18
