@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  9 JAN 2021 18:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  9 JAN 2021 22:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -905,19 +905,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 318--322
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 323--325
+Underfull \hbox (badness 10000) in paragraph at lines 323--326
 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 325.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 326.
 
 (/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 325.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 326.
 
-Overfull \hbox (68.23802pt too wide) in paragraph at lines 348--371
+Overfull \hbox (68.23802pt too wide) in paragraph at lines 349--372
  [] 
  []
 
@@ -926,9 +926,9 @@ as been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.388 
+l.384 
       ]
-Overfull \hbox (36.62958pt too wide) in paragraph at lines 394--419
+Overfull \hbox (36.62958pt too wide) in paragraph at lines 395--420
  [] 
  []
 
@@ -980,7 +980,7 @@ texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/te
 xlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texl
 ive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on mainPRF.pdf (7 pages, 330261 bytes).
+Output written on mainPRF.pdf (7 pages, 331284 bytes).
 PDF statistics:
  232 PDF objects out of 1000 (max. 8388607)
  204 compressed objects within 3 object streams

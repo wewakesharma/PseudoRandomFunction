@@ -320,13 +320,14 @@ List of things to be written\\
 \textbf{Comment 3: How does it work, please explain with a diagram, if possible}\\
 \textbf{Comment 4: What are the disadvantage(s) of having/using a lookup table}\\ \\ \\ 
 
-In order to further optimize the run-time, we created a lookup table to replace the matrix-vector multiplication in phase 3. Implementing protocol using this method consisted of two substages in phase 3:\\
+Phase 2 of the protocols(DIDO, oPRF) outputs 256 bits $\in \mathbb{Z}_2$. Phase 3 takes output of phase 2 and performs a matrix vector multiplication with a public randomization matrix $Rmat \in \mathbb{Z}_{3}^{t \times m} $ to output $\mathbb{Z}_{3}^{t} $
+Naive method of performing this matrix-vector multiplication will be to multiply and add individual bits, which will take a long time. An optimized and faster version was also implemented as a function using packed bits. This packed version of multiplication runs way faster than the naive implementation. In order to further optimize the run-time, a lookup table is used to perform the task. Implementing protocol using the lookup method consists of two substages in phase 3:\\
 \begin{itemize}
 	\item{\textbf{Preprocessing Stage: } Creation of lookup table}
 	\item{\textbf{Multiplication Stage: } Usage of lookup table}
 \end{itemize}
 
-
+Lookup table is a matrix whose elements are precomputed product value of packed inputs(output of phase 2) with all possible combinations of similar sized packed values. Suppose, if inputs are packed as a 8-bit word, the matrix will contain all possible combination of product of 8-bit input and all values from 0 to $2^{8}-1$
 
 To this end, the randomization matrix is assumed to be constant and divided into 16 matrices of size $81 \times 16$. A lookup table of size $16 x 2^{256}$ is created during the pre-processing stage. During runtime, the input is divided to MSB and LSB, and each consecutive 16 bits (16 rows in the matrix) are used as separate input to the lookup table.
 
