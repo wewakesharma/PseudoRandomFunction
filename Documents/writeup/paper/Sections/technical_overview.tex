@@ -196,7 +196,7 @@ To optimize the randomization in $Z_3$, which requires a matrix-vector multiplic
 
 \subsubsection{Bit slicing and operations:} this was done by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. 
 
-A few operations, such as addition, subtraction and multiplication mod 3 required extra calculations. One of the properties that were utilized to implement this was:\\
+The Addition, subtraction, multiplication and MUX mod 3 were implemented using the protocols defined in table ref{tab:multicol}. One of the properties that were utilized to implement this was:\\
 mult-by-2 $\mod 3  \leftrightarrow$ negation $ \mod 3 \leftrightarrow$ swap the MSB and LSB\\
 
 Such a vector is sometimes being represented as a vector of $2 \times n$ bits. One example is when this vector is sent as an input to the Oblivious Transfer mechanism. 
@@ -321,10 +321,10 @@ Note: since each trinary number can be either 0,1 or 2, we can add up to 255 num
 \paragraph{Matrix multiplication - using a lookup table: }
 List of things to be written\\
 
-\textbf{Comment 1: What is lookup table, explain with context?}\\
-\textbf{Comment 2: Why is it required and what does it replace, are there any advantage}\\
-\textbf{Comment 3: How does it work, please explain with a diagram, if possible}\\
-\textbf{Comment 4: What are the disadvantage(s) of having/using a lookup table}\\ \\ \\ 
+%\textbf{Comment 1: What is lookup table, explain with context?}\\
+%\textbf{Comment 2: Why is it required and what does it replace, are there any advantage}\\
+%\textbf{Comment 3: How does it work, please explain with a diagram, if possible}\\
+%\textbf{Comment 4: What are the disadvantage(s) of having/using a lookup table}\\ \\ \\ 
 
 \begin{figure*}[ht]
 	\centering
@@ -350,7 +350,7 @@ Implementing protocol using the lookup method consists of two substages in phase
 The prime advantage of replacing matrix vector multiplication with lookup table is speed improvement. This is due to creation of lookup table at the preprocessing stage of the protocol. While creation of a lookup table takes a prolong period of time, the multiplication stage is as simple as accessing an element from a matrix. This speeds up the last stage of the protocol, hence significantly improving the overall speed of execution.
 
 
-To this end, the randomization matrix is assumed to be constant and divided into 16 matrices of size $81 \times 16$. A lookup table of size $16 \times 2^{256}$ is created during the pre-processing stage. During runtime, the input is divided to MSB and LSB, and each consecutive 16 bits (16 rows in the matrix) are used as separate input to the lookup table. 
+To this end, the randomization matrix is assumed to be constant and divided into 16 matrices of size $81 \times 16$. A lookup table of size $16 \times 2^{16}$ is created during the pre-processing stage. During runtime, the input is divided to MSB and LSB, and each consecutive 16 bits (16 rows in the matrix) are used as separate input to the lookup table.  Similarly, we explored dividing the table into 8 matrices of size $81 \times 32$, resulting in a lookup table of size $8  \times 2^{32} $. However, due to the large table size, this crashed the system during runtime and we were not able to get results for it.
 
 There are two challenges of using a lookup table as compared to matrix-vector multiplication
 \begin{itemize}
