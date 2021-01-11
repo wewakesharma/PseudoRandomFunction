@@ -211,7 +211,7 @@ input:   $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
 \begin{table}[ht]
 \caption{Operations in $Z_3$}
 \begin{center}
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|l|}
     \hline
     \textbf{Operations} & \textbf{Methods}\\
     \hline
@@ -308,8 +308,8 @@ input:   $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
 
 \fi%END of comment
 
-\subsubsection{Integer packing and operations:} this was explored as an alternative to the bit slicing.  Since each number is a trinary number, the multiplication of each row by the output vector can be any number between -256 to 256. To explore this option, we represented each number by 9 bits, and packed 7 numbers into each word. This was expected to result in time saving of up to $\times 7$. Testing this option indeed proved to be significantly slower than the first method of packing. We therefore continued using the first packing method of packing instead.
-Note: Since each trinary number can be either 0,1 or 2, we can add up to 255 numbers and never exceed 511. Moreover, if we take a random sample, we can add 256 numbers and the probability of carryover is negligible. We use this to multiply a packed trinary vector with a ternary matrix with 256 columns (see algorithm below).
+\subsubsection{Integer packing and operations:} As an alternative to bit splicing, integer packing was explored. Since each number is a trinary number, the multiplication of each row by the output vector can be any number between -256 to 256. To explore this option, we represented each number by 9 bits, and packed 7 numbers into each word. This was expected to result in time saving of up to $\times 7$. Testing this option indeed proved to be significantly slower than the first method of packing. We therefore continued using the first packing method of packing instead.
+Note: since each trinary number can be either 0,1 or 2, we can add up to 255 numbers and never exceed 511. Moreover, if we take a random sample, we can add 256 numbers and the probability of carryover is negligible. We use this to multiply a packed trinary vector with a ternary matrix with 256 columns (see algorithm below).
 	
 	$x_0 \dots x_6 \epsilon Z_3 = {0,1,2}$
 	
