@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  11 JAN 2021 12:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  11 JAN 2021 16:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -653,12 +653,6 @@ LaTeX Warning: Label `CommunicationCosts' multiply defined.
 
 LaTeX Warning: Label `CommunicationCosts@cref' multiply defined.
 
-
-LaTeX Warning: Label `RuntimeTable' multiply defined.
-
-
-LaTeX Warning: Label `RuntimeTable@cref' multiply defined.
-
 )
 \openout1 = `mainPRF.aux'.
 
@@ -895,13 +889,14 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
                                                   \fi \fi 
 l.351 
        <./images/lookup.jpg>]
-Overfull \hbox (68.23802pt too wide) in paragraph at lines 379--402
+Overfull \hbox (38.21448pt too wide) in paragraph at lines 379--394
  [] 
  []
 
 
-Overfull \hbox (25.07884pt too wide) in paragraph at lines 418--433
- [] 
+Overfull \hbox (17.81635pt too wide) in paragraph at lines 373--402
+[]\OT1/cmr/m/n/10.95 =============================\OT1/cmr/bx/n/10.95 THE FOL-L
+OW-ING TA-BLE RE-PLACES
  []
 
 [4pdfTeX warning (ext4): destination with the same identifier (name{table.2}) h
@@ -909,22 +904,16 @@ as been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.446 
-      pdfTeX warning (ext4): destination with the same identifier (name{table.3
-}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.446 
+l.412 
       ]
-Overfull \hbox (36.62958pt too wide) in paragraph at lines 457--482
+Overfull \hbox (36.62958pt too wide) in paragraph at lines 418--443
  [] 
  []
 
 ) (./Sections/conclusion.tex) (./Sections/acknowledgement.tex)
 (./Sections/references.tex))
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 30.
- [5pdfTeX warning (ext4): destination with the same identifier (name{table.4}) 
+ [5pdfTeX warning (ext4): destination with the same identifier (name{table.3}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
@@ -949,10 +938,10 @@ Package logreq Info: Writing requests to 'mainPRF.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 16197 strings out of 492616
- 280184 string characters out of 6129482
- 572925 words of memory out of 5000000
- 19869 multiletter control sequences out of 15000+600000
+ 16194 strings out of 492616
+ 280150 string characters out of 6129482
+ 571925 words of memory out of 5000000
+ 19867 multiletter control sequences out of 15000+600000
  12174 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  37i,12n,45p,917b,1214s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -970,10 +959,10 @@ exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texl
 ive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texli
 ve/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on mainPRF.pdf (5 pages, 210614 bytes).
+Output written on mainPRF.pdf (5 pages, 211289 bytes).
 PDF statistics:
- 180 PDF objects out of 1000 (max. 8388607)
- 156 compressed objects within 2 object streams
- 33 named destinations out of 1000 (max. 500000)
+ 179 PDF objects out of 1000 (max. 8388607)
+ 155 compressed objects within 2 object streams
+ 32 named destinations out of 1000 (max. 500000)
  150 words of extra memory for PDF output out of 10000 (max. 10000000)
 

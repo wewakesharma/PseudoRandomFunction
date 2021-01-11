@@ -367,49 +367,10 @@ There are two challenges of using a lookup table as compared to matrix-vector mu
 
 \section{Analysis}
 
-Table \ref{CommCosts} includes the computation and communication results for the different protocol.
-
-%TODO: Communication results - Consider to be deleted
-
-\begin{table}[htbp]
-	\label{CommCosts}
-	%[h]
-	\begin{center}
-		%\begin{minipage}{10cm}
-		\begin{tabular}{|c|c|c|c|c|}
-			\hline
-			\textbf{Protocol} & \textbf{Packed }  &  \textbf{$Z_3$ lookup table} & \textbf{Computation} & Communication Costs \\
-			\hline
-			\hline
-			\textbf{Centralized}  & N  & N  &  & 0	 \\
-			\hline
-			\textbf{Centralized} & Y  &  N & & 0 \\
-			\hline
-			\textbf{Original (DIDO) PRF protocol} & Y	& N &   & 	\\
-			\hline
-			\textbf{Our  (DIDO) PRF algorithm} & Y & N &	 & (4n + 2m) \\
-			\hline
-			\textbf{Our  (DIDO) PRF algorithm} & Y & Y &  &  (4n + 2m)	\\
-			\hline
-			\textbf{Our OPRF} & Y & N &  &  	\\
-			\hline
-			\textbf{Our OPRF} & Y & Y &  &  	\\
-			\hline
-			\textbf{Discrete log-based PRF} &  - & - &  &  \\
-			\hline
-			
-		\end{tabular}
-		
-		\vspace{-1mm}
-		\caption{Run-time of different protocols}
-		\label{RuntimeTable}
-		%\end{minipage}
-	\end{center}
-	\vspace{-5mm}
-\end{table}
+Table \ref{CommunicationCosts} includes the computation and communication results for the different protocol.
 
 %New Communication Cost
-
+=============================\textbf{THE FOLLOWING TABLE REPLACES PREVIOUS ONE}=================
 \begin{table}[htbp]
 	\label{CommunicationCosts}
 	%[h]
@@ -420,11 +381,11 @@ Table \ref{CommCosts} includes the computation and communication results for the
 			\textbf{Protocol} & \textbf{Rounds}  & \textbf{Message Counts} &  \textbf{Preprocessing Size} & \textbf{Comm Costs}  \\
 			\hline
 			\hline
-			\textbf{Old Protocol}  & 3  & 4 &  0 &	 \\
+			\textbf{Old Protocol}  & 4  & 11 & 8n & $(6n+3m+2t)$ \\
 			\hline
-			\textbf{DIDO PRF protocol} & Y	& N & &  	\\
+			\textbf{DIDO PRF protocol} & 2	& 8 & (2s+m)/(4n+7m) & $(4n+2m+2t)$  	\\
 			\hline
-			\textbf{OPRF} & 3 & N & &  	\\
+			\textbf{OPRF} & 3 & 5 & - &  $(2n+2m+t) bits$	\\
 			\hline
 			\textbf{Discrete log-based PRF} &  - & - &  & \\
 			\hline
