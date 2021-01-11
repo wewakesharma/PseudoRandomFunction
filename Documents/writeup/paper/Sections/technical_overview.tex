@@ -289,7 +289,7 @@ input:   $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
 	\end{algorithm}
 
 \begin{algorithm}
-		\caption{Mux implementation of two trinary vectors $Z_3$}
+		\caption{MUX implementation of two trinary vectors $Z_3$}
 			\label{alg:algpack4} 
 
 	
@@ -309,7 +309,7 @@ input:   $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
 \fi%END of comment
 
 \subsubsection{Integer packing and operations:} this was explored as an alternative to the bit slicing.  Since each number is a trinary number, the multiplication of each row by the output vector can be any number between -256 to 256. To explore this option, we represented each number by 9 bits, and packed 7 numbers into each word. This was expected to result in time saving of up to $\times 7$. Testing this option indeed proved to be significantly slower than the first method of packing. We therefore continued using the first packing method of packing instead.
-Note: Since each trinary number can be either 0,1 or 2, we can add up to 255 numbers and never exceed 511. Moreover, if we take a random sample, we can add 256 numbers and the probability of carryover is negligible. We use this to multiply a packed trinary vector with a trinary matrix with 256 columns (see algorithm below).
+Note: Since each trinary number can be either 0,1 or 2, we can add up to 255 numbers and never exceed 511. Moreover, if we take a random sample, we can add 256 numbers and the probability of carryover is negligible. We use this to multiply a packed trinary vector with a ternary matrix with 256 columns (see algorithm below).
 	
 	$x_0 \dots x_6 \epsilon Z_3 = {0,1,2}$
 	
@@ -335,14 +335,14 @@ Naive method of performing this matrix-vector multiplication will be to multiply
 
 Lookup table is a matrix whose elements are precomputed product value of packed inputs(output of phase 2) with all possible combinations of similar sized packed values. Suppose, if inputs are packed as a 8-bit word, the matrix will contain all possible combination of product of 8-bit input and all values from 0 to $2^{8}-1$. \\
 
-The prime advantage of replacing matrix vector multiplication with lookup table is speed improvement. This is due to creation of lookup table at the preprocessing stage of the protocol. This means the lookup table can be created beforehand and 
+The prime advantage of replacing matrix vector multiplication with lookup table is speed improvement. This is due to creation of lookup table at the preprocessing stage of the protocol. This means the lookup table can be created beforehand and during the protocol just use the 
 
 To this end, the randomization matrix is assumed to be constant and divided into 16 matrices of size $81 \times 16$. A lookup table of size $16 \times 2^{256}$ is created during the pre-processing stage. During runtime, the input is divided to MSB and LSB, and each consecutive 16 bits (16 rows in the matrix) are used as separate input to the lookup table. 
 
 There are two challenges of using a lookup table instead of matrix-vector multiplication
 \begin{itemize}
 	\item{Huge storage requirement/ more time in preprocessing}
-	\item{Find a perfect value that can balance between less storage and speedy lookup.}
+	\item{Find a perfect value that can balance between less storage and speedy lookup: Finding }
 \end{itemize}
 
 \subsection{Putting it all together}
@@ -352,7 +352,7 @@ There are two challenges of using a lookup table instead of matrix-vector multip
 
 Table \ref{CommCosts} includes the computation and communication results for the different protocol.
 
-%TODO: ADD computation and communication results
+%TODO: Communication results - Consider to be deleted
 
 \begin{table}[htbp]
 	\label{CommCosts}
@@ -390,6 +390,38 @@ Table \ref{CommCosts} includes the computation and communication results for the
 	\end{center}
 	\vspace{-5mm}
 \end{table}
+
+%New Communication Cost
+
+\begin{table}[htbp]
+	\label{CommunicationCosts}
+	%[h]
+	\begin{center}
+		%\begin{minipage}{10cm}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\textbf{Protocol} & \textbf{Rounds}  & \textbf{Message Counts} &  \textbf{Preprocessing Size} & \textbf{Comm Costs}  \\
+			\hline
+			\hline
+			\textbf{Old Protocol}  & 3  & 4 &  0 &	 \\
+			\hline
+			\textbf{DIDO PRF protocol} & Y	& N & &  	\\
+			\hline
+			\textbf{OPRF} & 3 & N & &  	\\
+			\hline
+			\textbf{Discrete log-based PRF} &  - & - &  & \\
+			\hline
+			
+		\end{tabular}
+		
+		\vspace{-1mm}
+		\caption{Communication Analysis of different protocols}
+		\label{CommunicationCosts}
+		%\end{minipage}
+	\end{center}
+	\vspace{-5mm}
+\end{table}
+
 
 \section{Benchmarking}
 
