@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  11 JAN 2021 11:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  11 JAN 2021 12:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -895,12 +895,12 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
                                                   \fi \fi 
 l.351 
        <./images/lookup.jpg>]
-Overfull \hbox (68.23802pt too wide) in paragraph at lines 375--398
+Overfull \hbox (68.23802pt too wide) in paragraph at lines 379--402
  [] 
  []
 
 
-Overfull \hbox (25.07884pt too wide) in paragraph at lines 414--429
+Overfull \hbox (25.07884pt too wide) in paragraph at lines 418--433
  [] 
  []
 
@@ -909,15 +909,15 @@ as been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.447 
+l.446 
       pdfTeX warning (ext4): destination with the same identifier (name{table.3
 }) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.447 
+l.446 
       ]
-Overfull \hbox (36.62958pt too wide) in paragraph at lines 453--478
+Overfull \hbox (36.62958pt too wide) in paragraph at lines 457--482
  [] 
  []
 
@@ -970,7 +970,7 @@ exlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/tex
 live/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texl
 ive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texli
 ve/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on mainPRF.pdf (5 pages, 208617 bytes).
+Output written on mainPRF.pdf (5 pages, 210614 bytes).
 PDF statistics:
  180 PDF objects out of 1000 (max. 8388607)
  156 compressed objects within 2 object streams

@@ -335,7 +335,7 @@ List of things to be written\\
 	\vspace{-5mm}
 \end{figure*}
 
-Phase 2 of the protocols(DIDO, oPRF) outputs 256 bits $\in \mathbb{Z}_2$. Phase 3 takes output of phase 2 and performs a matrix vector multiplication with a public randomization matrix $Rmat \in \mathbb{Z}_{3}^{t \times m} $ to output $\mathbb{Z}_{3}^{t} $\\
+Phase 2 of the protocols(DIDO, oPRF) outputs m bits $\in \mathbb{Z}_2$. Phase 3 takes output of phase 2 and performs a matrix vector multiplication with a public randomization matrix $Rmat \in \mathbb{Z}_{3}^{t \times m} $ to output $\mathbb{Z}_{3}^{t} $\\
 Naive method of performing this matrix-vector multiplication will be to multiply and add individual bits, which will take a long time. An optimized and faster version was also implemented as a function using packed bits. This packed version of multiplication runs way faster than the naive implementation. In order to further optimize the run-time, a lookup table is used to perform the task.\\
 
 Lookup table is a matrix whose elements are precomputed product value of packed inputs(output of phase 2) with all possible combinations of similar sized packed values. Suppose, if inputs are packed as a 8-bit word, the matrix will contain all possible combination of product of 8-bit input and all values from 0 to $2^{8}-1$. \\
@@ -360,6 +360,10 @@ There are two challenges of using a lookup table as compared to matrix-vector mu
 
 \subsection{Putting it all together}
 
+\begin{itemize}
+	\item{\textbf{Implemented DIDO protocol was 50.7\% faster and oPRF was 54\% than implemented wPRF protocol described in TCC'18.}}
+	\item{\textbf{Using lookup table, the speed increase was significant at 70\% and 76.5\% for DIDO and oPRF respectively.}}
+\end{itemize}
 
 \section{Analysis}
 
