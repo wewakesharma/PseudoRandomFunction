@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 JAN 2021 17:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 JAN 2021 22:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -837,29 +837,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 322--323
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 324--328
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 324--328
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 324--328
-
- []
-
-[2pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
-as been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.328 
-      ]
-<images/lookup.jpg, id=97, 722.7pt x 406.51875pt>
+<images/lookup.jpg, id=89, 722.7pt x 406.51875pt>
 File: images/lookup.jpg Graphic file (type jpg)
 <use images/lookup.jpg>
 Package pdftex.def Info: images/lookup.jpg  used on input line 331.
@@ -869,7 +847,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 338--340
 
  []
 
+[2pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
+as been already used, duplicate ignored
 
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.340 
+      ]
 Underfull \hbox (badness 10000) in paragraph at lines 341--342
 
  []
@@ -891,7 +875,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.351 
+l.354 
        <./images/lookup.jpg>]
 Overfull \hbox (38.21448pt too wide) in paragraph at lines 379--394
  [] 
@@ -903,19 +887,19 @@ Overfull \hbox (17.81635pt too wide) in paragraph at lines 373--402
 OW-ING TA-BLE RE-PLACES
  []
 
-[4pdfTeX warning (ext4): destination with the same identifier (name{table.2}) h
-as been already used, duplicate ignored
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.412 
-      ]
 Overfull \hbox (36.62958pt too wide) in paragraph at lines 418--443
  [] 
  []
 
 ) (./Sections/conclusion.tex) (./Sections/acknowledgement.tex)
-(./Sections/references.tex))
+(./Sections/references.tex)) [4pdfTeX warning (ext4): destination with the same
+ identifier (name{table.2}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.29 
+     ]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 30.
  [5pdfTeX warning (ext4): destination with the same identifier (name{table.3}) 
 has been already used, duplicate ignored
@@ -944,11 +928,11 @@ Package logreq Info: Writing requests to 'mainPRF.run.xml'.
 Here is how much of TeX's memory you used:
  16043 strings out of 492649
  273338 string characters out of 6129622
- 561949 words of memory out of 5000000
+ 563949 words of memory out of 5000000
  19674 multiletter control sequences out of 15000+600000
  12174 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,12n,45p,917b,1202s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,11n,45p,917b,1290s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -963,7 +947,7 @@ exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/tex
 live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texl
 ive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texli
 ve/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on mainPRF.pdf (5 pages, 211315 bytes).
+Output written on mainPRF.pdf (5 pages, 208623 bytes).
 PDF statistics:
  179 PDF objects out of 1000 (max. 8388607)
  155 compressed objects within 2 object streams

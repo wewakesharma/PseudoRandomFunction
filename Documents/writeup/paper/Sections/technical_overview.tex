@@ -204,9 +204,9 @@ The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg
 
 % TODO: replace with a table - COMPLETED
 
-input:   $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
-					$\vec{l_2}, \vec{m_2}$ - LSB and MSB vectors of value 2
-					$\vec{select}$ - binary vector
+input:   $\vec{l_1}, {m_1}$ - LSB and MSB vectors of value 1  \\
+					${l_2}, {m_2}$ - LSB and MSB vectors of value 2
+					${s}$ - binary select vector
 
 \begin{table}[ht]
 \caption{Operations in $Z_3$}
@@ -215,19 +215,19 @@ input:   $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
     \hline
     \textbf{Operations} & \textbf{Methods}\\
     \hline
-    \multirow{3}{*}{Addition} & $\vec{T} = (\vec{l_1} \BitOr \vec{m_2}) \oplus (\vec{l_2} \BitOr \vec{m_1})$;\\
-    & $MSB_{res} = ( \vec{l_1} \BitOr \vec{l_2} ) \oplus  \vec{T} $; \\
-    & $LSB_{res} = (\vec{m_1} \BitOr \vec{m_2} ) \oplus \vec{T} $; \\
+    \multirow{3}{*}{Addition} & ${t} := ({l_1 \wedge m_2}) \oplus ({l_2 \wedge m_1})$\\
+    & $m_{\mathrm{out}} := ( l_1 \wedge  l_2 ) \oplus  t $ \\
+    & $l_{\mathrm{out}} :=m_1 \wedge m_2 ) \oplus t $ \\
     \hline
-    \multirow{3}{*}{Subtraction} & $\vec{T} = (\vec{l_1} \BitOr \vec{m_2}) \oplus (\vec{l_2} \BitOr \vec{m_1})$;\\
-    & $MSB_{res} = (\vec{l_1} \BitOr \vec{m_2} ) \BitAnd \vec{T}$;\\
-    & $LSB_{res} = (\vec{m_1} \BitOr \vec{l_2} ) \BitAnd \vec{T}$; \\
+    \multirow{3}{*}{Subtraction} & ${t} := ({l_1} \wedge {l_2}) \oplus ({m_2} \wedge {m_1})$;\\
+    & $m_{\mathrm{out}} := (l_1 \wedge m_2 ) \oplus t$;\\
+    & $l_{\mathrm{out}} := (m_1 \wedge l_2 ) \oplus t$; \\
     \hline
-\multirow{3}{*}{Multiplication} & $\vec{MSB_{res}}= ((\vec{l_1} \BitAnd (\vec{m_2}) \BitAnd     ((\vec{m_1} \BitAnd (\vec{l_2})$; \\
-    & $\vec{LSB_{res}} = ((\vec{l_1} \BitAnd (\vec{l_2}) \BitAnd     ((\vec{m_1} \BitAnd (\vec{m_2})$;\\
+\multirow{3}{*}{Multiplication} & $m_{\mathrm{out}}:= (l_1 \vee m_2) \wedge   (m_1 \vee l_2)$; \\
+    & $l_{\mathrm{out}} := (l_1 \vee l_2) \wedge     (m_1 \vee m_2)$;\\
     \hline
-\multirow{3}{*}{MUX} & $\vec{MSB[i]} =( \vec{m_2} \BitAnd \vec{s[i]}) \BitOr (\vec{m_1} \BitAnd \vec{- s[i]})$; \\
-    & $\vec{LSB[i]} =( \vec{l_2} \BitAnd \vec{s[i]}) \BitOr (\vec{l_1} \BitAnd \vec{- s[i]})$; \\
+\multirow{3}{*}{MUX} & $m_{\mathrm{out}} :=( m_2 \vee s) \wedge (m_1 \vee (- s) )$; \\
+    & $l_{\mathrm{out}}[i] :=( l_2 \vee s) \wedge (l_1 \vee (- s) )$; \\
     \hline
 
 \end{tabular}
@@ -350,7 +350,7 @@ Implementing protocol using the lookup method consists of two substages in phase
 The prime advantage of replacing matrix vector multiplication with lookup table is speed improvement. This is due to creation of lookup table at the preprocessing stage of the protocol. While creation of a lookup table takes a prolong period of time, the multiplication stage is as simple as accessing an element from a matrix. This speeds up the last stage of the protocol, hence significantly improving the overall speed of execution.
 
 
-To this end, the randomization matrix is assumed to be constant and divided into 16 matrices of size $81 \times 16$. A lookup table of size $16 \times 2^{16}$ is created during the pre-processing stage. During runtime, the input is divided to MSB and LSB, and each consecutive 16 bits (16 rows in the matrix) are used as separate input to the lookup table.  Similarly, we explored dividing the table into 8 matrices of size $81 \times 32$, resulting in a lookup table of size $8  \times 2^{32} $. However, due to the large table size, this crashed the system during runtime and we were not able to get results for it.
+To this end, the randomization matrix is assumed to be constant and divided into 16 matrices of size $81 \times 16$. A lookup table of size $16 \times 2^{16}$ is created during the pre-processing stage. During runtime, the input is divided to MSB and LSB, and each consecutive 16 bits (16 rows in the matrix) are used as separate input to the lookup table.  Similarly, we explored dividing the table into 8 matrices of size $81 \times 32$, resulting in a lookup table of size $8  \times 2^{32} $. However, due to the large table size, this crashed the system during runtime and we were not able to get results for it.	
 
 There are two challenges of using a lookup table as compared to matrix-vector multiplication
 \begin{itemize}
