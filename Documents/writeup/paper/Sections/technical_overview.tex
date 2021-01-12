@@ -326,6 +326,7 @@ List of things to be written\\
 %\textbf{Comment 3: How does it work, please explain with a diagram, if possible}\\
 %\textbf{Comment 4: What are the disadvantage(s) of having/using a lookup table}\\ \\ \\ 
 
+\iffalse
 \begin{figure*}[ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{images/lookup.jpg}
@@ -334,6 +335,8 @@ List of things to be written\\
 	\label{oprf.fig}
 	\vspace{-5mm}
 \end{figure*}
+
+\fi
 
 Phase 2 of the protocols(DIDO, oPRF) outputs m bits $\in \mathbb{Z}_2$. Phase 3 takes output of phase 2 and performs a matrix vector multiplication with a public randomization matrix $Rmat \in \mathbb{Z}_{3}^{t \times m} $ to output $\mathbb{Z}_{3}^{t} $\\
 Naive method of performing this matrix-vector multiplication will be to multiply and add individual bits, which will take a long time. An optimized and faster version was also implemented as a function using packed bits. This packed version of multiplication runs way faster than the naive implementation. In order to further optimize the run-time, a lookup table is used to perform the task.\\

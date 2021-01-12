@@ -13,10 +13,59 @@
   <component name="ChangeListManager">
     <list default="true" id="644c242a-e514-4e60-bf76-55d2fabdec37" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/Sections/technical_overview.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/Sections/technical_overview.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF-blx.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF-blx.bib" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.aux" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.aux" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.log" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/mainPRF.synctex.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Documents/writeup/paper/preamble.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/writeup/paper/preamble.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeCCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeCXXCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeCXXCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.out" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.out" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/OPRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/OPRF.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/OT.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/OT.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/PRF.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/newprotocol" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/newprotocol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/newprotocol.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/newprotocol.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/darkmatter/mains.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/include/darkmatter/mains.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/newprotocol.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/newprotocol.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +206,8 @@
       <workItem from="1609307810699" duration="85000" />
       <workItem from="1609348584676" duration="4861000" />
       <workItem from="1609862705177" duration="1208000" />
-      <workItem from="1610122628076" duration="4521000" />
+      <workItem from="1610122628076" duration="5246000" />
+      <workItem from="1610490986569" duration="1900000" />
     </task>
     <servers />
   </component>
@@ -173,54 +223,54 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="409" height="466" key="DebuggerActiveHint/0.0.1440.900@0.0.1440.900" timestamp="1605122397118" />
-    <state width="1440" height="238" key="GridCell.Tab.0.bottom" timestamp="1609367014668">
+    <state width="1398" height="307" key="GridCell.Tab.0.bottom" timestamp="1610492583591">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="238" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1609367014668" />
+    <state width="1398" height="307" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1610492583591" />
     <state width="1440" height="216" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1607284116160" />
-    <state width="1440" height="238" key="GridCell.Tab.0.center" timestamp="1609367014665">
+    <state width="1398" height="307" key="GridCell.Tab.0.center" timestamp="1610492583590">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="238" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1609367014665" />
+    <state width="1398" height="307" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1610492583590" />
     <state width="1440" height="216" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1607284116159" />
-    <state width="1440" height="238" key="GridCell.Tab.0.left" timestamp="1609367014520">
+    <state width="1398" height="307" key="GridCell.Tab.0.left" timestamp="1610492583589">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="238" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1609367014520" />
+    <state width="1398" height="307" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1610492583589" />
     <state width="1440" height="216" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1607284116158" />
-    <state width="1440" height="238" key="GridCell.Tab.0.right" timestamp="1609367014667">
+    <state width="1398" height="307" key="GridCell.Tab.0.right" timestamp="1610492583591">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1440" height="238" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1609367014667" />
+    <state width="1398" height="307" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1610492583591" />
     <state width="1440" height="216" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1607284116160" />
-    <state width="1398" height="242" key="GridCell.Tab.1.bottom" timestamp="1606938007418">
+    <state width="1398" height="307" key="GridCell.Tab.1.bottom" timestamp="1610492584313">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="242" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1606938007418" />
+    <state width="1398" height="307" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1610492584313" />
     <state width="1440" height="214" key="GridCell.Tab.1.bottom/0.23.1440.821@0.23.1440.821" timestamp="1606925715276" />
-    <state width="1398" height="242" key="GridCell.Tab.1.center" timestamp="1606938007416">
+    <state width="1398" height="307" key="GridCell.Tab.1.center" timestamp="1610492584309">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="242" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1606938007416" />
+    <state width="1398" height="307" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1610492584309" />
     <state width="1440" height="214" key="GridCell.Tab.1.center/0.23.1440.821@0.23.1440.821" timestamp="1606925715275" />
-    <state width="1398" height="242" key="GridCell.Tab.1.left" timestamp="1606938007416">
+    <state width="1398" height="307" key="GridCell.Tab.1.left" timestamp="1610492584308">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="242" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1606938007416" />
+    <state width="1398" height="307" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1610492584308" />
     <state width="1440" height="214" key="GridCell.Tab.1.left/0.23.1440.821@0.23.1440.821" timestamp="1606925715275" />
-    <state width="1398" height="242" key="GridCell.Tab.1.right" timestamp="1606938007417">
+    <state width="1398" height="307" key="GridCell.Tab.1.right" timestamp="1610492584311">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="242" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1606938007417" />
+    <state width="1398" height="307" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1610492584311" />
     <state width="1440" height="214" key="GridCell.Tab.1.right/0.23.1440.821@0.23.1440.821" timestamp="1606925715275" />
-    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1609260294773">
+    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1610490980478">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel/0.0.1440.900@0.0.1440.900" timestamp="1609260294773" />
-    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel" timestamp="1609260294771">
+    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel/0.0.1440.900@0.0.1440.900" timestamp="1610490980478" />
+    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel" timestamp="1610490980476">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel/0.0.1440.900@0.0.1440.900" timestamp="1609260294771" />
+    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel/0.0.1440.900@0.0.1440.900" timestamp="1610490980476" />
     <state width="600" height="428" key="javadoc.popup" timestamp="1603304684358">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -268,6 +318,11 @@
           <line>238</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/newprotocol.cpp</url>
+          <line>308</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -278,6 +333,11 @@
         <watch expression="p_server_local.at(0)" language="ObjectiveC" />
         <watch expression="p_server_local.at(1)" language="ObjectiveC" />
         <watch expression="p_server_local.at(2)" language="ObjectiveC" />
+        <watch expression="K1.size()" language="ObjectiveC" />
+        <watch expression="nWords" language="ObjectiveC" />
+        <watch expression="nWords" language="ObjectiveC" />
+        <watch expression="wIdx" language="ObjectiveC" />
+        <watch expression="this-&gt;nWords" language="ObjectiveC" />
       </configuration>
     </watches-manager>
   </component>

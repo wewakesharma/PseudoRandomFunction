@@ -201,6 +201,9 @@ void fetchPreproc_party2(PackedZ2<N_COLS>& rx2, PackedZ2<N_COLS>& rw, PackedZ2<N
     r1z2 = r1z2_global;
 }
 
+/*
+ * party1_round_1: K1 is Toeplitz, has 8 words
+ */
 void party1_round_1(PackedZ2<N_COLS>& x1_mask, std::vector<uint64_t>& K1_mask,
                     PackedZ2<N_COLS>& x1, PackedZ2<N_COLS>& rx1, std::vector<uint64_t>& K1, std::vector<uint64_t>& rK1)
 {
