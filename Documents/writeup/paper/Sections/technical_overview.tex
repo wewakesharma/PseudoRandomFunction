@@ -370,7 +370,6 @@ There are two challenges of using a lookup table as compared to matrix-vector mu
 Table \ref{CommunicationCosts} includes the computation and communication results for the different protocol.
 
 %New Communication Cost
-=============================\textbf{THE FOLLOWING TABLE REPLACES PREVIOUS ONE}=================
 \begin{table}[htbp]
 	\label{CommunicationCosts}
 	%[h]
@@ -415,28 +414,28 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 	%[h]
 	\begin{center}
 		%\begin{minipage}{10cm}
-		\begin{tabular}{|c|c|c|c|c|}
+		\begin{tabular}{|c|c|c|c|c|c|}
 			\hline
-			\textbf{Protocol} & \textbf{Packed }  &  \textbf{$Z_3$ lookup table} & \textbf{Rounds/sec} & Runtime($\mu$ sec)\\
+			\textbf{Protocol} & \textbf{Packed }  &  \textbf{lookup} & \textbf{Rounds/sec} & Runtime($\mu$ sec) & Computation\\
 			\hline
 			\hline
-			\textbf{Centralized weak PRF}  & N  & N  &  50K&	20.2 \\
+			\textbf{Centralized weak PRF}  & N  & N  &  50K&	20.2 & -\\
 			\hline
-			\textbf{Centralized weak PRF} & Y  &  N & 65.4K &	18.5 \\
+			\textbf{Centralized weak PRF} & Y  &  N & 65.4K &	18.5 & 70n \\
 			\hline
-			\textbf{Centralized weak PRF} & Y  &  Y & 165K &	6.08 \\
+			\textbf{Centralized weak PRF} & Y  &  Y & 165K &6.08 & 34n\\
 			\hline
-			\textbf{Original distributed dark matter} & Y & N &  24K & 40.56	\\
+			\textbf{Original distributed dark matter} & Y & N &  24K & 40.56	&210n \\
 			\hline
-			\textbf{DIDO} & Y & N & 49K &  20.20\\
+			\textbf{DIDO} & Y & N & 49K &  20.20& 193n\\
 			\hline
-			\textbf{DIDO} & Y & Y & 82K &  12.12	\\
+			\textbf{DIDO} & Y & Y & 82K &  12.12& 133n\\
 			\hline
-			\textbf{oPRF} & Y & N & 53K &  18.66	\\
+			\textbf{oPRF} & Y & N & 53K &  18.66& 135n\\
 			\hline
-			\textbf{oPRF} & Y & Y & 104K &  9.52	\\
+			\textbf{oPRF} & Y & Y & 104K &  9.52& 76n \\
 			\hline
-			\textbf{Discrete log-based PRF} &  - & - & 35K & 28.69 \\
+			\textbf{Discrete log-based PRF} &  - & - & 35K & 28.69 &-\\
 			\hline
 			
 		\end{tabular}
