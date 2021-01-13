@@ -372,7 +372,7 @@ There are two challenges of using a lookup table as compared to matrix-vector mu
 
 Table \ref{CommunicationCosts} includes the computation and communication results for the different protocol.
 
-%New Communication Cost
+% Table: Communication Cost
 \begin{table}[htbp]
 	\label{CommunicationCosts}
 	%[h]
@@ -380,14 +380,26 @@ Table \ref{CommunicationCosts} includes the computation and communication result
 		%\begin{minipage}{10cm}
 		\begin{tabular}{|c|c|c|c|c|}
 			\hline
-			\textbf{Protocol} & \textbf{Rounds}  & \textbf{Message Counts} &  \textbf{Preprocessing Size} & \textbf{Comm Costs}  \\
+			 \multicolumn{1}{|p{5cm}|}{\centering Protocol}
+			& \multicolumn{1}{|p{2cm}|}{\centering Round  \\Complexity}
+			& \multicolumn{1}{|p{3cm}|}{\centering Online \\ Communication}
+			& \multicolumn{1}{|p{3cm}|}{\centering Preprocessing \\ Size}
+			& \multicolumn{1}{|p{3cm}|}{\centering Computation \\ Operation}\\
 			\hline
 			\hline
-			\textbf{Old Protocol}  & 4  & 11 & 8n & $(6n+3m+2t)$ \\
+			\textbf{Central wPRF}  & -  & - & - & holder \\
 			\hline
-			\textbf{DIDO PRF protocol} & 2	& 8 & (2s+m)/(4n+7m) & $(4n+2m+2t)$  	\\
+			\textbf{Central wPRF (packed)}  & -  & - & - & $18,432$ \\
 			\hline
-			\textbf{OPRF} & 3 & 5 & - &  $(2n+2m+t) bits$	\\
+			\textbf{Centralized wPRF(lookup)} & - & - & 1,069,296 & $8,704$\\
+			\hline
+			\textbf{Fully Distributed (packed)} & 3 & 5 & - &  $ 55,680$\\
+			\hline
+			\textbf{Fully Distributed (lookup)} & 3 & 5 & - &  $26,752$\\
+			\hline
+			\textbf{OPRF (packed)} & 3 & 5 & - &  $(2n+2m+t) bits$	\\
+			\hline
+			\textbf{OPRF (lookup)} & 3 & 5 & - &  $(2n+2m+t) bits$	\\
 			\hline
 			\textbf{Discrete log-based PRF} &  - & - &  & \\
 			\hline
