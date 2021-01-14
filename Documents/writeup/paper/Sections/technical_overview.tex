@@ -403,7 +403,7 @@ Table \ref{CommunicationCosts} includes the computation and communication result
 			\hline
 			\textbf{OPRF (lookup)} & 3 & 5 & 1M & 11K\\
 			\hline
-			\textbf{Discrete log-based PRF} &  - & - &  & \\
+			\textbf{\sout{Discrete log-based PRF}} &  - & - & - & -\\
 			\hline
 			
 		\end{tabular}
@@ -433,7 +433,7 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 		%\begin{minipage}{10cm}
 		\begin{tabular}{|c|c|c|c|c|c|}
 			\hline
-			\textbf{Protocol} & \textbf{Packed }  &  \textbf{lookup} & \textbf{Runs/sec} & Runtime($\mu$ sec)\\
+			\textbf{Protocol} & \textbf{Packed }  &  \textbf{lookup} & \textbf{Runs/sec} & \textbf{Runtime($\mu$ sec)}\\
 			\hline
 			\hline
 			\textbf{Centralized weak PRF}  & N  & N  &  50K&20.2 \\
@@ -458,20 +458,20 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 		%\begin{minipage}{10cm}
 		\begin{tabular}{|c|c|c|c|}
 			\hline
-			\textbf{Protocol} & \textbf{Runs/sec} & Runtime($\mu$ sec) & Computation\\
+			\textbf{Protocol} & \textbf{Runs/sec} & \textbf{Runtime($\mu$ sec)} \\
 			\hline
 			\hline
-			\textbf{Original distributed dark matter} & 24K & 40.56 &210n \\
+			\textbf{Fully Distributed wPRF\cite{darkmatter}} & 24K & 40.56  \\
 			\hline
-			\textbf{DIDO} &  49K &  20.20& 193n\\
+			\textbf{Fully Distributed wPRF} &  49K &  20.20\\
 			\hline
-			\textbf{DIDO} &  82K &  12.12& 133n\\
+			\textbf{Fully Distributed wPRF(lookup)} &  82K &  12.12\\
 			\hline
-			\textbf{oPRF} &  53K &  18.66& 135n\\
+			\textbf{oPRF} &  53K &  18.66\\
 			\hline
-			\textbf{oPRF} &  104K &  9.52& 76n \\
+			\textbf{oPRF with lookup} &  104K &  9.52 \\
 			\hline
-			\textbf{Discrete log-based PRF} & 35K & 28.69 &-\\
+			\textbf{Discrete log-based PRF} & 35K & \sout{28.69} \textbf{9.56}\\
 			\hline
 			
 		\end{tabular}
