@@ -24,7 +24,7 @@ We use capital letters for matrices, and $\vec{x}$ notation for vectors \\
 
 \section{Appendix}
 
-\paragraph{Original - Distributed Input Distributed Output (DIDO) - PRF Protocol}
+\paragraph{Original - Distributed Input Distributed Output (DIDO) - WPRF Protocol}
 
 The protocol was introduced in \cite{darkmatter}. The main details of the protocols are described below (\ref{2PartyDarkMatter}). In this setting, both the input and the key are secret shared additively between the two parties. Both the protocol presented in this paper and the original protocol are two-party PRFs. For our implementation, randomization was added in phase 3 to provide $Z_3$ output with 128-bit entropy. 
 The protocol is described in \figref{algorithm1}.
@@ -41,7 +41,7 @@ The protocol is described in \figref{algorithm1}.
 
 
 \begin{algorithm}
-	\caption{2-Party dark matter PRF}
+	\caption{2-Party dark matter WPRF}
 	\label{2PartyDarkMatter}
 	
 	
@@ -103,7 +103,7 @@ The protocol is described in \figref{algorithm1}.
 
 %add table with parameters, including communication
 
-\paragraph{Our improved (DIDO) PRF protocol}
+\paragraph{Our improved (DIDO) wPRF protocol}
 
 \begin{figure*}[ht]
 	\centering
@@ -188,7 +188,7 @@ In phase 3 of the algorithm, a randomization matrix is used which is of size $r 
 
 \subsection{representing $Z_2$ vector}
 
-Bit slicing: this bit-wise packing technique was used to optimize the run-time, each 64 bits were represented by a word. Since each key is of size $m \times n$ and each input is a vactor of size $n$, it is possible to pack each 64 rows into $m$ words. This may result in time saving of up to $\times 64$ of the run-time.
+Bit slicing: this bit-wise packing technique was used to optimize the run-time, each 64 bits were represented by a word. Since each key is of size $m \times n$ and each input is a vector of size $n$, it is possible to pack each 64 rows into $m$ words. This may result in time saving of up to $\times 64$ of the run-time.
 
 \subsection{Representing $Z_3$ vector}
 
@@ -197,15 +197,15 @@ To optimize the randomization in $Z_3$, which requires a matrix-vector multiplic
 \subsubsection{Bit slicing and operations:} this was done by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. 
 
 The Addition, subtraction, multiplication and MUX mod 3 were implemented using the protocols defined in table ref{tab:multicol}. One of the properties that were utilized to implement this was:\\
-mult-by-2 $\mod 3  \leftrightarrow$ negation $ \mod 3 \leftrightarrow$ swap the MSB and LSB\\
-
+mult-by-2 $\mod 3  \leftrightarrow$ negation $ \mod 3 \leftrightarrow$ swap the MSB and LSB \\
+ 
 Such a vector is sometimes being represented as a vector of $2 \times n$ bits. One example is when this vector is sent as an input to the Oblivious Transfer mechanism. 
 The algorithms can be found in ~\cref{alg:algpack1,alg:algpack2,alg:algpack3,alg:algpack4}.
 
 % TODO: replace with a table - COMPLETED
 
 input:   $\vec{l_1}, {m_1}$ - LSB and MSB vectors of value 1  \\
-					${l_2}, {m_2}$ - LSB and MSB vectors of value 2
+					${l_2}, {m_2}$ - LSB and MSB vectors of value 2 \\
 					${s}$ - binary select vector
 
 \begin{table}[ht]
@@ -241,7 +241,7 @@ input:   $\vec{l_1}, {m_1}$ - LSB and MSB vectors of value 1  \\
 	\caption{Addition in $Z_3$}
 		\label{alg:algpack1}  Item 1:
 		input: $\vec{l_1}, \vec{m_1}$ - LSB and MSB vectors of value 1  \\
-		  	  	$\vec{l_2}, \vec{m_2}$ - LSB and MSB vectors of value 2
+		  	  	$\vec{l_2}, \vec{m_2}$ - LSB and MSB vectors of value 2 \\
 		
 \begin{enumerate}
 
@@ -259,7 +259,7 @@ input:   $\vec{l_1}, {m_1}$ - LSB and MSB vectors of value 1  \\
 
 	
 		input: $\vec{l_1}, \vec{m_1}$ - LSB and LSB vectors of value 1  \\
-                  $\vec{l_2}, \vec{m_2}$ - LSB and LSB vectors of value 2
+                  $\vec{l_2}, \vec{m_2}$ - LSB and LSB vectors of value 2 \\
                   
 \begin{enumerate}
 
@@ -278,7 +278,7 @@ input:   $\vec{l_1}, {m_1}$ - LSB and MSB vectors of value 1  \\
 
 		
 				input: $\vec{l_1}, \vec{m_1}$ - LSB and LSB vectors of value 1  \\
-		$\vec{l_2}, \vec{m_2}$ - LSB and LSB vectors of value 2
+		$\vec{l_2}, \vec{m_2}$ - LSB and LSB vectors of value 2 \\
 		
 			\begin{enumerate}
 	\item  $\vec{LSB_{res}} = ((\vec{l_1} \BitAnd (\vec{l_2}) \land     ((\vec{m_1} \BitAnd (\vec{m_2})       $
@@ -294,7 +294,7 @@ input:   $\vec{l_1}, {m_1}$ - LSB and MSB vectors of value 1  \\
 
 	
 		input:   $\vec{l_1}, \vec{m_1}$ - LSB and LSB vectors of value 1  \\
-					$\vec{l_2}, \vec{m_2}$ - LSB and LSB vectors of value 2
+					$\vec{l_2}, \vec{m_2}$ - LSB and LSB vectors of value 2 \\
 					$\vec{select}$ - binary vector
 
 	\begin{enumerate}
@@ -318,8 +318,8 @@ Note: since each trinary number can be either 0,1 or 2, we can add up to 255 num
 
 %TODO: IS THIS CORRECT? CHECK AND CORRECT
 
-\paragraph{Matrix multiplication - using a lookup table: }
-List of things to be written\\
+\subsubsection{Matrix multiplication - using a lookup table: }
+%List of things to be written\\
 
 %\textbf{Comment 1: What is lookup table, explain with context?}\\
 %\textbf{Comment 2: Why is it required and what does it replace, are there any advantage}\\
@@ -338,12 +338,12 @@ List of things to be written\\
 
 \fi
 
-Phase 2 of the protocols(DIDO, oPRF) outputs m bits $\in \mathbb{Z}_2$. Phase 3 takes output of phase 2 and performs a matrix vector multiplication with a public randomization matrix $Rmat \in \mathbb{Z}_{3}^{t \times m} $ to output $\mathbb{Z}_{3}^{t} $\\
+Phase 2 of the protocols (WPRF, OPRF) outputs m bits $\in \mathbb{Z}_2$. Phase 3 takes output of phase 2 and performs a matrix vector multiplication with a public randomization matrix $R \in \mathbb{Z}_{3}^{t \times m} $ to output $\mathbb{Z}_{3}^{t}. $\\
 Naive method of performing this matrix-vector multiplication will be to multiply and add individual bits, which will take a long time. An optimized and faster version was also implemented as a function using packed bits. This packed version of multiplication runs way faster than the naive implementation. In order to further optimize the run-time, a lookup table is used to perform the task.\\
 
 Lookup table is a matrix whose elements are precomputed product value of packed inputs(output of phase 2) with all possible combinations of similar sized packed values. Suppose, if inputs are packed as a 8-bit word, the matrix will contain all possible combination of product of 8-bit input and all values from 0 to $2^{8}-1$. \\
 
-Implementing protocol using the lookup method consists of two substages in phase 3:\\
+Implementing protocol using the lookup method consists of two sub-stages in phase 3:\\
 \begin{itemize}
 	\item{\textbf{Preprocessing Stage: } Creation of lookup table}
 	\item{\textbf{Multiplication Stage: } Usage of lookup table}
@@ -352,20 +352,16 @@ Implementing protocol using the lookup method consists of two substages in phase
 
 The prime advantage of replacing matrix vector multiplication with lookup table is speed improvement. This is due to creation of lookup table at the preprocessing stage of the protocol. While creation of a lookup table takes a prolong period of time, the multiplication stage is as simple as accessing an element from a matrix. This speeds up the last stage of the protocol, hence significantly improving the overall speed of execution.
 
+To this end, the randomization matrix is divided into $l$ matrices of size $81 \times (256/l)$. A lookup table of size $l \times 2^{ (256/l)  }$ is created during the pre-processing stage.
+Using lookup table results in a significantly larger data storage (as well as increased preprocessing time). Therefore, our goal was to find the number of sub-tables that should be used to provide faster protocol run-time while still maintaining a reasonable storage space.
 
-To this end, the randomization matrix is assumed to be constant and divided into 16 matrices of size $81 \times 16$. A lookup table of size $16 \times 2^{16}$ is created during the pre-processing stage. During runtime, the input is divided to MSB and LSB, and each consecutive 16 bits (16 rows in the matrix) are used as separate input to the lookup table.  Similarly, we explored dividing the table into 8 matrices of size $81 \times 32$, resulting in a lookup table of size $8  \times 2^{32} $. However, due to the large table size, this crashed the system during runtime and we were not able to get results for it.	
-
-There are two challenges of using a lookup table as compared to matrix-vector multiplication
-\begin{itemize}
-	\item{Huge storage requirement/ more time in preprocessing}
-	\item{Find a perfect value that can balance between less storage and speedy lookup: Finding }
-\end{itemize}
+To this end, we first use $l=16$, therefore dividing the randomization matrix into 16 matrices of size $81 \times 16$. A lookup table of size $16 \times 2^{16}$ is created during the pre-processing stage. During runtime, the input is divided to MSB and LSB, and each consecutive 16 bits (16 rows in the matrix) are used as separate input to the lookup table.  Similarly, we explored dividing the table into 8 matrices of size $81 \times 32$, resulting in a lookup table of size $8  \times 2^{32} $. However, due to the large table size, this crashed the system during runtime and we were not able to get results for it.	
 
 \subsection{Putting it all together}
 
 \begin{itemize}
-	\item{\textbf{Implemented DIDO protocol was 50.7\% faster and oPRF was 54\% than implemented wPRF protocol described in TCC'18.}}
-	\item{\textbf{Using lookup table, the speed increase was significant at 70\% and 76.5\% for DIDO and oPRF respectively.}}
+	\item{\textbf{Our newly Implemented WPRF protocol was 50.7\% faster and OPRF was 54\% than implemented WPRF protocol described in TCC'18 \cite{darkmatter}}}
+	\item{\textbf{Using lookup table, the speed increase was significant at 70\% and 76.5\% for WPRF and WPRF respectively.}}
 \end{itemize}
 
 \section{Analysis}
@@ -387,29 +383,27 @@ Table \ref{CommunicationCosts} includes the computation and communication result
 			& \multicolumn{1}{|p{3cm}|}{\centering Computation \\ Operation}\\
 			\hline
 			\hline
-			\textbf{Central wPRF}  & -  & - & - & holder \\
+%			\textbf{Central WPRF}  & -  & - & - & holder \\
+%			\hline
+%			\textbf{Central WPRF (packed)}  & -  & - & - & 18K \\
+%			\hline
+			\textbf{Centralized WPRF} & - & - & - & 9K\\
 			\hline
-			\textbf{Central wPRF (packed)}  & -  & - & - & 18K \\
+			\textbf{Distributed WPRF \cite{darkmatter} (packed)} & 4 & 5 & 2K &  45K\\
 			\hline
-			\textbf{Centralized wPRF(lookup)} & - & - & - & 9K\\
+%			\textbf{Fully Distributed (packed)} & 3 & 5 & 6K &  22K\\
+%			\hline
+			\textbf{wPRF Fully Distributed } & 3 & 5 & 1M &  13K\\
 			\hline
-			\textbf{Fully Distributed\cite{darkmatter} (packed)} & 4 & 5 & 2K &  45K\\
-			\hline
-			\textbf{Fully Distributed (packed)} & 3 & 5 & 6K &  22K\\
-			\hline
-			\textbf{Fully Distributed (lookup)} & 3 & 5 & 1M &  13K\\
-			\hline
-			\textbf{OPRF (packed)} & 3 & 5 & 3K &  20K\\
-			\hline
-			\textbf{OPRF (lookup)} & 3 & 5 & 1M & 11K\\
-			\hline
-			\textbf{\sout{Discrete log-based PRF}} &  - & - & - & -\\
+%			\textbf{OPRF (packed)} & 3 & 5 & 3K &  20K\\
+%			\hline
+			\textbf{OPRF } & 3 & 5 & 1M & 11K\\
 			\hline
 			
 		\end{tabular}
 		
 		\vspace{-1mm}
-		\caption{Communication Analysis of different protocols}
+		\caption{Communication Analysis of different protocols. The protocols were optimized using both the bit packing and the lookup table}
 		\label{CommunicationCosts}
 		%\end{minipage}
 	\end{center}
@@ -461,23 +455,19 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 			\textbf{Protocol} & \textbf{Runs/sec} & \textbf{Runtime($\mu$ sec)} \\
 			\hline
 			\hline
-			\textbf{Fully Distributed wPRF\cite{darkmatter}} & 24K & 40.56  \\
+			\textbf{Fully Distributed WPRF\cite{darkmatter}} & 24K & 40.56  \\
 			\hline
-			\textbf{Fully Distributed wPRF} &  49K &  20.20\\
+			\textbf{Fully Distributed WPRF} &  82K &  12.12\\
 			\hline
-			\textbf{Fully Distributed wPRF(lookup)} &  82K &  12.12\\
+			\textbf{OPRF with lookup} &  104K &  9.52 \\
 			\hline
-			\textbf{oPRF} &  53K &  18.66\\
-			\hline
-			\textbf{oPRF with lookup} &  104K &  9.52 \\
-			\hline
-			\textbf{Discrete log-based PRF} & 35K & \sout{28.69} \textbf{9.56}\\
+			\textbf{Discrete log-based PRF $\times 3$} & 12K &\textbf{86.07}\\
 			\hline
 			
 		\end{tabular}
 		
 		\vspace{-1mm}
-		\caption{Optimized protocols runtime with parameters.}
+		\caption{Optimized protocols runtime. These protocols utilize both the bit-packing and lookup table optimization}
 		\label{RuntimeTable}
 		%\end{minipage}
 	\end{center}
