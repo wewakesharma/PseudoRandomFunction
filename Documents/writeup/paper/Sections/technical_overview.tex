@@ -4,173 +4,7 @@
 %TODO: here we should describe the protocols implemented
 %should be rewritten
 
-\iffalse
 
-In this work we implemented a few distributed protocols of the PRF introduced by Boneh et. Al  \cite{darkmatter}:
-
-$PRF_k(x) = R \times (K \times x \mod 2)  \mod 3 $
-
-where $R$ is a randomization matrix in $Z_3$, $K$ is an $m \times n$ key and $x$ is an $n$-length vector. Specifically, we present a new protocol for implementing this PRF. The protocol uses a shared input and output which provides improved performance over the original protocol described in \cite{darkmatter}. For context, we also implement the original protocol \cite{darkmatter} . We also introduce an improved OPRF (Oblivious PRF) protocol, in which one party has the input and one has the key. Below are  details of the protocols.
-
-\subsection{PRF}
-
-
-\paragraph{notations:} below are the notations we use to describe the protocols: \\
-$K$ is the key, represented by an $m \times n$ matrix \\
-$x$ is the input, represented by an $n$ size vector \\
-$R_x, r_k$ - pre-shared randomness for key $K$ and input $x$ \\
-$r$ - random vector in $Z_3$]
-We use capital letters for matrices, and $\vec{x}$ notation for vectors \\
-
-\section{Appendix}
-
-\paragraph{Original - Distributed Input Distributed Output (DIDO) - WPRF Protocol}
-
-The protocol was introduced in \cite{darkmatter}. The main details of the protocols are described below (\ref{2PartyDarkMatter}). In this setting, both the input and the key are secret shared additively between the two parties. Both the protocol presented in this paper and the original protocol are two-party PRFs. For our implementation, randomization was added in phase 3 to provide $Z_3$ output with 128-bit entropy. 
-The protocol is described in \figref{algorithm1}.
-%add  a description of the protocol
-
-\begin{figure*}[ht]
-	\centering
-	\includegraphics[width=1.2\textwidth]{images/old_protocol2.pdf}
-	\vspace{-2mm}
-	\caption{Old wPRF protocol}
-	\label{old_protocol.fig}
-	\vspace{-5mm}
-\end{figure*}
-
-
-\begin{algorithm}
-	\caption{2-Party dark matter WPRF}
-	\label{2PartyDarkMatter}
-	
-	
-	Input: ${K_{m\times n} }(i)$ and $\vec{Inp}(i_n)$ key and user input of each user,\\
-	$(i = 1...2, n,m = 256)$\\ 
-	Output: user 1: $\vec{K} \times x + \vec{r}$\\
-	user2: $-  \vec{r}$\\   %SVec = salt vectorx`
-	
-	\begin{algorithmic}
-		
-		\STATE \textbf{Preprocessing}:
-		
-		Output: 	user 1: $\vec{R_a}, \vec{r_b}$ - pre-shared randomness \\
-		user 2: $\vec{r_x} $- pre-share randomness \\
-		
-		\STATE  \textbf{Stage\ 1}: calculate $a \times b \plus c$
-		
-		input: user 1: ${\vec{A}, \vec{b}, {\vec R_a}, \vec{r_b} } $ \\
-		user 2: ${\vec{x}, \vec{r_x},  \vec{z} }$ \\
-		
-		\begin{enumerate}
-			
-			\item user 2 $\vec{m_x} = \vec{x} -\vec{r_x}  \rightarrow  $  user 1
-			
-			\item user 1  $ \leftarrow   \vec{M_a} =  \vec{A} - \vec{r_A}   $ user 2
-			
-			\item user 2 $ \vec{m_b} = \vec{R_a} \times \vec{m_x} + \vec{b}  - \vec{r_b}  \rightarrow $ user 1
-		\end{enumerate}
-		
-		Output: $user 1: \vec{- b} $  \\
-		$user 2: \vec{M_a} \times \vec{x} + \vec{m_b} + \vec{z} = \vec{A} \vec{x} + \vec{b}$ \\
-		
-		\STATE  \textbf{Stage\ 2}: Oblivious Transfer
-		input: 	 user 1:  $\vec{r_1}, \vec{r_2}, \vec{r_a}, \vec{r_b}$ - vectors in $Z_3$
-		user 2:  $\vec{x}, \vec{r_x}$ - vectors in $Z_2$, $\vec{z} $ - vector in $Z_3$
-		
-		
-		\begin{enumerate}
-			\item user 1  $ \leftarrow   \vec{m_x} = \vec{x} \oplus \vec{r_x}$   user 2
-			
-			\item user 1:  $  \vec{m_1} = \vec(- m_x)  \vec{r_a} + \vec{m_x} \vec{r_b} + \vec{r_1}   \rightarrow $   user 2
-			
-			\item user 1:  $  \vec{m_2} = \vec(m_x)  \vec{r_a} + \vec{- m_x} \vec{r_b} + \vec{r_2}  \rightarrow $   user 2
-			
-			
-		\end{enumerate}
-		
-		output:  user 2: $\vec{w}:= \vec{x} \times \vec{m_2}+ - \vec{x}  \times \vec{m_1} - \vec{z}$
-		
-		
-		\STATE  \textbf{stage 3}: $Z_3$ randomization  
-		
-	\end{algorithmic}
-	
-\end{algorithm}
-
-
-
-
-%add table with parameters, including communication
-
-\paragraph{Our improved (DIDO) wPRF protocol}
-
-\begin{figure*}[ht]
-	\centering
-	\includegraphics[width=0.8\textwidth]{images/sisk.jpg}
-	\vspace{-2mm}
-	\caption{Distributed Input Distributed Output wPRF protocol}
-	\label{sisk.fig}
-	\vspace{-5mm}
-\end{figure*}
-
-\begin{algorithm}
-	\caption{2-Party Distributed PRF (Shared input and Shared Key)}
-	\begin{algorithmic}
-		\STATE Input: $x \in \mathbb{Z}_{2}^{n}$
-		\STATE Key: $K \in \mathbb{Z}_{2}^{m \times n}$
-		\STATE Output: $y \in \mathbb{Z}_{3}^{t}$
-		\STATE Preprocessing: Generate correlated randomness $r_{x}, s_{w} \in \mathbb{Z}_{2}^{n}. and R_{k} \in \mathbb{Z}_{2}^{m \times n}$\\
-		and compute $ r_{w} = R_{k} \cdot r_{x} \oplus s_{w}$
-		
-		\STATE Stage 1: Mask the inputs: Both the parties mask their shares of input and key they hold and the mask are shared.\\
-		$K_{i}^{\textrm'} = K_{i} + Rk_{i}$ and 
-		$x_{i}^{\textrm'} = x_{i} + rx_{i}$ and 
-		
-		
-		\STATE Stage 2: Merging the shares, each party computes $w^{\textrm'} = K \times x + rw$. This is done as follows\\
-		
-		
-		\STATE stage 3: $Z_3$ randomization  
-		
-	\end{algorithmic}
-\end{algorithm}
-
-
-
-%add  a description of the protocol
-
-%add table with parameters, including communication
-
-\subsection{OPRF}
-This is a new OPRF protocol, which improved the performance over the original OPRF protocol descirbed in \cite{darkmatter}. In this setting, one party has the input and another party has the key.
-
-\begin{figure*}[ht]
-	\centering
-	\includegraphics[width=0.8\textwidth]{images/oprf.jpg}
-	\vspace{-2mm}
-	\caption{oPRF protocol}
-	\label{oprf.fig}
-	\vspace{-5mm}
-\end{figure*}
-
-
-\begin{algorithm}
-	\caption{2-Party oPRF}
-	\begin{algorithmic}
-		
-		\STATE Preprocessing
-		
-		\STATE Stage\ 1: calculate $a \times b \plus c$
-		
-		\STATE Stage\ 2: Oblivious Transfer
-		
-		\STATE stage 3: $Z_3$ randomization  
-		
-	\end{algorithmic}
-\end{algorithm}
-
-\fi
 
 
 \section{Implementation}
@@ -383,21 +217,42 @@ Table \ref{CommunicationCosts} includes the computation and communication result
 			& \multicolumn{1}{|p{3cm}|}{\centering Computation \\ Operation}\\
 			\hline
 			\hline
+%<<<<<<< HEAD
 %			\textbf{Central WPRF}  & -  & - & - & holder \\
 %			\hline
 %			\textbf{Central WPRF (packed)}  & -  & - & - & 18K \\
 %			\hline
 			\textbf{Centralized WPRF} & - & - & - & 9K\\
 			\hline
-			\textbf{Distributed WPRF \cite{darkmatter} (packed)} & 4 & 5 & 2K &  45K\\
+			\textbf{Distributed WPRF \cite{darkmatter} } & 4 & 5 & 2K &  45K\\
 			\hline
 %			\textbf{Fully Distributed (packed)} & 3 & 5 & 6K &  22K\\
 %			\hline
-			\textbf{wPRF Fully Distributed } & 3 & 5 & 1M &  13K\\
+			\textbf{Our )WPRF  } & 3 & 5 & 1M &  13K\\
 			\hline
 %			\textbf{OPRF (packed)} & 3 & 5 & 3K &  20K\\
 %			\hline
-			\textbf{OPRF } & 3 & 5 & 1M & 11K\\
+			\textbf{Our OPRF } & 3 & 5 & 1M & 11K\\
+%=======
+
+%			\textbf{Central wPRF}  & -  & - & - & 27K \\
+%			\hline
+%			\textbf{Central wPRF (packed)}  & -  & - & - & 18K \\
+%			\hline
+%			\textbf{Centralized wPRF(lookup)} & - & - & - & 9K\\
+%			\hline
+%			\textbf{Fully Distributed\cite{darkmatter} (packed)} & 4 & 3490 & 2K &  45K\\
+%			\hline
+%			\textbf{Fully Distributed (packed)} & 3 & 2210 & 6K &  22K\\
+%			\hline
+%			\textbf{Fully Distributed (lookup)} & 3 & 2210 & 1M &  13K\\
+%			\hline
+%			\textbf{OPRF (packed)} & 3 & 1361 & 3K &  20K\\
+%			\hline
+%			\textbf{OPRF (lookup)} & 3 & 1361 & 1M & 11K\\
+%			\hline
+%			\textbf{\sout{Discrete log-based PRF}} &  - & - & - & -\\
+%>>>>>>> 8558f77bf4ab3f9df8397eabe88ae639f69cdd29
 			\hline
 			
 		\end{tabular}
@@ -474,6 +329,175 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 	\vspace{-5mm}
 \end{table}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\iffalse
+
+In this work we implemented a few distributed protocols of the PRF introduced by Boneh et. Al  \cite{darkmatter}:
+
+$PRF_k(x) = R \times (K \times x \mod 2)  \mod 3 $
+
+where $R$ is a randomization matrix in $Z_3$, $K$ is an $m \times n$ key and $x$ is an $n$-length vector. Specifically, we present a new protocol for implementing this PRF. The protocol uses a shared input and output which provides improved performance over the original protocol described in \cite{darkmatter}. For context, we also implement the original protocol \cite{darkmatter} . We also introduce an improved OPRF (Oblivious PRF) protocol, in which one party has the input and one has the key. Below are  details of the protocols.
+
+\subsection{PRF}
+
+
+\paragraph{notations:} below are the notations we use to describe the protocols: \\
+$K$ is the key, represented by an $m \times n$ matrix \\
+$x$ is the input, represented by an $n$ size vector \\
+$R_x, r_k$ - pre-shared randomness for key $K$ and input $x$ \\
+$r$ - random vector in $Z_3$]
+We use capital letters for matrices, and $\vec{x}$ notation for vectors \\
+
+\section{Appendix}
+
+\paragraph{Original - Distributed Input Distributed Output (DIDO) - WPRF Protocol}
+
+The protocol was introduced in \cite{darkmatter}. The main details of the protocols are described below (\ref{2PartyDarkMatter}). In this setting, both the input and the key are secret shared additively between the two parties. Both the protocol presented in this paper and the original protocol are two-party PRFs. For our implementation, randomization was added in phase 3 to provide $Z_3$ output with 128-bit entropy. 
+The protocol is described in \figref{algorithm1}.
+%add  a description of the protocol
+
+\begin{figure*}[ht]
+	\centering
+	\includegraphics[width=1.2\textwidth]{images/old_protocol2.pdf}
+	\vspace{-2mm}
+	\caption{Old wPRF protocol}
+	\label{old_protocol.fig}
+	\vspace{-5mm}
+\end{figure*}
+
+
+\begin{algorithm}
+	\caption{2-Party dark matter WPRF}
+	\label{2PartyDarkMatter}
+	
+	
+	Input: ${K_{m\times n} }(i)$ and $\vec{Inp}(i_n)$ key and user input of each user,\\
+	$(i = 1...2, n,m = 256)$\\ 
+	Output: user 1: $\vec{K} \times x + \vec{r}$\\
+	user2: $-  \vec{r}$\\   %SVec = salt vectorx`
+	
+	\begin{algorithmic}
+		
+		\STATE \textbf{Preprocessing}:
+		
+		Output: 	user 1: $\vec{R_a}, \vec{r_b}$ - pre-shared randomness \\
+		user 2: $\vec{r_x} $- pre-share randomness \\
+		
+		\STATE  \textbf{Stage\ 1}: calculate $a \times b \plus c$
+		
+		input: user 1: ${\vec{A}, \vec{b}, {\vec R_a}, \vec{r_b} } $ \\
+		user 2: ${\vec{x}, \vec{r_x},  \vec{z} }$ \\
+		
+		\begin{enumerate}
+			
+			\item user 2 $\vec{m_x} = \vec{x} -\vec{r_x}  \rightarrow  $  user 1
+			
+			\item user 1  $ \leftarrow   \vec{M_a} =  \vec{A} - \vec{r_A}   $ user 2
+			
+			\item user 2 $ \vec{m_b} = \vec{R_a} \times \vec{m_x} + \vec{b}  - \vec{r_b}  \rightarrow $ user 1
+		\end{enumerate}
+		
+		Output: $user 1: \vec{- b} $  \\
+		$user 2: \vec{M_a} \times \vec{x} + \vec{m_b} + \vec{z} = \vec{A} \vec{x} + \vec{b}$ \\
+		
+		\STATE  \textbf{Stage\ 2}: Oblivious Transfer
+		input: 	 user 1:  $\vec{r_1}, \vec{r_2}, \vec{r_a}, \vec{r_b}$ - vectors in $Z_3$
+		user 2:  $\vec{x}, \vec{r_x}$ - vectors in $Z_2$, $\vec{z} $ - vector in $Z_3$
+		
+		
+		\begin{enumerate}
+			\item user 1  $ \leftarrow   \vec{m_x} = \vec{x} \oplus \vec{r_x}$   user 2
+			
+			\item user 1:  $  \vec{m_1} = \vec(- m_x)  \vec{r_a} + \vec{m_x} \vec{r_b} + \vec{r_1}   \rightarrow $   user 2
+			
+			\item user 1:  $  \vec{m_2} = \vec(m_x)  \vec{r_a} + \vec{- m_x} \vec{r_b} + \vec{r_2}  \rightarrow $   user 2
+			
+			
+		\end{enumerate}
+		
+		output:  user 2: $\vec{w}:= \vec{x} \times \vec{m_2}+ - \vec{x}  \times \vec{m_1} - \vec{z}$
+		
+		
+		\STATE  \textbf{stage 3}: $Z_3$ randomization  
+		
+	\end{algorithmic}
+	
+\end{algorithm}
+
+
+
+
+%add table with parameters, including communication
+
+\paragraph{Our improved (DIDO) wPRF protocol}
+
+\begin{figure*}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/sisk.jpg}
+	\vspace{-2mm}
+	\caption{Distributed Input Distributed Output wPRF protocol}
+	\label{sisk.fig}
+	\vspace{-5mm}
+\end{figure*}
+
+\begin{algorithm}
+	\caption{2-Party Distributed PRF (Shared input and Shared Key)}
+	\begin{algorithmic}
+		\STATE Input: $x \in \mathbb{Z}_{2}^{n}$
+		\STATE Key: $K \in \mathbb{Z}_{2}^{m \times n}$
+		\STATE Output: $y \in \mathbb{Z}_{3}^{t}$
+		\STATE Preprocessing: Generate correlated randomness $r_{x}, s_{w} \in \mathbb{Z}_{2}^{n}. and R_{k} \in \mathbb{Z}_{2}^{m \times n}$\\
+		and compute $ r_{w} = R_{k} \cdot r_{x} \oplus s_{w}$
+		
+		\STATE Stage 1: Mask the inputs: Both the parties mask their shares of input and key they hold and the mask are shared.\\
+		$K_{i}^{\textrm'} = K_{i} + Rk_{i}$ and 
+		$x_{i}^{\textrm'} = x_{i} + rx_{i}$ and 
+		
+		
+		\STATE Stage 2: Merging the shares, each party computes $w^{\textrm'} = K \times x + rw$. This is done as follows\\
+		
+		
+		\STATE stage 3: $Z_3$ randomization  
+		
+	\end{algorithmic}
+\end{algorithm}
+
+
+
+%add  a description of the protocol
+
+%add table with parameters, including communication
+
+\subsection{OPRF}
+This is a new OPRF protocol, which improved the performance over the original OPRF protocol descirbed in \cite{darkmatter}. In this setting, one party has the input and another party has the key.
+
+\begin{figure*}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/oprf.jpg}
+	\vspace{-2mm}
+	\caption{oPRF protocol}
+	\label{oprf.fig}
+	\vspace{-5mm}
+\end{figure*}
+
+
+\begin{algorithm}
+	\caption{2-Party oPRF}
+	\begin{algorithmic}
+		
+		\STATE Preprocessing
+		
+		\STATE Stage\ 1: calculate $a \times b \plus c$
+		
+		\STATE Stage\ 2: Oblivious Transfer
+		
+		\STATE stage 3: $Z_3$ randomization  
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\fi
 
 
 

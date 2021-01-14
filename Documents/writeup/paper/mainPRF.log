@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  14 JAN 2021 18:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  14 JAN 2021 18:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -811,30 +811,30 @@ LaTeX Font Info:    Try loading font information for U+stmry on input line 25.
 (./Sections/relatedwork.tex) (./Sections/technical_overview.tex
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 189.
+(hyperref)                removing `math shift' on input line 23.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 189.
+(hyperref)                removing `subscript' on input line 23.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 189.
+(hyperref)                removing `math shift' on input line 23.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 193.
+(hyperref)                removing `math shift' on input line 27.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 193.
+(hyperref)                removing `subscript' on input line 27.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 193.
+(hyperref)                removing `math shift' on input line 27.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 199--201
+Underfull \hbox (badness 10000) in paragraph at lines 33--35
 
  []
 
@@ -842,19 +842,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 199--201
 
 {/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
-LaTeX Warning: Reference `alg:algpack4' on page 1 undefined on input line 203.
+LaTeX Warning: Reference `alg:algpack4' on page 1 undefined on input line 37.
 
 
-LaTeX Warning: Reference `alg:algpack3' on page 1 undefined on input line 203.
+LaTeX Warning: Reference `alg:algpack3' on page 1 undefined on input line 37.
 
 
-LaTeX Warning: Reference `alg:algpack2' on page 1 undefined on input line 203.
+LaTeX Warning: Reference `alg:algpack2' on page 1 undefined on input line 37.
 
 
-LaTeX Warning: Reference `alg:algpack1' on page 1 undefined on input line 203.
+LaTeX Warning: Reference `alg:algpack1' on page 1 undefined on input line 37.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 341--343
+Underfull \hbox (badness 10000) in paragraph at lines 175--177
 
  []
 
@@ -863,26 +863,26 @@ as been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.343 
+l.177 
       ]
-Underfull \hbox (badness 10000) in paragraph at lines 344--345
+Underfull \hbox (badness 10000) in paragraph at lines 178--179
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--348
+Underfull \hbox (badness 10000) in paragraph at lines 180--182
 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 348.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 182.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 348.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 182.
 
-Overfull \hbox (78.68417pt too wide) in paragraph at lines 377--404
+Overfull \hbox (45.48904pt too wide) in paragraph at lines 211--259
  [] 
  []
 
@@ -951,7 +951,7 @@ texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
 exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/tex
 live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texl
 ive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on mainPRF.pdf (5 pages, 155424 bytes).
+Output written on mainPRF.pdf (5 pages, 155405 bytes).
 PDF statistics:
  179 PDF objects out of 1000 (max. 8388607)
  157 compressed objects within 2 object streams
