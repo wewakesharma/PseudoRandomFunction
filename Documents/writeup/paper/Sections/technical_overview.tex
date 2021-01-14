@@ -393,7 +393,7 @@ Table \ref{CommunicationCosts} includes the computation and communication result
 			\hline
 			\textbf{Centralized wPRF(lookup)} & - & - & - & 9K\\
 			\hline
-			\textbf{Fully Distributed TCC'18 (packed)} & 4 & 5 & 2K &  45K\\
+			\textbf{Fully Distributed\cite{darkmatter} (packed)} & 4 & 5 & 2K &  45K\\
 			\hline
 			\textbf{Fully Distributed (packed)} & 3 & 5 & 6K &  22K\\
 			\hline
@@ -433,14 +433,14 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 		%\begin{minipage}{10cm}
 		\begin{tabular}{|c|c|c|c|c|c|}
 			\hline
-			\textbf{Protocol} & \textbf{Packed }  &  \textbf{lookup} & \textbf{Rounds/sec} & Runtime($\mu$ sec) & Computation\\
+			\textbf{Protocol} & \textbf{Packed }  &  \textbf{lookup} & \textbf{Runs/sec} & Runtime($\mu$ sec)\\
 			\hline
 			\hline
-			\textbf{Centralized weak PRF}  & N  & N  &  50K&	20.2 & -\\
+			\textbf{Centralized weak PRF}  & N  & N  &  50K&20.2 \\
 			\hline
-			\textbf{Centralized weak PRF} & Y  &  N & 65.4K &	18.5 & 70n \\
+			\textbf{Centralized weak PRF} & Y  &  N & 65.4K &18.5  \\
 			\hline
-			\textbf{Centralized weak PRF} & Y  &  Y & 165K &6.08 & 34n\\
+			\textbf{Centralized weak PRF} & Y  &  Y & 165K &6.08 \\
 			\hline
 		\end{tabular}
 		
@@ -456,22 +456,22 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 	%[h]
 	\begin{center}
 		%\begin{minipage}{10cm}
-		\begin{tabular}{|c|c|c|c|c|c|}
+		\begin{tabular}{|c|c|c|c|}
 			\hline
-			\textbf{Protocol} & \textbf{Packed }  &  \textbf{lookup} & \textbf{Rounds/sec} & Runtime($\mu$ sec) & Computation\\
+			\textbf{Protocol} & \textbf{Runs/sec} & Runtime($\mu$ sec) & Computation\\
 			\hline
 			\hline
-			\textbf{Original distributed dark matter} & Y & N &  24K & 40.56	&210n \\
+			\textbf{Original distributed dark matter} & 24K & 40.56 &210n \\
 			\hline
-			\textbf{DIDO} & Y & N & 49K &  20.20& 193n\\
+			\textbf{DIDO} &  49K &  20.20& 193n\\
 			\hline
-			\textbf{DIDO} & Y & Y & 82K &  12.12& 133n\\
+			\textbf{DIDO} &  82K &  12.12& 133n\\
 			\hline
-			\textbf{oPRF} & Y & N & 53K &  18.66& 135n\\
+			\textbf{oPRF} &  53K &  18.66& 135n\\
 			\hline
-			\textbf{oPRF} & Y & Y & 104K &  9.52& 76n \\
+			\textbf{oPRF} &  104K &  9.52& 76n \\
 			\hline
-			\textbf{Discrete log-based PRF} &  - & - & 35K & 28.69 &-\\
+			\textbf{Discrete log-based PRF} & 35K & 28.69 &-\\
 			\hline
 			
 		\end{tabular}
