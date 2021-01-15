@@ -15,22 +15,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\subsection{Parameters}
-The input variable to the PRF functions are the key $K$ which is of size $m \times n$ and each input is a vector of size $n$. 
+\subsection{Preliminaries}
+We begin by defining some basic notation that we will use throughout this work. We use uppercase letters (e.g.,
+A, B) to denote matrices and bold letters to denote vectors \textbf{a} . As was specified in the Boneh et al work \cite{darkmatter}, the input variable to the PRF functions are the key ${K}$ which is of size $m \times n$ and each input $\textbf{i}$ is a vector of size $n$. 
 To save storage space, the key was implemented as a Toeplitz matrix, requiring $2 \cdot n$ bits of storage space.
 In phase 3 of the algorithm, a randomization matrix is used which is of size $r \times n = 81 \times 256$, resulting in entropy of 128 bits.
 
 \subsection{representing $Z_2$ vector}
 
-Bit slicing: this bit-wise packing technique was used to optimize the run-time, each 64 bits were represented by a word. Since each key is of size $m \times n$ and each input is a vector of size $n$, it is possible to pack each 64 rows into $m$ words. This may result in time saving of up to $\times 64$ of the run-time.
+The protocols include a few stages, where the beginning ones handle binary data. By default, each element is therefore part of a set of {0,1}. However, machine words can hold up to 64 bits. To take advantage of this property, we utilized bit slicing optimization. This bit-wise packing technique was used to optimize the run-time, each 64 bits were represented by a word. Since each key $\textbf{K}$  is of size $m \times n$ and each input is a vector of size $n$, it is possible to pack each 64 rows into $m$ words. This may result in time saving of up to $\times 64$ of the run-time.
 
 \subsection{Representing $Z_3$ vector}
 
-To optimize the randomization in $Z_3$, which requires a matrix-vector multiplication in the last phase of the PRF calculation, we implement two optimization methods:
+In the last stage of the PRF protocols, the binary vector is represented as a trinary vector. It is then multiplied by a matrix $R$ in $Z_3$ to produce output randomized vector in $Z_3$ with entropy of 128 bits. To optimize the randomization in $Z_3$, which requires a matrix-vector multiplication in the last phase of the PRF calculation, we implement two methods:
 
-\subsubsection{Bit slicing and operations:} this was done by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. 
+\subsubsection{Bit slicing and operations:} Bit slicing is implemented  by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. 
 
-The Addition, subtraction, multiplication and MUX mod 3 were implemented using the protocols defined in table ref{tab:multicol}. One of the properties that were utilized to implement this was:\\
+The addition, subtraction, multiplication and MUX mod 3 were implemented using the protocols defined in table ref{tab:multicol}. We took advantage of the fact that when representing each vector as MSB and LSB, negation (which is the same as multiplying by two) is the same as swapping the most and least significant bits. Therefore, we get:\\
 mult-by-2 $\mod 3  \leftrightarrow$ negation $ \mod 3 \leftrightarrow$ swap the MSB and LSB \\
  
 Such a vector is sometimes being represented as a vector of $2 \times n$ bits. One example is when this vector is sent as an input to the Oblivious Transfer mechanism. 
@@ -142,7 +143,8 @@ input:   $\vec{l_1}, {m_1}$ - LSB and MSB vectors of value 1  \\
 
 \fi%END of comment
 
-\subsubsection{Integer packing and operations:} As an alternative to bit splicing, integer packing was explored. Since each number is a trinary number, the multiplication of each row by the output vector can be any number between -256 to 256. To explore this option, we represented each number by 9 bits, and packed 7 numbers into each word. This was expected to result in time saving of up to $\times 7$. Testing this option indeed proved to be significantly slower than the first method of packing. We therefore continued using the first packing method of packing instead.
+\subsubsection{Integer packing and operations:} Another method that was explored for optimization was integer packing. 
+At the last stage of our PRF, we multiply a $Z_3$ matrix $R$ by a binary vector that is represented as a trinary vector. Since each number is a trinary number, the multiplication of each row by the output vector can be any number between -256 to 256. To explore this option, we represented each number by 9 bits, and packed 7 numbers into each word. This was expected to result in time saving of up to $\times 7$. Testing this option indeed proved to be significantly slower than the first method of packing. We therefore continued using the first packing method of packing instead.
 Note: since each trinary number can be either 0,1 or 2, we can add up to 255 numbers and never exceed 511. Moreover, if we take a random sample, we can add 256 numbers and the probability of carryover is negligible. We use this to multiply a packed trinary vector with a ternary matrix with 256 columns (see algorithm below).
 	
 	$x_0 \dots x_6 \epsilon Z_3 = {0,1,2}$
