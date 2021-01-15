@@ -1,6 +1,8 @@
 %!TEX root = ../main.tex
 \section{New Protocol}
 
+\input{Sections/additionalDetails}
+
 %TODO: here we should describe the protocols implemented
 %should be rewritten
 
@@ -19,7 +21,7 @@
 We begin by defining some basic notation that we will use throughout this work. We use uppercase letters (e.g.,
 A, B) to denote matrices and bold letters to denote vectors \textbf{a} . As was specified in the Boneh et al work \cite{darkmatter}, the input variable to the PRF functions are the key ${K}$ which is of size $m \times n$ and each input $\textbf{i}$ is a vector of size $n$. 
 To save storage space, the key was implemented as a Toeplitz matrix, requiring $2 \cdot n$ bits of storage space.
-In phase 3 of the algorithm, a randomization matrix is used which is of size $r \times n = 81 \times 256$, resulting in entropy of 128 bits.
+In phase 3 of the algorithm, a randomization matrix $R$ is used which is of size $t \times m = 81 \times 256$, resulting in entropy of 128 bits (as $81 = 128 \times log_2 3$).
 
 \subsection{representing $Z_2$ vector}
 
@@ -27,7 +29,7 @@ The protocols include a few stages, where the beginning ones handle binary data.
 
 \subsection{Representing $Z_3$ vector}
 
-In the last stage of the PRF protocols, the binary vector is represented as a trinary vector. It is then multiplied by a matrix $R$ in $Z_3$ to produce output randomized vector in $Z_3$ with entropy of 128 bits. To optimize the randomization in $Z_3$, which requires a matrix-vector multiplication in the last phase of the PRF calculation, we implement two methods:
+In the last stage of the PRF protocols, the binary vector is represented as a trinary vector. It is then multiplied by a matrix $R$ in $Z_3$ to produce output randomized vector in $Z_3$ with entropy of 128 bits. To optimize the randomization in $Z_3$, which requires a matrix-vector multiplication in the last phase of the PRF calculation, we implement two methods:	
 
 \subsubsection{Bit slicing and operations:} Bit slicing is implemented  by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. 
 
