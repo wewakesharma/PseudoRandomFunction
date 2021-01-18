@@ -70,12 +70,18 @@ int main()  {
     //pack the Rmat
     pack_matrix(Rmat14,Rmat);
 
+    for(int i =0;i<256;i++)
+    {
+        std::cout<<Rmat14[i];
+    }
+
     PackedZ2<N_COLS> outKX;
     outKX.toeplitzByVec(K,X);//perform K*X
 
     //perform matByVec and get the output.[K*x*Rmat]
     matByVec_int_pack(outZ3,  outKX,  Rmat14);
 
+    std::cout<<"Output is "<<outZ3<<std::endl;
 /*
     //call the lookup table generator
     std::cout<<"Generating lookup table of size (16 X 2^16)"<<std::endl;

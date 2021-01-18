@@ -37,12 +37,13 @@ void pack_matrix(std::vector<vector<uint64_t> >& Rmat14, std::vector<PackedZ3<81
             uint64_t temp_value;
             for(int inner_row = 5; inner_row >= 0; inner_row--)
             {
+                if((row_count*6+inner_row) > 80)
+                    continue;
                 z3_value = Rmat[col_count].at(row_count*6+inner_row); //extract a z3 bit from Rmat
                 packed_value &= z3_value<<(inner_row)*10;   //first bit will be pushed 50 to left, second pushed 40 to left so on
-                if((row_count*6+inner_row) > 80)
-                    break;
+
             }
-            Rmat14[row_count][col_count] = packed_value;
+            Rmat14[col_count][row_count] = packed_value;//changed to col count and row count
         }
 
     }
