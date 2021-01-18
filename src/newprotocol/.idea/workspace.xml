@@ -12,6 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="644c242a-e514-4e60-bf76-55d2fabdec37" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Documents/analysis/DarkmatterImptDetails.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/analysis/DarkmatterImptDetails.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeCCompiler.cmake" afterDir="false" />
@@ -214,6 +215,7 @@
       <workItem from="1611007499884" duration="1492000" />
       <workItem from="1611009353959" duration="250000" />
       <workItem from="1611010022997" duration="274000" />
+      <workItem from="1611011602950" duration="376000" />
     </task>
     <servers />
   </component>
@@ -229,26 +231,26 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="409" height="466" key="DebuggerActiveHint/0.0.1440.900@0.0.1440.900" timestamp="1605122397118" />
-    <state width="1440" height="229" key="GridCell.Tab.0.bottom" timestamp="1611009637049">
+    <state width="1440" height="229" key="GridCell.Tab.0.bottom" timestamp="1611011980418">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1398" height="307" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1611004878691" />
-    <state width="1440" height="229" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1611009637049" />
-    <state width="1440" height="229" key="GridCell.Tab.0.center" timestamp="1611009637048">
+    <state width="1440" height="229" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1611011980418" />
+    <state width="1440" height="229" key="GridCell.Tab.0.center" timestamp="1611011980416">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1398" height="307" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1611004878690" />
-    <state width="1440" height="229" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1611009637048" />
-    <state width="1440" height="229" key="GridCell.Tab.0.left" timestamp="1611009637047">
+    <state width="1440" height="229" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1611011980416" />
+    <state width="1440" height="229" key="GridCell.Tab.0.left" timestamp="1611011980409">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1398" height="307" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1611004878689" />
-    <state width="1440" height="229" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1611009637047" />
-    <state width="1440" height="229" key="GridCell.Tab.0.right" timestamp="1611009637048">
+    <state width="1440" height="229" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1611011980409" />
+    <state width="1440" height="229" key="GridCell.Tab.0.right" timestamp="1611011980417">
       <screen x="0" y="23" width="1440" height="821" />
     </state>
     <state width="1398" height="307" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1611004878690" />
-    <state width="1440" height="229" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1611009637048" />
+    <state width="1440" height="229" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1611011980417" />
     <state width="1398" height="307" key="GridCell.Tab.1.bottom" timestamp="1611004878693">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
