@@ -15,7 +15,7 @@
 #include <darkmatter/integer_pack.h>
 #include "lookup_functions.h"
 
-#ifdef TEST_PACK
+#ifdef TEST_INTEGER_PACKING
 
 int main()  {
 

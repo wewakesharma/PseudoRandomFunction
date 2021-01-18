@@ -36,7 +36,7 @@
 //#define TEST_PackedMod2    //test class packedMod2
 //#define TEST_PackedMod3    //test class packedMod3
 //#define TEST_SC     //Not used anymore
-#define TEST_PACK
+#define TEST_INTEGER_PACKING
 //#define UNITTEST_ROUND2       //for dark matter protocol - runs the unit test code that checks round 2 only
 
 

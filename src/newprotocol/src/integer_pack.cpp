@@ -58,9 +58,12 @@ void unpack_output(PackedZ3<81>& out_Z3, std::vector<uint64_t>& out_pack)//this 
         packed_word = out_pack[word_count];
         for(int inner_count = 0; inner_count<6;inner_count++)
         {
+
             extracted_bit = packed_word>>(inner_count*10);
             extracted_bit = extracted_bit & 0x3ff;
             out_Z3.set(word_count*6+inner_count,extracted_bit);
+            if (word_count*6+inner_count == 80)
+                break;
 
         }
     }
