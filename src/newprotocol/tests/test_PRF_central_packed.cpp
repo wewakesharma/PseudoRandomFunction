@@ -74,7 +74,7 @@ int main()  {
     outKX.toeplitzByVec(K,X);//perform K*X
 
     //perform matByVec and get the output.[K*x*Rmat]
-    matByVec_int_pack(outZ3, outKX, outZ3);
+    matByVec_int_pack(outZ3, & outKX, & Rmat14);
 
 /*
     //call the lookup table generator
