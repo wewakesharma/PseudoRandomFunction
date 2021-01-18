@@ -29,18 +29,19 @@ void pack_matrix(std::vector<vector<uint64_t> >& Rmat14, std::vector<PackedZ3<81
     for(int col_count = 0; col_count < N_COLS; col_count++)
     {
         Rmat14[col_count].resize(14);//each column of Rmat will have 14 rows.
-        int z3_value = 0;       //extracted z3 bit from Randomization matrix
+        uint64_t z3_value = 0;       //extracted z3 bit from Randomization matrix
         int word_count = 0;     //To be REMOVED
-        int packed_value = 0;       //stores the final packed integer value
+        uint64_t packed_value = 0;       //stores the final packed integer value
         for(int row_count = 0; row_count < 14; row_count++)
         {
             uint64_t temp_value;
+            packed_value = 0;
             for(int inner_row = 5; inner_row >= 0; inner_row--)
             {
                 if((row_count*6+inner_row) > 80)
                     continue;
                 z3_value = Rmat[col_count].at(row_count*6+inner_row); //extract a z3 bit from Rmat
-                packed_value &= z3_value<<(inner_row)*10;   //first bit will be pushed 50 to left, second pushed 40 to left so on
+                packed_value |= z3_value<<(inner_row*10);   //first bit will be pushed 50 to left, second pushed 40 to left so on
 
             }
             Rmat14[col_count][row_count] = packed_value;//changed to col count and row count
