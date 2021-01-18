@@ -12,7 +12,7 @@
 #include "OT.hpp"
 #include "Timing.hpp"
 #include <chrono>
-#include <darkmatter/integer_pack.h>
+#include "integer_pack.h"
 #include "lookup_functions.h"
 
 #ifdef TEST_INTEGER_PACKING
@@ -93,7 +93,7 @@ int main()  {
 
         //perform matByVec and get the output.[K*x*Rmat]
         auto start_int_matByVec = std::chrono::system_clock::now();
-        matByVec_int_pack(outZ3,  outKX,  Rmat14);
+        matByVec_int_pack(outZ3_int_pack,  outKX,  Rmat14);
         timer_int_matByVec += (std::chrono::system_clock::now() - start_int_matByVec).count();
 
         outZ3_dummy += outZ3_int_pack;
