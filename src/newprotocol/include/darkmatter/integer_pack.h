@@ -11,6 +11,6 @@
 
 void pack_matrix(std::vector<std::vector<uint64_t> >& Rmat14, std::vector<PackedZ3<81> >& Rmat);
 void unpack_output(std::vector<uint64_t>& out_Z3, std::vector<uint64_t>& out_pack);
-void matByVec_int_pack(std::vector<uint64_t>& out_Z3, PackedZ2<N_COLS>& outKX, std::vector<std::vector<uint64_t> >& Rmat14);
+void matByVec_int_pack(PackedZ3<81>& out_Z3, PackedZ2<N_COLS>& outKX, std::vector<std::vector<uint64_t> >& Rmat14);
 
 #endif //NEWPROTOCOL_INTEGER_PACK_H

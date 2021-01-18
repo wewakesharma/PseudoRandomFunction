@@ -35,11 +35,11 @@ void pack_matrix(std::vector<vector<uint64_t> >& Rmat14, std::vector<PackedZ3<81
         for(int row_count = 0; row_count < 14; row_count++)
         {
             uint64_t temp_value;
-            for(int inner_row = 0; inner_row < 6; inner_row++)
+            for(int inner_row = 5; inner_row >= 0; inner_row--)
             {
                 z3_value = Rmat[col_count].at(row_count*6+inner_row); //extract a z3 bit from Rmat
-                packed_value &= z3_value<<((5-inner_row)*10);   //first bit will be pushed 50 to left, second pushed 40 to left so on
-                if((row_count*inner_row) > 80)
+                packed_value &= z3_value<<(inner_row)*10;   //first bit will be pushed 50 to left, second pushed 40 to left so on
+                if((row_count*6+inner_row) > 80)
                     break;
             }
             Rmat14[row_count][col_count] = packed_value;
@@ -48,13 +48,24 @@ void pack_matrix(std::vector<vector<uint64_t> >& Rmat14, std::vector<PackedZ3<81
     }
 }
 
-void unpack_output(std::vector<uint64_t>& out_Z3, std::vector<uint64_t>& out_pack)//this function unpacks 14 words to 81 bits
+void unpack_output(PackedZ3<81>& out_Z3, std::vector<uint64_t>& out_pack)//this function unpacks 14 words to 81 bits
 {
+    uint64_t packed_word;
+    uint64_t extracted_bit;
+    for(int word_count = 0; word_count < 14; word_count++)
+    {
+        packed_word = out_pack[word_count];
+        for(int inner_count = 0; inner_count<6;inner_count++)
+        {
+            extracted_bit = packed_word>>(inner_count*10);
+            out_Z3.set(word_count*6+inner_count,extracted_bit);
 
+        }
+    }
 }
 
 
-void matByVec_int_pack(std::vector<uint64_t>& out_Z3, PackedZ2<N_COLS>& outKX,
+void matByVec_int_pack(PackedZ3<81>& out_Z3, PackedZ2<N_COLS>& outKX,
         std::vector<vector<uint64_t> >& Rmat14)//performs the matrix vector product on the packed integers
 {
     std::vector<uint64_t> out_pack; //packed output
