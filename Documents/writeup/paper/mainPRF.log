@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  18 JAN 2021 10:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  18 JAN 2021 11:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -842,7 +842,7 @@ as been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.95 \[
+l.97 \]
        ]
 Overfull \hbox (45.48904pt too wide) in paragraph at lines 130--178
  [] 
@@ -879,7 +879,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 31.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 31.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 31.
 Package rerunfilecheck Info: File `mainPRF.out' has not changed.
-(rerunfilecheck)             Checksum: D594805FBA12893D96AA92D9F123E94D;1041.
+(rerunfilecheck)             Checksum: EC81E5DC23FD4211D92D34765986338F;1039.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -907,7 +907,7 @@ ocal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loc
 al/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/
 texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
 exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on mainPRF.pdf (4 pages, 146008 bytes).
+Output written on mainPRF.pdf (4 pages, 145512 bytes).
 PDF statistics:
  163 PDF objects out of 1000 (max. 8388607)
  144 compressed objects within 2 object streams
