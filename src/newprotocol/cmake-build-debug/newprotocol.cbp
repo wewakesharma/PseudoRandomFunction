@@ -164,13 +164,13 @@
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_PRF.cpp">
 			<Option target="newprotocol"/>
 		</Unit>
-		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_PRF_central_packed.cpp">
-			<Option target="newprotocol"/>
-		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_Packed_PRF.cpp">
 			<Option target="newprotocol"/>
 		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_Toeplitz-by-x.cpp">
+			<Option target="newprotocol"/>
+		</Unit>
+		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_central_int_packed.cpp">
 			<Option target="newprotocol"/>
 		</Unit>
 		<Unit filename="/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_dmprotocol.cpp">

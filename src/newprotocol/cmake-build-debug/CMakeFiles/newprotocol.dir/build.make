@@ -174,9 +174,22 @@ CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.s"
 	/usr/local/bin/g++-10 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/src/unpacked_PRF_central.cpp -o CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.s
 
+CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o: CMakeFiles/newprotocol.dir/flags.make
+CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o: ../tests/test_central_int_packed.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o"
+	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_central_int_packed.cpp
+
+CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.i"
+	/usr/local/bin/g++-10 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_central_int_packed.cpp > CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.i
+
+CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.s"
+	/usr/local/bin/g++-10 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_central_int_packed.cpp -o CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.s
+
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../tests/test_dmprotocol.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_dmprotocol.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.i: cmake_force
@@ -189,7 +202,7 @@ CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../tests/test_lookup.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_lookup.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.i: cmake_force
@@ -202,7 +215,7 @@ CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../tests/test_newprotocol.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_newprotocol.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.i: cmake_force
@@ -215,7 +228,7 @@ CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o: ../tests/test_oprf.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_oprf.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.i: cmake_force
@@ -228,7 +241,7 @@ CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o: ../tests/test_OT.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_OT.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_OT.cpp.i: cmake_force
@@ -241,7 +254,7 @@ CMakeFiles/newprotocol.dir/tests/test_OT.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o: ../tests/test_Packed_PRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_Packed_PRF.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.i: cmake_force
@@ -254,7 +267,7 @@ CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o: ../tests/test_packed_PRF_central_lookup.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_packed_PRF_central_lookup.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.i: cmake_force
@@ -267,7 +280,7 @@ CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.s: cmake_for
 
 CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o: ../tests/test_packedMod2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_packedMod2.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.i: cmake_force
@@ -280,7 +293,7 @@ CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o: ../tests/test_packedMod3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_packedMod3.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.i: cmake_force
@@ -293,7 +306,7 @@ CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o: ../tests/test_PRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o"
 	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_PRF.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.i: cmake_force
@@ -303,19 +316,6 @@ CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.i: cmake_force
 CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.s"
 	/usr/local/bin/g++-10 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_PRF.cpp -o CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.s
-
-CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.o: CMakeFiles/newprotocol.dir/flags.make
-CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.o: ../tests/test_PRF_central_packed.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.o"
-	/usr/local/bin/g++-10  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.o -c /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_PRF_central_packed.cpp
-
-CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.i"
-	/usr/local/bin/g++-10 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_PRF_central_packed.cpp > CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.i
-
-CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.s"
-	/usr/local/bin/g++-10 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/tests/test_PRF_central_packed.cpp -o CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.s
 
 CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o: ../tests/test_Toeplitz-by-x.cpp
@@ -367,6 +367,7 @@ newprotocol_OBJECTS = \
 "CMakeFiles/newprotocol.dir/src/PRF.cpp.o" \
 "CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o" \
 "CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o" \
+"CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o" \
@@ -377,7 +378,6 @@ newprotocol_OBJECTS = \
 "CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o" \
-"CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o"
@@ -394,6 +394,7 @@ newprotocol: CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/src/PRF.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o
+newprotocol: CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o
@@ -404,7 +405,6 @@ newprotocol: CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o
-newprotocol: CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o

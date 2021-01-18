@@ -420,33 +420,6 @@ tests/test_PRF.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.s
 .PHONY : tests/test_PRF.cpp.s
 
-tests/test_PRF_central_packed.o: tests/test_PRF_central_packed.cpp.o
-
-.PHONY : tests/test_PRF_central_packed.o
-
-# target to build an object file
-tests/test_PRF_central_packed.cpp.o:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.o
-.PHONY : tests/test_PRF_central_packed.cpp.o
-
-tests/test_PRF_central_packed.i: tests/test_PRF_central_packed.cpp.i
-
-.PHONY : tests/test_PRF_central_packed.i
-
-# target to preprocess a source file
-tests/test_PRF_central_packed.cpp.i:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.i
-.PHONY : tests/test_PRF_central_packed.cpp.i
-
-tests/test_PRF_central_packed.s: tests/test_PRF_central_packed.cpp.s
-
-.PHONY : tests/test_PRF_central_packed.s
-
-# target to generate assembly for a file
-tests/test_PRF_central_packed.cpp.s:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_PRF_central_packed.cpp.s
-.PHONY : tests/test_PRF_central_packed.cpp.s
-
 tests/test_Packed_PRF.o: tests/test_Packed_PRF.cpp.o
 
 .PHONY : tests/test_Packed_PRF.o
@@ -500,6 +473,33 @@ tests/test_Toeplitz-by-x.s: tests/test_Toeplitz-by-x.cpp.s
 tests/test_Toeplitz-by-x.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.s
 .PHONY : tests/test_Toeplitz-by-x.cpp.s
+
+tests/test_central_int_packed.o: tests/test_central_int_packed.cpp.o
+
+.PHONY : tests/test_central_int_packed.o
+
+# target to build an object file
+tests/test_central_int_packed.cpp.o:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o
+.PHONY : tests/test_central_int_packed.cpp.o
+
+tests/test_central_int_packed.i: tests/test_central_int_packed.cpp.i
+
+.PHONY : tests/test_central_int_packed.i
+
+# target to preprocess a source file
+tests/test_central_int_packed.cpp.i:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.i
+.PHONY : tests/test_central_int_packed.cpp.i
+
+tests/test_central_int_packed.s: tests/test_central_int_packed.cpp.s
+
+.PHONY : tests/test_central_int_packed.s
+
+# target to generate assembly for a file
+tests/test_central_int_packed.cpp.s:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.s
+.PHONY : tests/test_central_int_packed.cpp.s
 
 tests/test_dmprotocol.o: tests/test_dmprotocol.cpp.o
 
@@ -786,15 +786,15 @@ help:
 	@echo "... tests/test_PRF.o"
 	@echo "... tests/test_PRF.i"
 	@echo "... tests/test_PRF.s"
-	@echo "... tests/test_PRF_central_packed.o"
-	@echo "... tests/test_PRF_central_packed.i"
-	@echo "... tests/test_PRF_central_packed.s"
 	@echo "... tests/test_Packed_PRF.o"
 	@echo "... tests/test_Packed_PRF.i"
 	@echo "... tests/test_Packed_PRF.s"
 	@echo "... tests/test_Toeplitz-by-x.o"
 	@echo "... tests/test_Toeplitz-by-x.i"
 	@echo "... tests/test_Toeplitz-by-x.s"
+	@echo "... tests/test_central_int_packed.o"
+	@echo "... tests/test_central_int_packed.i"
+	@echo "... tests/test_central_int_packed.s"
 	@echo "... tests/test_dmprotocol.o"
 	@echo "... tests/test_dmprotocol.i"
 	@echo "... tests/test_dmprotocol.s"
