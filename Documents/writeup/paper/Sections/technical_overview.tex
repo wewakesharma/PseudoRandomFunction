@@ -71,7 +71,7 @@ by a matrix $R$ in $Z_3$ to produce an output vector in $Z_3$. We tried differen
 
 \subsubsection{Integer packing  operations} Another method that was explored for optimization was integer packing. 
 Since in our case we need to multiply a $Z_3$ vector of dimension $m=256$ by a trinary matrix, then each entry in the result can be as large as $256 \times 4 = 1024$, but not larger.
-We therefore allocated 9 bits for each entry (capable of holding numbers between 0 and 511), so we can pack such numbers into each word. Specifically, the vector $(X_0 ... X_6)$ over $Z_3$ is represented as the integer $y = \sum_{i=0}^6 512^i \times x_i$.
+We therefore allocated 10 bits for each entry (capable of holding numbers between 0 and 1023), so we can pack such numbers into each word. Specifically, the vector $(X_0 ... X_5)$ over $Z_3$ is represented as the integer $y = \sum_{i=0}^6 512^i \times x_i$.
 
 When performing the matrix-vector multiplication, multiple rows the matrix were packed using integer-packing. 
 %Specifically, the matrix was divided into two matrices of size $81 \times 128$. 
