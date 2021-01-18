@@ -41,4 +41,4 @@ add_executable(newprotocol
         tests/test_PRF.cpp
         tests/test_Toeplitz-by-x.cpp
         tests/test_unit_newprotocol.cpp
-        tests/test_unpacked_PRF.cpp)
+        tests/test_unpacked_PRF.cpp src/integer_pack.cpp include/darkmatter/integer_pack.h tests/test_PRF_central_packed.cpp)
