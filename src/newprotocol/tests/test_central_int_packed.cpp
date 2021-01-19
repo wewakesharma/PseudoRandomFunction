@@ -67,13 +67,26 @@ int main()  {
     //reformating Rmat from 81 X 256 to 14 X 256
     std::vector<std::vector<uint64_t> > Rmat14(256);//outer vector is of size 256 and inner is of size 14
 
+#ifdef DEBUG
+    for (int i = 0; i < 256; i++)
+    {
+        Rmat[i].reset();
+    }
+//    Rmat[0].set(0,1);
+    Rmat[0].set(1,2);
+    K= {1,0,0,0,0,0,0,0};
+    X.reset();
+    X.set(0,1);
+  //  X.set(1,1);
+#endif
+
     //pack the Rmat
     pack_matrix(Rmat14,Rmat);
 
 #ifdef DEBUG
     for(int i = 0; i < 256; i++)
     {
-        std::cout<<Rmat14[i];
+        std::cout<<Rmat14[i] << std::endl;
     }
 #endif
 

@@ -12,7 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="644c242a-e514-4e60-bf76-55d2fabdec37" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Documents/analysis/DarkmatterImptDetails.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Documents/analysis/DarkmatterImptDetails.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeCCompiler.cmake" afterDir="false" />
@@ -31,7 +30,6 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/DependInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/build.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/flags.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/OPRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/OPRF.cpp.o" afterDir="false" />
@@ -47,6 +45,7 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o" afterDir="false" />
@@ -60,6 +59,7 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/newprotocol" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/newprotocol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/newprotocol.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/newprotocol.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/darkmatter/mains.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/include/darkmatter/mains.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_central_int_packed.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_central_int_packed.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -216,6 +216,8 @@
       <workItem from="1611009353959" duration="250000" />
       <workItem from="1611010022997" duration="274000" />
       <workItem from="1611011602950" duration="376000" />
+      <workItem from="1611012258557" duration="326000" />
+      <workItem from="1611012589070" duration="1972000" />
     </task>
     <servers />
   </component>
@@ -231,54 +233,54 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="409" height="466" key="DebuggerActiveHint/0.0.1440.900@0.0.1440.900" timestamp="1605122397118" />
-    <state width="1440" height="229" key="GridCell.Tab.0.bottom" timestamp="1611011980418">
-      <screen x="0" y="23" width="1440" height="821" />
+    <state width="1398" height="274" key="GridCell.Tab.0.bottom" timestamp="1611014447265">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="307" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1611004878691" />
+    <state width="1398" height="274" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1611014447265" />
     <state width="1440" height="229" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1611011980418" />
-    <state width="1440" height="229" key="GridCell.Tab.0.center" timestamp="1611011980416">
-      <screen x="0" y="23" width="1440" height="821" />
+    <state width="1398" height="274" key="GridCell.Tab.0.center" timestamp="1611014447263">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="307" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1611004878690" />
+    <state width="1398" height="274" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1611014447263" />
     <state width="1440" height="229" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1611011980416" />
-    <state width="1440" height="229" key="GridCell.Tab.0.left" timestamp="1611011980409">
-      <screen x="0" y="23" width="1440" height="821" />
+    <state width="1398" height="274" key="GridCell.Tab.0.left" timestamp="1611014447262">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="307" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1611004878689" />
+    <state width="1398" height="274" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1611014447262" />
     <state width="1440" height="229" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1611011980409" />
-    <state width="1440" height="229" key="GridCell.Tab.0.right" timestamp="1611011980417">
-      <screen x="0" y="23" width="1440" height="821" />
+    <state width="1398" height="274" key="GridCell.Tab.0.right" timestamp="1611014447264">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="307" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1611004878690" />
+    <state width="1398" height="274" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1611014447264" />
     <state width="1440" height="229" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1611011980417" />
-    <state width="1398" height="307" key="GridCell.Tab.1.bottom" timestamp="1611004878693">
+    <state width="1398" height="274" key="GridCell.Tab.1.bottom" timestamp="1611014448095">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="307" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1611004878693" />
+    <state width="1398" height="274" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1611014448095" />
     <state width="1440" height="214" key="GridCell.Tab.1.bottom/0.23.1440.821@0.23.1440.821" timestamp="1611000469045" />
-    <state width="1398" height="307" key="GridCell.Tab.1.center" timestamp="1611004878692">
+    <state width="1398" height="274" key="GridCell.Tab.1.center" timestamp="1611014448094">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="307" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1611004878692" />
+    <state width="1398" height="274" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1611014448094" />
     <state width="1440" height="214" key="GridCell.Tab.1.center/0.23.1440.821@0.23.1440.821" timestamp="1611000469045" />
-    <state width="1398" height="307" key="GridCell.Tab.1.left" timestamp="1611004878691">
+    <state width="1398" height="274" key="GridCell.Tab.1.left" timestamp="1611014448093">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="307" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1611004878691" />
+    <state width="1398" height="274" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1611014448093" />
     <state width="1440" height="214" key="GridCell.Tab.1.left/0.23.1440.821@0.23.1440.821" timestamp="1611000469044" />
-    <state width="1398" height="307" key="GridCell.Tab.1.right" timestamp="1611004878692">
+    <state width="1398" height="274" key="GridCell.Tab.1.right" timestamp="1611014448095">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="307" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1611004878692" />
+    <state width="1398" height="274" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1611014448095" />
     <state width="1440" height="214" key="GridCell.Tab.1.right/0.23.1440.821@0.23.1440.821" timestamp="1611000469045" />
-    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1611004875708">
+    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel" timestamp="1611012583053">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel/0.0.1440.900@0.0.1440.900" timestamp="1611004875708" />
-    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel" timestamp="1611004875708">
+    <state width="647" height="205" key="ImportCMakeProjectWizard.bottomPanel/0.0.1440.900@0.0.1440.900" timestamp="1611012583053" />
+    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel" timestamp="1611012583052">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel/0.0.1440.900@0.0.1440.900" timestamp="1611004875708" />
+    <state width="647" height="477" key="ImportCMakeProjectWizard.topPanel/0.0.1440.900@0.0.1440.900" timestamp="1611012583052" />
     <state width="600" height="428" key="javadoc.popup" timestamp="1603304684358">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -333,20 +335,26 @@
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/integer_pack.cpp</url>
-          <line>87</line>
-          <option name="timeStamp" value="38" />
+          <url>file://$PROJECT_DIR$/tests/test_central_int_packed.cpp</url>
+          <line>115</line>
+          <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/integer_pack.cpp</url>
-          <line>70</line>
-          <option name="timeStamp" value="40" />
+          <url>file://$PROJECT_DIR$/tests/test_central_int_packed.cpp</url>
+          <line>108</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="Rmat[col_count].at(row_count*6+inner_row)" language="ObjectiveC" />
+        <watch expression="outZ3_int_pack.at(0)" language="ObjectiveC" />
+        <watch expression="outZ3.at(0)" language="ObjectiveC" />
+        <watch expression="outKX[0]" language="ObjectiveC" />
+        <watch expression="outKX.at(0)" language="ObjectiveC" />
+        <watch expression="outKX.at(1)" language="ObjectiveC" />
+        <watch expression="Rmat14.at(0)" language="ObjectiveC" />
       </configuration>
     </watches-manager>
   </component>
