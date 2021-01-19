@@ -153,7 +153,6 @@ Table \ref{CommunicationCosts} includes the computation and communication result
 		
 		\vspace{-1mm}
 		\caption{Communication Analysis of different protocols. The protocols were optimized using both the bit packing and the lookup table}
-		\label{CommunicationCosts}
 		%\end{minipage}
 	\end{center}
 	\vspace{-5mm}
@@ -179,12 +178,15 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 			\textbf{Protocol} & \textbf{Packed }  &  \textbf{lookup} & \textbf{Runs/sec} & \textbf{Runtime($\mu$ sec)}\\
 			\hline
 			\hline
-			\textbf{Centralized weak PRF}  & N  & N  &  50K&20.2 \\
+			\textbf{Centralized wPRF}  & N  & N  &  50K&20.2 \\
 			\hline
-			\textbf{Centralized weak PRF} & Y  &  N & 65.4K &18.5  \\
+			\textbf{Centralized wPRF} & Y  &  N & 65.4K &18.5  \\
 			\hline
-			\textbf{Centralized weak PRF} & Y  &  Y & 165K &6.08 \\
+			\textbf{Centralized wPRF(int pack)} & Y  &  N & 84K &11.85 \\
 			\hline
+			\textbf{Centralized wPRF} & Y  &  Y & 165K &6.08 \\
+			\hline
+			
 		\end{tabular}
 		
 		\vspace{-1mm}
