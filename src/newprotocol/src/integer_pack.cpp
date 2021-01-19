@@ -41,6 +41,11 @@ void pack_matrix(std::vector<vector<uint64_t> >& Rmat14, std::vector<PackedZ3<81
                 if((row_count*6+inner_row) > 80)
                     continue;
                 z3_value = Rmat[col_count].at(row_count*6+inner_row); //extract a z3 bit from Rmat
+#ifdef DEBUG
+                if (z3_value !=0)
+                    bool bBreakhere=0;
+#endif
+
                 packed_value |= z3_value<<(inner_row*10);   //first bit will be pushed 50 to left, second pushed 40 to left so on
 
             }
@@ -82,7 +87,18 @@ void matByVec_int_pack(PackedZ3<81>& out_Z3, PackedZ2<N_COLS>& outKX,
         uint64_t sum = 0;
         for(int j = 0; j < N_COLS; j++)//number of columns
         {
-            sum += outKX.at(j) * Rmat14[i][j];
+#ifdef DEBUG
+            uint64_t test = Rmat14[j][i];
+            uint64_t test2 = outKX.at(j);
+            if (test!=0)
+                bool bBreakhere=true;
+            if (test2!=0)
+                bool bBreakhere1=true;
+            if ( (test!=0) && (test2!=0) )
+                bool bBreakhere2=true;
+#endif
+
+            sum += outKX.at(j) * Rmat14[j][i];
         }
         out_pack[i] = sum;
         //% 3;
