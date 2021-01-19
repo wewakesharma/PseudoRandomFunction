@@ -62,6 +62,7 @@ void unpack_output(PackedZ3<81>& out_Z3, std::vector<uint64_t>& out_pack)//this 
 
             extracted_bit = packed_word>>(inner_count*10);
             extracted_bit = extracted_bit & 0x3ff;
+            extracted_bit = extracted_bit % 3;
             out_Z3.set(word_count*6+inner_count,extracted_bit);
             if (word_count*6+inner_count == 80)
                 break;
@@ -83,7 +84,8 @@ void matByVec_int_pack(PackedZ3<81>& out_Z3, PackedZ2<N_COLS>& outKX,
         {
             sum += outKX.at(j) * Rmat14[i][j];
         }
-        out_pack[i] = sum % 3;
+        out_pack[i] = sum;
+        //% 3;
     }
     unpack_output(out_Z3, out_pack);//internally calls the unpacking function
 

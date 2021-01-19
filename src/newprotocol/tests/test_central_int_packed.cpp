@@ -73,11 +73,17 @@ int main()  {
         Rmat[i].reset();
     }
 //    Rmat[0].set(0,1);
-    Rmat[0].set(1,2);
-    K= {1,0,0,0,0,0,0,0};
+ //   Rmat[0].set(1,2);
+ //   Rmat[0].set(0,2);
+//    for (int j = 0; j < 80; j++) {
+ //       Rmat[128].set(j, 2);
+ //   }
+    Rmat[128].set(0, 2);
+
+    K= {0,0,1,0,0,0,0,0};
     X.reset();
     X.set(0,1);
-  //  X.set(1,1);
+//    X.set(1,1);
 #endif
 
     //pack the Rmat
