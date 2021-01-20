@@ -13,7 +13,7 @@
 
 using namespace std;
 
-#ifdef UNIT_DM
+#ifdef UNIT_DM  //tests the dark matter wPRF implementation by comparing it with PRF_centralized
 int main()
 {
     //declare the variables

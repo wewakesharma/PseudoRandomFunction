@@ -13,6 +13,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o"
+  "CMakeFiles/newprotocol.dir/tests/test_dm_lookup.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o"

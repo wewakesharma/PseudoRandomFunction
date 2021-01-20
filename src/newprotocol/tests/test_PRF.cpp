@@ -11,6 +11,7 @@
 #include "OT.hpp"
 #include "Timing.hpp"
 #include <chrono>
+#include "lookup_functions.h"
 
 using namespace std;
 
@@ -33,24 +34,13 @@ int main(int argc,char* argv[] )  {
         stepsToRun = 3;
 
     int ntimes = 1;
-
-    std::cout<<"Executing Darkmatter PRF protocol..."<<std::endl;
+#ifndef TEST_PRF_LOOKUP
+    std::cout<<"Executing Darkmatter PRF protocol without lookup"<<std::endl;
+#endif
+#ifdef TEST_PRF_LOOKUP
+    std::cout<<"Executing Darkmatter PRF protocol with lookup"<<std::endl;
+#endif
     PRF_DM_wpreproc(ntimes, nRuns, stepsToRun);
-
-    /*
-    using Clock = std::chrono::system_clock;
-    using Duration = Clock::duration;
-    //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
-    float time_unit_multiplier = 1;
-    if(Duration::period::den == 1000000000)
-        time_unit_multiplier = 0.001; //make nanosecond to microsecond
-    else if(Duration::period::den == 1000000)
-        time_unit_multiplier = 1;   //keep the unit as microsecond
-
-    display_AXplusB_runtime(time_unit_multiplier);
-    display_SC_runtime(time_unit_multiplier);
-    display_Phase3_runtime(time_unit_multiplier);
-    display_PRF_runtime(time_unit_multiplier);*/
 
 }
 

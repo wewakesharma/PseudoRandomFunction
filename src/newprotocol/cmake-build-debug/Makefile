@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol
+CMAKE_SOURCE_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/thalevi/Documents/research/PRFs/git/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -501,6 +501,33 @@ tests/test_central_int_packed.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.s
 .PHONY : tests/test_central_int_packed.cpp.s
 
+tests/test_dm_lookup.o: tests/test_dm_lookup.cpp.o
+
+.PHONY : tests/test_dm_lookup.o
+
+# target to build an object file
+tests/test_dm_lookup.cpp.o:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dm_lookup.cpp.o
+.PHONY : tests/test_dm_lookup.cpp.o
+
+tests/test_dm_lookup.i: tests/test_dm_lookup.cpp.i
+
+.PHONY : tests/test_dm_lookup.i
+
+# target to preprocess a source file
+tests/test_dm_lookup.cpp.i:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dm_lookup.cpp.i
+.PHONY : tests/test_dm_lookup.cpp.i
+
+tests/test_dm_lookup.s: tests/test_dm_lookup.cpp.s
+
+.PHONY : tests/test_dm_lookup.s
+
+# target to generate assembly for a file
+tests/test_dm_lookup.cpp.s:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dm_lookup.cpp.s
+.PHONY : tests/test_dm_lookup.cpp.s
+
 tests/test_dmprotocol.o: tests/test_dmprotocol.cpp.o
 
 .PHONY : tests/test_dmprotocol.o
@@ -795,6 +822,9 @@ help:
 	@echo "... tests/test_central_int_packed.o"
 	@echo "... tests/test_central_int_packed.i"
 	@echo "... tests/test_central_int_packed.s"
+	@echo "... tests/test_dm_lookup.o"
+	@echo "... tests/test_dm_lookup.i"
+	@echo "... tests/test_dm_lookup.s"
 	@echo "... tests/test_dmprotocol.o"
 	@echo "... tests/test_dmprotocol.i"
 	@echo "... tests/test_dmprotocol.s"
