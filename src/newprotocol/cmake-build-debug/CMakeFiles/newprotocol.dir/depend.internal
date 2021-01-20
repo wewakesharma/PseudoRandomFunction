@@ -148,8 +148,6 @@ CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o
  ../include/darkmatter/packed_PRF_central.h
  ../include/darkmatter/utils.hpp
  /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_central_int_packed.cpp
-CMakeFiles/newprotocol.dir/tests/test_dm_lookup.cpp.o
- /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_dm_lookup.cpp
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o
  ../include/darkmatter/OT.hpp
  ../include/darkmatter/PRF.hpp

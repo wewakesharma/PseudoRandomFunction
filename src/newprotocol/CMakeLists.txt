@@ -44,4 +44,4 @@ add_executable(newprotocol
         tests/test_PRF.cpp
         tests/test_Toeplitz-by-x.cpp
         tests/test_unit_newprotocol.cpp
-        tests/test_unpacked_PRF.cpp tests/test_dm_lookup.cpp)
+        tests/test_unpacked_PRF.cpp)

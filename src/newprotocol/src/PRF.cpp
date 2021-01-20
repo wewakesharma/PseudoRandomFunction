@@ -222,9 +222,6 @@ void exec_lookup_timing()
 }
 #endif
 
-/*
- * PRF without the pre-processing
- */
 
 void display_timing()
 {
@@ -251,7 +248,7 @@ void display_timing()
              ((timerSCP1 + timerSCP2) * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Number of rounds per second for phase 2: "<<(1000/((timerSCP1 + timerSCP2) * time_unit_multiplier)*1000000)<<std::endl;
     std::cout<<"====================================================="<<std::endl;
-    timer_phase3 = std::max(timer_phase31,timer_phase32);
+    timer_phase3 = std::max(timer_phase31,timer_phase32);       //taking maximum of both phases to emulate simultaneous execution
     std::cout<<"\nTime to execute phase 3: "<<
              (timer_phase3 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Number of rounds per second for phase 3: "<<(1000/(timer_phase3*time_unit_multiplier)*1000000)<<std::endl;
@@ -273,12 +270,13 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         PackedZ3<81>& out2Z3, int i)
 {
 
-
         PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
 
     //NOTE: The timing for Toeplitz_partyx[_x] is within the function. Please do not panic.
 
     //Start of phase 1:common for both without and with lookup
+
+    // First run, a protocol for K1 times x2
         topelitz_Party2_1(x2, 2*i);
         topelitz_Party1(out1_A, K1, 2*i);
         topelitz_Party2_2(out1_B, x2, 2*i);
@@ -313,7 +311,7 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         PackedZ2<N_SIZE>& y2 = out1_B;
         PackedZ3<N_SIZE> out1, out2;
 
-        SC_Party2_1(y2, i);
+        SC_Party2_1(y2, i);             //The implementation details for SC functions are within the function.
         SC_Party1(y1, out1, i);
         SC_Party2_2(y2, out2, i);
         //=============end of phase 2=================
@@ -336,7 +334,7 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 
         //step3c. use lookup
         uselookup(result_out1_lsb,out1_lsb,lookup_prf);
-        uselookup(result_out1_msb,out1_msb,lookup_prf);
+        uselookup(result_out1_msb,out1_msb,lookup_prf); //use of lookup table
 
         //step3d. subtract to get the final output
         out1Z3 = result_out1_lsb;
@@ -348,20 +346,20 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
     auto start_p32 = chrono::system_clock::now();
 
     #ifndef TEST_PRF_LOOKUP         //party 2 phase 3 without lookup implementation
-    out2Z3.matByVec(Rmat, out2); // compute matrix-by-vector multiply
+    out2Z3.matByVec(Rmat, out2);    //compute matrix-by-vector multiply
     #endif
 
     #ifdef TEST_PRF_LOOKUP  //party 2 phase 3 lookup implementation
     //step3a. resize the output vector
-    out2_lsb.resize(16);
+    out2_lsb.resize(16);    //resize the input space to accomodate 16 bits
     out2_msb.resize(16);
 
     //step3b. reformat the input
     reformat_input(out2_lsb,out2.lsbs());
-    reformat_input(out2_msb,out2.msbs());
+    reformat_input(out2_msb,out2.msbs());   //reformat input into 16 words of 16 bits each
 
     //step3c. use lookup
-    uselookup(result_out2_lsb,out2_lsb,lookup_prf);
+    uselookup(result_out2_lsb,out2_lsb,lookup_prf); //use lookup function
     uselookup(result_out2_msb,out2_msb,lookup_prf);
 
     //step3d. subtract to get the final output
@@ -374,7 +372,7 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
     //timerPRF += (chrono::system_clock::now() - start_prf).count();
 
     out_dummy += out1Z3;
-    out_dummy += out2Z3;
+    out_dummy += out2Z3;        //creating and assigning output to dummy variable so that the timing don't get skipped
 }
 
 /*
@@ -390,7 +388,7 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
 
     PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
 
-    initGlobals();  // initialize some global variables
+    initGlobals();      //initialize some global variables
 
     std::vector<PackedZ3<81> > Rmat(256); // generate a 81x256 matrix
 
@@ -412,38 +410,36 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
     for (auto &w : K2) w = randomWord();
     K2[K2.size() - 1] &= topelitzMask; // turn off extra bits at the end
 
-    x1.randomize();
-    x2.randomize();
+    x1.randomize();     //setting random input for party 1
+    x2.randomize();     //setting random input for party 2
 
-    PackedZ3<81> out1Z3;                     // 81-vector
-    PackedZ3<81> out2Z3;                     // 81-vector
+    PackedZ3<81> out1Z3;                     // party 1's protocol output
+    PackedZ3<81> out2Z3;                     // party 2's protocol output
 
-    PackedZ3<81> outSum;
+    PackedZ3<81> outSum;            //final output of entire dark matter wPRF
     outSum.reset();
 
 
     //Creation of Lookup table
-#ifdef TEST_PRF_LOOKUP //reformat Rmat and create a lookup table only if LOOKUP implementation is required
-    reformat_Rmat(Rmat16_prf, Rmat); //convert (81 X 256) matrix to (16 x 16 X 81) matrix
-    create_lookup_table(Rmat16_prf, lookup_prf);//(a lookup table of 16 X 2^16) is generated
+#ifdef TEST_PRF_LOOKUP                  //reformat Rmat and create a lookup table only if LOOKUP implementation is required
+    reformat_Rmat(Rmat16_prf, Rmat);        //convert (81 X 256) matrix to (16 x 16 X 81) matrix
+    create_lookup_table(Rmat16_prf, lookup_prf);        //(a lookup table of 16 X 2^16) is generated
     std::cout<<"Lookup table created"<<std::endl;
 #endif
 
     //TODO: write phase 1 function
-    for (int i = 0; i < nRuns; i++) {
+    for (int i = 0; i < nRuns; i++) {   //nRuns is the number of runs, for timing we keep it at 1000
 
         PRF_DM(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i); // R = randomization matrix
     //    PRF_packed_centralized_test(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, i);
-        //PRF_unpacked_test() /* just a placeholder*/
         outSum = out1Z3;
-        outSum += out2Z3;
-        //cout <<"out1Z3=" << out1Z3 << "\n out2Z3=" << out2Z3 << endl;
+        outSum += out2Z3;   //computing the output of entire PRF by adding the shares of output by both the parties
     }
     cout << "Output of PRF Dark matter, outSum=" << outSum << endl;
-    PRF_packed_centralized(K1,x1,K2,x2,Rmat,outZ3,1);
+    PRF_packed_centralized(K1,x1,K2,x2,Rmat,outZ3,1);   //centralized implementation for testing
     cout << "Output of PRF centralized implementation, outZ3=" << outZ3 << endl;
 
-    if(outSum == outZ3)
+    if(outSum == outZ3) //outZ3 is the output of centralized and outSum is output of DM wPRF protocol.
         std::cout<<std::endl<<"Test passed"<<std::endl;
     else
         std::cout<<std::endl<<"Test failed"<<std::endl;

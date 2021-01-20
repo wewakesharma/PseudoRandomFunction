@@ -148,8 +148,6 @@ CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o: ../include/darkm
 CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o: ../include/darkmatter/utils.hpp
 CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o: ../tests/test_central_int_packed.cpp
 
-CMakeFiles/newprotocol.dir/tests/test_dm_lookup.cpp.o: ../tests/test_dm_lookup.cpp
-
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/OT.hpp
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/PRF.hpp
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../include/darkmatter/Timing.hpp

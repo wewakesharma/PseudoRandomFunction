@@ -501,33 +501,6 @@ tests/test_central_int_packed.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.s
 .PHONY : tests/test_central_int_packed.cpp.s
 
-tests/test_dm_lookup.o: tests/test_dm_lookup.cpp.o
-
-.PHONY : tests/test_dm_lookup.o
-
-# target to build an object file
-tests/test_dm_lookup.cpp.o:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dm_lookup.cpp.o
-.PHONY : tests/test_dm_lookup.cpp.o
-
-tests/test_dm_lookup.i: tests/test_dm_lookup.cpp.i
-
-.PHONY : tests/test_dm_lookup.i
-
-# target to preprocess a source file
-tests/test_dm_lookup.cpp.i:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dm_lookup.cpp.i
-.PHONY : tests/test_dm_lookup.cpp.i
-
-tests/test_dm_lookup.s: tests/test_dm_lookup.cpp.s
-
-.PHONY : tests/test_dm_lookup.s
-
-# target to generate assembly for a file
-tests/test_dm_lookup.cpp.s:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dm_lookup.cpp.s
-.PHONY : tests/test_dm_lookup.cpp.s
-
 tests/test_dmprotocol.o: tests/test_dmprotocol.cpp.o
 
 .PHONY : tests/test_dmprotocol.o
@@ -822,9 +795,6 @@ help:
 	@echo "... tests/test_central_int_packed.o"
 	@echo "... tests/test_central_int_packed.i"
 	@echo "... tests/test_central_int_packed.s"
-	@echo "... tests/test_dm_lookup.o"
-	@echo "... tests/test_dm_lookup.i"
-	@echo "... tests/test_dm_lookup.s"
 	@echo "... tests/test_dmprotocol.o"
 	@echo "... tests/test_dmprotocol.i"
 	@echo "... tests/test_dmprotocol.s"
