@@ -25,22 +25,28 @@ void reformat_input(std::vector<uint64_t>& outKX_input, PackedZ2<256>& outKX)//c
 #ifdef LOOKUP_PRINT_VAL
     std::cout<<std::endl<<"Getting inside the loop"<<std::endl;
 #endif
-    for(int base_counter = 0; base_counter < 16; base_counter++)
+    for(int base_counter = 0; base_counter < 16; base_counter++)//base counter is used to index 16 vectors of the output
     {
         uint64_t input_word = 0;
-        for(int offset_counter = 0; offset_counter < 16; offset_counter++)
+        for(int offset_counter = 0; offset_counter < 16; offset_counter++)//offset is used along with base counter to index PackedZ2 input and also used in shifting operation
         {
             input_word |= ((outKX.at(16*base_counter+offset_counter)) << offset_counter);
         }
-        outKX_input[base_counter] = input_word;
+        outKX_input[base_counter] = input_word;//once the word is created by cumulative shifting of bits, it is stored in outKX_input
     }
 }
 
+/*
+ * Rmat is Randomization matrix of size 81 X 256. Since to create a lookup table, we need to combine 16 bits as a single word.
+ * The Rmat also needs to be in similar format. reformat_Rmat does the exact same thing. It converts a single 81 X 256 matrix in to
+ * 16 matrices, each of size 16 X 81(which is Rmat16)
+ */
 void reformat_Rmat(std::vector<std::vector<PackedZ3<81> > >& Rmat16, std::vector<PackedZ3<81> >& Rmat)
 {
-    for(int outer_vector = 0; outer_vector < 16; outer_vector++)
+    for(int outer_vector = 0; outer_vector < 16; outer_vector++)//counts the 16  matrices created in output
     {
-        Rmat16[outer_vector].resize(16);
+        Rmat16[outer_vector].resize(16);//setting up the column size 16 for each of those 16 matrices.
+        //inner_vector: use to point columns of each of those 16 matrices and also used with outer_vector to point to original input matrix columns
         for(int inner_vector = 0; inner_vector < 16; inner_vector++)
         {
             Rmat16[outer_vector][inner_vector] = Rmat[16*outer_vector+inner_vector];
@@ -48,8 +54,12 @@ void reformat_Rmat(std::vector<std::vector<PackedZ3<81> > >& Rmat16, std::vector
     }
 }
 
+/*
+ * creates a table of size 16 X (2^16)-1, which consists of precomputed product of all possible integers that can be made with 16 bits
+ * with possible 16 bit values.
+ */
 void create_lookup_table(std::vector<std::vector<PackedZ3<81> > >& Rmat16,
-                         std::vector<std::vector<PackedZ3<81> > >& lookup_table)//create 16 count of (16 X 81) matrix
+                         std::vector<std::vector<PackedZ3<81> > >& lookup_table)
 {
     PackedZ3<81> temp_result_vec;
     int packed_z3_counter; //go through the packedMod3 bit by bit
@@ -82,7 +92,10 @@ void create_lookup_table(std::vector<std::vector<PackedZ3<81> > >& Rmat16,
  //   cout << "in create_lookup_table, after all 16 rounds" << endl;
 }
 
-
+/*
+ * The final and main part of lookup implementation is use of lookup table
+ * This function takes input and lookup table that contains all the input
+ */
 void uselookup(PackedZ3<81>& result_sum, std::vector<uint64_t>& outKX_input, std::vector<std::vector<PackedZ3<81> > >& lookup_table)
 {
     std::vector<PackedZ3<81> > result_table(16); //stores the result of multiplication using lookup table

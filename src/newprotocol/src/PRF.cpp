@@ -300,7 +300,7 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
     std::chrono::time_point<std::chrono::system_clock> start_p31, start_p32;
     std::chrono::time_point<std::chrono::system_clock> start_reformat, start_uselookup, start_subtract;
 
-    //step3a. resize the output vector
+    //step3a. resize the output vector from phase 2
     out1_lsb.resize(16);
     out1_msb.resize(16);
     out2_lsb.resize(16);
@@ -360,6 +360,7 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 
 #ifndef TEST_PRF_LOOKUP     //party 1 phase 3 without lookup implementation
         //===============party 1==================
+
         start_p31 = chrono::system_clock::now();
         out1Z3.matByVec(Rmat, out1); // compute matrix-by-vector multiply
         timer_phase31 += (std::chrono::system_clock::now() - start_p31).count();
@@ -378,22 +379,22 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         start_reformat = chrono::system_clock::now();
         //step3b. reformat the input
         reformat_input(out1_lsb, out1.lsbs());
-        reformat_input(out1_msb, out1.msbs());
-        timerreformat += (chrono::system_clock::now() - start_reformat).count();
+        reformat_input(out1_msb, out1.msbs());//reformat input into 16 words of 16 bits each
+        timerreformat += (chrono::system_clock::now() - start_reformat).count();//counts the time taken for reformatting input
 
         start_uselookup = chrono::system_clock::now();
         //step3c. use lookup
-        uselookup(result_out1_lsb, out1_lsb, lookup_prf);
+        uselookup(result_out1_lsb, out1_lsb, lookup_prf);//output is stored in result_out1_lsb or result_out1_msb
         uselookup(result_out1_msb, out1_msb, lookup_prf); //use of lookup table
         timerlookup += (chrono::system_clock::now() - start_uselookup).count();
 
         start_subtract = chrono::system_clock::now();
         //step3d. subtract to get the final output
         out1Z3 = result_out1_lsb;
-        out1Z3.subtract(result_out1_msb);
-        timersubtract += (chrono::system_clock::now() - start_subtract).count();
+        out1Z3.subtract(result_out1_msb);//out1Z3 = result_out1_lsb - result_out1_msb;
+        timersubtract += (chrono::system_clock::now() - start_subtract).count();    //computes time for subtacting results
 
-        timer_phase31_lookup += (std::chrono::system_clock::now() - start_p31_lookup).count();
+        timer_phase31_lookup += (std::chrono::system_clock::now() - start_p31_lookup).count();//gives output for phase 3 party 1 using lookup
 
         //===============party 2==================
 
@@ -403,13 +404,13 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         reformat_input(out2_msb, out2.msbs());   //reformat input into 16 words of 16 bits each
 
         //step3c. use lookup
-        uselookup(result_out2_lsb, out2_lsb, lookup_prf); //use lookup function
-        uselookup(result_out2_msb, out2_msb, lookup_prf);
+        uselookup(result_out2_lsb, out2_lsb, lookup_prf); //use lookup function in lookupfunction.cpp
+        uselookup(result_out2_msb, out2_msb, lookup_prf);  //output is stored in result_out2_lsb or result_out2_msb
 
         //step3d. subtract to get the final output
         out2Z3 = result_out2_lsb;
-        out2Z3.subtract(result_out2_msb);
-        timer_phase32_lookup += (std::chrono::system_clock::now() - start_p32_lookup).count();
+        out2Z3.subtract(result_out2_msb);       //final subtraction to get the final output in Z3
+        timer_phase32_lookup += (std::chrono::system_clock::now() - start_p32_lookup).count();//gives output for phase 3 party 2 using lookup
 #endif
 
         out_dummy += out1Z3;
@@ -424,8 +425,8 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
 
     randomWord(1); // use seed=1
-    vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);
-    PackedZ2<N_COLS> x1, x2;
+    vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);  //Key to the protocol
+    PackedZ2<N_COLS> x1, x2;            //input of the protocol
     PackedZ3<81> outZ3;         //output of packed_centralized implementation used for testing
 
     PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
@@ -484,6 +485,6 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
         std::cout<<std::endl<<"Test passed"<<std::endl;
     else
         std::cout<<std::endl<<"Test failed"<<std::endl;
-    display_timing();
+    display_timing();       //displays the timing and number of rounds in each phase of the protocol
 }
 

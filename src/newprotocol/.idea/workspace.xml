@@ -35,10 +35,12 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/PRF.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/newprotocol.dir/src/PRF.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/newprotocol" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/newprotocol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PRF.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/PRF.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lookup_functions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lookup_functions.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_np" beforeDir="false" afterPath="$PROJECT_DIR$/test_np" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_np_lookup" beforeDir="false" afterPath="$PROJECT_DIR$/test_np_lookup" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_prf" beforeDir="false" afterPath="$PROJECT_DIR$/test_prf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_prf_lookup" beforeDir="false" afterPath="$PROJECT_DIR$/test_prf_lookup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_PRF.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_PRF.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_lookup.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_lookup.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -206,6 +208,7 @@
       <workItem from="1611176848951" duration="11912000" />
       <workItem from="1611247458589" duration="404000" />
       <workItem from="1611249386152" duration="2320000" />
+      <workItem from="1611257353008" duration="1166000" />
     </task>
     <servers />
   </component>

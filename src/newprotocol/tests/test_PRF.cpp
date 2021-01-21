@@ -40,7 +40,7 @@ int main(int argc,char* argv[] )  {
 #ifdef TEST_PRF_LOOKUP
     std::cout<<"Executing Darkmatter PRF protocol with lookup"<<std::endl;
 #endif
-    PRF_DM_wpreproc(ntimes, nRuns, stepsToRun);
+    PRF_DM_wpreproc(ntimes, nRuns, stepsToRun); //calling the function in PRF.cpp
 
 }
 
