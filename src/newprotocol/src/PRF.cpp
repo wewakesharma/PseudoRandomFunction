@@ -3,6 +3,7 @@
  *  - implementing a protocol for A*x (aka A*x+b) mod 2
  *    A is a Toeplitz matrix
  */
+#include <iostream>
 #include <cassert>
 #include "packedMod2.hpp"
 #include "Toeplitz-by-x.hpp"
@@ -27,12 +28,6 @@ using namespace std;
 std::vector<std::vector<PackedZ3<81> > > Rmat16_prf(16); //Rmat16_prf vector of size 16 X 16 X 81 (GLOBAL)
 std::vector<std::vector<PackedZ3<81> > > lookup_prf(16); //lookup table
 
-PackedZ3<81> result_out1_lsb, result_out1_msb;
-PackedZ3<81> result_out2_lsb, result_out2_msb;
-
-std::vector<uint64_t> out1_lsb, out1_msb;
-std::vector<uint64_t> out2_lsb, out2_msb;
-
 long timerPRF = 0;  //times the entire DM wPRF
 
 long timerAxpBP1 = 0;   //times the party 1 round 1 of DM wPRF
@@ -47,6 +42,10 @@ long timerSCP2 = 0;
 long timer_phase3 = 0;  //total time to complete phase 3(matByVec)
 long timer_phase31 = 0;     //time required to complete phase 3 by party 1
 long timer_phase32 = 0;     //time required to complete phase 3 by party 2
+
+long timerreformat = 0;
+long timerlookup = 0;
+long timersubtract = 0;
 
 #ifdef LOOKUP_TIME
 long timer_create_lookup = 0;
@@ -249,6 +248,11 @@ void display_timing()
     std::cout<<"Number of rounds per second for phase 2: "<<(1000/((timerSCP1 + timerSCP2) * time_unit_multiplier)*1000000)<<std::endl;
     std::cout<<"====================================================="<<std::endl;
     timer_phase3 = std::max(timer_phase31,timer_phase32);       //taking maximum of both phases to emulate simultaneous execution
+    std::cout<<"\nphase 3 party 1: "<<(timer_phase31 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"\nphase 3 reformat: "<<(timerreformat * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"\nphase 3 uselookup: "<<(timerlookup * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"\nphase 3 subtract: "<<(timersubtract * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"\nphase 3 party 2: "<<(timer_phase32 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"\nTime to execute phase 3: "<<
              (timer_phase3 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Number of rounds per second for phase 3: "<<(1000/(timer_phase3*time_unit_multiplier)*1000000)<<std::endl;
@@ -270,7 +274,17 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         PackedZ3<81>& out2Z3, int i)
 {
 
+    PackedZ3<81> result_out1_lsb, result_out1_msb;
+    PackedZ3<81> result_out2_lsb, result_out2_msb;
+
+    std::vector<uint64_t> out1_lsb, out1_msb;
+    std::vector<uint64_t> out2_lsb, out2_msb;
+
         PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
+        result_out1_lsb.reset();
+        result_out1_msb.reset();
+        result_out2_lsb.reset();
+        result_out2_msb.reset();
 
     //NOTE: The timing for Toeplitz_partyx[_x] is within the function. Please do not panic.
 
@@ -328,17 +342,23 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         out1_lsb.resize(16);
         out1_msb.resize(16);
 
+    auto start_reformat = chrono::system_clock::now();
         //step3b. reformat the input
         reformat_input(out1_lsb,out1.lsbs());
         reformat_input(out1_msb,out1.msbs());
+    timerreformat += (chrono::system_clock::now() - start_reformat).count();
 
+    auto start_uselookup = chrono::system_clock::now();
         //step3c. use lookup
         uselookup(result_out1_lsb,out1_lsb,lookup_prf);
         uselookup(result_out1_msb,out1_msb,lookup_prf); //use of lookup table
+    timerlookup += (chrono::system_clock::now() - start_uselookup).count();
 
+    auto start_subtract = chrono::system_clock::now();
         //step3d. subtract to get the final output
         out1Z3 = result_out1_lsb;
         out1Z3.subtract(result_out1_msb);
+    timersubtract += (chrono::system_clock::now() - start_subtract).count();
     #endif
 
     timer_phase31 += (std::chrono::system_clock::now() - start_p31).count();

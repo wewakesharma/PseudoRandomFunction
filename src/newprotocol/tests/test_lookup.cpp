@@ -23,7 +23,9 @@
 #ifdef UNIT_LOOKUP
 int main() {
     //declare the variables
-    int nTimes = 1;
+    int nTimes = 1000;
+    long timer_reformat_input = 0;
+    long timer_use_lookup = 0;
     std::vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);//key shares of parties
     PackedZ2<N_COLS> x1, x2; //input shares of parties
     PackedZ3<81> outZ3;//output shares of both the parties
@@ -68,10 +70,6 @@ int main() {
 
     outZ3.matByVec(Rmat,outKX_Z3);//output of the centralized computation of PRF
 
-    //converting the input format
-    std::vector<uint64_t> outKX_input(16); //16 vectors each as a word of size 16 bits. Total containing 256 bits.
-    reformat_input(outKX_input, outKX);
-
 #ifdef LOOKUP_PRINT_VAL
     for(int i = 0; i< 16; i++)
     {
@@ -84,12 +82,24 @@ int main() {
     std::vector<std::vector<PackedZ3<81> > > Rmat16(16);
     reformat_Rmat(Rmat16, Rmat);
 
+    PackedZ3<81> outZ3_lookup;
+
     //call the lookup table generator
     std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //table has 16 rows and 65536 columns and each element is PackedZ3
     create_lookup_table(Rmat16,lookup_table);
 
-    PackedZ3<81> outZ3_lookup;
+for(int i = 0; i< nTimes; i++)
+{
+    //converting the input format
+    std::vector<uint64_t> outKX_input(16); //16 vectors each as a word of size 16 bits. Total containing 256 bits.
+    auto start_reformat_input = std::chrono::system_clock::now();
+    reformat_input(outKX_input, outKX);
+    timer_reformat_input += (std::chrono::system_clock::now() - start_reformat_input).count();
+
+    auto start_use_lookup = std::chrono::system_clock::now();
     uselookup(outZ3_lookup, outKX_input, lookup_table);
+    timer_use_lookup += (std::chrono::system_clock::now() - start_use_lookup).count();
+}
 
 
 #ifdef LOOKUP_PRINT_VAL
@@ -97,11 +107,22 @@ int main() {
     std::cout<<"The final value(matByVec) is "<<outZ3<<std::endl;
 #endif
 
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    //std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+    float time_unit_multiplier = 1;
+    if(Duration::period::den == 1000000000)
+        time_unit_multiplier = 0.001; //make nanosecond to microsecond
+    else if(Duration::period::den == 1000000)
+        time_unit_multiplier = 1;   //keep the unit as microsecond
+    std::cout<<std::endl<<"reformat "<<timer_reformat_input*time_unit_multiplier<<std::endl;
+    std::cout<<std::endl<<"use lookup "<<timer_use_lookup*time_unit_multiplier<<std::endl;
     if(outZ3 == outZ3_lookup)
         std::cout<<"Lookup table test status: Test passed"<<std::endl;
     else
         std::cout<<"Lookup table test status: Test failed"<<std::endl;
     return 0;
+
 }
 
 #endif
