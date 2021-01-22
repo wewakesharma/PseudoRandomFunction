@@ -95,6 +95,8 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     #endif
 }
 
+
+
 void display_timing()
 {
     using Clock = std::chrono::system_clock;
@@ -148,6 +150,34 @@ void display_timing()
 
 }
 
+void usedLookupTable(PackedZ3<81>& outZ3, PackedZ3<256>& out, std::vector<std::vector<PackedZ3<81> > >& lookup_prf)
+{
+    PackedZ3<81> result_out_lsb, result_out_msb;
+
+    std::vector<uint64_t> out_lsb, out_msb;
+
+    //step3a. resize the output vector from phase 2
+    out_lsb.resize(16);
+    out_msb.resize(16);
+
+
+    result_out_lsb.reset();
+    result_out_msb.reset();
+
+
+    //step3b. reformat the input
+    reformat_input(out_lsb, out.lsbs());
+    reformat_input(out_msb, out.msbs());//reformat input into 16 words of 16 bits each
+
+    //step3c. use lookup
+    uselookup(result_out_lsb, out_lsb, lookup_prf);//output is stored in result_out1_lsb or result_out1_msb
+    uselookup(result_out_msb, out_msb, lookup_prf); //use of lookup table
+
+    //step3d. subtract to get the final output
+    outZ3 = result_out_lsb;
+    outZ3.subtract(result_out_msb);//out1Z3 = result_out1_lsb - result_out1_msb;
+}
+
 void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
         PackedZ3<81>& out2Z3, int nRuns)
@@ -165,13 +195,7 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
     std::cout<<"Lookup table created"<<std::endl;
 #endif
 
-    //create lookup table
-
-    PackedZ3<81> result_out1_lsb, result_out1_msb;
-    PackedZ3<81> result_out2_lsb, result_out2_msb;
-
-    std::vector<uint64_t> out1_lsb, out1_msb;
-    std::vector<uint64_t> out2_lsb, out2_msb;
+    PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
 
     chrono::time_point<std::chrono::system_clock> start_p1,start_p2;
     //Timing declaration for lookup implementation in PRF phase 3
@@ -179,17 +203,7 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
     std::chrono::time_point<std::chrono::system_clock> start_p31, start_p32;
     std::chrono::time_point<std::chrono::system_clock> start_reformat, start_uselookup, start_subtract;
 
-    //step3a. resize the output vector from phase 2
-    out1_lsb.resize(16);
-    out1_msb.resize(16);
-    out2_lsb.resize(16);
-    out2_msb.resize(16);
 
-    PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
-    result_out1_lsb.reset();
-    result_out1_msb.reset();
-    result_out2_lsb.reset();
-    result_out2_msb.reset();
 
     for (int i = 0; i < nRuns; i++) {   //nRuns is the number of runs, for timing we keep it at 1000
 
@@ -255,34 +269,15 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 
         start_p31_lookup = chrono::system_clock::now();//starting the lookup timing for phase 3
         //===============party 1==================
-        //step3b. reformat the input
-        reformat_input(out1_lsb, out1.lsbs());
-        reformat_input(out1_msb, out1.msbs());//reformat input into 16 words of 16 bits each
-
-        //step3c. use lookup
-        uselookup(result_out1_lsb, out1_lsb, lookup_prf);//output is stored in result_out1_lsb or result_out1_msb
-        uselookup(result_out1_msb, out1_msb, lookup_prf); //use of lookup table
-
-        //step3d. subtract to get the final output
-        out1Z3 = result_out1_lsb;
-        out1Z3.subtract(result_out1_msb);//out1Z3 = result_out1_lsb - result_out1_msb;
+        usedLookupTable(out1Z3,out1,lookup_prf);
 
         timer_phase31_lookup += (std::chrono::system_clock::now() - start_p31_lookup).count();//gives output for phase 3 party 1 using lookup
 
         //===============party 2==================
 
         start_p32_lookup = chrono::system_clock::now();
-        //step3b. reformat the input
-        reformat_input(out2_lsb, out2.lsbs());
-        reformat_input(out2_msb, out2.msbs());   //reformat input into 16 words of 16 bits each
 
-        //step3c. use lookup
-        uselookup(result_out2_lsb, out2_lsb, lookup_prf); //use lookup function in lookupfunction.cpp
-        uselookup(result_out2_msb, out2_msb,lookup_prf);  //output is stored in result_out2_lsb or result_out2_msb
-
-        //step3d. subtract to get the final output
-        out2Z3 = result_out2_lsb;
-        out2Z3.subtract(result_out2_msb);       //final subtraction to get the final output in Z3
+        usedLookupTable(out2Z3,out2,lookup_prf);
 
         timer_phase32_lookup += (std::chrono::system_clock::now() - start_p32_lookup).count();//gives output for phase 3 party 2 using lookup
 #endif

@@ -17,7 +17,7 @@
 //#define DEBUG
 
 //#define TEST_PRF              //runs the dark matter protocol
-//#define TEST_PRF_LOOKUP         //runs the dark matter with lookup table
+#define TEST_PRF_LOOKUP         //runs the dark matter with lookup table
 //#define TEST_NP                 //runs the new protocol using MATBYVEC
 //#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
 //#define TEST_OPRF               //runs the packed distributed 2-3OPRF using matByVec()
@@ -65,7 +65,7 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
 //#define PRINT_VAL //used to print the intermediate values
 //#define DEBUG //used to set bits of intermediate values and print the values in new protocol
 //#define OPRF_PRINT_VAL    //enable to print intermediate values in 23OPRF
-#define TEST_LOOKUP_INDEPENDENT
+//#define TEST_LOOKUP_INDEPENDENT
 
 #endif // _EXECUTION_HEADER_H
 
