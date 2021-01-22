@@ -17,9 +17,9 @@
 //#define DEBUG
 
 //#define TEST_PRF              //runs the dark matter protocol
-#define TEST_PRF_LOOKUP         //runs the dark matter with lookup table
+//#define TEST_PRF_LOOKUP         //runs the dark matter with lookup table
 //#define TEST_NP                 //runs the new protocol using MATBYVEC
-//#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
+#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
 //#define TEST_OPRF               //runs the packed distributed 2-3OPRF using matByVec()
 //#define TEST_OPRF_LOOKUP    //runs the OPRF protococl using LOOKUP table(only difference is in round 3 compared to OPRF
 
