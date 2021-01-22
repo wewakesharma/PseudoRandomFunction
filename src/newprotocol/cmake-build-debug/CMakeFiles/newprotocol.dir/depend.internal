@@ -158,6 +158,16 @@ CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
  /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_dmprotocol.cpp
+CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.o
+ ../include/darkmatter/OT.hpp
+ ../include/darkmatter/Timing.hpp
+ ../include/darkmatter/Toeplitz-by-x.hpp
+ ../include/darkmatter/lookup_functions.h
+ ../include/darkmatter/mains.hpp
+ ../include/darkmatter/packedMod2.hpp
+ ../include/darkmatter/packedMod3.hpp
+ ../include/darkmatter/utils.hpp
+ /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_independent_lookup.cpp
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o
  ../include/darkmatter/OT.hpp
  ../include/darkmatter/PRF.hpp

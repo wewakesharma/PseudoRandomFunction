@@ -528,6 +528,33 @@ tests/test_dmprotocol.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.s
 .PHONY : tests/test_dmprotocol.cpp.s
 
+tests/test_independent_lookup.o: tests/test_independent_lookup.cpp.o
+
+.PHONY : tests/test_independent_lookup.o
+
+# target to build an object file
+tests/test_independent_lookup.cpp.o:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.o
+.PHONY : tests/test_independent_lookup.cpp.o
+
+tests/test_independent_lookup.i: tests/test_independent_lookup.cpp.i
+
+.PHONY : tests/test_independent_lookup.i
+
+# target to preprocess a source file
+tests/test_independent_lookup.cpp.i:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.i
+.PHONY : tests/test_independent_lookup.cpp.i
+
+tests/test_independent_lookup.s: tests/test_independent_lookup.cpp.s
+
+.PHONY : tests/test_independent_lookup.s
+
+# target to generate assembly for a file
+tests/test_independent_lookup.cpp.s:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.s
+.PHONY : tests/test_independent_lookup.cpp.s
+
 tests/test_lookup.o: tests/test_lookup.cpp.o
 
 .PHONY : tests/test_lookup.o
@@ -798,6 +825,9 @@ help:
 	@echo "... tests/test_dmprotocol.o"
 	@echo "... tests/test_dmprotocol.i"
 	@echo "... tests/test_dmprotocol.s"
+	@echo "... tests/test_independent_lookup.o"
+	@echo "... tests/test_independent_lookup.i"
+	@echo "... tests/test_independent_lookup.s"
 	@echo "... tests/test_lookup.o"
 	@echo "... tests/test_lookup.i"
 	@echo "... tests/test_lookup.s"

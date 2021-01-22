@@ -174,6 +174,9 @@
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_dmprotocol.cpp">
 			<Option target="newprotocol"/>
 		</Unit>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_independent_lookup.cpp">
+			<Option target="newprotocol"/>
+		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_lookup.cpp">
 			<Option target="newprotocol"/>
 		</Unit>

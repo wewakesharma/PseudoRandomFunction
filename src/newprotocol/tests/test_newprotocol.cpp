@@ -172,7 +172,7 @@ int main()
 /*
  * Code to compare the output of New protocol with the centralized implementation
  */
-/*
+
     PackedZ3<81>out_dist_Z3 = y1_z3;
     out_dist_Z3.add(y2_z3);//merged output from parameters
 
@@ -185,7 +185,7 @@ int main()
         std::cout<<std::endl<<"PRF packed test: Test passed"<<std::endl;
     else
         std::cout<<std::endl<<"PRF packed test: Test fails"<<std::endl;
-*/
+
 
     //===============================LOOKUP IMPLEMENTATION=================
 #ifdef LOOKUP //enable in main.hpp to compute using lookup table

@@ -42,8 +42,7 @@ long timer_p2_lookup = 0;
 long timer_np_prf = 0;
 
 // Declaring the global variables for lookup implementation
-std::vector<std::vector<PackedZ3<81> > > Rmat16(16); //Rmat16 vector of size 16 X 16 X 81 (GLOBAL)
-std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //lookup table
+
 
 //Declaring shares of key and input masks of two parties
 std::vector<uint64_t> rK1_global(toeplitzWords), rK2_global(toeplitzWords), rK_global(toeplitzWords);
@@ -374,7 +373,8 @@ void party2_round3(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
 //====================================Round 3 lookup implementation=======NEEDS DEBUGGING=========
 #ifdef TEST_NP_LOOKUP
 void party1_round3_lookup(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
-                          PackedZ3<N_SIZE>& r1z1, std::vector<PackedZ3<81> >& Rmat,PackedZ2<N_COLS>& w_mask)
+                          PackedZ3<N_SIZE>& r1z1, std::vector<PackedZ3<81> >& Rmat,PackedZ2<N_COLS>& w_mask,
+                          std::vector<std::vector<PackedZ3<81> > >& lookup_table)
 {
 #ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/party1_round3_lookup: inside the function"<<std::endl;
@@ -419,7 +419,8 @@ void party1_round3_lookup(PackedZ3<81>& y1_z3,PackedZ3<N_SIZE>& r0z1,
     //timer_round3 += timer_lookup;
 }
 void party2_round3_lookup(PackedZ3<81>& y2_z3,PackedZ3<N_SIZE>& r0z2,
-                          PackedZ3<N_SIZE>& r1z2, std::vector<PackedZ3<81> >& Rmat,PackedZ2<N_COLS>& w_mask)
+                          PackedZ3<N_SIZE>& r1z2, std::vector<PackedZ3<81> >& Rmat,PackedZ2<N_COLS>& w_mask,
+                          std::vector<std::vector<PackedZ3<81> > >& lookup_table)
 {
     PackedZ3<81> result_sum_lsb;
     PackedZ3<81> result_sum_msb;
@@ -545,6 +546,9 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     fetchPreproc_party2(rx2,rw,sw2,rK2, r0z2,r1z2);
 
 #ifdef TEST_NP_LOOKUP //reformat Rmat and create a lookup table only if LOOKUP implementation is required
+    std::vector<std::vector<PackedZ3<81> > > Rmat16(16); //Rmat16 vector of size 16 X 16 X 81 (GLOBAL)
+    std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //lookup table
+
     reformat_Rmat(Rmat16, Rmat); //convert (81 X 256) matrix to (16 x 16 X 81) matrix
     create_lookup_table(Rmat16, lookup_table);//(a lookup table of 16 X 2^16) is generated
 #endif
@@ -627,11 +631,11 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
 #ifdef TEST_NP_LOOKUP// if TEST_NP is enabled run the new protocol
         //start_r3_p1 = std::chrono::system_clock::now();
-        party1_round3_lookup(y1_z3,r0z1,r1z1,Rmat,w_mask);
+        party1_round3_lookup(y1_z3,r0z1,r1z1,Rmat,w_mask, lookup_table);
         //timer_round3_p1 += (std::chrono::system_clock::now() - start_r3_p1).count();
 
         //start_r3_p2 = std::chrono::system_clock::now();
-        party2_round3_lookup(y2_z3,r0z2,r1z2,Rmat,w_mask);
+        party2_round3_lookup(y2_z3,r0z2,r1z2,Rmat,w_mask, lookup_table);
         //timer_round3_p2 += (std::chrono::system_clock::now() - start_r3_p2).count();
 #endif
 

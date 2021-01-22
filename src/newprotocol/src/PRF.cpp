@@ -9,10 +9,8 @@
 #include "Toeplitz-by-x.hpp"
 #include "OT.hpp"
 #include "mains.hpp"
-#include <typeinfo>//to determine the type of variables
 #include "Timing.hpp"
 #include <chrono>
-#include "packedMod2.hpp"
 #include "packedMod3.hpp"
 #include "utils.hpp"
 #include "lookup_functions.h"
@@ -23,10 +21,6 @@
 
 using namespace std;
 
-
-// Declaring the global variables for lookup implementation
-std::vector<std::vector<PackedZ3<81> > > Rmat16_prf(16); //Rmat16_prf vector of size 16 X 16 X 81 (GLOBAL)
-std::vector<std::vector<PackedZ3<81> > > lookup_prf(16); //lookup table
 
 long timerPRF = 0;  //times the entire DM wPRF
 
@@ -44,17 +38,8 @@ long timer_phase31 = 0;     //time required to complete phase 3 by party 1
 long timer_phase32 = 0;     //time required to complete phase 3 by party 2
 
 long timer_phase3_lookup = 0;  //total time to complete phase 3(using lookup table)
-long timer_phase31_lookup = 0;     //time required to complete phase 3 by party 1 lookup
-long timer_phase32_lookup = 0;     //time required to complete phase 3 by party 2 lookup
-
-long timerreformat = 0;
-long timerlookup = 0;
-long timersubtract = 0;
-
-#ifdef LOOKUP_TIME
-long timer_create_lookup = 0;
-long timer_use_lookup = 0;
-#endif
+long timer_phase31_lookup = 0;
+long timer_phase32_lookup = 0;
 
 // A place to store the results from pre-processing
 static std::vector< std::vector<uint64_t> > rAs;
@@ -110,123 +95,6 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     #endif
 }
 
-#ifdef LOOKUP
-void independent_lookup_implementation(int nRuns)
-{
-
-        //generate Rmat with 16 matrix of size 81 X 16.
-        std::vector<std::vector<PackedZ3<81> > > Rmat16_prf(16);
-
-        for(int matrix_count = 0; matrix_count < 16; matrix_count++)//go over 16 matrix
-        {
-            Rmat16_prf[matrix_count].resize(16);        //resize each matrix to have 16 columns
-            for (auto &col : Rmat16_prf[matrix_count]) // iterate over the columns
-                col.randomize();                    //call the randomize function in packedMod3.hpp
-        }
-
-
-#ifdef LOOKUP_DEBUG
-        //printing the values of Rmat16_prf
-    std::cout<<"The number of matrices is "<<Rmat16_prf.size()<<std::endl;
-    for(int i = 0; i< 16;i++)
-    {
-        std::cout<<Rmat16_prf[i]<<std::endl;
-    }
-#endif
-
-#ifdef LOOKUP
-        //generate a lookup table with all the possibilities of multiplication of Rmat with 2^16 inputs.
-        std::vector<std::vector<PackedZ3<81> > > lookup_prf(16); //table has 16 rows and 65536 columns and each element is PackedZ3
-
-#ifdef LOOKUP_TIME
-        std::chrono::time_point<std::chrono::system_clock> start_create_lookup = std::chrono::system_clock::now();
-#endif
-        create_lookup_prf(Rmat16_prf,lookup_prf);
-
-#ifdef LOOKUP_TIME
-        timer_create_lookup += (std::chrono::system_clock::now() - start_create_lookup).count();
-#endif
-
-#ifdef LOOKUP_DEBUG
-        std::cout<<"The lookup table has been generated successfully"<<std::endl;
-#endif
-
-    PackedZ3<81> totalTime;
-
-    for(int iteration_count = 0; iteration_count < nRuns; iteration_count++)//running use of lookup table nRuns times
-    {
-        uint64_t random_input16[16]; //16 random words of size 16 bits
-        uint64_t random_input64[4]; //4 random words of size 64 bits
-
-        for(int word_count  = 0; word_count < 4; word_count++)
-        {
-            random_input64[word_count] = 0;
-            random_input64[word_count] = randomWord(0); //randomWord generates 64 bits of input in Z2.
-            random_input16[4*word_count+0] = ((random_input64[word_count]) & 65535);
-            random_input16[4*word_count+1] = ((random_input64[word_count]>>16) & 65535);
-            random_input16[4*word_count+2] = ((random_input64[word_count]>>32) & 65535);
-            random_input16[4*word_count+3] = ((random_input64[word_count]>>48) & 65535);
-            //std::cout<<random_input64[i]<<std::endl;
-        }
-
-#ifdef LOOKUP_DEBUG
-        std::cout<<"The input has been generated successfully, they are: " <<std::endl;
-#endif
-
-
-        std::vector<PackedZ3<81> > result_table(16); //stores the result of multiplication using lookup table
-        for(int i =0; i< 16; i++)
-        {
-            result_table[i].reset();
-        }
-
-
-#ifdef LOOKUP_TIME
-        std::chrono::time_point<std::chrono::system_clock> start_use_lookup = std::chrono::system_clock::now();
-#endif
-        //use_lookup_prf(lookup_prf, random_input16,result_table);
-        for(int word_count = 0; word_count < 16; word_count++)
-        {
-            uint64_t value = random_input16[word_count];
-            result_table[word_count] = lookup_prf[word_count][value];
-        }
-
-        //add up the 16 count of packedmod3 values
-        PackedZ3<81> result_sum;
-        result_sum = result_table[0];
-        for(int count = 1; count < 16; count++)
-        {
-            result_sum += result_table[count];
-        }
-
-#ifdef LOOKUP_TIME
-        timer_use_lookup += (std::chrono::system_clock::now() - start_use_lookup).count();
-
-        totalTime+= result_sum;
-
-#endif
-
-#ifdef LOOKUP_DEBUG
-        std::cout<<"Printing the output value "<<std::endl;
-    std::cout<<"The final output is "<<result_sum<<std::endl;
-#endif
-
-#endif
-    }
-    cout << "in independent_lookup_implementation, " << "total Time=" << totalTime << endl;
-    cout << "in independent_lookup_implementation, " << "nruns-" << nRuns << endl;
-}
-#endif
-
-#ifdef LOOKUP_TIME
-void exec_lookup_timing()
-{
-    std::cout<<"Time to create a lookup table(just once) "<<timer_create_lookup<<std::endl;
-    std::cout<<"Time elapsed in using lookup table "<<timer_use_lookup<<std::endl;
-}
-#endif
-
-
 void display_timing()
 {
     using Clock = std::chrono::system_clock;
@@ -265,9 +133,6 @@ void display_timing()
 #ifdef TEST_PRF_LOOKUP
     timer_phase3_lookup = std::max(timer_phase31_lookup,timer_phase32_lookup);       //taking maximum of both phases to emulate simultaneous execution
     std::cout<<"\nphase 3 party 1: "<<(timer_phase31_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"\nphase 3 reformat: "<<(timerreformat * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"\nphase 3 uselookup: "<<(timerlookup * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"\nphase 3 subtract: "<<(timersubtract * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"\nphase 3 party 2: "<<(timer_phase32_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"\nTime to execute phase 3: "<<
              (timer_phase3_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
@@ -287,6 +152,20 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
         PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
         PackedZ3<81>& out2Z3, int nRuns)
 {
+#ifdef TEST_PRF_LOOKUP
+    //local copy of lookup table and Rmat16
+    std::vector<std::vector<PackedZ3<81> > > Rmat16_prf(16); //Rmat16_prf vector of size 16 X 16 X 81 (GLOBAL)
+    std::vector<std::vector<PackedZ3<81> > > lookup_prf(16); //lookup table
+
+    //reformat Rmat
+    reformat_Rmat(Rmat16_prf, Rmat);        //convert (81 X 256) matrix to (16 x 16 X 81) matrix
+
+    //Creation of Lookup table
+    create_lookup_table(Rmat16_prf, lookup_prf);        //(a lookup table of 16 X 2^16) is generated
+    std::cout<<"Lookup table created"<<std::endl;
+#endif
+
+    //create lookup table
 
     PackedZ3<81> result_out1_lsb, result_out1_msb;
     PackedZ3<81> result_out2_lsb, result_out2_msb;
@@ -306,11 +185,11 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
     out2_lsb.resize(16);
     out2_msb.resize(16);
 
-        PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
-        result_out1_lsb.reset();
-        result_out1_msb.reset();
-        result_out2_lsb.reset();
-        result_out2_msb.reset();
+    PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
+    result_out1_lsb.reset();
+    result_out1_msb.reset();
+    result_out2_lsb.reset();
+    result_out2_msb.reset();
 
     for (int i = 0; i < nRuns; i++) {   //nRuns is the number of runs, for timing we keep it at 1000
 
@@ -376,23 +255,17 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 
         start_p31_lookup = chrono::system_clock::now();//starting the lookup timing for phase 3
         //===============party 1==================
-        start_reformat = chrono::system_clock::now();
         //step3b. reformat the input
         reformat_input(out1_lsb, out1.lsbs());
         reformat_input(out1_msb, out1.msbs());//reformat input into 16 words of 16 bits each
-        timerreformat += (chrono::system_clock::now() - start_reformat).count();//counts the time taken for reformatting input
 
-        start_uselookup = chrono::system_clock::now();
         //step3c. use lookup
         uselookup(result_out1_lsb, out1_lsb, lookup_prf);//output is stored in result_out1_lsb or result_out1_msb
         uselookup(result_out1_msb, out1_msb, lookup_prf); //use of lookup table
-        timerlookup += (chrono::system_clock::now() - start_uselookup).count();
 
-        start_subtract = chrono::system_clock::now();
         //step3d. subtract to get the final output
         out1Z3 = result_out1_lsb;
         out1Z3.subtract(result_out1_msb);//out1Z3 = result_out1_lsb - result_out1_msb;
-        timersubtract += (chrono::system_clock::now() - start_subtract).count();    //computes time for subtacting results
 
         timer_phase31_lookup += (std::chrono::system_clock::now() - start_p31_lookup).count();//gives output for phase 3 party 1 using lookup
 
@@ -405,11 +278,12 @@ void PRF_DM(vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, vector<uint64_t>& K2,
 
         //step3c. use lookup
         uselookup(result_out2_lsb, out2_lsb, lookup_prf); //use lookup function in lookupfunction.cpp
-        uselookup(result_out2_msb, out2_msb, lookup_prf);  //output is stored in result_out2_lsb or result_out2_msb
+        uselookup(result_out2_msb, out2_msb,lookup_prf);  //output is stored in result_out2_lsb or result_out2_msb
 
         //step3d. subtract to get the final output
         out2Z3 = result_out2_lsb;
         out2Z3.subtract(result_out2_msb);       //final subtraction to get the final output in Z3
+
         timer_phase32_lookup += (std::chrono::system_clock::now() - start_p32_lookup).count();//gives output for phase 3 party 2 using lookup
 #endif
 
@@ -464,18 +338,10 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
 
     std::cout<<" Number of Runs: "<<nRuns<<std::endl;
 
-    //Creation of Lookup table
-#ifdef TEST_PRF_LOOKUP                  //reformat Rmat and create a lookup table only if LOOKUP implementation is required
-    reformat_Rmat(Rmat16_prf, Rmat);        //convert (81 X 256) matrix to (16 x 16 X 81) matrix
-    create_lookup_table(Rmat16_prf, lookup_prf);        //(a lookup table of 16 X 2^16) is generated
-    std::cout<<"Lookup table created"<<std::endl;
-#endif
+    PRF_DM(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, nRuns); // Calling the main function
 
-
-        PRF_DM(K1, x1, K2, x2, Rmat, out1Z3, out2Z3, nRuns); // Calling the main function
-
-        outSum = out1Z3;
-        outSum += out2Z3;   //computing the output of entire PRF by adding the shares of output by both the parties
+    outSum = out1Z3;
+    outSum += out2Z3;   //computing the output of entire PRF by adding the shares of output by both the parties
 
     cout << "Output of PRF Dark matter, outSum=" << outSum << endl;
     PRF_packed_centralized(K1,x1,K2,x2,Rmat,outZ3,1);   //centralized implementation for testing
@@ -486,5 +352,6 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
     else
         std::cout<<std::endl<<"Test failed"<<std::endl;
     display_timing();       //displays the timing and number of rounds in each phase of the protocol
+
 }
 
