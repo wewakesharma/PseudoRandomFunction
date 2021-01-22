@@ -114,3 +114,35 @@ void uselookup(PackedZ3<81>& result_sum, std::vector<uint64_t>& outKX_input, std
         result_sum += result_table[count];
     }
 }
+
+/*
+ * usedLookupTable: Gets input vector and lookup table, choose the approriate entry in the lookup table and returns the outpu
+ *
+ */
+void usedLookupTable(PackedZ3<81>& outZ3, PackedZ3<256>& inVec, std::vector<std::vector<PackedZ3<81> > >& lookup_prf)
+{
+    PackedZ3<81> result_out_lsb, result_out_msb;
+
+    std::vector<uint64_t> out_lsb, out_msb;
+
+    //step3a. resize the output vector from phase 2
+    out_lsb.resize(16);
+    out_msb.resize(16);
+
+
+    result_out_lsb.reset();
+    result_out_msb.reset();
+
+
+    //step3b. reformat the input
+    reformat_input(out_lsb, inVec.lsbs());
+    reformat_input(out_msb, inVec.msbs());//reformat input into 16 words of 16 bits each
+
+    //step3c. use lookup
+    uselookup(result_out_lsb, out_lsb, lookup_prf);//output is stored in result_out1_lsb or result_out1_msb
+    uselookup(result_out_msb, out_msb, lookup_prf); //use of lookup table
+
+    //step3d. subtract to get the final output
+    outZ3 = result_out_lsb;
+    outZ3.subtract(result_out_msb);//out1Z3 = result_out1_lsb - result_out1_msb;
+}

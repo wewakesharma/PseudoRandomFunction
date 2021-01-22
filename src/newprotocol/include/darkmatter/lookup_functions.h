@@ -13,4 +13,6 @@ void create_lookup_table(std::vector<std::vector<PackedZ3<81> > >& Rmat16,
                          std::vector<std::vector<PackedZ3<81> > >& lookup_table);
 void uselookup(PackedZ3<81>& result_sum, std::vector<uint64_t>& outKX_input, std::vector<std::vector<PackedZ3<81> > >& lookup_table);
 
+void usedLookupTable(PackedZ3<81>& outZ3, PackedZ3<256>& inVec, std::vector<std::vector<PackedZ3<81> > >& lookup_prf);
+
 #endif //NEWPROTOCOL_LOOKUP_FUNCTIONS_H

@@ -33,6 +33,7 @@ add_executable(newprotocol
         src/unpacked_PRF_central.cpp
         tests/test_central_int_packed.cpp
         tests/test_dmprotocol.cpp
+        tests/test_independent_lookup.cpp
         tests/test_lookup.cpp
         tests/test_newprotocol.cpp
         tests/test_oprf.cpp
@@ -44,4 +45,4 @@ add_executable(newprotocol
         tests/test_PRF.cpp
         tests/test_Toeplitz-by-x.cpp
         tests/test_unit_newprotocol.cpp
-        tests/test_unpacked_PRF.cpp tests/test_independent_lookup.cpp)
+        tests/test_unpacked_PRF.cpp)
