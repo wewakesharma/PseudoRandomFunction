@@ -19,6 +19,8 @@
 // #define N_ROWS 256
 // #define N_COLS 256
 
+
+#ifdef TEST_PRF
 using namespace std;
 
 
@@ -41,6 +43,7 @@ long timer_phase3_lookup = 0;  //total time to complete phase 3(using lookup tab
 long timer_phase31_lookup = 0;
 long timer_phase32_lookup = 0;
 
+#endif
 // A place to store the results from pre-processing
 
 static std::vector< std::vector<uint64_t> > rAs;
@@ -98,7 +101,7 @@ PackedZ3<81> out_dummy;
 }
 
 
-
+#ifdef TEST_PRF
 void display_timing()
 {
     using Clock = std::chrono::system_clock;
@@ -325,4 +328,4 @@ void PRF_DM_wpreproc(unsigned int nTimes,  int nRuns, int nStages) {
     display_timing();       //displays the timing and number of rounds in each phase of the protocol
 
 }
-
+#endif

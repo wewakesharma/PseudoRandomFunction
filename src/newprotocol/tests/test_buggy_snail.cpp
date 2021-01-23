@@ -27,11 +27,11 @@
 #ifdef TEST_BUGGY_SNAIL
 int main()
 {
-    int nRuns=1000;
-    int stepsToRun = 1;
-    int nTimes = 1;
-    std::cout<<"Executing Darkmatter PRF protocol(Project 'Buggy_Snail') with lookup"<<std::endl;
-    DM_snail(nRuns,nTimes);
+    int nRuns=1000;//runs the program for 1000 times
+    int stepsToRun = 1;//it has no use in this program
+    int nTimes = 1;//setting it to 1, size of rAs, rxs, rbs(preprocessing values for Toeplitz_by_vec and SC())
+    std::cout<<"Executing Darkmatter PRF protocol(Project 'Buggy_Snail') with lookup for "<<nRuns<<" times."<<std::endl;
+    DM_snail(nRuns,nTimes);//driver code in buggy_snail.cpp
     return 0;
 }
 #endif
