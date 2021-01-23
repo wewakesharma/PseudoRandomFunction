@@ -369,6 +369,32 @@ CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_unpacked_PRF.cpp -o CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.s
 
+CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o: CMakeFiles/newprotocol.dir/flags.make
+CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o: ../tests/test_buggy_snail.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_buggy_snail.cpp
+
+CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_buggy_snail.cpp > CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.i
+
+CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_buggy_snail.cpp -o CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.s
+
+CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o: CMakeFiles/newprotocol.dir/flags.make
+CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o: ../src/buggy_snail.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.cpp
+
+CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.cpp > CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.i
+
+CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.cpp -o CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.s
+
 # Object files for target newprotocol
 newprotocol_OBJECTS = \
 "CMakeFiles/newprotocol.dir/src/integer_pack.cpp.o" \
@@ -394,7 +420,9 @@ newprotocol_OBJECTS = \
 "CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o" \
-"CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o"
+"CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o" \
+"CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o" \
+"CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o"
 
 # External object files for target newprotocol
 newprotocol_EXTERNAL_OBJECTS =
@@ -423,9 +451,11 @@ newprotocol: CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o
+newprotocol: CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o
+newprotocol: CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/build.make
 newprotocol: CMakeFiles/newprotocol.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking CXX executable newprotocol"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Linking CXX executable newprotocol"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/newprotocol.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

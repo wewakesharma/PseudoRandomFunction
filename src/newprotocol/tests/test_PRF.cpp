@@ -18,21 +18,10 @@ using namespace std;
 #ifdef TEST_PRF
 
 // This test program implements the first phase of the PRF
-//int main(int argc,char* argv[] ) {
-int main(int argc,char* argv[] )  {
-    int stepsToRun, nRuns;
-    if (argc>1){
-        char *p;
-        nRuns = strtol(argv[1], &p, 10);
-    } else
-        nRuns=1000;
 
-    if (argc > 2) {
-        char *p;
-        stepsToRun = strtol(argv[2], &p, 10);
-    } else
-        stepsToRun = 3;
-
+int main()  {
+    int nRuns=1000;
+    int stepsToRun = 1;
     int ntimes = 1;
 #ifndef TEST_PRF_LOOKUP
     std::cout<<"Executing Darkmatter PRF protocol without lookup"<<std::endl;

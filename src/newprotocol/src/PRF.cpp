@@ -42,13 +42,15 @@ long timer_phase31_lookup = 0;
 long timer_phase32_lookup = 0;
 
 // A place to store the results from pre-processing
+
 static std::vector< std::vector<uint64_t> > rAs;
 static std::vector< PackedZ2<N_ROWS> > rbs, rzs;
 static std::vector< PackedZ2<N_COLS> > rxs;
 PackedZ3<81> out_dummy;
 
 //This is the centralized implementation, acting as the base version for packing. FOr lookup implementation go to test_packed_central_lookup.cpp
-void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
+
+  void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                             PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat,  PackedZ3<81>& outZ3, int nTimes)
 {
     #ifdef DEBUG

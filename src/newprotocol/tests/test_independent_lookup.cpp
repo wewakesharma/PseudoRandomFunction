@@ -19,23 +19,27 @@
 
 #ifdef TEST_LOOKUP_INDEPENDENT
 
+void generate_Rmat(std::vector<PackedZ3<81> >& test_Rmat)
+{
+    for (auto &col : test_Rmat) // iterate over the columns
+        col.randomize();
+    std::cout<<std::endl<<"Rmat Created"<<std::endl;
+}
+void randomize_input(PackedZ3<256>& test_z3)
+{
+    test_z3.randomize();
+}
 //main function
 int main()
 {
      //=========================test code for uselookup timing by calling uselookup from PRF.cpp========
 
-    //step 0: variable to time the lookup
+    //step 1: variable to time the lookup
     long timer_test_lookup = 0;
 
-    //Step 1: Create a randomize input(test_res)
-    std::vector<uint64_t> test_res_msb(16) ;
-    std::vector<uint64_t> test_res_lsb(16) ;
-
-    //Declare and add randomize Rmat
+    //step 2: Declare and add randomize Rmat
     std::vector<PackedZ3<81> > test_Rmat(256);
-    for (auto &col : test_Rmat) // iterate over the columns
-        col.randomize();
-    std::cout<<std::endl<<"Rmat Created"<<std::endl;
+    generate_Rmat(test_Rmat);
 
     //Reformat rmat from 81 X 256 into 16 X 81 X 16
     std::vector<std::vector<PackedZ3<81> > > test_Rmat16(16); //Rmat16_prf vector of size 16 X 16 X 81 (GLOBAL)
@@ -49,16 +53,12 @@ int main()
 
     //step 1a. Create a PackedZ3<256> variable and randomize it
     PackedZ3<256> test_z3;
-    test_z3.randomize();
-
-    //step1b. call reformat_input and reformat test_z3's lsb or msb into test_res
-    reformat_input(test_res_msb,test_z3.msbs());
-    reformat_input(test_res_lsb,test_z3.lsbs());
+    randomize_input(test_z3);
 
     std::cout<<std::endl<<"Input generated and reformatted"<<std::endl;
 
     //step 3. Output variable
-    PackedZ3<81> test_out_msb, test_out_lsb, test_out, test_dummy;
+    PackedZ3<81> test_out, test_dummy;
 
     //step 3a. call uselookup with test_res ,test_lookup and test_out for 1000 times
     std::chrono::time_point<std::chrono::system_clock> start_test_lookup;
@@ -66,12 +66,7 @@ int main()
 
     for(int runs = 0; runs < 1000; runs++)
     {
-        uselookup(test_out_msb, test_res_msb, test_lookup_table);
-        uselookup(test_out_lsb, test_res_lsb, test_lookup_table);
-
-        test_out = test_out_lsb;
-        test_out.subtract(test_out_msb);
-
+        usedLookupTable(test_out, test_z3, test_lookup_table);
         test_dummy += test_out;
     }
     timer_test_lookup = (std::chrono::system_clock::now() - start_test_lookup).count();

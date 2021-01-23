@@ -99,6 +99,9 @@
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/include/darkmatter/Toeplitz-by-x.hpp">
 			<Option target="newprotocol"/>
 		</Unit>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/include/darkmatter/buggy_snail.h">
+			<Option target="newprotocol"/>
+		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/include/darkmatter/integer_pack.h">
 			<Option target="newprotocol"/>
 		</Unit>
@@ -141,6 +144,9 @@
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/Toeplitz-by-x.cpp">
 			<Option target="newprotocol"/>
 		</Unit>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.cpp">
+			<Option target="newprotocol"/>
+		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/integer_pack.cpp">
 			<Option target="newprotocol"/>
 		</Unit>
@@ -166,6 +172,9 @@
 			<Option target="newprotocol"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_Toeplitz-by-x.cpp">
+			<Option target="newprotocol"/>
+		</Unit>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_buggy_snail.cpp">
 			<Option target="newprotocol"/>
 		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_central_int_packed.cpp">

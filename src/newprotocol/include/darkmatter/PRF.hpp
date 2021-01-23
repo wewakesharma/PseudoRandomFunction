@@ -38,11 +38,3 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
 void PRF_DM(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
             PackedZ2<N_COLS>& x2, std::vector< PackedZ3<81> >& Rmat, PackedZ3<81>& out1Z3,
             PackedZ3<81>& out2Z3, int i);
-
-#ifdef LOOKUP
-void independent_lookup_implementation(int nRuns);
-#endif
-
-#ifdef LOOKUP_TIME
-void exec_lookup_timing();
-#endif
