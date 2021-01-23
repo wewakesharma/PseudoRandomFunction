@@ -238,11 +238,11 @@ void DM_snail(int nRuns, int nTimes)
         round2(SC_out1, SC_out2, out1_A,out2_A,out1_B,out2_B,nTimes);
 
         //round3/usedLookupTable
-        std::chrono::time_point<std::chrono::system_clock> start_round3_p1;
+        std::chrono::time_point<std::chrono::system_clock> start_round3_p1 = std::chrono::system_clock::now();
         round3_party1(out1Z3, SC_out1,lookup_prf);
         timer_phase31 += (chrono::system_clock::now() - start_round3_p1).count();
 
-        std::chrono::time_point<std::chrono::system_clock> start_round3_p2;
+        std::chrono::time_point<std::chrono::system_clock> start_round3_p2 = std::chrono::system_clock::now();
         round3_party2(out2Z3, SC_out2,lookup_prf);
         timer_phase32 += (chrono::system_clock::now() - start_round3_p2).count();
     }
