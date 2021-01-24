@@ -12,6 +12,16 @@ packedMod2.hpp
 packedMod3.hpp
 ../include/darkmatter/packedMod3.hpp
 
+../include/darkmatter/PRF.hpp
+packedMod2.hpp
+../include/darkmatter/packedMod2.hpp
+packedMod3.hpp
+../include/darkmatter/packedMod3.hpp
+Toeplitz-by-x.hpp
+../include/darkmatter/Toeplitz-by-x.hpp
+OT.hpp
+../include/darkmatter/OT.hpp
+
 ../include/darkmatter/Timing.hpp
 packedMod2.hpp
 ../include/darkmatter/packedMod2.hpp
@@ -21,6 +31,8 @@ packedMod3.hpp
 ../include/darkmatter/Toeplitz-by-x.hpp
 packedMod2.hpp
 ../include/darkmatter/packedMod2.hpp
+
+../include/darkmatter/buggy_snail.h
 
 ../include/darkmatter/lookup_functions.h
 
@@ -62,10 +74,12 @@ iterator
 random
 -
 
-/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/PRF.cpp
+/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.cpp
 iostream
 -
-cassert
+fstream
+-
+ostream
 -
 packedMod2.hpp
 /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/packedMod2.hpp
@@ -85,4 +99,8 @@ utils.hpp
 /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/utils.hpp
 lookup_functions.h
 /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/lookup_functions.h
+PRF.hpp
+/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/PRF.hpp
+buggy_snail.h
+/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.h
 

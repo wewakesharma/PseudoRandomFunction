@@ -3,7 +3,8 @@
 //
 
 #include <iostream>
-
+#include <fstream>
+#include <ostream>
 #include "packedMod2.hpp"
 #include "Toeplitz-by-x.hpp"
 #include "OT.hpp"
@@ -170,6 +171,58 @@ void round1(std::vector<uint64_t>& K1,PackedZ2<N_COLS>& x1, std::vector<uint64_t
     party2_local_computation(K2, x2, out1_B,out2_B);
     timerAxpBP2 += (chrono::system_clock::now() - start_p2).count();
 }
+
+void save_round1_output(PackedZ2<N_ROWS>& out1_A, PackedZ2<N_ROWS>& out1_B, PackedZ2<N_ROWS>& out2_A,PackedZ2<N_ROWS>& out2_B)
+{
+    //SAVE 1A. create a vector containing all the outputs.
+    std::vector<PackedZ2<N_ROWS>> round1_output(4);
+    //SAVE 1B: push all the contents in this vector
+
+    round1_output[0] = out1_A;
+    round1_output[1] = out1_B;
+    round1_output[2] = out2_A;
+    round1_output[3] = out2_B;
+
+    //SAVE 1C: SAVE IT to file
+    std::ofstream round1_output_file("round1.txt");
+    ostream_iterator<PackedZ2<N_ROWS>> output_iterator( round1_output_file, "\n" );
+    // Passing all the variables inside the vector from the beginning of the vector to the end.
+    copy( round1_output.begin( ), round1_output.end( ), output_iterator );
+
+}
+
+void fetch_round1_output(PackedZ2<N_ROWS>& out1_A, PackedZ2<N_ROWS>& out1_B, PackedZ2<N_ROWS>& out2_A, PackedZ2<N_ROWS>& out2_B)
+{
+    //reset values
+    out1_A.reset();
+    out1_B.reset();
+    out2_A.reset();
+    out2_B.reset();
+
+    //SAVE 1A. create a vector containing all the outputs.
+    std::vector<PackedZ2<N_ROWS>> round1_output(4);
+
+    //SAVE 1B: push all the contents in this vector
+
+    /*
+    ifstream input_file("round1.txt");
+    PackedZ2<N_ROWS> out; //tempVar;
+    while (input_file >> out)
+    {
+        round1_output.push_back(out);
+    }
+
+    out1_A = round1_output[0];
+    out1_B = round1_output[1];
+    out2_A = round1_output[2];
+    out2_B = round1_output[3];
+*/
+
+
+
+
+}
+
 void round2(PackedZ3<N_SIZE>& SC_out1, PackedZ3<N_SIZE>& SC_out2, PackedZ2<N_ROWS>& out1_A, PackedZ2<N_ROWS>& out2_A,
         PackedZ2<N_ROWS>& out1_B,PackedZ2<N_ROWS>& out2_B, int nTimes)
 {
@@ -229,10 +282,17 @@ void DM_snail(int nRuns, int nTimes)
     //setup lookup preprocessing
     setup_table(lookup_prf, Rmat);
 
+    //run round 1 just once and save out1_A, out2_A, out1_B and out2_B in a file.
+    round1(K1,x1,K2,x2,out1_A,out2_A,out1_B,out2_B,nTimes);
+
+    //SAVE 1: save round 1 output in a file
+    save_round1_output(out1_A,  out1_B, out2_A, out2_B);
+
+
     for(int i = 0; i< nRuns; i++)//runs the rounds for nRuns times
     {
-        //round1
-        round1(K1,x1,K2,x2,out1_A,out2_A,out1_B,out2_B,nTimes);
+        //round1- fetch output from a file
+        fetch_round1_output(out1_A,  out1_B, out2_A, out2_B);
 
         //round2
         round2(SC_out1, SC_out2, out1_A,out2_A,out1_B,out2_B,nTimes);
