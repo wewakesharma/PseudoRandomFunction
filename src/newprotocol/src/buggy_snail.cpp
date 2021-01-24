@@ -36,6 +36,10 @@ long timer_phase31 = 0;     //time required to complete phase 3 by party 1
 long timer_phase32 = 0;     //time required to complete phase 3 by party 2
 
 
+//global variables to emulate storage in file.
+PackedZ2<N_ROWS> global_out1_A, global_out1_B, global_out2_A, global_out2_B;
+PackedZ3<N_SIZE> global_SC_out1, global_SC_out2;
+
 /*
 long timer_phase3_lookup = 0;  //total time to complete phase 3(using lookup table)
 long timer_phase31_lookup = 0;
@@ -174,53 +178,31 @@ void round1(std::vector<uint64_t>& K1,PackedZ2<N_COLS>& x1, std::vector<uint64_t
 
 void save_round1_output(PackedZ2<N_ROWS>& out1_A, PackedZ2<N_ROWS>& out1_B, PackedZ2<N_ROWS>& out2_A,PackedZ2<N_ROWS>& out2_B)
 {
-    //SAVE 1A. create a vector containing all the outputs.
-    std::vector<PackedZ2<N_ROWS>> round1_output(4);
-    //SAVE 1B: push all the contents in this vector
-
-    round1_output[0] = out1_A;
-    round1_output[1] = out1_B;
-    round1_output[2] = out2_A;
-    round1_output[3] = out2_B;
-
-    //SAVE 1C: SAVE IT to file
-    std::ofstream round1_output_file("round1.txt");
-    ostream_iterator<PackedZ2<N_ROWS>> output_iterator( round1_output_file, "\n" );
-    // Passing all the variables inside the vector from the beginning of the vector to the end.
-    copy( round1_output.begin( ), round1_output.end( ), output_iterator );
-
+    global_out1_A = out1_A;
+    global_out1_B = out1_B;
+    global_out2_A = out2_A;
+    global_out2_B = out2_B;
 }
 
 void fetch_round1_output(PackedZ2<N_ROWS>& out1_A, PackedZ2<N_ROWS>& out1_B, PackedZ2<N_ROWS>& out2_A, PackedZ2<N_ROWS>& out2_B)
 {
-    //reset values
-    out1_A.reset();
-    out1_B.reset();
-    out2_A.reset();
-    out2_B.reset();
 
-    //SAVE 1A. create a vector containing all the outputs.
-    std::vector<PackedZ2<N_ROWS>> round1_output(4);
+    out1_A = global_out1_A;
+    out1_B = global_out1_B;
+    out2_A = global_out2_A;
+    out2_B = global_out2_B;
+}
 
-    //SAVE 1B: push all the contents in this vector
+void save_round2_output(PackedZ3<N_SIZE>& SC_out1, PackedZ3<N_SIZE>& SC_out2)
+{
+    global_SC_out1 = SC_out1;
+    global_SC_out2 = SC_out2;
+}
 
-    /*
-    ifstream input_file("round1.txt");
-    PackedZ2<N_ROWS> out; //tempVar;
-    while (input_file >> out)
-    {
-        round1_output.push_back(out);
-    }
-
-    out1_A = round1_output[0];
-    out1_B = round1_output[1];
-    out2_A = round1_output[2];
-    out2_B = round1_output[3];
-*/
-
-
-
-
+void fetch_round2_output(PackedZ3<N_SIZE>& SC_out1, PackedZ3<N_SIZE>& SC_out2)
+{
+    SC_out1 = global_SC_out1;
+    SC_out2 = global_SC_out2;
 }
 
 void round2(PackedZ3<N_SIZE>& SC_out1, PackedZ3<N_SIZE>& SC_out2, PackedZ2<N_ROWS>& out1_A, PackedZ2<N_ROWS>& out2_A,
@@ -284,15 +266,25 @@ void DM_snail(int nRuns, int nTimes)
 
     //run round 1 just once and save out1_A, out2_A, out1_B and out2_B in a file.
     round1(K1,x1,K2,x2,out1_A,out2_A,out1_B,out2_B,nTimes);
+    //run round 2 just once and save out1_A, out2_A, out1_B and out2_B in a file.
+    round2(SC_out1, SC_out2, out1_A,out2_A,out1_B,out2_B,nTimes);
 
     //SAVE 1: save round 1 output in a file
-    save_round1_output(out1_A,  out1_B, out2_A, out2_B);
+    //save_round1_output(out1_A,  out1_B, out2_A, out2_B);
 
+    //SAVE 2: save round 2 output in a file
+    //save_round2_output(SC_out1, SC_out2);
+
+    //round1- fetch output from a file
+    //fetch_round1_output(out1_A,  out1_B, out2_A, out2_B);
+
+    //round2- fetch output from a file
+    //fetch_round2_output(SC_out1, SC_out2);
 
     for(int i = 0; i< nRuns; i++)//runs the rounds for nRuns times
     {
-        //round1- fetch output from a file
-        fetch_round1_output(out1_A,  out1_B, out2_A, out2_B);
+        //round1
+        round1(K1,x1,K2,x2,out1_A,out2_A,out1_B,out2_B,nTimes);
 
         //round2
         round2(SC_out1, SC_out2, out1_A,out2_A,out1_B,out2_B,nTimes);
@@ -321,3 +313,53 @@ void DM_snail(int nRuns, int nTimes)
     display_timing();       //displays the timing and number of rounds in each phase of the protocol
 }
 #endif
+
+
+
+//====================ARCHIVED CODE FOR FAILED ATTEMPT AT SAVING AND RETRIEVING FROM FILE======
+/*
+ * void save_round1_output(PackedZ2<N_ROWS>& out1_A, PackedZ2<N_ROWS>& out1_B, PackedZ2<N_ROWS>& out2_A,PackedZ2<N_ROWS>& out2_B)
+{
+    //SAVE 1A. create a vector containing all the outputs.
+    std::vector<PackedZ2<N_ROWS>> round1_output(4);
+    //SAVE 1B: push all the contents in this vector
+
+    round1_output[0] = out1_A;
+    round1_output[1] = out1_B;
+    round1_output[2] = out2_A;
+    round1_output[3] = out2_B;
+
+    //SAVE 1C: SAVE IT to file
+    std::ofstream round1_output_file("round1.txt");
+    ostream_iterator<PackedZ2<N_ROWS>> output_iterator( round1_output_file, "\n" );
+    // Passing all the variables inside the vector from the beginning of the vector to the end.
+    copy( round1_output.begin( ), round1_output.end( ), output_iterator );
+
+}
+
+void fetch_round1_output(PackedZ2<N_ROWS>& out1_A, PackedZ2<N_ROWS>& out1_B, PackedZ2<N_ROWS>& out2_A, PackedZ2<N_ROWS>& out2_B)
+{
+    //reset values
+    out1_A.reset();
+    out1_B.reset();
+    out2_A.reset();
+    out2_B.reset();
+
+    //SAVE 1A. create a vector containing all the outputs.
+    std::vector<PackedZ2<N_ROWS>> round1_output(4);
+
+    //SAVE 1B: push all the contents in this vector
+
+
+    ifstream input_file("round1.txt");
+    PackedZ2<N_ROWS> out; //tempVar;
+    while (input_file >> out)
+    {
+        round1_output.push_back(out);
+    }
+
+    out1_A = round1_output[0];
+    out1_B = round1_output[1];
+    out2_A = round1_output[2];
+    out2_B = round1_output[3];
+}*/
