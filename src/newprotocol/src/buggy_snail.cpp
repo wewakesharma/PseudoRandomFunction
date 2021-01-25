@@ -81,6 +81,7 @@ void display_timing() {
     std::cout<<"\nTime to execute phase 3: "<<
              (timer_phase3 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Number of rounds per second for phase 3: "<<(1000/(timer_phase3*time_unit_multiplier)*1000000)<<std::endl;
+    //timerPRF = (timerAxpBP1 + timerAxpBP2) + (timerSCP1 + timerSCP2) + timer_phase3;
     timerPRF = (timerAxpBP1 + timerAxpBP2) + (timerSCP1 + timerSCP2) + timer_phase3;
 
     std::cout<<"====================================================="<<std::endl;
@@ -208,7 +209,6 @@ void fetch_round2_output(PackedZ3<N_SIZE>& SC_out1, PackedZ3<N_SIZE>& SC_out2)
 void round2(PackedZ3<N_SIZE>& SC_out1, PackedZ3<N_SIZE>& SC_out2, PackedZ2<N_ROWS>& out1_A, PackedZ2<N_ROWS>& out2_A,
         PackedZ2<N_ROWS>& out1_B,PackedZ2<N_ROWS>& out2_B, int nTimes)
 {
-
     PackedZ2<N_SIZE> &y1 = out1_A;
     PackedZ2<N_SIZE> &y2 = out1_B;
 
@@ -264,10 +264,12 @@ void DM_snail(int nRuns, int nTimes)
     //setup lookup preprocessing
     setup_table(lookup_prf, Rmat);
 
+    /* DEBUGGING BY SAVING AND RETRIEVING FROM FILE
     //run round 1 just once and save out1_A, out2_A, out1_B and out2_B in a file.
-    round1(K1,x1,K2,x2,out1_A,out2_A,out1_B,out2_B,nTimes);
+    //round1(K1,x1,K2,x2,out1_A,out2_A,out1_B,out2_B,nTimes);
+
     //run round 2 just once and save out1_A, out2_A, out1_B and out2_B in a file.
-    round2(SC_out1, SC_out2, out1_A,out2_A,out1_B,out2_B,nTimes);
+    //round2(SC_out1, SC_out2, out1_A,out2_A,out1_B,out2_B,nTimes);
 
     //SAVE 1: save round 1 output in a file
     //save_round1_output(out1_A,  out1_B, out2_A, out2_B);
@@ -280,6 +282,7 @@ void DM_snail(int nRuns, int nTimes)
 
     //round2- fetch output from a file
     //fetch_round2_output(SC_out1, SC_out2);
+     */
 
     for(int i = 0; i< nRuns; i++)//runs the rounds for nRuns times
     {

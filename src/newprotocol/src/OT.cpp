@@ -247,7 +247,7 @@ void OT_Party2_2(const PackedZ2<N_SIZE>& x, PackedPairZ2<N_SIZE>& out, int index
 
 void SC_Party2_1(const PackedZ2<N_SIZE>& y2, int index) {
 //    std::cout << "\nSC: party 2 calling OT("<<y2.at(0)<<",index="<<index<<")\n";
-    auto start = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
 
     OT_Party2_1(y2, index);
 
@@ -268,7 +268,7 @@ void SC_Party1(const PackedZ2<N_SIZE>& y1, PackedZ3<N_SIZE>& out, int index) {
     const static PackedZ2<N_SIZE> zVec; //by default constructor initializes to 0
     PackedZ3<N_SIZE> y1_3;  // initialized to zero
 
-    auto start = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
     y1_3.lsbs() = y1;       // set the lsb's to y1
 
 #ifdef DEBUG
@@ -299,7 +299,7 @@ void SC_Party1(const PackedZ2<N_SIZE>& y1, PackedZ3<N_SIZE>& out, int index) {
 
 void SC_Party2_2(const PackedZ2<N_SIZE>& y2, PackedZ3<N_SIZE>& out, int index)
 {
-    auto start = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
     // Note: out is a PackedZ3, which is derived from PackedPairZ2
     // so we can directly call OT_Party2_2 that expects to get PackedPairZ2
     OT_Party2_2(y2,out, index);

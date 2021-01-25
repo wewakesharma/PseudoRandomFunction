@@ -7,6 +7,7 @@ include_directories(include)
 include_directories(include/darkmatter)
 
 add_executable(newprotocol
+        include/darkmatter/buggy_snail.h
         include/darkmatter/integer_pack.h
         include/darkmatter/lookup_functions.h
         include/darkmatter/mains.hpp
@@ -22,6 +23,7 @@ add_executable(newprotocol
         include/darkmatter/Toeplitz-by-x.hpp
         include/darkmatter/unpacked_PRF_central.h
         include/darkmatter/utils.hpp
+        src/buggy_snail.cpp
         src/integer_pack.cpp
         src/lookup_functions.cpp
         src/newprotocol.cpp
@@ -31,6 +33,7 @@ add_executable(newprotocol
         src/PRF.cpp
         src/Toeplitz-by-x.cpp
         src/unpacked_PRF_central.cpp
+        tests/test_buggy_snail.cpp
         tests/test_central_int_packed.cpp
         tests/test_dmprotocol.cpp
         tests/test_independent_lookup.cpp
@@ -45,4 +48,4 @@ add_executable(newprotocol
         tests/test_PRF.cpp
         tests/test_Toeplitz-by-x.cpp
         tests/test_unit_newprotocol.cpp
-        tests/test_unpacked_PRF.cpp tests/test_buggy_snail.cpp src/buggy_snail.cpp include/darkmatter/buggy_snail.h)
+        tests/test_unpacked_PRF.cpp)
