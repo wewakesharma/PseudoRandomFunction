@@ -6,10 +6,10 @@ The repository contains optimized code written to implement weak PRF with parame
 Currently m = n = 256 and t = 81 in Z3.
 
 ### How to use it
-Here are the instructions to replicate the benchmarking procedure.
-	1. Clone the repository ($ git clone https://github.com/vivek18394/PseudoRandomFunction)
-	2. Set the appropriate flag. Check section Flags
-	3. run the command ''' $g++ -std=c++14 [-O3] -o <output_file> -I include/darkmatter/ src/*.cpp tests/*.cpp '''
+Here are the instructions to replicate the benchmarking procedure:
+1. Clone the repository ($ git clone https://github.com/vivek18394/PseudoRandomFunction)
+2. Set the appropriate flag. Check section Flags
+3. run the command ''' $g++ -std=c++14 [-O3] -o <output_file> -I include/darkmatter/ src/*.cpp tests/*.cpp '''
 
 ### Languages Used: C, C++.
 
