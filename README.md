@@ -11,6 +11,12 @@ Here are the instructions to replicate the benchmarking procedure:
 2. Set the appropriate flag. Check section Flags
 3. run the command $g++ -std=c++14 [-O3] -o <output_file> -I include/darkmatter/ src/*.cpp tests/*.cpp
 
+### Screenshots:
+![Fully Distributed with packing]()
+![Fully Distributed with packing and lookup table]
+![OPRF with packing]
+![OPRF with packing and lookup table]
+
 ### Languages Used: C, C++.
 
 ### Motivation:
@@ -23,11 +29,11 @@ Here are the instructions to replicate the benchmarking procedure:
 * [Mahimna Kelkar](https://github.com/mahimnakelkar)
 
 ### Task Lists:
-[x] Dark Matter TCC '18 wPRF 
-[x] Dark Matter TCC '18 wPRF with packing
-[] Dark Matter TCC '18 wPRF with packing and lookup table
-[x] Fully Distributed wPRF
-[x] Fully Distributed wPRF with packing
-[x] Fully Distributed wPRF with packing and lookup table
-[x] Proposed OPRF with packing
-[x] Proposed OPRF with packing and lookup table
+- [x] Dark Matter TCC '18 wPRF 
+- [x] Dark Matter TCC '18 wPRF with packing
+- [] Dark Matter TCC '18 wPRF with packing and lookup table
+- [x] Fully Distributed wPRF
+- [x] Fully Distributed wPRF with packing
+- [x] Fully Distributed wPRF with packing and lookup table
+- [x] Proposed OPRF with packing
+- [x] Proposed OPRF with packing and lookup table
