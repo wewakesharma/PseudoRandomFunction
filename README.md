@@ -9,7 +9,7 @@ Currently m = n = 256 and t = 81 in Z3.
 Here are the instructions to replicate the benchmarking procedure:
 1. Clone the repository ($ git clone https://github.com/vivek18394/PseudoRandomFunction)
 2. Set the appropriate flag. Check section Flags
-3. run the command ''' $g++ -std=c++14 [-O3] -o <output_file> -I include/darkmatter/ src/*.cpp tests/*.cpp '''
+3. run the command $g++ -std=c++14 [-O3] -o <output_file> -I include/darkmatter/ src/*.cpp tests/*.cpp
 
 ### Languages Used: C, C++.
 
@@ -19,15 +19,15 @@ Here are the instructions to replicate the benchmarking procedure:
 ### Flags
 
 ### Contributors
-	* [Tzipora Halevi](https://github.com/thalevi)
-	* [Mahimna Kelkar](https://github.com/mahimnakelkar)
+* [Tzipora Halevi](https://github.com/thalevi)
+* [Mahimna Kelkar](https://github.com/mahimnakelkar)
 
-### Task List
-	[x] Dark Matter TCC '18 wPRF 
-	[x] Dark Matter TCC '18 wPRF with packing
-	[] Dark Matter TCC '18 wPRF with packing and lookup table
-	[x] Fully Distributed wPRF
-	[x] Fully Distributed wPRF with packing
-	[x] Fully Distributed wPRF with packing and lookup table
-	[x] Proposed OPRF with packing
-	[x] Proposed OPRF with packing and lookup table
+### Task Lists:
+[x] Dark Matter TCC '18 wPRF 
+[x] Dark Matter TCC '18 wPRF with packing
+[] Dark Matter TCC '18 wPRF with packing and lookup table
+[x] Fully Distributed wPRF
+[x] Fully Distributed wPRF with packing
+[x] Fully Distributed wPRF with packing and lookup table
+[x] Proposed OPRF with packing
+[x] Proposed OPRF with packing and lookup table
