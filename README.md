@@ -12,10 +12,10 @@ Here are the instructions to replicate the benchmarking procedure:
 3. run the command $g++ -std=c++14 [-O3] -o <output_file> -I include/darkmatter/ src/*.cpp tests/*.cpp
 
 ### Screenshots:
-![Fully Distributed with packing]()
-![Fully Distributed with packing and lookup table]
-![OPRF with packing]
-![OPRF with packing and lookup table]
+![Fully Distributed with packing](https://github.com/vivek18394/PseudoRandomFunction/tree/master/Documents/screenshots/np_aws.png)
+![Fully Distributed with packing and lookup table](https://github.com/vivek18394/PseudoRandomFunction/tree/master/Documents/screenshots/np_lookup_aws.png)
+![OPRF with packing](https://github.com/vivek18394/PseudoRandomFunction/tree/master/Documents/screenshots/oprf_aws.png)
+![OPRF with packing and lookup table](https://github.com/vivek18394/PseudoRandomFunction/tree/master/Documents/screenshots/oprf_lookup_aws.png)
 
 ### Languages Used: C, C++.
 
