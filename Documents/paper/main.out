@@ -14,12 +14,12 @@
 \BOOKMARK [2][-]{subsection.5.5}{Oblivious PRF Evaluation}{section.5}% 14
 \BOOKMARK [1][-]{section.6}{Implementation and Evaluation}{}% 15
 \BOOKMARK [2][-]{subsection.6.1}{Optimizations}{section.6}% 16
-\BOOKMARK [2][-]{subsection.6.2}{Performance Benchmarks}{section.6}% 17
-\BOOKMARK [1][-]{section.7}{Implementation}{}% 18
-\BOOKMARK [2][-]{subsection.7.1}{Representing Z2 vector}{section.7}% 19
-\BOOKMARK [2][-]{subsection.7.2}{Representing Z3 vector}{section.7}% 20
-\BOOKMARK [3][-]{subsubsection.7.2.1}{Bit slicing}{subsection.7.2}% 21
-\BOOKMARK [3][-]{subsubsection.7.2.2}{Matrix multiplication using a lookup table}{subsection.7.2}% 22
+\BOOKMARK [2][-]{subsection.6.2}{Representing Z2 vector}{section.6}% 17
+\BOOKMARK [2][-]{subsection.6.3}{Representing Z3 vector}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.4}{Performance Benchmarks}{section.6}% 19
+\BOOKMARK [1][-]{section.7}{Implementation}{}% 20
+\BOOKMARK [2][-]{subsubsection.7.0.1}{Bit slicing}{section.7}% 21
+\BOOKMARK [3][-]{subsubsection.7.0.2}{Matrix multiplication using a lookup table}{subsubsection.7.0.1}% 22
 \BOOKMARK [1][-]{section.8}{Analysis}{}% 23
 \BOOKMARK [1][-]{section.9}{Benchmarking}{}% 24
 \BOOKMARK [1][-]{section.10}{Experimental Results}{}% 25

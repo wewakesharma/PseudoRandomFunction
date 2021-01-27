@@ -25,9 +25,78 @@ We implemented our 2-party 23-wPRF (Construction~\ref{construction:23-central-wp
 \subsection{Optimizations}
 \label{subsec:implementation_opt}
 We start with a centralized implementation of the 23-wPRF. We find optimizations that provide 5x better performance over a na\"ive implementation, which we detail below. Later, in Table~\ref{table:optimization_benchmarks}, we compare the performance gain from these optimizations.
-\paragraph{Vector packing.}
+
+%Representation of vectors
+
+\subsection{Representing $Z_2$ vector}
+
+The dark matter function manipulates elements of $Z_2$ and $Z_3$. However, machine words can hold up to 64 bits and we use this to represent many elements in just a few machine words, using bit slicing. Namely, we used each machine word as a vector of 64 bits and applied operations to this bit-vector in a SIMD manner.
+Since in our implementation each key $\textbf{K}$  is of size $m \times n = 256 \times 256$ and each input is a vector of size $n = 256$, this results in packing each key o $256 \dfrac 64 = 4$ words and each input vector into 4 words. This may result in time saving of up to $\times 64$ of the run-time.
+
+\subsection{Representing $Z_3$ vector}
+
+The last part of the dark matter function takes an intermediate vector viewed as a vector of $Z_3$ elements, which is then multiplied 
+by a matrix $R$ in $Z_3$ to produce the output vector in $Z_3$. We tried different methods for implementing this matrix-vector multiplication over $Z_3$.:	
+
+
+
+%Bit Slicing
 \paragraph{Bit slicing.}
+
+Bit slicing is implemented  by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. The operations over this $Z_3$ vector - addition, subtraction, multiplication and MUX  - were implemented in a bitwise manner as shown in table \ref{tab:multicol}. We took advantage of the fact that when representing each vector as MSB and LSB, negation (which is the same as multiplying by two) is the same as swapping the most and least significant bits. 
+
+% Integer packing
+\paragraph{Vector packing.}
+Commented out
+
+%Integer packing - COMMENTED OUT
+\iffalse
+
+\subsubsection{Integer packing  operations} Another method that was explored for optimization was integer packing. 
+Since in our case we need to multiply a $Z_3$ vector of dimension $m=256$ by a trinary matrix, then each entry in the result can be as large as $256 \times 4 = 1024$, but not larger.
+We therefore allocated 10 bits for each entry (capable of holding numbers between 0 and 1023), so we can pack such numbers into each word. Specifically, the vector $(X_0 ... X_5)$ over $Z_3$ is represented as the integer $y = \sum_{i=0}^6 512^i \times x_i$.
+
+When performing the matrix-vector multiplication, multiple rows the matrix were packed using integer-packing. 
+%Specifically, the matrix was divided into two matrices of size $81 \times 128$. 
+Specifically, the matrix was divided into packs of 6 items each belonging to the same column and  consecutive rows, i.e.,  $R_{i,j}$ where ${i = (6 \times l) ... (6 \times l + 5)}$ were packed into one word, resulting in two matrices of size $14 x 256$. The matrix was then multipled by the trinary vector. The results was divided into consecutive items of 10 bits each and the value $\mod 3$ was calculated as the result
+%TODO: write how the matrix was packed but the vector was not
+
+\fi
+
+
+%Lookup table Implemetation
 \paragraph{Lookup table for matrix multiplication.}
+Even with bitslicing, implementing the matrix-vector multiplication column by column via the opertions from Table~1 is still rather slow.
+To get better performence, we capitalized on the fact that the random matrix $R$ is fixed, and we can therefore set up $R$-dependent tables and use table lookups in the implementation of the multiply-by-$R$ operation.
+
+Specifically, we partition the matrix $R$ (which has $m=256$ columns) into sixteen slices of 16 columns each, denoted $R_1,\ldots,R_{16}$.
+For each of these small matrices $R_i$, we then build a table with $2^{16}$ entries, holding the result of multiplying $R_i$ by every vector from $\{0,1\}^{16}$.
+Namely, let $R_{i,0},R_{i,1},\ldots,R_{i,15}$ be the sixteen columns of the matrix $R_i$.
+The table for $R_i$ is then defined as follows: For each index $0\le j < 2^{16}$, let $\vec{J}=(j_0,j_1,\ldots,j_{15})$ be the 0-1 vector holding the bits in the binary representation of~$j$, then we have
+\[
+T_i[j] = R_i \times \vec{J} = \sum_{k=0}^{15} R_{i,k} \cdot j_k ~~\bmod 3.
+\]
+Recalling that $R$ is $Z_3$ matrix of dimension $81\times 256$, every entry in each table~$T_i$ therefore holds an 81-vector over $Z_3$.
+Specifically, it holds a packed-$Z_3$ element with four words (two for the MSBs and two for the LSBs of this 81-element vector).
+
+Note, however, that $T_i$ can only be used directly to multiply $R_i$ by \emph{0-1 vectors}.
+To use $T_i$ when multiplying $R_i$ by a $\{0,1,2\}$ vector, multiply $R_i$ separately by the MBSs and the LSBs of that vector, and then subtract one from the other using the operations from Table~1.
+To multiply a dimension-256 $\{0,1,2\}$ vector by the matrix $R$, we partition it into sixteen vectors of dimension 16, use the approach above to multiply each one of them by the corresponding $R_i$, then use the operations from Table~1 to add them all together.
+Hence we have
+
+\begin{tabbing}
+	\underline{Multiply-by-$R$(input: $\vec{V}\in\{0,1,2\}^{256}$:}\\
+	~~1. $Acc := 0$\\
+	~~2. For \=$i=0,\ldots,15$\\
+	~~3. \> Let $\vec{M}_i,\vec{L}_i\in\{0,1\}^{16}$ be the MSB, LSB vectors (resp.) of $\vec{V}_i=\vec{V}[16i,\ldots,16i+15]$\\
+	~~4. \> Set the indexes $m:=\sum_{k=0}^{15}2^i\cdot\vec{M}[i]$
+	and $\ell:=\sum_{k=0}^{15}2^i\cdot\vec{L}[i]$\\
+	~~5. \> $Acc := Acc + T_i[\ell] - T_i[\ell] \bmod 3$\\
+	~~6. Output $Acc$
+\end{tabbing}
+
+We note that a sligtly faster implementation could be obtained by braking the matrix into (say) 26 slices of upto 10 columns each, and directly identify each 10-vector over $\{0,1,2\}$ with an index $i<3^{10}=59049$.
+This implementation would have only 26 lookup operations instead of 32 in the implementation above, so we expect it to be about 20\% faster. On the other hand it would have almost twice the table size of the implementation from above.
 
 
 \subsection{Performance Benchmarks}
@@ -96,34 +165,10 @@ The pre-shared randomness was generated centrally (as if its generated by a thir
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\subsection{Representing $Z_2$ vector}
-
-The dark matter function manipulates elements of $Z_2$ and $Z_3$. However, machine words can hold up to 64 bits and we use this to represent many elements in just a few machine words, using bit slicing. Namely, we used each machine word as a vector of 64 bits and applied operations to this bit-vector in a SIMD manner.
-Since in our implementation each key $\textbf{K}$  is of size $m \times n = 256 \times 256$ and each input is a vector of size $n = 256$, this results in packing each key o $256 \dfrac 64 = 4$ words and each input vector into 4 words. This may result in time saving of up to $\times 64$ of the run-time.
-
-\subsection{Representing $Z_3$ vector}
-
-The last part of the dark matter function takes an intermediate vector viewed as a vector of $Z_3$ elements, which is then multiplied 
-by a matrix $R$ in $Z_3$ to produce the output vector in $Z_3$. We tried different methods for implementing this matrix-vector multiplication over $Z_3$.:	
-
-\subsubsection{Bit slicing} Bit slicing is implemented  by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. The operations over this $Z_3$ vector - addition, subtraction, multiplication and MUX  - were implemented in a bitwise manner as shown in table \ref{tab:multicol}. We took advantage of the fact that when representing each vector as MSB and LSB, negation (which is the same as multiplying by two) is the same as swapping the most and least significant bits. 
 
 
-%Integer packing - COMMENTED OUT
-
-\iffalse
-
-\subsubsection{Integer packing  operations} Another method that was explored for optimization was integer packing. 
-Since in our case we need to multiply a $Z_3$ vector of dimension $m=256$ by a trinary matrix, then each entry in the result can be as large as $256 \times 4 = 1024$, but not larger.
-We therefore allocated 10 bits for each entry (capable of holding numbers between 0 and 1023), so we can pack such numbers into each word. Specifically, the vector $(X_0 ... X_5)$ over $Z_3$ is represented as the integer $y = \sum_{i=0}^6 512^i \times x_i$.
-
-When performing the matrix-vector multiplication, multiple rows the matrix were packed using integer-packing. 
-%Specifically, the matrix was divided into two matrices of size $81 \times 128$. 
-Specifically, the matrix was divided into packs of 6 items each belonging to the same column and  consecutive rows, i.e.,  $R_{i,j}$ where ${i = (6 \times l) ... (6 \times l + 5)}$ were packed into one word, resulting in two matrices of size $14 x 256$. The matrix was then multipled by the trinary vector. The results was divided into consecutive items of 10 bits each and the value $\mod 3$ was calculated as the result
-%TODO: write how the matrix was packed but the vector was not
-
-\fi
-
+\subsubsection{Bit slicing} 
+moved to 6.1 optimization, the description for Integer packing is commented below bit slicing part in 6.1 optimization
 
 % TODO: replace with a table - COMPLETED
 
@@ -162,37 +207,7 @@ Specifically, the matrix was divided into packs of 6 items each belonging to the
 
 \subsubsection{Matrix multiplication using a lookup table}
 
-Even with bitslicing, implementing the matrix-vector multiplication column by column via the opertions from Table~1 is still rather slow.
-To get better performence, we capitalized on the fact that the random matrix $R$ is fixed, and we can therefore set up $R$-dependent tables and use table lookups in the implementation of the multiply-by-$R$ operation.
-
-Specifically, we partition the matrix $R$ (which has $m=256$ columns) into sixteen slices of 16 columns each, denoted $R_1,\ldots,R_{16}$.
-For each of these small matrices $R_i$, we then build a table with $2^{16}$ entries, holding the result of multiplying $R_i$ by every vector from $\{0,1\}^{16}$.
-Namely, let $R_{i,0},R_{i,1},\ldots,R_{i,15}$ be the sixteen columns of the matrix $R_i$.
-The table for $R_i$ is then defined as follows: For each index $0\le j < 2^{16}$, let $\vec{J}=(j_0,j_1,\ldots,j_{15})$ be the 0-1 vector holding the bits in the binary representation of~$j$, then we have
-\[
-T_i[j] = R_i \times \vec{J} = \sum_{k=0}^{15} R_{i,k} \cdot j_k ~~\bmod 3.
-\]
-Recalling that $R$ is $Z_3$ matrix of dimension $81\times 256$, every entry in each table~$T_i$ therefore holds an 81-vector over $Z_3$.
-Specifically, it holds a packed-$Z_3$ element with four words (two for the MSBs and two for the LSBs of this 81-element vector).
-
-Note, however, that $T_i$ can only be used directly to multiply $R_i$ by \emph{0-1 vectors}.
-To use $T_i$ when multiplying $R_i$ by a $\{0,1,2\}$ vector, multiply $R_i$ separately by the MBSs and the LSBs of that vector, and then subtract one from the other using the operations from Table~1.
-To multiply a dimension-256 $\{0,1,2\}$ vector by the matrix $R$, we partition it into sixteen vectors of dimension 16, use the approach above to multiply each one of them by the corresponding $R_i$, then use the operations from Table~1 to add them all together.
-Hence we have
-
-\begin{tabbing}
-	\underline{Multiply-by-$R$(input: $\vec{V}\in\{0,1,2\}^{256}$:}\\
-	~~1. $Acc := 0$\\
-	~~2. For \=$i=0,\ldots,15$\\
-	~~3. \> Let $\vec{M}_i,\vec{L}_i\in\{0,1\}^{16}$ be the MSB, LSB vectors (resp.) of $\vec{V}_i=\vec{V}[16i,\ldots,16i+15]$\\
-	~~4. \> Set the indexes $m:=\sum_{k=0}^{15}2^i\cdot\vec{M}[i]$
-	and $\ell:=\sum_{k=0}^{15}2^i\cdot\vec{L}[i]$\\
-	~~5. \> $Acc := Acc + T_i[\ell] - T_i[\ell] \bmod 3$\\
-	~~6. Output $Acc$
-\end{tabbing}
-
-We note that a sligtly faster implementation could be obtained by braking the matrix into (say) 26 slices of upto 10 columns each, and directly identify each 10-vector over $\{0,1,2\}$ with an index $i<3^{10}=59049$.
-This implementation would have only 26 lookup operations instead of 32 in the implementation above, so we expect it to be about 20\% faster. On the other hand it would have almost twice the table size of the implementation from above.
+Moved to 6.1 Optimization
 
 \section{Analysis}
 
