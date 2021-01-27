@@ -17,7 +17,7 @@ long timer_PRF_unpacked = 0;    //times the entire PRF protocol
 
 void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
                           PackedZ2<N_COLS>& x2, uint64_t randMat[81][256], PackedZ3<81>& out1Z3,
-                          PackedZ3<81>& out2Z3, int i, int outMod3[81])
+                          PackedZ3<81>& out2Z3, int unused, uint64_t outMod3[81])
 {
     //1.perform X = x1+ x2 (on vectors)
     PackedZ2<N_COLS> X = x1; //declare a variable
@@ -44,7 +44,6 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         KtimesX[cnt] = outKX.at(cnt);
     }
 
-    uint64_t out_mod3[81];
     int out_mod3_dummy[81];
  //   uint64_t dummy;
 
@@ -56,7 +55,7 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
         {
            sum += KtimesX[j] * randMat[i][j];
         }
-        out_mod3[i] = sum % 3;
+        outMod3[i] = sum % 3;
    //     out_mod3_dummy[i] += out_mod3[i];
     //    dummy += out_mod3_dummy[i];
 
