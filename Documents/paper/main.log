@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  27 JAN 2021 09:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  27 JAN 2021 11:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1442,10 +1442,6 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 18.
  [2]
-
-LaTeX Warning: Reference `fig:graphical_gates' on page 3 undefined on input lin
-e 31.
-
 (./Figures/tikzfigs/graphical_gates.tex) (./Figures/23-constructions.tex
 (./Figures/tikzfigs/23wPRF_fig.tex) (./Figures/tikzfigs/23OWF_fig.tex)
 Overfull \hbox (3.31082pt too wide) in paragraph at lines 38--39
@@ -1484,7 +1480,7 @@ LaTeX Warning: Citation 'LibSodium' on page 8 undefined on input line 67.
 LaTeX Warning: Citation 'naor1999-oprf' on page 9 undefined on input line 79.
 
 
-Overfull \hbox (16.84859pt too wide) in paragraph at lines 72--82
+Overfull \hbox (52.49701pt too wide) in paragraph at lines 72--82
  [][] 
  []
 
@@ -1514,12 +1510,12 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 104.
 
 [10]
-Overfull \hbox (73.80252pt too wide) in paragraph at lines 191--214
+Overfull \hbox (73.80252pt too wide) in paragraph at lines 207--230
  [] 
  []
 
 
-LaTeX Warning: Citation 'LibSodium' on page 11 undefined on input line 226.
+LaTeX Warning: Citation 'LibSodium' on page 11 undefined on input line 242.
 
 [11]) (./Sections/applications.tex
 
@@ -1570,15 +1566,9 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 25.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 25.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 25.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 009EB221F3E5C20D318BCB6CD9AC6917;2056.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: CB653361400581F78470FDF0B4A793E1;2050
-(rerunfilecheck)             After:  009EB221F3E5C20D318BCB6CD9AC6917;2056.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -1635,10 +1625,10 @@ ts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts
 ype1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/ty
 pe1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2019/texmf-dist/font
 s/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (19 pages, 381413 bytes).
+Output written on main.pdf (19 pages, 381643 bytes).
 PDF statistics:
- 496 PDF objects out of 1000 (max. 8388607)
- 408 compressed objects within 5 object streams
+ 497 PDF objects out of 1000 (max. 8388607)
+ 409 compressed objects within 5 object streams
  119 named destinations out of 1000 (max. 500000)
  401 words of extra memory for PDF output out of 10000 (max. 10000000)
 

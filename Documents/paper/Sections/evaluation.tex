@@ -69,14 +69,14 @@ For the comparison with the DDH-based OPRF construction in~\cite{naor1999-oprf},
 \begin{table}[h]
 {
 \centering
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 
 \hline
-\multirow{2}{*}{Protocol} & \multicolumn{2}{c|}{Runtime} & \multirow{2}{*}{\makecell{Output \\ Size}} & \multirow{2}{*}{Preprocessing} & \multirow{2}{*}{Communication}\\
-& Server & Client & & & \\
+\multirow{2}{*}{Protocol} & \multicolumn{2}{c|}{Runtime} & \multirow{2}{*}{\makecell{Output \\ Size}} & \multirow{2}{*}{Preprocessing} & \multicolumn{2}{c|}{Communication}\\
+& Server & Client & & & Server & Client \\
 \hline\hline
-23-OPRF & & & & &\\
-DDH-based OPRF~\cite{naor1999-oprf} & & & & &\\
+23-OPRF & 9.45 & 8.52 & 81 & & $(2n+m+t)$ & $(n+m)$\\
+DDH-based OPRF~\cite{naor1999-oprf} & 57.38 & 28.69 & 256 & 2560 & 256$(n)$ & 256$(n)$\\
 \hline
 \end{tabular}
 \caption{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model.}
