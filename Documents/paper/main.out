@@ -1,0 +1,30 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Preliminaries}{}% 2
+\BOOKMARK [1][-]{section.3}{Candidate Constructions}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Basic structure.}{section.3}% 4
+\BOOKMARK [1][-]{section.4}{Cryptanalysis}{}% 5
+\BOOKMARK [2][-]{subsection.4.1}{Choosing concrete parameters}{section.4}% 6
+\BOOKMARK [1][-]{section.5}{Distributed Protocols}{}% 7
+\BOOKMARK [2][-]{subsection.5.1}{Technical Overview}{section.5}% 8
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Distributed Computation of Circuit Gates}{subsection.5.1}% 9
+\BOOKMARK [2][-]{subsection.5.2}{Distributed Evaluation in the Preprocessing Model}{section.5}% 10
+\BOOKMARK [3][-]{subsubsection.5.2.1}{2-party wPRF evaluation.}{subsection.5.2}% 11
+\BOOKMARK [2][-]{subsection.5.3}{2-party Public Input Evaluation}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.4}{3-party Distributed Evaluation}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.5}{Oblivious PRF Evaluation}{section.5}% 14
+\BOOKMARK [1][-]{section.6}{Implementation and Evaluation}{}% 15
+\BOOKMARK [2][-]{subsection.6.1}{Optimizations}{section.6}% 16
+\BOOKMARK [2][-]{subsection.6.2}{Performance Benchmarks}{section.6}% 17
+\BOOKMARK [1][-]{section.7}{Implementation}{}% 18
+\BOOKMARK [2][-]{subsection.7.1}{Representing Z2 vector}{section.7}% 19
+\BOOKMARK [2][-]{subsection.7.2}{Representing Z3 vector}{section.7}% 20
+\BOOKMARK [3][-]{subsubsection.7.2.1}{Bit slicing}{subsection.7.2}% 21
+\BOOKMARK [3][-]{subsubsection.7.2.2}{Matrix multiplication using a lookup table}{subsection.7.2}% 22
+\BOOKMARK [1][-]{section.8}{Analysis}{}% 23
+\BOOKMARK [1][-]{section.9}{Benchmarking}{}% 24
+\BOOKMARK [1][-]{section.10}{Experimental Results}{}% 25
+\BOOKMARK [1][-]{section.11}{Applications}{}% 26
+\BOOKMARK [2][-]{subsection.11.1}{A Signature Scheme}{section.11}% 27
+\BOOKMARK [3][-]{subsubsection.11.1.1}{MPC protocol details}{subsection.11.1}% 28
+\BOOKMARK [3][-]{subsubsection.11.1.2}{Signature Scheme Details}{subsection.11.1}% 29
+\BOOKMARK [2][-]{subsection.11.2}{Distributed Picnic}{section.11}% 30

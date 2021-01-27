@@ -1,0 +1,367 @@
+\documentclass{article}
+
+\usepackage{comment}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{amssymb, amsmath, amsfonts}
+\usepackage{bbm}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\newtheorem{lemma}{Lemma}
+
+\title{2-3 OWF and PRF Analysis}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{The 2-3 OWF}
+
+\subsection{OWF Definition}
+
+We define the following OWF (one-way function) candidate $F: \mathbb{F}_2^n \rightarrow \mathbb{F}_3^t$,
+given 3 positive integer parameters $n,m,t$ (such that $m \geq n$, $m \geq t$), and two public matrices $A \in \mathbb{F}_2^{m \times n}$ of rank full $n$ and
+$B \in \mathbb{F}_3^{t \times m}$ of full rank $t$, which are chosen uniformly at random from the space
+of all full rank matrices (or from the space of all full rank circulant matrices):
+\begin{enumerate}
+  \item Compute $w = Ax \in \mathbb{F}_2^m$
+  \item View $w$ as a vector in $\mathbb{F}_3^m$ and output $y = Bw \in \mathbb{F}_3^t$.
+\end{enumerate}
+
+
+\subsection{Goal}
+
+We define an inversion attack game on $F(\cdot)$ by choosing
+$\hat{x} \in \mathbb{F}_2^n$ uniformly at random and giving $\hat{y}= F(\hat{x})$ to the adversary, whose
+goal to output some $x \in \mathbb{F}_2^n$ such that $F(x) = \hat{y}$.
+We say that $F(\cdot)$ has $s$ bits of security if no adversary can win the inversion attack game on $F(\cdot)$ with average complexity below $2^s$.
+
+Our goal is to determine parameters $n,m,t$ which assure that $F(\cdot)$ has $s$ bits of security,
+while optimizing the formula
+\begin{align}
+\label{eq:opt}
+n+m+ \log 3 \cdot t.
+\end{align}
+This formula corresponds to the per-party communication of the distributed evaluation protocol of $F(\cdot)$, where $n$ bits correspond to the $\bmod$ $2$ sharing of the input, $m$ bits for one round of online communication, and $\log 3 \cdot t$ bits for reconstructing the output.
+
+\section{Security Evaluation of the 2-3 OWF}
+
+
+\subsection{Basic Attacks}
+\label{sec:basic}
+
+We describe several basic attacks and analyze their complexity as a function of $n,m,t$.
+First, by exhaustive search, we can invert $F(\cdot)$ in time complexity $2^n$ or $3^t = 2^{\log 3 \cdot t}$.
+
+Moreover, we may assume that $n = \log 3 \cdot t$ (up to rounding factors): indeed, the choice $n = \log 3 \cdot t$ guarantees that the scheme has very few preimages for $y \in \mathbb{F}_3^t$ on average. Thus, setting $n < \log 3 \cdot t$ does not reduce the number of preimages substantially. Consequently, any attack on a scheme with $n = \log 3 \cdot t$ can be applied to a scheme with $\log 3 \cdot t > n$ by truncating the output, and a scheme with $n < \log 3 \cdot t$ not offer better security than a scheme with $n = \log 3 \cdot t$. On the other hand, setting $n < \log 3 \cdot t$ only increases the value of the optimized formula $n+m+\log 3 \cdot t$. Similarly, if $n > \log 3 \cdot t$, an attacker can fix $n - \log 3 \cdot t$ bits of the secret input to and arbitrary value and try to invert the image of the induced scheme where $n' = \log 3 \cdot t$ (note that on average, a single such preimage exists).
+
+Focusing on the value of $m$, by exhaustive search, we can find $x$ such that $Ax = A\hat{x}$ (which implies that $F(x) = F(\hat{x})$) in time complexity $2^m$.
+A tighter restriction on $m$ is imposed by the following attack: guess $m - t$ bits of $w = Ax$ and solve the linear equation system $\hat{y} = Bw$ over $\mathbb{F}_3$ (which has $t$ equations and variables) to obtain a full suggestion for $w$. A suggestion for $w$ allows to compute $x$ by solving the linear equation system $Ax=w$ over $\mathbb{F}_2$. This attack has complexity $2^{m-t}$. An improved attack is described next.
+
+\subsubsection*{Enumerating $w$ Values}
+
+We show how to enumerate over all $w \in \{0,1\}^m$ that satisfy $B w = \hat{y}$ in time complexity of about $2^{m/2}$ if $m \leq \log 3 \cdot t = n$, and $2^{m - \log 3 \cdot t} = 2^{m - n}$, otherwise.
+
+Given such an algorithm, we can test each $w$ by solving the equation system $Ax = w$ over $\mathbb{F}_2$, and if a solution exists, we have successfully inverted~$\hat{y}$.
+
+Observe that if $w$ and $w'$ do not have a common $1$ entry, then $w + w' \bmod 2 = w + w' \bmod 3$
+(where the addition is performed entry-wise). Therefore,
+\begin{align}
+\label{eq:lineara}
+\begin{split}
+B(w + w' \bmod 2) \bmod 3 = \\
+B(w + w' \bmod 3) \bmod 3 = \\
+(Bw \bmod 3) + (Bw' \bmod 3) \bmod 3.
+\end{split}
+\end{align}
+
+We use this observation in the following algorithm, whose complexity as claimed above.
+\begin{enumerate}
+  \item Partition the $m$ indices of $w$ into 2 subsets $I_1$ and $I_2 = [m] \backslash I_1$, each of size $m/2$ bits.
+  \item For $i \in \{0,1,\ldots 2^{m/2 -1}\}$, let $w_i$ be the $m$-bit vector whose value on the $m/2$ indices of $I_1$ is $i$, and is 0 on the indices of $I_2$. For each such $i$,
+      evaluate $B w_i \bmod 3 = y_i$ and store the pairs $(w_i,y_i)$ in a table $\mathcal{T}$, sorted by $y_i$ values.
+  \item For $j \in \{0,1,\ldots 2^{m/2 -1}\}$, let $w'_j$ be the $m$-bit vector whose value on the $m/2$ indices of $I_2$ is $j$, and is 0 on the indices of $I_1$. For each such $j$,
+      evaluate $B w'_j \bmod 3 = y'_j$ and search $\mathcal{T}$ for the value $\hat{y} - y'_j \bmod 3$. If there exists a match $y_i$ such that $y_i = \hat{y} - y'_j \bmod 3$ (or $y_i + y'_j \bmod 3 = \hat{y}$), recover the value $w_i$ such that $B w_i \bmod 3 = y_i$ from $\mathcal{T}$
+      and return $w = w_i + w'_j \bmod 2$.
+\end{enumerate}
+
+Note that the expected number of $w \in \{0,1\}^m$ that satisfy $B w = \hat{y}$ is $2^{m - \log 3 \cdot t}$. Hence, we cannot hope to obtain better complexity than $2^{m - \log 3 \cdot t}$ without exploiting additional constraints on $w$, imposed by the matrix $A$. In the next section, we show how this can be done.
+
+
+\subsection{Reduction to Subset-Sum}
+\label{sec:improved}
+
+We now show how to reduce the problem of inverting $F(\cdot)$ to solving an instance of subset-sum (for a particular definition of the sum operation) over the space $\{0,1\}^m$.
+
+\subsubsection{The Reduction}
+For a vector $w \in \mathbb{F}_2^m$, there is an $(m -n) \times m$ (parity check) matrix $P$ such that there exists $x \in \mathbb{F}_2^n$ for which $Ax = w$ if and only if $P w=0$.
+Assume that $x \in \mathbb{F}_2^n$ satisfies $F(x) = \hat{y}$ and let $w = Ax$. Then,
+$w$ satisfies the conditions $P w = 0$ (over $\mathbb{F}_2$) and $Bw = \hat{y}$ (over $\mathbb{F}_3$).
+We attempt to find such $w$ by a reduction to subset-sum, as detailed below.
+
+Suppose we fine a set $J \subseteq [m]$ such that
+$$\left( \sum_{j \in J} Pe_j  \bmod 2, \sum_{j \in J} Be_i  \bmod 3 \right) = (\vec{0},\hat{y}),$$
+where $e_i \in \{0,1\}^m$ be the $i$'th unit vector.
+Then, a preimage $x$ such that $F(x) = \hat{y}$ can be computed by solving the linear equation system
+$Ax = \sum_{j \in J} e_j  \bmod 2$.
+
+Thus, we have reduced the problem to subset-sum with $m$ binary variables
+$(\epsilon_1, \ldots, \epsilon_m) \in \{0,1\}^m$, where we associate $\epsilon_i = 1$
+with $$(Pe_i, Be_i) \in \mathbb{F}_2^{m-n} \times \mathbb{F}_3^t,$$
+and define the target
+as $(\vec{0},\hat{y}) \in \mathbb{F}_2^{m-n} \times \mathbb{F}_3^t$.
+
+\subsubsection{Solving the Subset-Sum Problem}
+
+We can now apply the advanced subset-sum algorithm by
+Howgrave{-}Graham and Joux~\cite{Howgrave-GrahamJ10} and the more recent ones
+~\cite{BeckerCJ11,BonnetainBSS20},
+which are based on the \emph{representation technique}.
+These algorithms where designed to solve subset-sum problems over the integers.
+Below, we describe the main ideas of these algorithms
+and explain how to apply them to the special subset-sum problem
+we consider.
+
+In the subset-sum problem over the integers,
+we are given a list of $m$ positive  integers $(a_1,a_2,\ldots,a_m)$
+and another positive integer $S$ such that $S = \sum_{i=1}^{m} \epsilon_i a_i$
+for $\epsilon_i \in \{0,1\}$. The goal is to recover the unknown coefficients $\epsilon_i$.
+
+A standard meet-in-the-middle approach for solving the problem has time complexity of about $2^{m/2}$.
+The representation technique allows to improve this complexity as briefly summarized below.
+
+Assume that a solution to the subset-sum problem is chosen uniformly from $\{0,1\}^m$
+and the parameters are set such that the instance has about one solution on average. Effectively, this means that the density of the problem $d = \tfrac{n}{\log \max(\{a_i\}_{i=1}^{m})}$ is set to 1.
+
+The main idea of the basic algorithm of Howgrave{-}Graham and Joux~\cite{Howgrave-GrahamJ10}
+is to split the problem into two parts by writing
+$S = \sigma_1 + \sigma_2$,
+where $\sigma_1 = \sum_{i=1}^{m} \alpha_i a_i$ and $\sigma_2 = \sum_{i=1}^{m} \beta_i a_i$
+and $(\alpha_i,\beta_i) \in \{(0,0),(0,1),(1,0)\}$.
+Thus, $\epsilon_i = \alpha_i + \beta_i$ for each $i$ is a solution to the problem.
+
+Note that each coefficient $\epsilon_i$ with value 1 can be split into $(0,1)$, or $(1,0)$.
+Thus, assuming that the solution has Hamming weight\footnote{In general, one
+may guess the Hamming weight of the solution and
+repeat the algorithm accordingly a polynomial number of times.} of $m/2$
+(which occurs with probability $\Omega(1/\sqrt{m})$),
+it has $2^{m/2}$ different \emph{representations}.
+Consequently, one may focus of finding only one of these representations
+by solving two subset-sum problems of Hamming weight $m/4$.
+Focusing on a single representation of the solution
+allows to beat the standard meet-in-the-middle approach which requires time $2^{m/2}$.
+
+\subsubsection{Adaptation of Previous Subset-Sum Algorithms}
+The algorithm of~\cite{Howgrave-GrahamJ10} of can be easily adapted
+to our specialized subset-sum problem (although it is not define over the integers).
+Moreover the improved algorithm of~\cite{BeckerCJ11} considers additional representations
+of the solution by allowing $\alpha_i$ and $\beta_i$ to also take the value -1
+(implying that $\epsilon_i = 0$ can be decomposed into
+$(\alpha_i,\beta_i) \in \{(0,0),(-1,1),(1,-1)\}$).
+In our case, we associate $\alpha_i = -1$
+with $(P(-e_i), B(-e_i)) = (Pe_i, 2 \cdot Be_i)  \in \mathbb{F}_2^{m-n} \times \mathbb{F}_3^t$.
+Finally, the recent improved algorithm of~\cite{BonnetainBSS20} considers representations over
+$\{-1,0,1,2\}$ and we can adapt this algorithm to our setting in a similar way.
+
+In terms of complexity, ignoring polynomial factors in $m$,
+the attack of~\cite{Howgrave-GrahamJ10} runs in time $2^{0.337m}$ and uses $2^{0.256m}$ memory,
+while the complexity of attack of~\cite{BonnetainBSS20} is $2^{0.283m}$ time and memory.
+
+
+\subsection{Quantum Attacks}
+
+Attackers with access to a quantum computer can improve upon the complexity of some of the attacks described in the classical setting. In the classical setting, exhaustive search and the subset-sum based algorithm are the most relevant attacks that we found of the scheme. This also applies to the post-quantum setting.
+
+First, it is possible to invert $F(\cdot)$ with Grover's algorithm in time complexity $2^{n/2}$. Second, according to~\cite{BonnetainBSS20}, one can solve subset-sum (in $m$ binary variables) on a quantum computer in complexity $2^{0.2156 m}$ (ignoring polynomial factors).
+
+
+\subsection{Parameter Selection for the 2-3 OWF}
+
+We now optimize the formula
+$$n+m+ \log 3 \cdot t$$
+subject to the constraints imposed by the above attacks
+(and recalling that $n = \log 3 \cdot t $).
+First, due to the exhaustive search, we require $$n \geq s.$$
+Second,
+the most restrictive constraint on $m$ is imposed by the subset-sum algorithm.
+Of we conservatively ignore the hidden polynomial factors and the large memory
+complexity of the subset-sum algorithm of~\cite{BonnetainBSS20}, we need to set
+$$0.283m \geq s.$$
+
+Overall, we obtain
+$$n = \log 3 \cdot t = s,$$
+and $$m = \tfrac{s}{0.283} \approx 3.53 s.$$
+
+A more aggressive setting of the parameters may take into account the polynomial factors of~\cite{BonnetainBSS20} (and perhaps its high memory complexity). Unfortunately, the polynomial factors associated with the complexity formulas of the relevant subset-sum algorithms have not been analyzed.
+If we assume that the polynomial factors are about $m^2$, and we aim for $s = 128$ bits of security, then
+we require $m^2 \cdot 2^{0.283m} \geq 2^{s} = 2^{128}$. Setting $m = 400 = 3.125 s$ is sufficient for satisfying the constraint in this setting.
+
+\paragraph{Post-quantum setting.}
+In the post-quantum setting, we have the constraints
+$$n/2 \geq s$$
+due to Grover's algorithm, and
+$$0.2156 m \geq s$$
+due to the quantum subset-sum algorithm.
+
+Overall, we obtain
+$$n = \log 3 \cdot t = 2s,$$
+and $$m = \tfrac{s}{0.2156} \approx 4.64 s.$$
+
+\section{The 2-3 PRF}
+
+\subsection{PRF Definition}
+
+We define the following PRF (pseudo-random function) candidate
+$F: \mathbb{F}_2^{m \times n} \times \mathbb{F}_2^n \rightarrow \mathbb{F}_3^t$,
+given 3 positive integer parameters $n,m,t$ (such that $m \geq n$, $m \geq t$ ), and a public matrix
+$M \in \mathbb{F}_3^{t \times m}$, which is chosen uniformly at random from the space
+of all matrices of full rank $t$ (or from the space of all circulant matrices of rank $t$).
+On secret input $K \in \mathbb{F}_2^{m \times n}$ which is a circulant matrix of full rank $n$
+whose rows include all cyclic rotations of an $n$-bit key $k$, and
+public input $x \in \mathbb{F}_2^n$, chosen uniformly at random (conditioned on $K$ being of rank $n$):
+\begin{enumerate}
+  \item Compute $w = Kx \in \mathbb{F}_2^m$
+  \item View $w$ as a vector in $\mathbb{F}_3^m$ and output $y = Mw \in \mathbb{F}_3^t$.
+\end{enumerate}
+
+
+\subsection{Goal}
+
+The key $k \in \mathbb{F}_2^n$ that defines the secret matrix $K$ is chosen uniformly at random such that
+$K \in \mathbb{F}_2^{m \times n}$ is of rank $n$.
+For a parameter $r$, an adversary is given $2^{r}$ samples $(x^{(1)},y^{(1)}) ,\ldots, (x^{(r)},y^{(r)})$, where each $x^{(i)} \in \mathbb{F}_2^n$ is chosen uniformly at random and $y^{(i)} = F(K,x^{(i)})$. In this setting, the adversary is a distinguisher that attempts to distinguish the $r$ samples generated as above from $r$ samples where each $x^{(i)} \in \mathbb{F}_2^n$ and corresponding $y^{(i)} \in \mathbb{F}_3^t$ are chosen independently and uniformly at random.
+
+We will place a restriction of $r \leq 40$,
+corresponding to a practical limit of $2^{40}$ on the number of samples available to the adversary.
+
+We say that $F(\cdot,\cdot)$ has $s$ bits of security if no adversary that runs in time $2^\tau$
+can win the distinguishing game with probability more that $2^{\tau - s}$ .
+
+Our goal is to determine parameters $n,m,t$ which assure that $F(\cdot,\cdot)$ has $s$ bits of security,
+while optimizing the formula
+\begin{align}
+\label{eq:opt1}
+n+ 2m + \log 3 \cdot t.
+\end{align}
+This formula corresponds to the online communication of the parties (sender and receiver) that implement an oblivious PRF protocol for $F(\cdot,\cdot)$.
+
+Another relevant formula is
+$$2n+m,$$
+which is the per-party online communication of mapping shared input and shared key (over $\mathbb{F}_2$) to shared output (over $\mathbb{F}_3$).
+
+We further note that most applications impose a lower bound on $t$, so typically, it cannot be arbitrarily small.
+
+\subsection{Attacks}
+\label{sec:basicprf}
+
+As for the OWF, we describe several attacks and analyze their complexity as a function of the parameters $n,m,t$.
+
+Unlike the case of the OWF (where the goal was to find a preimage of a give output),
+we can choose a small value of $t$ regardless of the other parameters without sacrificing security. In fact, it is clear that a small value of $t$ can only contribute to security, as any attack on a scheme with a small value of $t$ can be applied to a scheme with a larger value of $t$, simply by ignoring part of the output. Consequently, we may fix $t$ to the lower bound defined by the application.
+
+We also note that given a sufficiently large number of samples, we expect that the key $k$ would be uniquely determined by the samples (regardless of the value of $t$).
+
+\subsubsection{Key Recovery Attacks Exploiting a Single Sample}
+
+We describe key recovery attacks that make use of the minimal number of samples required to derive the secret key $k$.
+
+First, as for the OWF, exhaustive search requires $2^{n}$ time. Also,
+similarly to the OWF, given any sample $(x^{(i)},y^{(i)})$, we can guess $m - t$ bits of $w^{(i)} = K x^{(i)}$ and solve the linear equation system $y^{(i)} = M w^{(i)}$, which then allows to compute a suggestion for $k$ (that can be tested on the remaining samples). This attack has complexity $2^{m-t}$.
+
+Furthermore, given a single sample, we can apply the same attack for enumerating $w$ values,
+described at the beginning of Section~\ref{sec:improved}. This attack has complexity which is the maximum between $2^{m/2}$ and $2^{m - \log 3 \cdot t}$.
+
+\paragraph{Reduction to subset-sum.}
+Similarly to the case of the OWF, we can reduce the key recovery problem to the problem of solving subset-sum over the $m$ binary variables of $w$. However, it is clear that if the algorithm is applied to a single $(x^{(i)},y^{(i)})$ sample, then its complexity cannot drop below $2^{m - \log 3 \cdot t - (m -n)} = 2^{n - \log 3 \cdot t}$, which is the expected number of $w^{(i)}$ values possible given $(x^{(i)},y^{(i)})$.
+
+On the other hand, if we try to reduce the complexity by applying the algorithm to more than one sample (e.g., to $(x^{(i)},y^{(i)})$ and $(x^{(j)},y^{(j)})$), then we must take advantage of the dependency between $w^{(i)}$ and $w^{(j)}$, that are related via linear constraints, imposed by $k$ and the samples $x^{(i)},x^{(j)}$. However, it is not clear how to model these complex linear constraints in the subset-sum reduction and we were not able to improve the complexity of the single-sample attack.
+
+\subsubsection{Exploiting Multiple Samples in Key Recovery and Distinguishing Attacks}
+
+The key recovery attacks described above make use of a minimal number of samples required to derive the secret key. On the other hand, when given more samples, it may be possible to exploit various relations among them to mount more efficient key recover or distinguishing attacks.
+
+A simple key recovery attack that exploits multiple samples is a multi-target attack on $w$: we compute $M w$ for various values of $w \in \mathbb{F}_2^m$ until we successfully guess some $w^{(i)}$ for which we have the corresponding sample $(x^{(i)},y^{(i)})$. This can be detected as $M w = y^{(i)}$. The complexity is $2^{m - r}$, unless $3 \log t < r$ and then it is only $2^{m - \log 3 \cdot t}$ (as we expect $2^{r - \log 3 \cdot t}$ possible matches with the samples for every value of $M w$). However, this attack is not more efficient than the subset-sum attack described above, as it does not exploit any special relation between the samples.
+
+In principle, various relations between samples that could be exploited by an attacker. For example, the attack may try to exploit sample pairs $(x^{(i)},y^{(i)})$ and $(x^{(j)},y^{(j)})$ such that $x^{(i)}$ and $x^{(j)}$ are of low Hamming distance. However, given the limited amount of samples (that satisfy $3r < n $), pairs with very small Hamming distance are very unlikely. A different and more concrete attack is described below.
+
+
+\paragraph{Simultaneous sums.}
+Assume that for some index set $I$, $\sum_{i \in I} x^{(i)} \bmod 2 = 0$. Then, $\sum_{i \in I} w^{(i)} \bmod 2 = 0$ (and a similar relation holds modulo 3 for the $y^{(i)}$ values).
+
+An interesting distinguishing attack extends this initial idea by simultaneously considering sums modulo 2 and 3, as follows: assume that there are 4 samples (denoted for simplicity
+by $ \{(x^{(i)},y^{(i)})\}_{i=1}^{4}$) such that for each $j \in [m]$, $$\sum_{i = 1}^{4} w^{(i)}_j = 2.$$
+Then, $\sum_{i = 0}^{4} x^{(i)} \bmod 2 = 0$ and $\sum_{i = 0}^{4} y^{(i)} \bmod 3 = M \cdot \vec{2} \bmod 3$ (where $\vec{2}$ is a vector with $m$ entries whose values are 2).
+Note that a random 4-tuple of samples satisfies this simultaneous sum constraint with probability
+$2^{-n - \log 3 \cdot t}$, but the probability that the constraint $\sum_{i = 0}^{4} w^{(i)}_j = 2$ is satisfied for every $j \in [m]$ is about
+$$\left( \tfrac{\tbinom{4}{2}}{16} \right) ^{-m} \approx 2^{- 1.415 m},$$
+which is higher than expected if $1.415 m < n + \log 3 \cdot t $.
+
+Since the adversary has about $2^{4r}$ such 4-tuples, the probability that such a simultaneous 4-sum exists is about $2^{4r - 1.415 m}$. It can be detected in time complexity of about $2^{2r}$ using a standard matching algorithm. The important constraints for this attack are
+$$1.415 m > n + \log 3 \cdot t,$$ or
+$$1.415 m \gg 4r,$$
+otherwise (so that the value of $2^{4r - 1.415 m}$ is negligible).
+The constraints on $m$ imposed by the other attacks will indeed assure that
+indeed $1.415 m \gg 4r \geq 160$.
+
+The simultaneous 4-sum distinguisher can be easily generalized to a
+simultaneous $\ell$-sum distinguisher for arbitrary $\ell$.
+In general, we look for $\ell$-tuples where (for example)
+for each $j \in [m]$, $$\sum_{i = 1}^{\ell} w^{(i)}_j = c,$$
+for some fixed value $c$ such that $c \bmod 2 = 0$.
+However, $\ell = 4$ seems to give the most efficient
+distinguisher.
+
+
+
+\subsection{Quantum Attacks}
+
+The relevant attacks in the quantum setting are similar to ones for the OWF.
+First, Grover's algorithm, breaks the scheme (recovers the key) is time $2^{n/2}$.
+Second, the quantum subset-sum algorithm of~\cite{BonnetainBSS20} has complexity $2^{0.2156 m}$ (ignoring polynomial factors), but does not drop below $2^{n - \log 3 \cdot t}$.
+
+
+\subsection{Parameter Selection for the 2-3 PRF}
+
+In order to select the parameters, we first set $t$ to it's minimal possible value
+(depending on the application), as noted above.
+However, in general $t$ is not too large, and we assume $\log 3 \cdot t \leq s$,
+where $s$ is the security level.
+
+The constraints imposed by the above attacks are as follows.
+First, due to the exhaustive search, we require $$n \geq s.$$
+Second, the subset-sum algorithm
+imposes the constraint
+$$n - \log 3 \cdot t \geq s,$$
+(and $m \geq n$)
+or
+$$0.283m \geq s$$
+otherwise.
+We also need to make sure that the constraints of the simultaneous sum distinguisher are satisfied
+(mainly $1.415 m \gg 4r = 160$).
+
+
+If we wish to optimize the formula
+$n + 2m + \log 3 \cdot t$, we can set\footnote{This is assuming that $t$ is sufficiently large so that $1.415 m \gg 4r = 160$.}
+$$n = m = s + \log 3 \cdot t.$$
+
+If we wish to optimize the formula $2n + m$, we can set the parameters similarly to the OWF,
+namely
+$$n = s,$$
+and
+$$m = 3.53 s,$$
+or select a slightly smaller value of $m$ for more a aggressive setting,
+as for the OWF.
+
+
+
+
+\bibliographystyle{abbrv}
+\bibliography{owfbib}
+
+
+
+
+
+\end{document}

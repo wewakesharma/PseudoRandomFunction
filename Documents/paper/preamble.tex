@@ -1,0 +1,152 @@
+%!TEX root = ../main.tex
+
+%--------------------------------------------------------------%
+%-----------------------Common Packages------------------------%
+%--------------------------------------------------------------%
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsfonts,amssymb,amsmath,amsthm}
+\usepackage{enumitem}
+\usepackage[style=alphabetic,backend=bibtex,maxnames=4,minnames=3,maxbibnames=99]{biblatex}
+\usepackage[pdfauthor={},pdfpagelabels=true,linktocpage=true,hidelinks,linktoc=all,colorlinks]{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+\hypersetup{linkcolor = {teal}, citecolor = {magenta}, urlcolor = {black}}
+
+\usepackage{stmaryrd}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{multirow,makecell}
+\usepackage[most]{tcolorbox}
+\usepackage{varwidth}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, positioning, patterns}
+
+%--------------------------------------------------------------%
+
+
+%--------------------------------------------------------------%
+%---------------------------Notation---------------------------%
+%--------------------------------------------------------------%
+
+% Standard math notation
+\newcommand{\N}{\mathbb{N}}     % Natural numbers
+\newcommand{\Z}{\mathbb{Z}}     % Integers
+\newcommand{\R}{\mathbb{R}}     % Real numbers
+\newcommand{\F}{\mathbb{F}}     % Finite field
+
+\newcommand{\ceil}[1]{\left\lceil {#1} \right\rceil}
+\newcommand{\floor}[1]{\left\lfloor {#1} \right\rfloor}
+\newcommand{\abs}[1]{\left| {#1} \right|}
+
+\newcommand{\xor}{\oplus}
+
+\newcommand{\figref}[1]{Figure~\protect\ref{#1.fig}}
+
+\newcommand*\BitAnd{\mathbin{\&}}
+\newcommand*\BitOr{\mathbin{|}}
+\newcommand*\ShiftLeft{\ll}
+\newcommand*\ShiftRight{\gg}
+\newcommand*\BitNeg{\ensuremath{\mathord{\sim}}}
+
+% Crypto Notation
+\newcommand{\secparam}{\lambda}
+\newcommand{\bits}{\{0,1\}}
+\newcommand{\keyspace}{\mathcal{K}}
+\newcommand{\inspace}{\mathcal{X}}
+\newcommand{\outspace}{\mathcal{Y}}
+
+%-------General notation---------
+\newcommand{\mat}[1]{\MakeUppercase{\mathbf{#1}}}
+\newcommand{\thtext}{\textnormal{th}}
+
+% sf font
+\newcommand{\sfF}{\mathsf{F}}
+
+
+
+
+
+%--------------------------------------------------------------%
+
+
+
+%--------------------------------------------------------------%
+%-----------------------Specific Commands----------------------%
+%--------------------------------------------------------------%
+\newcommand{\pzero}{\textnormal{P}_0}
+\newcommand{\pone}{\textnormal{P}_1}
+\newcommand{\ptwo}{\textnormal{P}_2}
+\newcommand{\partyi}{\textnormal{P}_i}
+\newcommand{\party}{\textnormal{P}}
+
+
+\newcommand{\share}[1]{\left\llbracket #1 \right\rrbracket}
+
+\newcommand{\PRFfunc}{\mathsf{F}_\secparam}
+\newcommand{\OWFfunc}{\mathsf{F}_\secparam}
+\newcommand{\map}[1]{\textsf{map23}_{#1}}
+\newcommand{\Fconvert}{\mathcal{F}_{23}}
+\newcommand{\unmask}{\mathcal{F}_{\textnormal{unmask}}}
+
+\newcommand{\prot}{\boldsymbol{\pi}}
+\newcommand{\protunmask}{\prot_\textnormal{unmask}}
+
+\newcommand{\LinMap}{\textsf{LinMap}}
+\newcommand{\BiLinear}{\textsf{BiLinear}}
+\newcommand{\LMap}{\textsf{Lin}}
+\newcommand{\BLMap}{\textsf{BL}}
+\newcommand{\Convert}{\textsf{Convert}}
+
+%--------------------------------------------------------------%
+
+
+
+
+
+%--------------------------------------------------------------%
+%-----------------------LaTeX Formatting-----------------------%
+%--------------------------------------------------------------%
+% Comments: Add your name as necessary
+\ifcomments
+    \newcommand{\mahimna}[1]{\textsf{\color{blue}{[Mahimna: {#1}]}}}
+    \newcommand{\yuval}[1]{\textsf{\color{red}{[Yuval: {#1}]}}}
+    \newcommand{\greg}[1]{\textsf{\color{ForestGreen}{[Greg: {#1}]}}}
+\else
+    \newcommand{\mahimna}[1]{}
+    \newcommand{\greg}[1]{}
+\fi
+
+% Environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{protocol}[theorem]{Protocol}
+\newtheorem{functionality}[theorem]{Functionality}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+
+
+% Boxes
+\newcommand{\boxsize}{0.95}
+\newcommand{\protbox}[2]{\noindent\fbox{\small\hbox{\quad\begin{minipage}{\boxsize\columnwidth}\begin{center}{\bf #1}\end{center}#2\end{minipage}\quad}}}
+
+% Operators
+% \DeclareMathOperator*\bigboxplus{\ensuremath{\boxplus}}
+
+\newcommand{\bigboxplus}{
+  \mathop{
+    \vphantom{\bigoplus} 
+    \mathchoice
+      {\vcenter{\hbox{\resizebox{\widthof{$\displaystyle\bigoplus$}}{!}{$\boxplus$}}}}
+      {\vcenter{\hbox{\resizebox{\widthof{$\bigoplus$}}{!}{$\boxplus$}}}}
+      {\vcenter{\hbox{\resizebox{\widthof{$\scriptstyle\oplus$}}{!}{$\boxplus$}}}}
+      {\vcenter{\hbox{\resizebox{\widthof{$\scriptscriptstyle\oplus$}}{!}{$\boxplus$}}}}
+  }\displaylimits 
+}

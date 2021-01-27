@@ -1,0 +1,50 @@
+%!TEX root = ../../main.tex
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[scale=0.4]
+    \begin{scope}[shift={(-15,0)}]
+        \node [draw,rectangle,minimum width=1.6cm,minimum height=0.55cm,fill=blue!15] {$\mat{A}$};
+        \node[shift={(0,-0.6)}] {$\LMap^\mat{A}_2$ gate};
+        \node[shift={(-1,0)}] {$x$};
+        \node[shift={(1,0)}] {$y$};
+
+        \node [draw,rectangle,minimum width=1.6cm,minimum height=1.065cm,pattern=north west lines, pattern color=orange!70, shift={(0,-2)}] {$\mat{A}$};
+        \node[shift={(0,-2.8)}] {$\LMap^\mat{A}_3$ gate};
+        \node[shift={(-1,-2)}] {$x$};
+        \node[shift={(1,-2)}] {$y$};
+
+    \end{scope}
+    \begin{scope}[shift={(0,0)}]
+        \draw[fill=blue!15] (-2,0.68) -- (2,0.68) -- (2,-0.68) -- (-2,-0.68) -- (-2,-0.43) -- (1.75,-0.43) -- (1.75,0.43) -- (-2,0.43) -- (-2,0.68);
+
+        \node[shift={(0,-0.6)}] {$\BLMap_2$ gate};
+        \node[shift={(-1,0.25)}] {$\mat{A}$};
+        \node[shift={(-1,-0.25)}] {$x$};
+        \node[shift={(1,0)}] {$y$};
+
+
+        \draw[pattern=north west lines, pattern color=orange!70, shift={(0,-5)}] (-2,1.3) -- (2,1.3) -- (2,-1.3) -- (-2,-1.3) -- (-2,-0.8) -- (1.5,-0.8) -- (1.5,0.8) -- (-2,0.8) -- (-2,1.3);
+
+        \node[shift={(0,-2.8)}] {$\BLMap_3$ gate};
+        \node[shift={(-1,-1.6)}] {$\mat{A}$};
+        \node[shift={(-1,-2.4)}] {$x$};
+        \node[shift={(1,-2)}] {$y$};
+
+    \end{scope}   
+    \begin{scope}[shift={(15,0)}]
+        \node [draw,trapezium,trapezium left angle=65,trapezium right angle=65,minimum height=0.55cm,fill=blue!15,rotate=90] {};
+        \node[shift={(0,-0.7)}] {$\Convert_{23}$ gate};
+        \node[shift={(-0.5,0)}] {$x$};
+        \node[shift={(0.6,0.05)}] {$x^*$};
+
+        \node [draw,trapezium,trapezium left angle=65,trapezium right angle=65,minimum height=0.55cm,pattern=north west lines, pattern color=orange!70,rotate=-90, shift={(2,0)}] {};
+        \node[shift={(0,-2.8)}] {$\Convert_{32}$ gate};
+        \node[shift={(-0.5,-2)}] {$x$};
+        \node[shift={(0.6,-1.95)}] {$x^*$};
+
+    \end{scope}          
+\end{tikzpicture}
+\caption{Pictorial representations of the circuit gates.}
+\label{fig:graphical_gates}
+\end{figure}

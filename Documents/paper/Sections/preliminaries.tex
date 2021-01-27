@@ -1,0 +1,16 @@
+%!TEX root = ../main.tex
+
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+We start with some basic notation. For a positive integer $k$, we use $[k]$ to denote the set $\{1,\dots, k\}$. $\Z_p$ denotes the ring of integers modulo $p$. 
+
+
+
+
+% The operator $\oplus$ denotes addition modulo 2, and the operator $\boxplus$ denotes addition modulo 3. 
+
+We begin by defining some basic notations that we will use throughout this work. We use uppercase letters (e.g.,
+A, B) to denote matrices and bold letters to denote vectors \textbf{a} . As was specified in the Boneh et al work \cite{boneh2018-darkmatter}, the input variables to the PRF functions are the key ${K}$ which is of size $m \times n$ and each input vector $\textbf{i}$ of size $n$. 
+To save on bandwidth in the distributed implementation, the key was implemented as a Toeplitz matrix, requiring $m + n - 1$ bits.
+At the end of the algorithm, a randomization matrix $R$ is used which is of size $t \times m = 81 \times 256$, resulting in entropy of 128 bits (as $81 = 128 \times \log_2 3$).
