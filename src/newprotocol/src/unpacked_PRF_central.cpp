@@ -16,8 +16,7 @@ long timer_PRF_unpacked = 0;    //times the entire PRF protocol
 
 
 void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                          PackedZ2<N_COLS>& x2, uint64_t randMat[81][256], PackedZ3<81>& out1Z3,
-                          PackedZ3<81>& out2Z3, int unused, uint64_t outMod3[81])
+                          PackedZ2<N_COLS>& x2, uint64_t randMat[81][256], uint64_t outMod3[81])
 {
     //1.perform X = x1+ x2 (on vectors)
     PackedZ2<N_COLS> X = x1; //declare a variable
@@ -145,10 +144,15 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
 
     //TODO: write phase 1 function
     for (int i = 0; i < nRuns; i++) {
-        PRF_unpacked_central(K1, x1, K2, x2, randMat, out1Z3, out2Z3, i, out_mod3);
+        PRF_unpacked_central(K1, x1, K2, x2, randMat, out_mod3);
         dummy += out1Z3;
         dummy += out2Z3;
-        dummyoutmod3+=out_mod3;
+
+        for(int i = 0; i < 81; i++)
+        {
+            dummyoutmod3 += out_mod3[i];
+        }
+        //dummyoutmod3 += out_mod3;
     }
 
     std::cout<<dummy << dummyoutmod3;
