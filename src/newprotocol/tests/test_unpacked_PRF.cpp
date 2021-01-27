@@ -17,21 +17,11 @@ using namespace std;
 
 #ifdef UNPACKED_PRF_CENTRAL
 
-int main(int argc,char* argv[] )  {
-    int stepsToRun, nRuns;
-    if (argc>1){
-        char *p;
-        nRuns = strtol(argv[1], &p, 10);
-    } else
-        nRuns=1000;
-
-    if (argc > 2) {
-        char *p;
-        stepsToRun = strtol(argv[2], &p, 10);
-    } else
-        stepsToRun = 3;
-
-    int ntimes = 1;
+int main()  {
+    int ntimes, nRuns, stepsToRun;
+    nRuns=1000;
+    ntimes= 1;
+    stepsToRun = 1;
 
     using Clock = std::chrono::system_clock;
     using Duration = Clock::duration;
@@ -39,6 +29,6 @@ int main(int argc,char* argv[] )  {
 
     PRF_unpacked_driver(ntimes, nRuns, stepsToRun); //driver program does the preprocessing and called unpacked function
     display_time_unpacked(nRuns);
-
+    return 0;
 }
 #endif
