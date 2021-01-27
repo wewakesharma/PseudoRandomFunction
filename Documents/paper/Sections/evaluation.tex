@@ -95,7 +95,7 @@ Hence we have
 	~~6. Output $Acc$
 \end{tabbing}
 
-We note that a sligtly faster implementation could be obtained by braking the matrix into (say) 26 slices of upto 10 columns each, and directly identify each 10-vector over $\{0,1,2\}$ with an index $i<3^{10}=59049$.
+We note that a slightly faster implementation could be obtained by braking the matrix into (say) 26 slices of upto 10 columns each, and directly identify each 10-vector over $\{0,1,2\}$ with an index $i<3^{10}=59049$.
 This implementation would have only 26 lookup operations instead of 32 in the implementation above, so we expect it to be about 20\% faster. On the other hand it would have almost twice the table size of the implementation from above.
 
 
@@ -126,6 +126,8 @@ Packing & Bit Slicing & Lookup Table &  & \\
 }
 \mahimna{It would be nice to get benchmarks for performance gain using each optimization independently. If possible, it might also be nice to get the numbers for different sized lookup tables. We could also estimate this analytically.}
 \end{table}
+
+Our results show that using the $Z_2$ packing, the $Z_3$ optimizations  and the lookup table optimizations together provided the best results. Therefore, all future timings used these options.
 
 \paragraph{Distributed wPRF evaluation.}
 
@@ -300,7 +302,7 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 			\hline
 			\textbf{Fully Distributed WPRF} &  82K &  12.12\\
 			\hline
-			\textbf{OPRF with lookup} &  104K &  9.52 \\
+			\textbf{OPRF} &  104K &  9.52 \\
 			\hline
 			\textbf{Discrete log-based PRF } & 12K &\textbf{86.07}\\
 			\hline
