@@ -21,7 +21,7 @@
 //=========variables for timings=========
 long timer_client_r1 = 0;
 long timer_server_r1 = 0;
-long timer_client_final = 0;
+//long timer_client_final = 0;//it is same as timer_client_output
 
 long timer_client_r2 = 0;
 long timer_server_r2 = 0;
@@ -41,6 +41,8 @@ long timer_server_lookup = 0;
 
 long timer_client_mux = 0;
 long timer_client_lookup = 0;
+
+long timer_client_output = 0; //time measure to compute the output by client using it's own and server's output
 
 
 long timer_oprf = 0;        //timer_oprf = timer_round1_oprf + timer_round2_oprf + timer_round3_oprf
@@ -524,6 +526,8 @@ void display_oprf_timings()
     std::cout<<"Time to execute client lookup: "<<(timer_client_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
 #endif
     std::cout<<"Time to execute server step 3: "<<(timer_server_r3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Time to execute start_client_output: "<<(timer_client_output * time_unit_multiplier)<<" microseconds"<<std::endl;
+
 #ifdef TEST_OPRF_LOOKUP
     std::cout<<"Time to execute server mux: "<<(timer_server_mux * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Time to execute server lookup: "<<(timer_server_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
@@ -543,7 +547,7 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
 {
 
     std::chrono::time_point<std::chrono::system_clock> start_client_r1, start_server_r1,start_server_r3,start_client_r3;
-    std::chrono::time_point<std::chrono::system_clock> start_server_r2, start_client_r2, start_w_mask, start_timer_oprf;
+    std::chrono::time_point<std::chrono::system_clock> start_server_r2, start_client_r2, start_w_mask, start_timer_oprf, start_client_output;
 
     std::vector<uint64_t> rK(toeplitzWords);
     PackedZ2<N_COLS> rq, rx, v, rw, q, rw1, rw2;    //local variables fetched through preprocessing
@@ -612,8 +616,11 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
         client_round3_lookup(y_client,p_client_local,Rmat);
 #endif
 
+        start_client_output = std::chrono::system_clock::now();
         y_out_z3 = y_server;
         y_out_z3.add(y_client);
+        timer_client_output += (std::chrono::system_clock::now() - start_client_output).count();
+
 
         y_dummy += y_out_z3;
     }
