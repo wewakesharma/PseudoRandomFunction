@@ -57,12 +57,12 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
            sum += KtimesX[j] * randMat[i][j];
         }
         out_mod3[i] = sum % 3;
-        out_mod3_dummy[i] += out_mod3[i];
-        dummy += out_mod3_dummy[i];
+   //     out_mod3_dummy[i] += out_mod3[i];
+    //    dummy += out_mod3_dummy[i];
 
     }
     timer_PRF_unpacked += (std::chrono::system_clock::now() - start_unpacked_prf).count();;
-    std::cout<<dummy;
+   // std::cout<<dummy;
 
     //cout << "in PRF_unpacked_central" << "out_mod3=" << out_mod3 << endl;
 
@@ -107,6 +107,7 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
 
     PackedZ3<81> out1Z3;                     // 81-vector
     PackedZ3<81> out2Z3;                     // 81-vector
+    PackedZ3<81> dummy;
 
     //generating the random matrix
     auto start_randZ3 = chrono::system_clock::now();
@@ -147,6 +148,9 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
         PRF_unpacked_central(K1, x1, K2, x2, randMat, out1Z3, out2Z3, i, out_mod3);
     }
 
+    dummy += out1Z3;
+    dummy += out2Z3;
+    std::cout<<dummy;
 }
 
 void display_time_unpacked(int nRuns)
