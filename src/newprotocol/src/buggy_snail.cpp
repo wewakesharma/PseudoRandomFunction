@@ -22,14 +22,16 @@ using namespace std;
 #ifdef TEST_BUGGY_SNAIL
 long timerPRF = 0;  //times the entire DM wPRF
 
+/*
 long timerAxpBP1 = 0;   //times the party 1 round 1 of DM wPRF
 long timerAxpBP2 = 0;   //times the party 1 round 1 of DM wPRF
 
-/*long timerOTP1 = 0;     //times the party 1 phase 2
+long timerOTP1 = 0;     //times the party 1 phase 2
 long timerOTP2 = 0;
 
 long timerSCP1 = 0;
-long timerSCP2 = 0;*/
+long timerSCP2 = 0;
+*/
 
 long timer_phase3 = 0;  //total time to complete phase 3(matByVec)
 long timer_phase31 = 0;     //time required to complete phase 3 by party 1
@@ -46,11 +48,6 @@ long timer_phase31_lookup = 0;
 long timer_phase32_lookup = 0;
  */
 
-std::chrono::time_point<std::chrono::system_clock> start_SC_1;
-std::chrono::time_point<std::chrono::system_clock> start_SC_2;
-
-long timer_SC_1 = 0;
-long timer_SC_2 = 0;
 
 
 void display_timing() {
@@ -72,12 +69,12 @@ void display_timing() {
               << (1000 / ((timerAxpBP1 + timerAxpBP2) * time_unit_multiplier) * 1000000) << std::endl;
     std::cout << "=====================================================" << std::endl;
     std::cout << std::endl << "Share Conversion execution time " << std::endl;
-    std::cout << "Party 1: " << (timer_SC_1 * time_unit_multiplier) << " microseconds" << std::endl;
-    std::cout << "Party 2: " << (timer_SC_2 * time_unit_multiplier) << " microseconds" << std::endl;
+    std::cout << "Party 1: " << (timerSCP1 * time_unit_multiplier) << " microseconds" << std::endl;
+    std::cout << "Party 2: " << (timerSCP2 * time_unit_multiplier) << " microseconds" << std::endl;
     std::cout << "Time to execute phase 2(Share Conversion): " <<
-              ((timer_SC_1 + timer_SC_2) * time_unit_multiplier) << " microseconds" << std::endl;
+              ((timerSCP1 + timerSCP2) * time_unit_multiplier) << " microseconds" << std::endl;
     std::cout << "Number of rounds per second for phase 2: "
-              << (1000 / ((timer_SC_1 + timer_SC_2) * time_unit_multiplier) * 1000000) << std::endl;
+              << (1000 / ((timerSCP1 + timerSCP2) * time_unit_multiplier) * 1000000) << std::endl;
 
     std::cout << "=====================================================" << std::endl;
     timer_phase3 = std::max(timer_phase31,timer_phase32);       //taking maximum of both phases to emulate simultaneous execution
@@ -87,7 +84,7 @@ void display_timing() {
              (timer_phase3 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Number of rounds per second for phase 3: "<<(1000/(timer_phase3*time_unit_multiplier)*1000000)<<std::endl;
     //timerPRF = (timerAxpBP1 + timerAxpBP2) + (timerSCP1 + timerSCP2) + timer_phase3;
-    timerPRF = (timerAxpBP1 + timerAxpBP2) + (timer_SC_1 + timer_SC_2) + timer_phase3;
+    timerPRF = (timerAxpBP1 + timerAxpBP2) + (timerSCP1 + timerSCP2) + timer_phase3;
 
     std::cout<<"====================================================="<<std::endl;
 
@@ -217,20 +214,11 @@ void round2(PackedZ3<N_SIZE>& SC_out1, PackedZ3<N_SIZE>& SC_out2, PackedZ2<N_ROW
     PackedZ2<N_SIZE> &y1 = out1_A;
     PackedZ2<N_SIZE> &y2 = out1_B;
 
-
     for(int i = 0; i < nTimes;i++)
     {
-        start_SC_2 = chrono::system_clock::now();
         SC_Party2_1(y2, i);             //The implementation details for SC functions are within the function.
-        timer_SC_2 += (std::chrono::system_clock::now() - start_SC_2).count();
-
-        start_SC_1 = chrono::system_clock::now();
         SC_Party1(y1, SC_out1, i);
-        timer_SC_1 += (std::chrono::system_clock::now() -start_SC_1).count();
-
-        start_SC_2 = chrono::system_clock::now();
         SC_Party2_2(y2, SC_out2, i);
-        timer_SC_2 += (std::chrono::system_clock::now() - start_SC_2).count();
     }
 
 }
@@ -278,6 +266,7 @@ void DM_snail(int nRuns, int nTimes)
     //setup lookup preprocessing
     setup_table(lookup_prf, Rmat);
 
+    /* DEBUGGING BY SAVING AND RETRIEVING FROM FILE
     //run round 1 just once and save out1_A, out2_A, out1_B and out2_B in a file.
     //round1(K1,x1,K2,x2,out1_A,out2_A,out1_B,out2_B,nTimes);
 
@@ -295,20 +284,17 @@ void DM_snail(int nRuns, int nTimes)
 
     //round2- fetch output from a file
     //fetch_round2_output(SC_out1, SC_out2);
+     */
 
     for(int i = 0; i< nRuns; i++)//runs the rounds for nRuns times
     {
         //round1
         round1(K1,x1,K2,x2,out1_A,out2_A,out1_B,out2_B,nTimes);
-        //fetch_round1_output(out1_A,  out1_B, out2_A, out2_B);
 
         //round2
-
         round2(SC_out1, SC_out2, out1_A,out2_A,out1_B,out2_B,nTimes);
-        //fetch_round2_output(SC_out1, SC_out2);
 
         //round3/usedLookupTable
-
         std::chrono::time_point<std::chrono::system_clock> start_round3_p1 = std::chrono::system_clock::now();
         round3_party1(out1Z3, SC_out1,lookup_prf);
         timer_phase31 += (chrono::system_clock::now() - start_round3_p1).count();
@@ -316,12 +302,7 @@ void DM_snail(int nRuns, int nTimes)
         std::chrono::time_point<std::chrono::system_clock> start_round3_p2 = std::chrono::system_clock::now();
         round3_party2(out2Z3, SC_out2,lookup_prf);
         timer_phase32 += (chrono::system_clock::now() - start_round3_p2).count();
-
     }
-
-    //round2(SC_out1, SC_out2, out1_A,out2_A,out1_B,out2_B,nTimes);
-    //round3_party1(out1Z3, SC_out1,lookup_prf);
-    //round3_party2(out2Z3, SC_out2,lookup_prf);
 
     final_protocol_output(out_protocol_result,out1Z3, out2Z3);
     std::cout<<out_protocol_result<<std::endl;

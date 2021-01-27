@@ -27,17 +27,20 @@
 #define TEST_BUGGY_SNAIL    //runs the PRF step by step.
 //========================================================
 
+//#define TEST_LOOKUP_INDEPENDENT
+
 /*
  * UNIT TEST FLAGS
  */
 //#define UNIT_NP    //testing distributed new protocol, no lookup table
 //#define UNIT_NP_LOOKUP    //testing distributed new protocol with lookup table
+
 //#define UNIT_DM     //test the distributed dark matter protocol, no lookup table PROBLEM!
 
 //#define UNIT_LOOKUP           //tests the lookup table implementation
 
 //#define TEST_PHASE1         //test AX+B class
-//#define TEST_PackedMod2    //test class packedMod2
+//#define TEST_PackedMod2    //test class packedMod2, PROBLEM!!!
 //#define TEST_PackedMod3    //test class packedMod3
 //#define TEST_SC     //Not used anymore
 
@@ -68,7 +71,7 @@ TEST_NP_LOOKUP = 1, New protocol, packed, no lookup table
 //#define PRINT_VAL //used to print the intermediate values
 //#define DEBUG //used to set bits of intermediate values and print the values in new protocol
 //#define OPRF_PRINT_VAL    //enable to print intermediate values in 23OPRF
-//#define TEST_LOOKUP_INDEPENDENT
+
 
 #endif // _EXECUTION_HEADER_H
 

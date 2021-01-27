@@ -12,8 +12,8 @@
 
 using namespace std;
 
-extern long timerAxpBP1;
-extern long timerAxpBP2;
+long timerAxpBP1 = 0;
+long timerAxpBP2 = 0;
 
 // in Toeplitz-by-x.hpp
  #define N_ROWS 256

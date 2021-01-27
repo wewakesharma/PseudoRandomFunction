@@ -26,6 +26,7 @@ using namespace std;
 
 long timerPRF = 0;  //times the entire DM wPRF
 
+/*
 long timerAxpBP1 = 0;   //times the party 1 round 1 of DM wPRF
 long timerAxpBP2 = 0;   //times the party 1 round 1 of DM wPRF
 
@@ -34,7 +35,7 @@ long timerOTP2 = 0;
 
 long timerSCP1 = 0;
 long timerSCP2 = 0;
-
+*/
 long timer_phase3 = 0;  //total time to complete phase 3(matByVec)
 long timer_phase31 = 0;     //time required to complete phase 3 by party 1
 long timer_phase32 = 0;     //time required to complete phase 3 by party 2

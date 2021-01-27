@@ -13,11 +13,11 @@
 #include "mains.hpp"
 #include <chrono>
 
-extern long timerOTP1;
-extern long timerOTP2;
+long timerOTP1 = 0;
+long timerOTP2 = 0;
 
-extern long timerSCP1;
-extern long timerSCP2;
+long timerSCP1 = 0;
+long timerSCP2 = 0;
 
 // A place to store the results from pre-processing
 
