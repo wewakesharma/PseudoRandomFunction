@@ -95,7 +95,7 @@ Hence we have
 	~~6. Output $Acc$
 \end{tabbing}
 
-We note that a slightly faster implementation could be obtained by braking the matrix into (say) 26 slices of upto 10 columns each, and directly identify each 10-vector over $\{0,1,2\}$ with an index $i<3^{10}=59049$.
+We note that a sligtly faster implementation could be obtained by braking the matrix into (say) 26 slices of upto 10 columns each, and directly identify each 10-vector over $\{0,1,2\}$ with an index $i<3^{10}=59049$.
 This implementation would have only 26 lookup operations instead of 32 in the implementation above, so we expect it to be about 20\% faster. On the other hand it would have almost twice the table size of the implementation from above.
 
 
@@ -127,8 +127,6 @@ Packing & Bit Slicing & Lookup Table &  & \\
 \mahimna{It would be nice to get benchmarks for performance gain using each optimization independently. If possible, it might also be nice to get the numbers for different sized lookup tables. We could also estimate this analytically.}
 \end{table}
 
-Our results show that using the $Z_2$ packing, the $Z_3$ optimizations  and the lookup table optimizations together provided the best results. Therefore, all future timings used these options.
-
 \paragraph{Distributed wPRF evaluation.}
 
 
@@ -137,6 +135,34 @@ In Table~\ref{table:oprf_comparison}, we provide performance benchmarks for our 
 
 For the comparison with the DDH-based OPRF construction in~\cite{naor1999-oprf}, we use the libsodium library~\cite{LibSodium} for the elliptic curve scalar multiplication operation. We use the Curve25519 elliptic curve, which has a 256-bit key size, and provides 128 bits of security. \yuval{I actually think that the Naor-Pinkas-Reingold99 paper cited in the TCC '18 paper refers to a different notion of distributing a PRF, namely where the PRF key is distributed between two or more servers and the input is public. Let's try to figure out the source of the simple DDH-based OPRF protocol. Can ask Stas/Hugo if needed.}
 
+
+%NEW VERSION OF OPRF TABLE
+
+\begin{table}[h]
+{
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|cc|c|c|c|c|c|c|c|}%9 columns
+
+\hline
+\multirow{2}{*}{Protocol} & & \multicolumn{3}{c|}{Runtime} & \multirow{2}{*}{\makecell{Output \\ Size}} & \multirow{2}{*}{Preprocessing} & \multicolumn{2}{c|}{Communication}\\
+& & Server & Client & Parallel & & &Server & Client\\
+\hline\hline
+\multirow{2}{*}{23-OPRF} & Key Update & 0.65 & - & \multirow{2}{*}{9.48} & \multirow{2}{*}{81} & \multirow{2}{*}{$2n+5.17m$} & \multirow{2}{*}{$(n+m+1.59t)$} & \multirow{2}{*}{$(n+m)$}\\
+& Evaluation & 9.45 & 9.13 & & & &&\\
+\hline
+DDH-based OPRF & & 57.38& 28.69 & - & 256 & - &n&n\\
+\hline
+\end{tabular}}
+\caption{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu$s).}
+\label{table:oprf_comparison}
+}
+\mahimna{Include more comparisons as necessary}
+\end{table}
+
+
+%COMMENTED OUT PREVIOUS WORKING VERSION OF TABLE
+\iffalse
 \begin{table}[h]
 {
 \centering
@@ -156,7 +182,7 @@ DDH-based OPRF~\cite{naor1999-oprf} & 57.38 & 28.69 & 256 & - & 256$(n)$ & 256$(
 \mahimna{Include more comparisons as necessary}
 \end{table}
 
-
+\fi
 
 \newpage
 \section{Implementation}
@@ -302,7 +328,7 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 			\hline
 			\textbf{Fully Distributed WPRF} &  82K &  12.12\\
 			\hline
-			\textbf{OPRF} &  104K &  9.52 \\
+			\textbf{OPRF with lookup} &  104K &  9.52 \\
 			\hline
 			\textbf{Discrete log-based PRF } & 12K &\textbf{86.07}\\
 			\hline
