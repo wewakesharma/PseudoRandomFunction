@@ -115,9 +115,9 @@ We start with benchmarks for the different optimization techniques detailed in S
 \multicolumn{3}{|c|}{Optimization} &  \multirow{2}{*}{Runtime} & \multirow{2}{*}{Evaluations / sec} & \multirow{2}{*}{Memory Usage}\\
 Packing & Bit Slicing & Lookup Table &  & & \\
 \hline\hline
-\checkmark & & & 26.84 & 37K & \\
-\checkmark & \checkmark & & 18.5 & 65K & \\
-\checkmark & \checkmark & \checkmark & 6.08 & 165K & \\
+\checkmark & & & 26.84 & 37K & $5n+2t$\\
+\checkmark & \checkmark & & 18.5 & 65K &$n(t+3)+2t$ \\
+\checkmark & \checkmark & \checkmark & 6.08 & 165K & $n(2+2t)+t + 2^{20}$ \\
 \hline
 \end{tabular}
 \caption{Centralized 23-wPRF benchmarks using different optimization techniques. Packing was done into 64-bit sized words (for both $\Z_2$ and $\Z_3$ vectors). For the lookup table optimization, an $(m=256)$-column matrix was partitioned into 16 slices of 16 columns each.}
