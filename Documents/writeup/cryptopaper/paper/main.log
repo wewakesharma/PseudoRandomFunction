@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  28 JAN 2021 11:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  28 JAN 2021 12:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1565,7 +1565,10 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 [8] [9]
 
-LaTeX Warning: Reference `newProtocol' on page 10 undefined on input line 132.
+LaTeX Warning: Reference `newProtocol' on page 10 undefined on input line 108.
+
+
+LaTeX Warning: Reference `newProtocol' on page 10 undefined on input line 137.
 
 [10] [11]) (./Sections/applications.tex
 
@@ -1667,7 +1670,7 @@ ype1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2018/texmf-dist/fonts/typ
 e1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2018/texmf-dist/fonts
 /type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (18 pages, 407640 bytes).
+Output written on main.pdf (18 pages, 408218 bytes).
 PDF statistics:
  486 PDF objects out of 1000 (max. 8388607)
  398 compressed objects within 4 object streams

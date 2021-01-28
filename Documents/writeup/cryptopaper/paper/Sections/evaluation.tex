@@ -102,8 +102,13 @@ This implementation would have only 26 lookup operations instead of 32 in the al
 
 
 \subsection{Performance Benchmarks}
-\paragraph{Experimental setup.}
-We ran all our experiments on a t2.medium AWS EC2 instance with 4GiB RAM (architecture: x86-64 Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz) running on Ubuntu 18.04. The performance benchmarks and timing results we provide are averaged over 1000 runs. For the distributed construction benchmarks, both parties were run on the same instance. We separately report the computational runtime for the parties, and provide an estimate of the communication costs. \yuval{Communication costs in bits can be computed analytically. Maybe talk about estimated breakeven points: (1) minimal network speed in which computation dominates communication, and (2) minimal network speed where we estimate our OPRF to be faster than the DDH-based alternative.  }
+\paragraph{Experimental setup}
+We ran all our experiments on a t2.medium AWS EC2 instance with 4GiB RAM (architecture: x86-64 Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz) running on Ubuntu 18.04. The performance benchmarks and timing results we provide are averaged over 1000 runs. For the distributed construction benchmarks, both parties were run on the same instance. We separately report the computational runtime for the parties, and provide an estimate of the communication costs. 
+
+Communication vs. Computation: from the table we can estimate the break even point for each protocol. Note that synchronization is needed between the parties, though, so the assumption this is independent is an estimate. For the  wPRF protocol \ref{newProtocol} presented in this paper, the break even point is achieved  at a network speed 63 Mbps, in which case the overall communication and computation times will be the same. For the oPRF protocol, the break even point will be achieved with a network of speed 146 Mbps. 
+From here we see that for the oPRF protocol, for an existing 25 Mbps connection, communication will dominate the total run-time, while for a high speed network of 1 Gbps, the computation time will dominate the overall run-time.
+
+\yuval{Communication costs in bits can be computed analytically. Maybe talk about estimated breakeven points: (1) minimal network speed in which computation dominates communication, and (2) minimal network speed where we estimate our OPRF to be faster than the DDH-based alternative.  }
 
 \paragraph{Optimization results.}
 We start with benchmarks for the different optimization techniques detailed in Section~\ref{subsec:implementation_opt}. Table~\ref{table:optimization_benchmarks} contains timing results for our centralized implementation of the 23-wPRF construction using these optimizations.
