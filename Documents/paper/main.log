@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  28 JAN 2021 10:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  28 JAN 2021 10:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1490,46 +1490,45 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 36.
 
-[8] [9]
+[8] [9] [10]
 
-LaTeX Warning: Citation 'naor1999-oprf' on page 10 undefined on input line 135.
+LaTeX Warning: Citation 'naor1999-oprf' on page 11 undefined on input line 186.
 
 
 
-LaTeX Warning: Citation 'LibSodium' on page 10 undefined on input line 135.
+LaTeX Warning: Citation 'LibSodium' on page 11 undefined on input line 186.
 
-[10]
+[11]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 197.
+(hyperref)                than one, level fixed on input line 248.
 
 
-Overfull \hbox (73.80252pt too wide) in paragraph at lines 249--272
+Overfull \hbox (73.80252pt too wide) in paragraph at lines 274--297
  [] 
  []
 
 
-LaTeX Warning: Citation 'LibSodium' on page 11 undefined on input line 284.
+LaTeX Warning: Citation 'LibSodium' on page 12 undefined on input line 309.
 
-[11]) (./Sections/applications.tex
+) (./Sections/applications.tex
 
 LaTeX Warning: Citation 'STOC:IKOS07' on page 12 undefined on input line 53.
 
+[12]
 
-LaTeX Warning: Citation 'CCS:CDGORR17' on page 12 undefined on input line 58.
+LaTeX Warning: Citation 'CCS:CDGORR17' on page 13 undefined on input line 58.
 
 
-LaTeX Warning: Citation 'CCS:KatKolWan18' on page 12 undefined on input line 60
+LaTeX Warning: Citation 'CCS:KatKolWan18' on page 13 undefined on input line 60
 .
 
 
-LaTeX Warning: Citation 'EC:ARSTZ15' on page 12 undefined on input line 63.
+LaTeX Warning: Citation 'EC:ARSTZ15' on page 13 undefined on input line 63.
 
-[12]
 LaTeX Font Info:    Try loading font information for OMS+cmss on input line 76.
 
 LaTeX Font Info:    No file OMScmss.fd. on input line 76.
-
 
 LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
@@ -1540,22 +1539,22 @@ LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 LaTeX Warning: Citation 'TCHES:KalZav20' on page 15 undefined on input line 186
 .
 
-
-LaTeX Warning: Citation 'sp800-185' on page 15 undefined on input line 210.
-
 [15]
+
+LaTeX Warning: Citation 'sp800-185' on page 16 undefined on input line 210.
+
 
 LaTeX Warning: Citation 'EC:DinNad19' on page 16 undefined on input line 255.
 
 
 LaTeX Warning: Citation 'picnic-spec' on page 16 undefined on input line 257.
 
-[16]
+[16] [17]
 Overfull \hbox (46.97836pt too wide) in paragraph at lines 336--394
 [][]
  []
 
-)) [17] [18]
+)) [18] [19]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 25.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 25.
  (./main.aux)
@@ -1583,8 +1582,8 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 43700 strings out of 492616
- 890375 string characters out of 6129482
+ 43701 strings out of 492616
+ 890382 string characters out of 6129482
  1177680 words of memory out of 5000000
  46875 multiletter control sequences out of 15000+600000
  554033 words of font info for 104 fonts, out of 8000000 for 9000
@@ -1620,10 +1619,10 @@ ts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts
 ype1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/ty
 pe1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2019/texmf-dist/font
 s/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (18 pages, 382237 bytes).
+Output written on main.pdf (19 pages, 382298 bytes).
 PDF statistics:
- 492 PDF objects out of 1000 (max. 8388607)
- 405 compressed objects within 5 object streams
- 118 named destinations out of 1000 (max. 500000)
+ 497 PDF objects out of 1000 (max. 8388607)
+ 409 compressed objects within 5 object streams
+ 119 named destinations out of 1000 (max. 500000)
  401 words of extra memory for PDF output out of 10000 (max. 10000000)
 

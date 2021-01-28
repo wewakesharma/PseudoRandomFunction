@@ -45,6 +45,34 @@ by a matrix $R$ in $Z_3$ to produce the output vector in $Z_3$. We tried differe
 
 Bit slicing is implemented  by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. The operations over this $Z_3$ vector - addition, subtraction, multiplication and MUX  - were implemented in a bitwise manner as shown in table \ref{tab:multicol}. We took advantage of the fact that when representing each vector as MSB and LSB, negation (which is the same as multiplying by two) is the same as swapping the most and least significant bits. 
 
+\begin{table}[ht]
+	\caption{Operations in $Z_3$. input:   ${l_1}, {m_1}$ - LSB and MSB  of first trinary number, 
+		${l_2}, {m_2}$ - LSB and MSB  of second trinary number,  ${s}$ - selection bit for MUX}
+	\begin{center}
+		\begin{tabular}{|c|l|}
+			\hline
+			\textbf{Operations} & \textbf{Methods}\\
+			\hline
+			\multirow{3}{*}{Addition} & ${t} := ({l_1 \wedge m_2}) \oplus ({l_2 \wedge m_1})$\\
+			& $m_{\mathrm{out}} := ( l_1 \wedge  l_2 ) \oplus  t $ \\
+			& $l_{\mathrm{out}} :=m_1 \wedge m_2 ) \oplus t $ \\
+			\hline
+			\multirow{3}{*}{Subtraction} & ${t} := ({l_1} \wedge {l_2}) \oplus ({m_2} \wedge {m_1})$;\\
+			& $m_{\mathrm{out}} := (l_1 \wedge m_2 ) \oplus t$;\\
+			& $l_{\mathrm{out}} := (m_1 \wedge l_2 ) \oplus t$; \\
+			\hline
+			\multirow{3}{*}{Multiplication} & $m_{\mathrm{out}}:= (l_1 \vee m_2) \wedge   (m_1 \vee l_2)$; \\
+			& $l_{\mathrm{out}} := (l_1 \vee l_2) \wedge     (m_1 \vee m_2)$;\\
+			\hline
+			\multirow{3}{*}{MUX} & $m_{\mathrm{out}} :=( m_2 \vee s) \wedge (m_1 \vee (\bar{s}) )$; \\
+			& $l_{\mathrm{out}}[i] :=( l_2 \vee s) \wedge (l_1 \vee (\bar{s}) )$; \\
+			\hline
+			
+		\end{tabular}
+	\end{center}
+	\label{tab:multicol}
+\end{table}
+
 % Integer packing
 \paragraph{Vector packing.}
 Commented out
@@ -128,6 +156,29 @@ Packing & Bit Slicing & Lookup Table &  & & \\
 
 \paragraph{Distributed wPRF evaluation.}
 
+\begin{table}[htbp]
+	%[h]
+	\begin{center}
+		%\begin{minipage}{10cm}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Protocol} & \textbf{Eval/sec} & \textbf{Runtime($\mu$ sec)} \\
+			\hline
+			\hline
+			\textbf{Fully Distributed wPRF\cite{boneh2018-darkmatter}} & 36K & 28.02  \\
+			\hline
+			\textbf{Fully Distributed wPRF} &  82K &  12.12\\
+			\hline
+			
+		\end{tabular}
+		
+		\vspace{-1mm}
+		\caption{Optimized protocols runtime. These protocols utilize both the bit-packing and lookup table optimization}
+		\label{RuntimeTable}
+		%\end{minipage}
+	\end{center}
+	\vspace{-5mm}
+\end{table}
 
 \paragraph{OPRF evaluation.}
 In Table~\ref{table:oprf_comparison}, we provide performance benchmarks for our 23-OPRF construction while also comparing it with other constructions. For our timing results, we report both the server and client runtimes (averages over 1000 runs). For each construction, we also include the output size, the size of the preprocessed correlated randomness, and the online communication cost. All constructions are parameterized appropriately to provide 128-bit security.
@@ -201,33 +252,7 @@ moved to 6.1 optimization, the description for Integer packing is commented belo
 
 
 
-\begin{table}[ht]
-	\caption{Operations in $Z_3$. input:   ${l_1}, {m_1}$ - LSB and MSB  of first trinary number, 
-		${l_2}, {m_2}$ - LSB and MSB  of second trinary number,  ${s}$ - selection bit for MUX}
-	\begin{center}
-		\begin{tabular}{|c|l|}
-			\hline
-			\textbf{Operations} & \textbf{Methods}\\
-			\hline
-			\multirow{3}{*}{Addition} & ${t} := ({l_1 \wedge m_2}) \oplus ({l_2 \wedge m_1})$\\
-			& $m_{\mathrm{out}} := ( l_1 \wedge  l_2 ) \oplus  t $ \\
-			& $l_{\mathrm{out}} :=m_1 \wedge m_2 ) \oplus t $ \\
-			\hline
-			\multirow{3}{*}{Subtraction} & ${t} := ({l_1} \wedge {l_2}) \oplus ({m_2} \wedge {m_1})$;\\
-			& $m_{\mathrm{out}} := (l_1 \wedge m_2 ) \oplus t$;\\
-			& $l_{\mathrm{out}} := (m_1 \wedge l_2 ) \oplus t$; \\
-			\hline
-			\multirow{3}{*}{Multiplication} & $m_{\mathrm{out}}:= (l_1 \vee m_2) \wedge   (m_1 \vee l_2)$; \\
-			& $l_{\mathrm{out}} := (l_1 \vee l_2) \wedge     (m_1 \vee m_2)$;\\
-			\hline
-			\multirow{3}{*}{MUX} & $m_{\mathrm{out}} :=( m_2 \vee s) \wedge (m_1 \vee (\bar{s}) )$; \\
-			& $l_{\mathrm{out}}[i] :=( l_2 \vee s) \wedge (l_1 \vee (\bar{s}) )$; \\
-			\hline
-			
-		\end{tabular}
-	\end{center}
-	\label{tab:multicol}
-\end{table}
+
 
 
 %TODO: IS THIS CORRECT? CHECK AND CORRECT
@@ -314,30 +339,3 @@ The system was tested using Ubuntu Server 18.04 on a t2.medium AWS environment. 
 	\vspace{-5mm}
 \end{table}
 
-\begin{table}[htbp]
-	%[h]
-	\begin{center}
-		%\begin{minipage}{10cm}
-		\begin{tabular}{|c|c|c|c|}
-			\hline
-			\textbf{Protocol} & \textbf{Runs/sec} & \textbf{Runtime($\mu$ sec)} \\
-			\hline
-			\hline
-			\textbf{Fully Distributed WPRF\cite{boneh2018-darkmatter}} & 24K & 40.56  \\
-			\hline
-			\textbf{Fully Distributed WPRF} &  82K &  12.12\\
-			\hline
-			\textbf{OPRF with lookup} &  104K &  9.52 \\
-			\hline
-			\textbf{Discrete log-based PRF } & 12K &\textbf{86.07}\\
-			\hline
-			
-		\end{tabular}
-		
-		\vspace{-1mm}
-		\caption{Optimized protocols runtime. These protocols utilize both the bit-packing and lookup table optimization}
-		\label{RuntimeTable}
-		%\end{minipage}
-	\end{center}
-	\vspace{-5mm}
-\end{table}
