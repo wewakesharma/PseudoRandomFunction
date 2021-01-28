@@ -1,0 +1,84 @@
+%!TEX root = ../main.tex
+
+%--------------------------------------------------------------%
+%-----------------------Common Packages------------------------%
+%--------------------------------------------------------------%
+\usepackage{xcolor}
+\usepackage{amsfonts,amsmath,amsthm}
+\usepackage{enumitem}
+\usepackage[style=numeric-comp,backend=bibtex]{biblatex}
+\usepackage[pdfauthor={},pdfpagelabels=true,linktocpage=true,hidelinks,linktoc=all,colorlinks]{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+\hypersetup{linkcolor = {black}, citecolor = {magenta}, urlcolor = {black}}
+
+\usepackage{stmaryrd}
+\usepackage{graphicx}
+\usepackage{calc}
+%--------------------------------------------------------------%
+
+
+
+
+%--------------------------------------------------------------%
+%---------------------------Notation---------------------------%
+%--------------------------------------------------------------%
+
+% Standard math notation
+\newcommand{\N}{\mathbb{N}}     % Natural numbers
+\newcommand{\Z}{\mathbb{Z}}     % Integers
+\newcommand{\R}{\mathbb{R}}     % Real numbers
+\newcommand{\F}{\mathbb{F}}     % Finite field
+
+\newcommand{\ceil}[1]{\left\lceil {#1} \right\rceil}
+\newcommand{\floor}[1]{\left\lfloor {#1} \right\rfloor}
+\newcommand{\abs}[1]{\left| {#1} \right|}
+\newcommand{\figref}[1]{Figure~\protect\ref{#1.fig}}
+
+\newcommand*\BitAnd{\mathbin{\&}}
+\newcommand*\BitOr{\mathbin{|}}
+\newcommand*\ShiftLeft{\ll}
+\newcommand*\ShiftRight{\gg}
+\newcommand*\BitNeg{\ensuremath{\mathord{\sim}}}
+%--------------------------------------------------------------%
+
+
+
+
+%--------------------------------------------------------------%
+%-----------------------LaTeX Formatting-----------------------%
+%--------------------------------------------------------------%
+% Comments: Add your name as necessary
+\ifcomments
+    \newcommand{\mahimna}[1]{\textsf{\color{blue}{[Mahimna: {#1}]}}}
+\else
+    \newcommand{\mahimna}[1]{}
+\fi
+
+% Environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{graphicx}
+\usepackage{cleveref}
+\Crefname{algocf}{alg.}{algs.}
+\Crefname{algocf}{Algorithm}{Algorithms}
+\usepackage{mathtools}
+
+%\newcommand\xleftrightarrow[1]{%
+%\mathbin{\ooalign{$\,\xrightarrow{#1}$\cr$\xleftarrow{\hphantom{#1}}\,$}}}
+
+\newcommand{\plus}{\raisebox{.4\height}{\scalebox{.6}{+}}}
+\newcommand{\minus}{\raisebox{.4\height}{\scalebox{.8}{-}}}
+
+
