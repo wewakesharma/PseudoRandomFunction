@@ -1,0 +1,209 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{anyt/global//global/global}
+  \entry{boyle2019-fss-preprocess}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=BE}{%
+         family={Boyle},
+         familyi={B\bibinitperiod},
+         given={Elette},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=GN}{%
+         family={Gilboa},
+         familyi={G\bibinitperiod},
+         given={Niv},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=IY}{%
+         family={Ishai},
+         familyi={I\bibinitperiod},
+         given={Yuval},
+         giveni={Y\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BEGNIY1}
+    \strng{fullhash}{BEGNIY1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{BGI19}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{booktitle}{TCC}
+    \field{pages}{341\bibrangedash 371}
+    \field{title}{Secure Computation with Preprocessing via Function Secret
+  Sharing}
+    \field{year}{2019}
+  \endentry
+
+  \entry{boneh2018-darkmatter}{inproceedings}{}
+    \name{author}{5}{}{%
+      {{hash=BD}{%
+         family={Boneh},
+         familyi={B\bibinitperiod},
+         given={Dan},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=IY}{%
+         family={Ishai},
+         familyi={I\bibinitperiod},
+         given={Yuval},
+         giveni={Y\bibinitperiod},
+      }}%
+      {{hash=PA}{%
+         family={Passel\`egue},
+         familyi={P\bibinitperiod},
+         given={Alain},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=SA}{%
+         family={Sahai},
+         familyi={S\bibinitperiod},
+         given={Amit},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=WDJ}{%
+         family={Wu},
+         familyi={W\bibinitperiod},
+         given={David\bibnamedelima J.},
+         giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BDIYPA+1}
+    \strng{fullhash}{BDIYPASAWDJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{BIP+18}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{booktitle}{TCC}
+    \field{pages}{699\bibrangedash 729}
+    \field{title}{Exploring Crypto Dark Matter: New Simple PRF Candidates and
+  Their Applications}
+    \field{year}{2018}
+  \endentry
+
+  \entry{sp800-185}{misc}{}
+    \name{author}{3}{}{%
+      {{hash=KJ}{%
+         family={Kelsey},
+         familyi={K\bibinitperiod},
+         given={J.},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=CSJ}{%
+         family={Chang},
+         familyi={C\bibinitperiod},
+         given={S.\bibnamedelima J.},
+         giveni={S\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+      {{hash=PR}{%
+         family={Perlner},
+         familyi={P\bibinitperiod},
+         given={R.},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KJCSJPR1}
+    \strng{fullhash}{KJCSJPR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{KCP16}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{note}{National Institute for Standards and Technology, Special
+  Publication 800-185.}
+    \field{title}{SHA-3 derived functions: cSHAKE KMAC TupleHash and
+  ParallelHash}
+    \verb{url}
+    \verb https://doi.org/10.6028/NIST.SP.800-185
+    \endverb
+    \field{year}{2016}
+  \endentry
+
+  \entry{LibSodium}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Lib}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{howpublished}{\url{https://libsodium.gitbook.io/doc/}}
+    \field{note}{Online; December 31 2020}
+    \field{title}{{libsodium 1.0.18-stable}}
+    \field{year}{2020}
+  \endentry
+
+  \entry{naor1999-oprf}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=NM}{%
+         family={Naor},
+         familyi={N\bibinitperiod},
+         given={Moni},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=PB}{%
+         family={Pinkas},
+         familyi={P\bibinitperiod},
+         given={Benny},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=RO}{%
+         family={Reingold},
+         familyi={R\bibinitperiod},
+         given={Omer},
+         giveni={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{NMPBRO1}
+    \strng{fullhash}{NMPBRO1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{NPR99}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{booktitle}{EUROCRYPT}
+    \field{pages}{327\bibrangedash 346}
+    \field{title}{Distributed pseudo-random functions and KDCs.}
+    \field{year}{1999}
+  \endentry
+
+  \entry{picnic-spec}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=TTPD}{%
+         family={Team},
+         familyi={T\bibinitperiod},
+         given={The {Picnic}\bibnamedelima Design},
+         giveni={T\bibinitperiod\bibinitdelim P\bibinitperiod\bibinitdelim
+  D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TTPD1}
+    \strng{fullhash}{TTPD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelalpha}{Tea20}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{note}{Version 3.0, Available at
+  \url{https://microsoft.github.io/Picnic/}}
+    \field{title}{The {Picnic} Signature Algorithm Specification}
+    \field{year}{2020}
+    \warn{\item Invalid format of field 'month'}
+  \endentry
+\enddatalist
+\endinput

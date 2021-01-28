@@ -1,0 +1,76 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: main.aux
+The style file: biblatex.bst
+I couldn't open database file cryptobib/abbrev3.bib
+---line 4 of file main.aux
+ : \bibdata{main-blx,references,cryptobib/abbrev3
+ :                                               ,cryptobib/crypto}
+I'm skipping whatever remains of this command
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: main-blx.bib
+Database file #2: references.bib
+Warning--I didn't find a database entry for "STOC:IKOS07"
+Warning--I didn't find a database entry for "CCS:CDGORR17"
+Warning--I didn't find a database entry for "CCS:KatKolWan18"
+Warning--I didn't find a database entry for "EC:ARSTZ15"
+Warning--I didn't find a database entry for "TCHES:KalZav20"
+Warning--I didn't find a database entry for "EC:DinNad19"
+Biblatex version: 3.8
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+You've used 7 entries,
+            6268 wiz_defined-function locations,
+            1225 strings with 9687 characters,
+and the built_in function-call counts, 33790 in all, are:
+= -- 2077
+> -- 749
+< -- 229
++ -- 857
+- -- 332
+* -- 2649
+:= -- 3487
+add.period$ -- 0
+call.type$ -- 7
+change.case$ -- 70
+chr.to.int$ -- 33
+cite$ -- 14
+duplicate$ -- 3680
+empty$ -- 3119
+format.name$ -- 441
+if$ -- 6957
+int.to.chr$ -- 0
+int.to.str$ -- 11
+missing$ -- 0
+newline$ -- 203
+num.names$ -- 225
+pop$ -- 2139
+preamble$ -- 1
+purify$ -- 93
+quote$ -- 0
+skip$ -- 1053
+stack$ -- 0
+substring$ -- 3331
+swap$ -- 918
+text.length$ -- 238
+text.prefix$ -- 7
+top$ -- 1
+type$ -- 226
+warning$ -- 0
+while$ -- 446
+width$ -- 0
+write$ -- 197
+(There was 1 error message)

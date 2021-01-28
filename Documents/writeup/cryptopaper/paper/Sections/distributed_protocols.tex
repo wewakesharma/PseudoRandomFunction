@@ -6,7 +6,7 @@
 We now describe efficient protocols to compute our candidate constructions in several distributed settings.
 
 \subsection{Technical Overview}
-Recall that all our constructions can be succinctly represented using four basic gates. The main strategy now will be to evaluate each of these gates in a distributed manner. These gate evaluation sub-protocols can then be easily composed to evaluate the  candidate constructions. 
+Recall that all our constructions can be succinctly represented using four basic gates. The main strategy now will be to evaluate each of these gates in a distributed manner. These gate evaluation subprotocols can then be easily composed to evaluate the  candidate constructions. 
 
 We provide distributed protocols to evaluate each of the four gates. Recall that the goal of a gate protocol is to convert shares of the inputs to shares of the outputs (or shares of the masked output). To make our formalism cleaner, the gate protocols, by themselves, will involve no communication. Instead, they can additionally take in masked versions of the inputs, and possibly some additional correlated randomness. To compose gate protocols, whenever a masked input is needed, the parties will exchange their local shares to publicly reveal the masked value.
 
@@ -72,7 +72,7 @@ For the protocol $\prot_{\Convert}^{(3,2)}$, each $\party_i$ will hold additive 
 \mahimna{todo}
 
 
-\subsection{Distributed Evaluation in the Preprocessing Model}\label{newProtocol}
+\subsection{Distributed Evaluation in the Preprocessing Model}
 Equipped with our technical overview, we proceed to describe our distributed protocols in the preprocessing model. We focus primarily on the 2-party semi-honest setting but comment that our protocols can easily be generalized to $n$ parties. We use $\pzero$ and $\pone$ to denote the 2 parties.
 
 \subsubsection{2-party wPRF evaluation.}
