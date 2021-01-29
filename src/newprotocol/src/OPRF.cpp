@@ -248,7 +248,6 @@ void server_round2(std::vector<uint64_t>& K, PackedZ2<N_COLS>& rq, PackedZ2<N_CO
 
 #ifdef OPRF_PRINT_VAL
     std::cout<<"OPRF.cpp/server_round2(): Printing values for server round 2:"<<std::endl;
-
 #endif
 }
 
@@ -535,7 +534,6 @@ void display_oprf_timings()
 
     std::cout<<"=========================TOTAL TIME==================================="<<std::endl;
     std::cout<<"Time to execute entire new protocol PRF: "<<(timer_oprf * time_unit_multiplier)<<" microseconds"<<std::endl;
-
 }
 
 
@@ -612,8 +610,8 @@ void oblivious_PRF(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector<Pa
 #endif
 
 #ifdef TEST_OPRF_LOOKUP
-        server_round3_lookup(y_server,p_server_local,Rmat);
-        client_round3_lookup(y_client,p_client_local,Rmat);
+        server_round3_lookup(y_server,p_server_local,Rmat);//timing is inside the function
+        client_round3_lookup(y_client,p_client_local,Rmat);//timing is inside the function
 #endif
 
         start_client_output = std::chrono::system_clock::now();
