@@ -18,16 +18,11 @@ using namespace std;
 #ifdef UNPACKED_PRF_CENTRAL
 
 int main()  {
-    int ntimes, nRuns, stepsToRun;
+    int nRuns;
     nRuns=1000;
-    ntimes= 1;
-    stepsToRun = 1;
 
-    using Clock = std::chrono::system_clock;
-    using Duration = Clock::duration;
-    std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
 
-    PRF_unpacked_driver(ntimes, nRuns, stepsToRun); //driver program does the preprocessing and called unpacked function
+    PRF_unpacked_driver(nRuns); //driver program does the preprocessing and called unpacked function
     display_time_unpacked(nRuns);
     return 0;
 }

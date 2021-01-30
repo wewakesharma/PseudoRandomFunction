@@ -9,60 +9,44 @@
 #include "Timing.hpp"
 #include <chrono>
 
-
 using namespace std;
 
 long timer_PRF_unpacked = 0;    //times the entire PRF protocol
 
-
-void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vector<uint64_t>& K2,
-                          PackedZ2<N_COLS>& x2, uint64_t randMat[81][256], uint64_t outMod3[81])
+void set_input(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x)//setting up random input and key
 {
-    //1.perform X = x1+ x2 (on vectors)
-    PackedZ2<N_COLS> X = x1; //declare a variable
-    X.add(x2);  //x = x1 + x2
+    for (auto &w : K) w = randomWord();
+    K[K.size() - 1] &= topelitzMask; // turn off extra bits at the end
 
+    x.randomize();//random values as input(Z2)
+}
 
-    //2.perform K = k1 + k2 (on matrix)
-    std::vector<uint64_t> K(toeplitzWords);
-    for (int i = 0; i < K1.size(); i++)
-    {
-        K[i] = K1[i] ^ K2[i];
-    }
+void PRF_unpacked_central(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, uint64_t randMat[81][256], uint64_t outMod3[81])
+{
 
-    PackedZ2<N_COLS> outKX;
+    PackedZ2<N_COLS> outKX;//stores K*x in mod 2
     //start timing for the entire PRF
     std::chrono::time_point<std::chrono::system_clock> start_unpacked_prf = chrono::system_clock::now(); //starting the clock for unpacked
     //Performing K*x
-    outKX.toeplitzByVec(K,X);
+    outKX.toeplitzByVec(K,x);   //computes K * x
 
-    //convert outKX vector
+    //convert outKX vector from mod 2 to mod 3
     uint64_t KtimesX[256];
     for(int cnt = 0; cnt < 256; cnt++)
     {
-        KtimesX[cnt] = outKX.at(cnt);
+        KtimesX[cnt] = outKX.at(cnt);//convert from Z2 to Z3
     }
-
-    int out_mod3_dummy[81];
- //   uint64_t dummy;
 
     for(int i = 0; i < 81; i++)
     {
-   //     dummy = 0;
         uint64_t sum = 0;
         for(int j = 0; j < 256; j++)
         {
-           sum += KtimesX[j] * randMat[i][j];
+           sum += KtimesX[j] * randMat[i][j];   //computing each element of the resultant column
         }
-        outMod3[i] = sum % 3;
-   //     out_mod3_dummy[i] += out_mod3[i];
-    //    dummy += out_mod3_dummy[i];
-
+        outMod3[i] = sum % 3;   //performing mod 3 ocmputation
     }
     timer_PRF_unpacked += (std::chrono::system_clock::now() - start_unpacked_prf).count();;
-   // std::cout<<dummy;
-
-    //cout << "in PRF_unpacked_central" << "out_mod3=" << out_mod3 << endl;
 
 #ifdef PRINT_VAL
     cout<<std::endl;
@@ -78,42 +62,22 @@ void PRF_unpacked_central(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::
 #endif
 }
 
-void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
+void PRF_unpacked_driver(int nRuns)
 {
     randomWord(1); // use seed=1
-    vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);
-    PackedZ2<N_COLS> x1, x2;
+    vector<uint64_t> K(toeplitzWords);
+    PackedZ2<N_COLS> x;
+    uint64_t out_mod3[81];  //actual output of unpacked PRF
+    uint64_t dummyoutmod3;  //dummy output for accurate timing purpose
 
-    PackedZ2<N_ROWS> out1_A, out2_A, out1_B, out2_B;
-
-    initGlobals();  // initialize some global variables
-
-    std::vector<PackedZ3<81> > Rmat(256); // generate a 81x256 matrix
-
-    //randomize the matrix
-    for (auto &col : Rmat) // iterate over the columns
-        col.randomize();
-
-    for (auto &w : K1) w = randomWord();
-    K1[K1.size() - 1] &= topelitzMask; // turn off extra bits at the end
-
-    for (auto &w : K2) w = randomWord();
-    K2[K2.size() - 1] &= topelitzMask; // turn off extra bits at the end
-
-    x1.randomize();
-    x2.randomize();
-
-    PackedZ3<81> out1Z3;                     // 81-vector
-    PackedZ3<81> out2Z3;                     // 81-vector
-    PackedZ3<81> dummy;
-    uint64_t dummyoutmod3;
+    set_input(K,x);//setting random inputs in Z2
 
     //generating the random matrix
     auto start_randZ3 = chrono::system_clock::now();
     //3b. Take outKX and multiply it with 81X256 Z3 matrix
-    int nColsGenerated;
-    int wLen = 64;
-    int rows = 0;
+    int nColsGenerated;//no. of columns generated
+    int wLen = 64;  //
+    int rows = 0;   //row counter
 
     uint64_t randMat[81][256];
 
@@ -140,24 +104,20 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
         rows++;
     }
 
-    uint64_t out_mod3[81];
-
-    //TODO: write phase 1 function
+    //Running the protocol for nRuns times
     for (int i = 0; i < nRuns; i++) {
-        PRF_unpacked_central(K1, x1, K2, x2, randMat, out_mod3);
-        dummy += out1Z3;
-        dummy += out2Z3;
+        PRF_unpacked_central(K, x, randMat, out_mod3);//calling unpacked central function in unpacked_PRF_central.cpp
 
         for(int i = 0; i < 81; i++)
         {
-            dummyoutmod3 += out_mod3[i];
+            dummyoutmod3 += out_mod3[i];//dummy variable for accurate timing
         }
         //dummyoutmod3 += out_mod3;
     }
 
     for(int i = 0; i < 81; i++)
     {
-        std::cout << out_mod3[i];
+        std::cout << out_mod3[i];//printing out the final value.
     }
 
 }

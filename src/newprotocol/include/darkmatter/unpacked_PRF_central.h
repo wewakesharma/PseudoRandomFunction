@@ -11,6 +11,6 @@
 
 #define N_SIZE 256
 
-void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages);
+void PRF_unpacked_driver(int nRuns);
 void display_time_unpacked(int nRuns);
 #endif //DARKMATTERCODE_UNPACKED_PRF_CENTRAL_H
