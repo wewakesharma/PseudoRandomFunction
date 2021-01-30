@@ -69,7 +69,7 @@ static PackedZ2<N_SIZE>& rcv_mx()
 // genrate randomly binary rx vector
 // calculate z = ra*rx+ rb*(~rx)
 
-void preProc_OT(unsigned int nTimes) {
+void preProc_OT(unsigned int nTimes) {      //preprocess for share conversion
     // allocate space
     raps.resize(nTimes);
     rbps.resize(nTimes);
@@ -106,7 +106,7 @@ void OT_Party2_1(const PackedZ2<N_SIZE>& x,  int index) {
     auto start = std::chrono::system_clock::now();
     // send mx = x xor rx to party1
     PackedZ2<N_SIZE> mx = x;
-    mx ^= rx;
+    mx ^= rx;                   //mx = x - rx
 #ifdef DEBUG
     std::cout << ", sending mx="<<mx.at(0) << std::endl;
 #endif

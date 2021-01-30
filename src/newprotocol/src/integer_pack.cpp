@@ -24,7 +24,7 @@ using namespace std;
 
 
 //pack matrix of 81 X 256 into 14 X 256 of packed integer elements
-void pack_matrix(std::vector<vector<uint64_t> >& Rmat14, std::vector<PackedZ3<81> >& Rmat)
+void pack_matrix(std::vector<vector<uint64_t> >& Rmat14, std::vector<PackedZ3<81> >& Rmat)//six bits pushed as a single integer
 {
     for(int col_count = 0; col_count < N_COLS; col_count++)
     {
@@ -55,7 +55,7 @@ void pack_matrix(std::vector<vector<uint64_t> >& Rmat14, std::vector<PackedZ3<81
     }
 }
 
-void unpack_output(PackedZ3<81>& out_Z3, std::vector<uint64_t>& out_pack)//this function unpacks 14 words to 81 bits
+void unpack_output(PackedZ3<81>& out_Z3, std::vector<uint64_t>& out_pack)//this function unpacks 14 words (six bit)integer to 81 bits in Z3
 {
     uint64_t packed_word;
     uint64_t extracted_bit;
@@ -64,7 +64,6 @@ void unpack_output(PackedZ3<81>& out_Z3, std::vector<uint64_t>& out_pack)//this 
         packed_word = out_pack[word_count];
         for(int inner_count = 0; inner_count<6;inner_count++)
         {
-
             extracted_bit = packed_word>>(inner_count*10);
             extracted_bit = extracted_bit & 0x3ff;
             extracted_bit = extracted_bit % 3;
@@ -76,9 +75,9 @@ void unpack_output(PackedZ3<81>& out_Z3, std::vector<uint64_t>& out_pack)//this 
     }
 }
 
-
+//performs the matrix vector product on the packed integers
 void matByVec_int_pack(PackedZ3<81>& out_Z3, PackedZ2<N_COLS>& outKX,
-        std::vector<vector<uint64_t> >& Rmat14)//performs the matrix vector product on the packed integers
+        std::vector<vector<uint64_t> >& Rmat14)
 {
     std::vector<uint64_t> out_pack; //packed output
     out_pack.resize(14);
@@ -98,7 +97,7 @@ void matByVec_int_pack(PackedZ3<81>& out_Z3, PackedZ2<N_COLS>& outKX,
                 bool bBreakhere2=true;
 #endif
 
-            sum += outKX.at(j) * Rmat14[j][i];
+            sum += outKX.at(j) * Rmat14[j][i];  //multiplying vector with matrix resulting in vector of size i(14).
         }
         out_pack[i] = sum;
         //% 3;

@@ -49,7 +49,7 @@ void preProc_Toeplitz_by_x(unsigned int nTimes) {
         
         // rz[i] = rA[i] * rx[i] xor rb[i]
         rzs[i].toeplitzByVec(rAs[i], rxs[i]);
-        rzs[i].add(rbs[i]);
+        rzs[i].add(rbs[i]);     //rx = rA * rx + rb
     }
 }
 
@@ -67,17 +67,11 @@ static PackedZ2<N_ROWS>& get_rz_PP(int index) {
     return rzs.at(index);
 }
 
-
-// poor-man's implementation of communication channels
-
-// FIXME: replace with real communication, on top of not having real
-//        communication this implementation is also not thread safe
-
 static std::vector<uint64_t> mA_global;
 static PackedZ2<N_ROWS> mb_global;
 static PackedZ2<N_COLS> mx_global;
 
-void initGlobals() {
+void initGlobals() {            //initialize global variables
     // initialize the Topelitz mask
     int extraBits = 64*toeplitzWords - (N_ROWS+N_COLS-1);
     if (extraBits>0) {
@@ -119,7 +113,7 @@ static PackedZ2<N_ROWS>& rcv_mb()
 
 void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
                      int index) {
-
+//computes mA = A - rA; mb = (rA * mx) + b - rb
     chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
 
     // get rA, rb from pre-processing
@@ -145,15 +139,13 @@ void topelitz_Party1(PackedZ2<N_ROWS>& b, const std::vector<uint64_t>& A,
 
     timerAxpBP1 += (chrono::system_clock::now() - start).count();
 
-    snd_mA_mb(mA, mb);        // send to party2
+    snd_mA_mb(mA, mb);        // send mA, mb to party2
     
     // b is the output of this party
 }
 
-void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index) {
+void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index) {//compute mx = x - rx
     // get rx from pre-processing
-
-
     PackedZ2<N_COLS>& rx = get_rx_PP(index); // local copy
 
     chrono::time_point<std::chrono::system_clock> start = chrono::system_clock::now();
@@ -168,7 +160,7 @@ void topelitz_Party2_1(PackedZ2<N_COLS>& x, int index) {
 }
 
 void topelitz_Party2_2(PackedZ2<N_ROWS>& out, PackedZ2<N_COLS>& x,
-                       int index) {
+                       int index) { //(mA*x) + mb -rz
     // receive back mA, mb from party1
     const std::vector<uint64_t>& mA = rcv_mA();
     PackedZ2<N_ROWS>& mb = rcv_mb();

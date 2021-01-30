@@ -61,7 +61,7 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     std::vector<uint64_t> K(toeplitzWords);
     for (int i = 0; i < K1.size(); i++)
     {
-        K[i] = K1[i] ^ K2[i];
+        K[i] = K1[i] ^ K2[i];       //K = K1 + K2
     }
     #ifdef PRINT_VAL
         cout<<"x "<<X<<endl;
@@ -69,7 +69,7 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     #endif
 
     PackedZ2<N_COLS> outKX;
-    outKX.toeplitzByVec(K,X);
+    outKX.toeplitzByVec(K,X);//K * x (mod 2)
     #ifdef PRINT_VAL
         cout<<"outKX "<<outKX<<endl;
     #endif
@@ -87,7 +87,7 @@ void PRF_packed_centralized(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std
     #endif
 
     //IMPORTANT FOR RUNNING NEW PROTOCOL WITHOUT LOOKUP TABLE: COMMENT IT IF LOOKUP IS USED
-    outZ3.matByVec(Rmat,outKX_Z3);//output of randmat*K*x
+    outZ3.matByVec(Rmat,outKX_Z3);//output of [randmat*((K*x) mod 2) mod 3]
     #ifdef PRINT_VAL
         cout<<"outZ3 "<<outZ3<<endl;
     #endif
@@ -131,13 +131,13 @@ void display_timing()
 #endif
 
 #ifdef TEST_PRF_LOOKUP
-    timer_phase3_lookup = std::max(timer_phase31_lookup,timer_phase32_lookup) + timer_final_output;       //taking maximum of both phases to emulate simultaneous execution
-    std::cout<<"\nphase 3 party 1: "<<(timer_phase31_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"\nphase 3 party 2: "<<(timer_phase32_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
+    timer_phase3 = std::max(timer_phase31,timer_phase32) + timer_final_output;       //taking maximum of both phases to emulate simultaneous execution
+    std::cout<<"\nphase 3 party 1: "<<(timer_phase31 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"\nphase 3 party 2: "<<(timer_phase32 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"\nTime to execute phase 3: "<<
-             (timer_phase3_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
-    std::cout<<"Number of rounds per second for phase 3: "<<(1000/(timer_phase3_lookup*time_unit_multiplier)*1000000)<<std::endl;
-    timerPRF = (timerAxpBP1 + timerAxpBP2) + (timerSCP1 + timerSCP2) + timer_phase3_lookup;
+             (timer_phase3 * time_unit_multiplier)<<" microseconds"<<std::endl;
+    std::cout<<"Number of rounds per second for phase 3: "<<(1000/(timer_phase3*time_unit_multiplier)*1000000)<<std::endl;
+    timerPRF = (timerAxpBP1 + timerAxpBP2) + (timerSCP1 + timerSCP2) + timer_phase3;
 #endif
 
     std::cout<<"====================================================="<<std::endl;
