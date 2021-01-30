@@ -18,28 +18,28 @@
 #include "PRF.hpp"
 #include "lookup_functions.h"
 
-long timer_round1_p1 = 0;
-long timer_round1_p2 = 0;
-long timer_round1_mask = 0;
+long timer_round1_p1 = 0;//times phase 1 by party 1
+long timer_round1_p2 = 0;//times phase 1 by party 2
+long timer_round1_mask = 0;//time to compute K' and x' by both parties(simultaneous)
 
-long timer_round2_p1 = 0;
-long timer_round2_p2 = 0;
-long timer_round2_mask = 0;
+long timer_round2_p1 = 0;//times phase 2 by party 1
+long timer_round2_p2 = 0;//times phase 2 by party 2
+long timer_round2_mask = 0;//time to compute w' by both parties(simultaneous)
 
-long timer_round3_p1 = 0;
-long timer_round3_p2 = 0;
+long timer_round3_p1 = 0;//times phase 3 by party 1
+long timer_round3_p2 = 0;//times phase 3 by party 2
 
-long timer_round1 = 0;
-long timer_round2 = 0;
-long timer_round3 = 0;
+long timer_round1 = 0;//total time taken by protocol in phase 1: party 1 and party 2 runs simultaneously
+long timer_round2 = 0;//total time taken by protocol in phase 2: party 1 and party 2 runs simultaneously
+long timer_round3 = 0;//total time taken by protocol in phase 3: party 1 and party 2 runs simultaneously
 
-long timer_p1_mux = 0;
-long timer_p2_mux = 0;
-long timer_p1_lookup = 0;
-long timer_p2_lookup = 0;
+long timer_p1_mux = 0;//time taken by party 1 for mux computation
+long timer_p2_mux = 0;//time taken by party 2 for mux computation
+long timer_p1_lookup = 0;//time taken by party 1 accessing lookup table
+long timer_p2_lookup = 0;//time taken by party 2 accessing lookup table
 
 
-long timer_np_prf = 0;
+long timer_np_prf = 0;//Total time by new protocl (using lookup table or matByVec)
 
 // Declaring the global variables for lookup implementation
 
@@ -66,6 +66,7 @@ PackedZ2<N_COLS> fetch_rw_global()
     return rw_global;
 }
 
+//generate random variables in Z2 field
 void preProc_mod2_dm2020(unsigned int nRuns)
 {
 #ifdef PRINT_VAL//preprocessing begins
@@ -130,6 +131,7 @@ void preProc_mod2_dm2020(unsigned int nRuns)
 #endif
 }
 
+//generate random variables in Z3 field
 void preProc_mod3_dm2020(unsigned int Runs)//generate r0z and r1z and share them between two parties
 {
     //Cast rw and 1-rw  to mod3; single line assignment of r0z_global and r1z_global
@@ -178,6 +180,7 @@ void preProc_mod3_dm2020(unsigned int Runs)//generate r0z and r1z and share them
 
 }
 
+//fetch preprocessed values from global variables: party 1
 void fetchPreproc_party1(PackedZ2<N_COLS>& rx1, PackedZ2<N_COLS>& rw, PackedZ2<N_COLS>& sw1,
                          std::vector<uint64_t>& rK1, PackedZ3<N_SIZE>& r0z1, PackedZ3<N_SIZE>& r1z1)
 {
@@ -189,6 +192,7 @@ void fetchPreproc_party1(PackedZ2<N_COLS>& rx1, PackedZ2<N_COLS>& rw, PackedZ2<N
     r1z1 = r1z1_global;
 }
 
+//fetch preprocessed values from global variables: party 2
 void fetchPreproc_party2(PackedZ2<N_COLS>& rx2, PackedZ2<N_COLS>& rw, PackedZ2<N_COLS>& sw2,
                          std::vector<uint64_t>& rK2, PackedZ3<N_SIZE>& r0z2, PackedZ3<N_SIZE>& r1z2)
 {
@@ -261,7 +265,7 @@ void compute_input_mask(PackedZ2<N_COLS>& x_mask, std::vector<uint64_t>& K_mask,
 }
 
 void party1_round2(PackedZ2<N_COLS>& w1_mask, std::vector<uint64_t>& K_mask, PackedZ2<N_COLS>& x_mask, PackedZ2<N_COLS>& rx1,
-        std::vector<uint64_t>& rK1, PackedZ2<N_COLS>& x1, PackedZ2<N_COLS>& sw1)
+        std::vector<uint64_t>& rK1, PackedZ2<N_COLS>& x1, PackedZ2<N_COLS>& sw1)//computes w2'
 {
     //new code to compute w1_mask
     PackedZ2<N_COLS> K_mask_x1;
@@ -274,19 +278,6 @@ void party1_round2(PackedZ2<N_COLS>& w1_mask, std::vector<uint64_t>& K_mask, Pac
     w1_mask ^= rK1_x_mask;
     w1_mask ^= sw1;
 
-    //previous buggy code to compute w1_mask
-    /*PackedZ2<N_COLS> x_rx1 = x_mask;    //x_rx1 = x_mask - rx1
-    x_rx1 ^= rx1;
-
-    PackedZ2<N_COLS> Kx1;   //kx1 = K_mask * x_rx1
-    Kx1.toeplitzByVec(K_mask,x_rx1);
-
-    PackedZ2<N_COLS> x_rK1;//x_rk1 = rK1 * x_mask
-    x_rK1.toeplitzByVec(rK1,x_mask);
-
-    w1_mask = Kx1;//w1 = kx1 - rk_x1
-    w1_mask ^= x_rK1;
-    w1_mask ^= sw1;*/
 #ifdef PRINT_VAL
     std::cout<<"newprotocol.cpp/party1_round2(): "<<std::endl;
     std::cout<<"K_mask * x1"<<K_mask_x1<<std::endl;
@@ -482,9 +473,6 @@ void display_exec_timing()  //displays the timing for each round, each party in 
     else if(Duration::period::den == 1000000)
         time_unit_multiplier = 1;   //keep the unit as microsecond
 
-
-
-
     timer_round1 = std::max(timer_round1_p1, timer_round1_p2) + timer_round1_mask;
     timer_round2 = std::max(timer_round2_p1, timer_round2_p2) + timer_round2_mask;
 
@@ -547,11 +535,11 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
     //============================
 
     //1. Perform preprocessing
-    preProc_mod2_dm2020(nRuns);//it was nRuns * 2 in previous protocol, needs to be changed later
-    preProc_mod3_dm2020(nRuns);
+    preProc_mod2_dm2020(nRuns);//generated correlated randomness values in mod 2
+    preProc_mod3_dm2020(nRuns);//generate random values in mod 3, which will be used later in protocol
 
-    fetchPreproc_party1(rx1,rw,sw1,rK1,r0z1,r1z1);
-    fetchPreproc_party2(rx2,rw,sw2,rK2, r0z2,r1z2);
+    fetchPreproc_party1(rx1,rw,sw1,rK1,r0z1,r1z1);//party 1 fetches preprocessed value
+    fetchPreproc_party2(rx2,rw,sw2,rK2, r0z2,r1z2);//party 2 fetches preprocessed value
 
 #ifdef TEST_NP_LOOKUP //reformat Rmat and create a lookup table only if LOOKUP implementation is required
     std::vector<std::vector<PackedZ3<81> > > Rmat16(16); //Rmat16 vector of size 16 X 16 X 81 (GLOBAL)
@@ -567,16 +555,16 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         std::cout<<"PRF_new_protocol, rx2 "<<rx2<<std::endl;
     #endif
 
-    std::chrono::time_point<std::chrono::system_clock> start_r1_p1;
-    std::chrono::time_point<std::chrono::system_clock> start_r1_p2;
-    std::chrono::time_point<std::chrono::system_clock> start_r1_mask;
+    std::chrono::time_point<std::chrono::system_clock> start_r1_p1;//time when phase 1 of party 1 starts
+    std::chrono::time_point<std::chrono::system_clock> start_r1_p2;//time when phase 1 of party 1 starts
+    std::chrono::time_point<std::chrono::system_clock> start_r1_mask;//time when both parties start to compute K' = K1 + K2 and x' = x1' + x2'
 
-    std::chrono::time_point<std::chrono::system_clock> start_r2_p1;
-    std::chrono::time_point<std::chrono::system_clock> start_r2_p2;
-    std::chrono::time_point<std::chrono::system_clock> start_r2_mask;
+    std::chrono::time_point<std::chrono::system_clock> start_r2_p1;//time when phase 2 of party 1 starts
+    std::chrono::time_point<std::chrono::system_clock> start_r2_p2;//time when phase 2 of party 2 starts
+    std::chrono::time_point<std::chrono::system_clock> start_r2_mask;//time when both parties starts to compute w' = w1' + w2'
 
-    std::chrono::time_point<std::chrono::system_clock> start_r3_p1;
-    std::chrono::time_point<std::chrono::system_clock> start_r3_p2;
+    std::chrono::time_point<std::chrono::system_clock> start_r3_p1;//time when phase 3 of party 1 starts
+    std::chrono::time_point<std::chrono::system_clock> start_r3_p2;//time when phase 3 of party 2 starts
 
     PackedZ3<81> out;
 
@@ -589,16 +577,16 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         std::vector<uint64_t> K1_mask(toeplitzWords), K2_mask(toeplitzWords), K_mask(toeplitzWords);
 
         start_r1_p1 = std::chrono::system_clock::now();
-        party1_round_1(x1_mask,K1_mask,x1,rx1,K1,rK1);
+        party1_round_1(x1_mask,K1_mask,x1,rx1,K1,rK1);//compute x1' = x - rx1 and K1' = K1 - rK1
         timer_round1_p1 += (std::chrono::system_clock::now() - start_r1_p1).count();
 
         start_r1_p2 = std::chrono::system_clock::now();
-        party2_round_1(x2_mask,K2_mask,x2,rx2,K2,rK2);
+        party2_round_1(x2_mask,K2_mask,x2,rx2,K2,rK2);//computation of x2' = x - rx2 and K2' = K2 - rK2
         timer_round1_p2 += (std::chrono::system_clock::now() - start_r1_p2).count();
 
         start_r1_mask = std::chrono::system_clock::now();
         //both the parties are supposed to exchange their mask values
-        compute_input_mask(x_mask, K_mask, x1_mask, x2_mask, K1_mask, K2_mask);
+        compute_input_mask(x_mask, K_mask, x1_mask, x2_mask, K1_mask, K2_mask);//x' = x1' + x2' and K' = K1' + K2'
         timer_round1_mask += (std::chrono::system_clock::now() - start_r1_mask).count();
 
 
@@ -611,15 +599,15 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
         PackedZ2<N_COLS> w1_mask, w2_mask, w_mask; //w' = K'(x' - rx) - rK'*x' + sw
 
         start_r2_p1 = std::chrono::system_clock::now();
-        party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, x1, sw1);
+        party1_round2(w1_mask, K_mask,x_mask, rx1, rK1, x1, sw1);//compute w1'
         timer_round2_p1 += (std::chrono::system_clock::now() - start_r2_p1).count();
 
         start_r2_p2 = std::chrono::system_clock::now();
-        party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, x2, sw2);
+        party2_round2(w2_mask, K_mask,x_mask, rx2, rK2, x2, sw2);//compute w2'
         timer_round2_p2 += (std::chrono::system_clock::now() - start_r2_p2).count();
 
         start_r2_mask = std::chrono::system_clock::now();
-        compute_wmask(w_mask, w1_mask, w2_mask);
+        compute_wmask(w_mask, w1_mask, w2_mask);        //compute w' = w1' + w2'
         timer_round2_mask += (std::chrono::system_clock::now() - start_r2_mask).count();
 
 #ifdef PRINT_VAL
@@ -629,26 +617,26 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 
 #ifndef TEST_NP_LOOKUP //if TEST_NP_Lookup is not enabled run the matbyVec version
         start_r3_p1 = std::chrono::system_clock::now();
-        party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask);
+        party1_round3(y1_z3,r0z1,r1z1,Rmat,w_mask); //compute output share y1 in Z3 using matByVec
         timer_round3_p1 += (std::chrono::system_clock::now() - start_r3_p1).count();
 
         start_r3_p2 = std::chrono::system_clock::now();
-        party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask);
+        party2_round3(y2_z3,r0z2,r1z2,Rmat,w_mask); //compute output share y2 in Z3 using matByVec
         timer_round3_p2 += (std::chrono::system_clock::now() - start_r3_p2).count();
 #endif
 
 #ifdef TEST_NP_LOOKUP// if TEST_NP is enabled run the new protocol
         //start_r3_p1 = std::chrono::system_clock::now();
-        party1_round3_lookup(y1_z3,r0z1,r1z1,Rmat,w_mask, lookup_table);
+        party1_round3_lookup(y1_z3,r0z1,r1z1,Rmat,w_mask, lookup_table);//compute output share y1 in Z3 using lookup table
         //timer_round3_p1 += (std::chrono::system_clock::now() - start_r3_p1).count();
 
         //start_r3_p2 = std::chrono::system_clock::now();
-        party2_round3_lookup(y2_z3,r0z2,r1z2,Rmat,w_mask, lookup_table);
+        party2_round3_lookup(y2_z3,r0z2,r1z2,Rmat,w_mask, lookup_table);//compute output share y2 in Z3 using lookup table
         //timer_round3_p2 += (std::chrono::system_clock::now() - start_r3_p2).count();
 #endif
 
         y1_z3_dummy += y1_z3;
-        y1_z3_dummy+= y2_z3;
+        y1_z3_dummy+= y2_z3;// y_dummy = y1 + y2; to make sure the timings are accurate
 
 
 #ifdef PRINT_VAL
@@ -656,9 +644,9 @@ void PRF_new_protocol(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1,
 #endif
     } //end of for loop, nTimes
 
-    std::cout << "in PRF_new_protocol, y1_z3_dummy=" << y1_z3_dummy <<  std:: endl;
+    std::cout << "in PRF_new_protocol, Final output of PRF new protocol(y1_z3_dummy)=" << y1_z3_dummy <<  std:: endl;
 
     //print the execution timings
-    display_exec_timing();
+    display_exec_timing();  //display the timings with clock metric
 }
 

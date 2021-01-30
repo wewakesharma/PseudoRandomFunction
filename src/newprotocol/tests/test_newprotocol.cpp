@@ -162,7 +162,7 @@ int main()
     std::cout<<"Executing new protocol with lookup table (Distributed Input and Distributed Key)"<<std::endl;
 #endif
     //calling the distributed version of the new PRF protocol
-    PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nRuns);
+    PRF_new_protocol(K1,x1,K2, x2, Rmat, y1_z3, y2_z3, nRuns);//method in newprotocol.cpp
 
 #ifdef PRINT_VAL
     std::cout<<"test_newprotocol/main.cpp: Protocol Execution ends"<<std::endl;

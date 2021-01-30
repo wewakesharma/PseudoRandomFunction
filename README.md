@@ -65,8 +65,9 @@ usedLookupTable()| Implements matrix vector multiplication using a lookup table.
 
 ##### 5.2.2 Phases
 1. **First phase: Masking the inputs**
-2. **Second phase: Compute w'(Kx)**
-3. **Third phase: Perform matrix vector multiplication**
+Both the parties mask their shares of input and key with a random mask that is generated in preprocessing. These shares are shared at the end of this phase. So now apart from holding secret share of input and key, each party also holds masked input and key of other party.
+3. **Second phase: Compute w'(Kx)**
+4. **Third phase: Perform matrix vector multiplication**
 
 #### 5.3. (2,3)-wPRF based OPRF 
 ##### 5.3.1. Files
@@ -89,7 +90,12 @@ Server Computes
 #### 5.5 Centralized PRF Implementation with Lookup Table
 ##### 5.5.1 Files:
 * tests/test_packed_PRF_central_lookup.cpp 
-
+* 
+#### 5.6 Centralized PRF Implementation with Integer packing
+##### 5.6.1 Files:
+* include/darkmatter/integer_pack.h
+* src/integer_pack.cpp
+* tests/test_central_int_packed.cpp 
 
 ### 6. Timing Methodology:
 This section describes the part that was timed in each protocol. The protocols are divided into phases and each phase of the protocol are timed. Some phases can run independently, which means they don't need any extra communication **while** running. Note: They do need inputs(at the beginning) and produces output(at the end). Some phases run while communicating, in such cases, parties indulge in communication **during** the execution of phase.
