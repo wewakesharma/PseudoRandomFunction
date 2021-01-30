@@ -57,22 +57,9 @@ include CMakeFiles/newprotocol.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/newprotocol.dir/flags.make
 
-CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o: CMakeFiles/newprotocol.dir/flags.make
-CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o: ../src/buggy_snail.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.cpp
-
-CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.cpp > CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.i
-
-CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.cpp -o CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.s
-
 CMakeFiles/newprotocol.dir/src/integer_pack.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/src/integer_pack.cpp.o: ../src/integer_pack.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/newprotocol.dir/src/integer_pack.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/newprotocol.dir/src/integer_pack.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/integer_pack.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/integer_pack.cpp
 
 CMakeFiles/newprotocol.dir/src/integer_pack.cpp.i: cmake_force
@@ -85,7 +72,7 @@ CMakeFiles/newprotocol.dir/src/integer_pack.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o: ../src/lookup_functions.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/lookup_functions.cpp
 
 CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.i: cmake_force
@@ -98,7 +85,7 @@ CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o: ../src/newprotocol.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/newprotocol.cpp
 
 CMakeFiles/newprotocol.dir/src/newprotocol.cpp.i: cmake_force
@@ -111,7 +98,7 @@ CMakeFiles/newprotocol.dir/src/newprotocol.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/src/OPRF.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/src/OPRF.cpp.o: ../src/OPRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/newprotocol.dir/src/OPRF.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/newprotocol.dir/src/OPRF.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/OPRF.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/OPRF.cpp
 
 CMakeFiles/newprotocol.dir/src/OPRF.cpp.i: cmake_force
@@ -124,7 +111,7 @@ CMakeFiles/newprotocol.dir/src/OPRF.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/src/OT.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/src/OT.cpp.o: ../src/OT.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/newprotocol.dir/src/OT.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/newprotocol.dir/src/OT.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/OT.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/OT.cpp
 
 CMakeFiles/newprotocol.dir/src/OT.cpp.i: cmake_force
@@ -137,7 +124,7 @@ CMakeFiles/newprotocol.dir/src/OT.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o: ../src/packed_PRF_central.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/packed_PRF_central.cpp
 
 CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.i: cmake_force
@@ -150,7 +137,7 @@ CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/src/PRF.cpp.o: ../src/PRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/newprotocol.dir/src/PRF.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/newprotocol.dir/src/PRF.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/PRF.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/PRF.cpp
 
 CMakeFiles/newprotocol.dir/src/PRF.cpp.i: cmake_force
@@ -163,7 +150,7 @@ CMakeFiles/newprotocol.dir/src/PRF.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o: ../src/Toeplitz-by-x.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/Toeplitz-by-x.cpp
 
 CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.i: cmake_force
@@ -176,7 +163,7 @@ CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o: ../src/unpacked_PRF_central.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/unpacked_PRF_central.cpp
 
 CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.i: cmake_force
@@ -187,22 +174,9 @@ CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/unpacked_PRF_central.cpp -o CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.s
 
-CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o: CMakeFiles/newprotocol.dir/flags.make
-CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o: ../tests/test_buggy_snail.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_buggy_snail.cpp
-
-CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_buggy_snail.cpp > CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.i
-
-CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_buggy_snail.cpp -o CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.s
-
 CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o: ../tests/test_central_int_packed.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_central_int_packed.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.i: cmake_force
@@ -215,7 +189,7 @@ CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o: ../tests/test_dmprotocol.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_dmprotocol.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.i: cmake_force
@@ -228,7 +202,7 @@ CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.o: ../tests/test_independent_lookup.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_independent_lookup.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.i: cmake_force
@@ -241,7 +215,7 @@ CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o: ../tests/test_lookup.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_lookup.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.i: cmake_force
@@ -254,7 +228,7 @@ CMakeFiles/newprotocol.dir/tests/test_lookup.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o: ../tests/test_newprotocol.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_newprotocol.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.i: cmake_force
@@ -267,7 +241,7 @@ CMakeFiles/newprotocol.dir/tests/test_newprotocol.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o: ../tests/test_oprf.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_oprf.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.i: cmake_force
@@ -280,7 +254,7 @@ CMakeFiles/newprotocol.dir/tests/test_oprf.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o: ../tests/test_OT.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_OT.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_OT.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_OT.cpp.i: cmake_force
@@ -293,7 +267,7 @@ CMakeFiles/newprotocol.dir/tests/test_OT.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o: ../tests/test_Packed_PRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_Packed_PRF.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.i: cmake_force
@@ -306,7 +280,7 @@ CMakeFiles/newprotocol.dir/tests/test_Packed_PRF.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o: ../tests/test_packed_PRF_central_lookup.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_packed_PRF_central_lookup.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.i: cmake_force
@@ -319,7 +293,7 @@ CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.s: cmake_for
 
 CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o: ../tests/test_packedMod2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_packedMod2.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.i: cmake_force
@@ -332,7 +306,7 @@ CMakeFiles/newprotocol.dir/tests/test_packedMod2.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o: ../tests/test_packedMod3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_packedMod3.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.i: cmake_force
@@ -345,7 +319,7 @@ CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o: ../tests/test_PRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_PRF.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.i: cmake_force
@@ -358,7 +332,7 @@ CMakeFiles/newprotocol.dir/tests/test_PRF.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o: ../tests/test_Toeplitz-by-x.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_Toeplitz-by-x.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.i: cmake_force
@@ -371,7 +345,7 @@ CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o: ../tests/test_unit_newprotocol.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_unit_newprotocol.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.i: cmake_force
@@ -384,7 +358,7 @@ CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.s: cmake_force
 
 CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o: CMakeFiles/newprotocol.dir/flags.make
 CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o: ../tests/test_unpacked_PRF.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o -c /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_unpacked_PRF.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.i: cmake_force
@@ -397,7 +371,6 @@ CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.s: cmake_force
 
 # Object files for target newprotocol
 newprotocol_OBJECTS = \
-"CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o" \
 "CMakeFiles/newprotocol.dir/src/integer_pack.cpp.o" \
 "CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o" \
 "CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o" \
@@ -407,7 +380,6 @@ newprotocol_OBJECTS = \
 "CMakeFiles/newprotocol.dir/src/PRF.cpp.o" \
 "CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o" \
 "CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o" \
-"CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o" \
 "CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.o" \
@@ -427,7 +399,6 @@ newprotocol_OBJECTS = \
 # External object files for target newprotocol
 newprotocol_EXTERNAL_OBJECTS =
 
-newprotocol: CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/src/integer_pack.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/src/lookup_functions.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/src/newprotocol.cpp.o
@@ -437,7 +408,6 @@ newprotocol: CMakeFiles/newprotocol.dir/src/packed_PRF_central.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/src/PRF.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/src/unpacked_PRF_central.cpp.o
-newprotocol: CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_dmprotocol.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_independent_lookup.cpp.o
@@ -455,7 +425,7 @@ newprotocol: CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o
 newprotocol: CMakeFiles/newprotocol.dir/build.make
 newprotocol: CMakeFiles/newprotocol.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Linking CXX executable newprotocol"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking CXX executable newprotocol"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/newprotocol.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

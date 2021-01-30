@@ -231,33 +231,6 @@ src/Toeplitz-by-x.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.s
 .PHONY : src/Toeplitz-by-x.cpp.s
 
-src/buggy_snail.o: src/buggy_snail.cpp.o
-
-.PHONY : src/buggy_snail.o
-
-# target to build an object file
-src/buggy_snail.cpp.o:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o
-.PHONY : src/buggy_snail.cpp.o
-
-src/buggy_snail.i: src/buggy_snail.cpp.i
-
-.PHONY : src/buggy_snail.i
-
-# target to preprocess a source file
-src/buggy_snail.cpp.i:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.i
-.PHONY : src/buggy_snail.cpp.i
-
-src/buggy_snail.s: src/buggy_snail.cpp.s
-
-.PHONY : src/buggy_snail.s
-
-# target to generate assembly for a file
-src/buggy_snail.cpp.s:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.s
-.PHONY : src/buggy_snail.cpp.s
-
 src/integer_pack.o: src/integer_pack.cpp.o
 
 .PHONY : src/integer_pack.o
@@ -500,33 +473,6 @@ tests/test_Toeplitz-by-x.s: tests/test_Toeplitz-by-x.cpp.s
 tests/test_Toeplitz-by-x.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.s
 .PHONY : tests/test_Toeplitz-by-x.cpp.s
-
-tests/test_buggy_snail.o: tests/test_buggy_snail.cpp.o
-
-.PHONY : tests/test_buggy_snail.o
-
-# target to build an object file
-tests/test_buggy_snail.cpp.o:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o
-.PHONY : tests/test_buggy_snail.cpp.o
-
-tests/test_buggy_snail.i: tests/test_buggy_snail.cpp.i
-
-.PHONY : tests/test_buggy_snail.i
-
-# target to preprocess a source file
-tests/test_buggy_snail.cpp.i:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.i
-.PHONY : tests/test_buggy_snail.cpp.i
-
-tests/test_buggy_snail.s: tests/test_buggy_snail.cpp.s
-
-.PHONY : tests/test_buggy_snail.s
-
-# target to generate assembly for a file
-tests/test_buggy_snail.cpp.s:
-	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.s
-.PHONY : tests/test_buggy_snail.cpp.s
 
 tests/test_central_int_packed.o: tests/test_central_int_packed.cpp.o
 
@@ -846,9 +792,6 @@ help:
 	@echo "... src/Toeplitz-by-x.o"
 	@echo "... src/Toeplitz-by-x.i"
 	@echo "... src/Toeplitz-by-x.s"
-	@echo "... src/buggy_snail.o"
-	@echo "... src/buggy_snail.i"
-	@echo "... src/buggy_snail.s"
 	@echo "... src/integer_pack.o"
 	@echo "... src/integer_pack.i"
 	@echo "... src/integer_pack.s"
@@ -876,9 +819,6 @@ help:
 	@echo "... tests/test_Toeplitz-by-x.o"
 	@echo "... tests/test_Toeplitz-by-x.i"
 	@echo "... tests/test_Toeplitz-by-x.s"
-	@echo "... tests/test_buggy_snail.o"
-	@echo "... tests/test_buggy_snail.i"
-	@echo "... tests/test_buggy_snail.s"
 	@echo "... tests/test_central_int_packed.o"
 	@echo "... tests/test_central_int_packed.i"
 	@echo "... tests/test_central_int_packed.s"

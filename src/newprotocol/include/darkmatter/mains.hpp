@@ -6,7 +6,7 @@
 /*
  * Centralized implementation flags
  */
-//#define PACKED_PRF_CENTRAL //packed centralized PRF with matbyvec multiplication
+#define PACKED_PRF_CENTRAL //packed centralized PRF with matbyvec multiplication: Timing purpose
 //#define PACKED_PRF_CENTRAL_LOOKUP //packed centralized PRF with lookup table
 //#define UNPACKED_PRF_CENTRAL  //unpacked centralized PRF, everything performed naively
 //#define TEST_INTEGER_PACKING
@@ -17,7 +17,7 @@
 //#define DEBUG
 
 //#define TEST_PRF              //runs the dark matter protocol
-#define TEST_PRF_LOOKUP         //runs the dark matter with lookup table
+//#define TEST_PRF_LOOKUP         //runs the dark matter with lookup table
 //#define TEST_NP                 //runs the new protocol using MATBYVEC
 //#define TEST_NP_LOOKUP        //runs the new protocol using LOOKUP TABLE(only difference is in round 3 compared to new protocol)
 //#define TEST_OPRF               //runs the packed distributed 2-3OPRF using matByVec()

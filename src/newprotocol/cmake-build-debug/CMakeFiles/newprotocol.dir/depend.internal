@@ -40,18 +40,6 @@ CMakeFiles/newprotocol.dir/src/Toeplitz-by-x.cpp.o
  ../include/darkmatter/packedMod3.hpp
  ../include/darkmatter/utils.hpp
  /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/Toeplitz-by-x.cpp
-CMakeFiles/newprotocol.dir/src/buggy_snail.cpp.o
- ../include/darkmatter/OT.hpp
- ../include/darkmatter/PRF.hpp
- ../include/darkmatter/Timing.hpp
- ../include/darkmatter/Toeplitz-by-x.hpp
- ../include/darkmatter/buggy_snail.h
- ../include/darkmatter/lookup_functions.h
- ../include/darkmatter/mains.hpp
- ../include/darkmatter/packedMod2.hpp
- ../include/darkmatter/packedMod3.hpp
- ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/src/buggy_snail.cpp
 CMakeFiles/newprotocol.dir/src/integer_pack.cpp.o
  ../include/darkmatter/OT.hpp
  ../include/darkmatter/PRF.hpp
@@ -147,18 +135,6 @@ CMakeFiles/newprotocol.dir/tests/test_Toeplitz-by-x.cpp.o
  ../include/darkmatter/packedMod2.hpp
  ../include/darkmatter/utils.hpp
  /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_Toeplitz-by-x.cpp
-CMakeFiles/newprotocol.dir/tests/test_buggy_snail.cpp.o
- ../include/darkmatter/OT.hpp
- ../include/darkmatter/PRF.hpp
- ../include/darkmatter/Timing.hpp
- ../include/darkmatter/Toeplitz-by-x.hpp
- ../include/darkmatter/buggy_snail.h
- ../include/darkmatter/lookup_functions.h
- ../include/darkmatter/mains.hpp
- ../include/darkmatter/packedMod2.hpp
- ../include/darkmatter/packedMod3.hpp
- ../include/darkmatter/utils.hpp
- /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_buggy_snail.cpp
 CMakeFiles/newprotocol.dir/tests/test_central_int_packed.cpp.o
  ../include/darkmatter/OT.hpp
  ../include/darkmatter/PRF.hpp
