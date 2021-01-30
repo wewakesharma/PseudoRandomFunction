@@ -218,6 +218,7 @@ CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o: ../include/darkmatter/ut
 CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o: ../tests/test_packedMod3.cpp
 
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o: ../include/darkmatter/OT.hpp
+CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o: ../include/darkmatter/PRF.hpp
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o: ../include/darkmatter/Timing.hpp
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o: ../include/darkmatter/Toeplitz-by-x.hpp
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o: ../include/darkmatter/lookup_functions.h

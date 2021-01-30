@@ -81,6 +81,16 @@ Server masks its input and sends it to client, while client masks its input and 
 Server Computes 
 4. **Third phase: Perform matrix vector multiplication**
 
+#### 5.4  Centralized PRF Implementation
+##### 5.4.1 Files
+* src/packed_PRF_central.cpp
+* tests/test_Packed_PRF.cpp
+
+#### 5.5 Centralized PRF Implementation with Lookup Table
+##### 5.5.1 Files:
+* tests/test_packed_PRF_central_lookup.cpp 
+
+
 ### 6. Timing Methodology:
 This section describes the part that was timed in each protocol. The protocols are divided into phases and each phase of the protocol are timed. Some phases can run independently, which means they don't need any extra communication **while** running. Note: They do need inputs(at the beginning) and produces output(at the end). Some phases run while communicating, in such cases, parties indulge in communication **during** the execution of phase.
 Some protocols can be parallelized, which means the parties running the phases of the protocol can run concurrently and in such cases, the time that a phase takes is the __maximum of the timing among two parties running on same phase/round__
@@ -111,28 +121,28 @@ Sr. No. | Flag in mains.hpp | Description
 6|#define TEST_OPRF_LOOKUP | Runs 23-wPRF based OPRF protocol using a lookup table
 
 ##### 7.2 Centralized Implementation
-Flags in mains.hpp | Description
--------------------- | ------------------
-#define PACKED_PRF_CENTRAL | Runs operations in wPRF using Packing and BitSlicing
-#define PACKED_PRF_CENTRAL_LOOKUP | Runs operations in wPRF using Packing, BitSlicing and lookup table
-#define UNPACKED_PRF_CENTRAL | Runs operations in wPRF using Packing and naive method for matrix vector multiplication
-#define TEST_INTEGER_PACKING | Runs operations in wPRF using Packing and Z3 integer packing. 
+Sr. No. | Flags in mains.hpp | Description
+|------------|-------------------- | ------------------
+1|#define PACKED_PRF_CENTRAL | Runs operations in wPRF using Packing and BitSlicing
+2|#define PACKED_PRF_CENTRAL_LOOKUP | Runs operations in wPRF using Packing, BitSlicing and lookup table
+3|#define UNPACKED_PRF_CENTRAL | Runs operations in wPRF using Packing and naive method for matrix vector multiplication
+4|#define TEST_INTEGER_PACKING | Runs operations in wPRF using Packing and Z3 integer packing. 
 
 
 ##### 7.3 Unit Tests
-Flags in mains.hpp | Description
--------------------- | ------------------
-#define TEST_LOOKUP_INDEPENDENT | Test standalone Lookup table implementation
-#define UNIT_NP | Test Fully Distributed 23-wPRF
-#define UNIT_NP_LOOKUP| Test Fully Distributed 23-wPRF with a lookup table
-#define TEST_PHASE1| Test Ax+B phase 1 of Dark Matter TCC '18 const 3.1 protocol.
+Sr. No. | Flags in mains.hpp | Description
+|--------|-------------------- | ------------------
+1|#define TEST_LOOKUP_INDEPENDENT | Test standalone Lookup table implementation
+2|#define UNIT_NP | Test Fully Distributed 23-wPRF
+3|#define UNIT_NP_LOOKUP| Test Fully Distributed 23-wPRF with a lookup table
+4|#define TEST_PHASE1| Test Ax+B phase 1 of Dark Matter TCC '18 const 3.1 protocol.
 
 
-### 7. Contributors
+### 8. Contributors
 * [Tzipora Halevi](https://github.com/thalevi)
 * [Mahimna Kelkar](https://github.com/mahimnakelkar)
 
-### 8. Task Lists:
+### 9. Task Lists:
 - [x] Dark Matter TCC '18 wPRF 
 - [x] Dark Matter TCC '18 wPRF with packing
 - [x] Dark Matter TCC '18 wPRF with packing and lookup table

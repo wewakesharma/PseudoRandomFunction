@@ -219,6 +219,7 @@ CMakeFiles/newprotocol.dir/tests/test_packedMod3.cpp.o
  /Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_packedMod3.cpp
 CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o
  ../include/darkmatter/OT.hpp
+ ../include/darkmatter/PRF.hpp
  ../include/darkmatter/Timing.hpp
  ../include/darkmatter/Toeplitz-by-x.hpp
  ../include/darkmatter/lookup_functions.h

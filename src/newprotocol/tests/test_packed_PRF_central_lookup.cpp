@@ -7,7 +7,7 @@
 #include "packedMod2.hpp"
 #include "packedMod3.hpp"
 #include "mains.hpp"
-//#include "PRF.hpp"
+#include "PRF.hpp"
 #include "packed_PRF_central.h"
 #include "OT.hpp"
 #include "Timing.hpp"
@@ -16,14 +16,28 @@
 
 #ifdef PACKED_PRF_CENTRAL_LOOKUP
 
+
+void set_input(std::vector<uint64_t>& K, PackedZ2<N_COLS>& x, std::vector< PackedZ3<81> >& Rmat)
+{
+    randomWord(1); // use seed=1
+
+    //randomize the matrix
+    for (auto &col : Rmat) // iterate over the columns
+        col.randomize();
+
+    // Choose random K,x
+    for (auto &w : K) w = randomWord();
+    K[K.size() - 1] &= topelitzMask; // turn off extra bits at the end
+
+    x.randomize();     //randomize input
+}
+
 int main()  {
 
+    long timer_packed_cent_p3 = 0;//time third phase
     long timer_packed_PRF_lookup = 0; //time the entire PRF computation nRuns times using lookup table
-    long timer_packed_cent_p1 = 0;
-    long timer_packed_cent_p3 = 0;
-    long timer_packed_cent_p2 = 0;
 
-    PackedZ3<81> outZ3_dummy;
+    PackedZ3<81> outZ3_dummy;//dummy output for accurate timing
 
     int nRuns = 1000; //number of times the program runs
 
@@ -36,65 +50,51 @@ int main()  {
     std::cout << Duration::period::num << " ==> " << Duration::period::den << '\n';
 
     //generate the inputs
-    std::vector<uint64_t> K1(toeplitzWords), K2(toeplitzWords);//key shares of parties
-    PackedZ2<N_COLS> x1, x2; //input shares of parties
+    std::vector<uint64_t> K(toeplitzWords);//key shares of parties
+    PackedZ2<N_COLS> X; //input shares of parties
+    std::vector<PackedZ3<81> > Rmat(256);
+
+    //variables defined for lookup implementation
+    std::vector<std::vector<PackedZ3<81> > > Rmat16(16);//16 X (81 X 16) matrix to construct lookup table
+    std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //table has 16 rows and 65536 columns and each element is PackedZ3
+
     PackedZ3<81> outZ3;//output shares of both the parties
 
     //generate random inputs
-    randomWord(1); // use seed=1
-    for (auto &w : K1) w = randomWord();
-    K1[K1.size() - 1] &= topelitzMask; // turn off extra bits at the end
-    for (auto &w : K2) w = randomWord();
-    K2[K2.size() - 1] &= topelitzMask; // turn off extra bits at the end
-    std::vector<uint64_t> K(toeplitzWords);
-    for (int i = 0; i < K1.size(); i++)
-    {
-        K[i] = K1[i] ^ K2[i];
-    }
-
-    x1.randomize();
-    x2.randomize();
-    PackedZ2<N_COLS> X = x1; //declare a variable
-    X ^= x2;
-
-    //generate a 81 X 256 randomization matrix in Z3.
-    std::vector<PackedZ3<81> > Rmat(256);
-    for (auto &col : Rmat) // iterate over the columns
-        col.randomize();
+    set_input(K,X,Rmat);//set random values in K, X and Rmat
 
     //converting the Rmat format
-    std::vector<std::vector<PackedZ3<81> > > Rmat16(16);
-    reformat_Rmat(Rmat16, Rmat);
+    reformat_Rmat(Rmat16, Rmat);//convert 81 X 256 to 16 X (81 X 16) matrix, latter makes easier to construct lookup table
 
     //call the lookup table generator
     std::cout<<"Generating lookup table of size (16 X 2^16)"<<std::endl;
-    std::vector<std::vector<PackedZ3<81> > > lookup_table(16); //table has 16 rows and 65536 columns and each element is PackedZ3
-    create_lookup_table(Rmat16,lookup_table);
+
+    create_lookup_table(Rmat16,lookup_table);   //creates lookup table 16 X 65535
     std::cout<<"Generation of lookup table.....COMPLETE"<<std::endl;
 
-
-
-    for(int run_count = 0; run_count < nRuns; run_count++)
+    for(int run_count = 0; run_count < nRuns; run_count++)//1000 runs
     {
-        PackedZ2<N_COLS> outKX;
+        PackedZ2<N_COLS> outKX;//stores the Z2 output of Kx
 
-        auto start_prf_lookup = std::chrono::system_clock::now();
+        auto start_prf_lookup = std::chrono::system_clock::now();//start timing for entire PRF with lookup table
 
-        outKX.toeplitzByVec(K,X);   //K * X
+        outKX.toeplitzByVec(K,X);   //K * X in mod 2 field
 
         //converting the input format
         std::vector<uint64_t> outKX_input(16); //16 vectors each as a word of size 16 bits. Total containing 256 bits.
         reformat_input(outKX_input, outKX);  //phase 2
 
-        PackedZ3<81> outZ3_lookup;
+        PackedZ3<81> outZ3_lookup;//stores output after accessing lookup table
 
         auto start_prf_p3 = std::chrono::system_clock::now();
-        uselookup(outZ3_lookup, outKX_input, lookup_table);
+
+        uselookup(outZ3_lookup, outKX_input, lookup_table);//use of lookup table
+
         timer_packed_cent_p3 += (std::chrono::system_clock::now() - start_prf_p3).count();
+
         timer_packed_PRF_lookup += (std::chrono::system_clock::now() - start_prf_lookup).count();
 
-        //std::cout << "in test_packed_PRF_central_lookup, main function, " << "outZ3_lookup=" << outZ3_lookup << std::endl;
-        outZ3_dummy += outZ3_lookup;
+        outZ3_dummy += outZ3_lookup;//dummy variable to ensure accurate timing in multiple runs
     }
 
     using Clock = std::chrono::system_clock;
@@ -105,6 +105,7 @@ int main()  {
         time_unit_multiplier = 0.001; //make nanosecond to microsecond
     else if(Duration::period::den == 1000000)
         time_unit_multiplier = 1;   //keep the unit as microsecond
+
     std::cout<<"Time for "<<nRuns<<" runs of calling/accessing lookup table "<<(timer_packed_cent_p3 * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Time for "<<nRuns<<" runs of entire PRF using lookup table "<<(timer_packed_PRF_lookup * time_unit_multiplier)<<" microseconds"<<std::endl;
     std::cout<<"Number of rounds per second for accessing lookup table "<<(1000/(timer_packed_cent_p3*time_unit_multiplier)*1000000)<<std::endl;

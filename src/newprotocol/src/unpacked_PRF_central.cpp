@@ -155,7 +155,11 @@ void PRF_unpacked_driver(int nTimes,  int nRuns, int nStages)
         //dummyoutmod3 += out_mod3;
     }
 
-    std::cout<<dummy << dummyoutmod3;
+    for(int i = 0; i < 81; i++)
+    {
+        std::cout << out_mod3[i];
+    }
+
 }
 
 void display_time_unpacked(int nRuns)

@@ -48,7 +48,7 @@ void PRF_packed_test(std::vector<uint64_t>& K1, PackedZ2<N_COLS>& x1, std::vecto
 
     //2.perform K = k1 + k2 (on matrix)
     std::vector<uint64_t> K(toeplitzWords);
-    for (int i = 0; i < K1.size(); i++)
+    for (int i = 0; i < K1.size(); i++)//K = K1 + K2
     {
         K[i] = K1[i] ^ K2[i];
     }
