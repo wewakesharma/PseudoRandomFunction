@@ -127,14 +127,14 @@ We start with benchmarks for the different optimization techniques detailed in S
 			\checkmark & \checkmark & \checkmark & 6.08 & 165K & $n(2+2t)+t + 2^{20}$ \\
 			\hline
 		\end{tabular}
-		\caption{Centralized 23-wPRF benchmarks using different optimization techniques. Packing was done into 64-bit sized words (for both $\Z_2$ and $\Z_3$ vectors). For the lookup table optimization, an $(m=256)$-column matrix was partitioned into 16 slices of 16 columns each.}
+		\caption{Centralized 23-wPRF benchmarks using different optimization techniques. Packing was done into 64-bit sized words (for both $\Z_2$ and $\Z_3$ vectors). For the lookup table optimization, an $(m=256)$-column matrix was partitioned into 16 slices of 16 columns each.\yuval{Specify units in Runtime column. Memory Usage column: not sure what this means, and in any case the first two rows seem too small to be meaningful (e.g., the amount of memory used by the program for maintaining variables may be bigger). I suggest removing this column, and instead specifying the lookup table size in the caption. Alternatively, we can keep this column and change the title to ``lookup table size'', keeping the first two rows empty. Regarding this size, what does $2^{20}$ count? Bits? Machine words? $\Z_3$ elements? }}
 		\label{table:optimization_benchmarks}
 	}
 	\mahimna{It would be nice to get benchmarks for performance gain using each optimization independently. If possible, it might also be nice to get the numbers for different sized lookup tables. We could also estimate this analytically.}
 \end{table}
 
 \paragraph{Distributed wPRF evaluation.}
-We consider two 2-party weak PRF protocols. The first protocol is described in \cite{boneh2018-darkmatter} and the second one is our construction as described in \ref{newProtocol}. Since the goal of the implementation was timing the local run-time, the implementation used a trusted party to generate the pre-processed variables.
+We consider two 2-party weak PRF protocols. The first protocol is described in \cite{boneh2018-darkmatter} and the second one is our construction as described in \ref{newProtocol}. Since the goal of the implementation was timing the local {\em online}run-time, the implementation used a trusted party to generate the pre-processed variables.
 
 \begin{table}[htbp]
 	%[h]
@@ -145,7 +145,7 @@ We consider two 2-party weak PRF protocols. The first protocol is described in \
 			\textbf{Protocol} & \textbf{Eval/sec} & \textbf{Runtime($\mu$ sec)} \\
 			\hline
 			\hline
-			\textbf{Fully Distributed wPRF\cite{boneh2018-darkmatter}} & 36K & 28.02  \\
+			\textbf{Fully Distributed wPRF~\cite{boneh2018-darkmatter}} & 36K & 28.02  \\
 			\hline
 			\textbf{Fully Distributed wPRF} &  82K &  12.12\\
 			\hline
@@ -181,7 +181,7 @@ For the comparison with the DDH-based OPRF construction in~\cite{naor1999-oprf},
 				DDH-based OPRF & & 57.38& 28.69 & - & 256 & - &n&n\\
 				\hline
 		\end{tabular}}
-		\caption{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu$s).}
+		\caption{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu$s). \yuval{What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\Z_3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }}
 		\label{table:oprf_comparison}
 	}
 	\mahimna{Include more comparisons as necessary}

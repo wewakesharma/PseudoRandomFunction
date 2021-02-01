@@ -2,78 +2,115 @@
 \newpage
 \section{Distributed Protocols}
 \label{sec:distributed_protocols}
-\mahimna{major changes in progress}
-We now describe efficient protocols to compute our candidate constructions in several distributed settings.
+We now describe efficient protocols to compute our candidate constructions in several interesting distributed settings.
 
 \subsection{Technical Overview}
 Recall that all our constructions can be succinctly represented using four basic gates. The main strategy now will be to evaluate each of these gates in a distributed manner. These gate evaluation subprotocols can then be easily composed to evaluate the  candidate constructions. 
 
-We provide distributed protocols to evaluate each of the four gates. Recall that the goal of a gate protocol is to convert shares of the inputs to shares of the outputs (or shares of the masked output). To make our formalism cleaner, the gate protocols, by themselves, will involve no communication. Instead, they can additionally take in masked versions of the inputs, and possibly some additional correlated randomness. To compose gate protocols, whenever a masked input is needed, the parties will exchange their local shares to publicly reveal the masked value.
+We begin with distributed protocols to evaluate each of the four gates. Abstractly, the goal of a gate protocol is to convert shares of the inputs to shares of the outputs (or shares of the masked output). To make our formalism cleaner, the gate protocols, by themselves, will involve no communication. Instead, they can additionally take in masked versions of the inputs, and possibly some additional correlated randomness. When composing gate protocols, whenever a masked input is needed, the parties will exchange their local shares to publicly reveal the masked value.
+
+\paragraph{Notation.}
+For a value $v$ in a group $\mathbb{G}$, we use $\tilde{v}$ to denote a random mask value sampled from the same group, and $\hat{v} = v + \tilde{v}$ (where + is the group operation for $\mathbb{G}$) to denote $v$ masked by $\tilde{v}$. We use the $+$ operator quite liberally and unless specified, it denotes the group operation (e.g., component-wise addition $\bmod~p$ for $\Z_p^l$) for the summands.
+
+For a value $v$, we use $\share{v}$ to denote an (additive) sharing of $v$ (in $\mathbb{G}$) among all protocol participants, and $\share{v}^{(i)}$ to denote the share of the $i^\thtext$ party. When clear from context (e.g., a local protocol for $\party_i$), we will often drop the superscript. 
+
+For a protocol $\prot$, we use the notation $\prot(a_1, \dots, a_k \mid b_1, \dots, b_l)$ to denote that the values $a_1, \dots, a_k$ are provided publicly to all parties in the protocol, while the values $b_1, \dots, b_l$ are secret shared among the parties.
+
+\paragraph{Local share operations.}
+Given public values $a_1, \dots, a_k$, it is straightforward for the protocol parties to compute a sharing $\share{f(a_1, \dots, a_k)}$ for a function $f$ (for example, $\party_1$ computes the function as its share, and all other parties set their share to $0$).
 
 \subsubsection{Distributed Computation of Circuit Gates}
 
-\paragraph{Linear gate protocol $\prot^\mat{A}_\LinMap$.}
-The linear gate is the easiest to evaluate. Given a publicly known matrix $\mat{A}$, and shares $(x^{(1)}, \dots, x^{(N)})$ of the input $x$ where $\party_i$ holds $x^{(i)}$, the protocol will compute shares of the output $u = \mat{A}x$. To do this, each party $\party_i$ can locally compute $u^{(i)} = \mat{A}x^{(i)}$. Note that $\mat{A}x = \sum_{i=1}^N \mat{A}x^{(i)}$.
+We provide detailed (local) protocols to compute each circuit gate in this section. The description of each gate protocol is also summarized in Table~\ref{table:gate_protocol_summary}.
 
-\paragraph{Bilinear gate protocol $\prot_\BiLinear$.}
-For the bilinear gate, both $\mat{A}$ and $x$ are secret shared amongst the protocol parties. The bilinear gate protocol will compute shares of the masked output $u' = \mat{A}{x} + r_u$, where $r_u$ is a random mask. 
 
-More concretely, let $\mat{R_A}$ and $r_x$ be randomly sampled masks for $\mat{A}$ and $x$, and denote the masked values by $\mat{A'} = \mat{A} + \mat{R_A}$ and $x' = x + r_x$. Define correlated randomness $r_c = \mat{R_A}
-r_x + r_u$. Apart from shares of the inputs, each party will also be given the masked values $\mat{A'}$ and $x'$ publicly, and shares of the random values $\mat{R_A}$, $r_x$, and $r_c$. Specifically, let $(\mat{A}^{(1)}, \dots, \mat{A}^{(N)})$, $(\mat{R_A}^{(1)}, \dots, \mat{R_A}^{(N)})$, $(x^{(1)}, \dots, x^{(N)})$, $(r_x^{(1)}, \dots, r_x^{(N)})$ and $(r_c^{(1)}, \dots, r_c^{(N)})$ be sharings of $\mat{A}$, $\mat{R_A}$, $x$, $x'$ and $r_c$ respectively. Then, $\party_i$ is provided with the values $\mat{A}^{(i)}, \mat{R_A}^{(i)}$, $x^{(i)}, r_x^{(i)}$, $\mat{A'}, x'$, and $r_c^{(i)}$. 
+\begin{table}[h]
+\centering
+{
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|}
 
-Now, to compute shares of the masked output $u' = \mat{A}x + r_u$, each party $\party_i (i \neq 1)$ computes $u'^{(i)} = - \mat{A'}r_x^{(i)} - \mat{R_A}^{(i)}x' + r_c^{(i)}$, while $\party_1$ computes $u'^{(1)} = \mat{A'}x' - \mat{A'}r_x^{(1)} - \mat{R_A}^{(1)}x' + r_c^{(i)}$. It is straightforward to see that $(u'^{(1)}, \cdots, u'^{(N)})$ is a sharing of $u'$ since:
+\hline
+Protocol & \makecell{Public \\ Inputs} & \makecell{Shared \\ Inputs} & \makecell{Output Shares \\ (over base group $\mathbb{G}$)} \\
+\hline
+$\prot_{\LMap}^{\mat{A},p}$ & $\mat{A}$ & $x$ & $y = \mat{A}x$\\
+\hline
+$\prot_{\BLMap}^p$ & $\hat{\mat{K}}, \hat{x}$ & $\tilde{\mat{K}},\tilde{x}, \tilde{\mat{K}}\tilde{x} + \tilde{y}$ & $\hat{y} = \mat{K}x + \tilde{y}$\\
+\hline
+$\prot_{\Convert}^{(2,3)}$ & $\hat{x}$ (over $\Z_2$) & $r = \tilde{x}$ (over $\Z_3$) & $x^* = x$ (over $\Z_3$) \\
+\hline
+$\prot_{\Convert}^{(3,2)}$ & $\hat{x}$ (over $\Z_3$) & \makecell{$u = \tilde{x} \bmod 2$ (over $\Z_2$) \\ $v = (\tilde{x} + \textbf{1} \bmod 3) \bmod 2$ (over $\Z_2$)} & $x^* = x \bmod 2$ (over $\Z_2$) \\
+\hline
+\end{tabular}
+}
+\caption{Summary of circuit gate protocols}
+\label{table:gate_protocol_summary}
+\end{table}
+
+
+\paragraph{Linear gate protocol $\prot_\LMap^{\mat{A}, p}$.}
+The linear gate is the easiest to evaluate. Here, each party is provided with the matrix $\mat{A}$, and a share of the input $x$ (over $\Z_p$). The goal is to compute shares of the output $y = \mat{A}x$. For the protocol $\prot_\LMap^{\mat{A}, p}(\mat{A} \mid x)$, each party $\party_i$ computes its share $\share{y} = \mat{A}\share{x}$. Note that $\mat{A}x = \sum_{\parties}\mat{A}\share{x}$.
+
+\mahimna{Is this sufficiently clear or should we use something like $\share{x}^{(i)}$ everywhere?}
+
+% $\share{y}^{(i)} = \mat{A}\share{x}^{(i)} \bmod p$. Note that $\mat{A}x = \sum_{\party_i \in \parties} \mathcal{A}\share{x}^{(i)}$.
+
+\paragraph{Bilinear gate protocol $\prot_\BLMap^p$.}
+For the bilinear gate, given shares of $\mat{K}$ and $x$ (over $\Z_p$), the goal is to compute shares of the masked value $\hat{y} = \mat{K}x + \tilde{y}$. In the protocol, the values $\hat{\mat{K}}, \hat{x}$ will be publicly provided to all parties. Further, each party will also be given shares of $\tilde{\mat{K}}, \tilde{x}$ and $\tilde{\mat{K}}\tilde{x} + \tilde{y}$. Now, the evaluate $\prot_\BLMap^p(\hat{\mat{K}},\hat{x}\mid \tilde{\mat{K}}, \tilde{x}, \tilde{\mat{K}}\tilde{x} + \tilde{y})$, each party $\party_i$ computes its share of $\hat{y}$ as:
+\[
+    \share{\hat{y}} = \share{\hat{\mat{K}}\hat{x}} - \hat{\mat{K}}\share{\tilde{x}} - \share{\tilde{\mat{K}}}\hat{x} + \share{\tilde{\mat{K}}\tilde{x} + \tilde{y}}
+\]
+
+\noindent Note that this works since:
 \begin{align*}
-\sum_{i=1}^N u'^{(i)} &= \mat{A'}x' - \mat{A'}r_x - \mat{R_A}x' + r_c \\
-&= (\mat{A} + \mat{R_A})x - \mat{R_A}(x + r_x) + (\mat{R_A}r_x + r_u) \\
-&= \mat{A}x + r_u
+\sum_\parties \share{\hat{y}} &= \hat{\mat{K}}\hat{x} - \hat{\mat{K}}\tilde{x} - \tilde{\mat{K}}\hat{x} + \tilde{\mat{K}}\tilde{x} + \tilde{y} \\
+&= (\mat{K} + \tilde{\mat{K}})x - \tilde{\mat{K}}(x + \tilde{x}) + (\tilde{\mat{K}}\tilde{x} + \tilde{y}) \\
+&= \mat{K}x + \tilde{y}
 \end{align*}
 
+\paragraph{$\Z_2 \to \Z_3$ conversion protocol $\prot_\Convert^{(2,3)}$.}
+For the $\Z_2$ to $\Z_3$ conversion gate, given a masked input $\hat{x} = x \oplus \tilde{x}$ (i.e., over $\Z_2$) publicly, the goal is to output shares of $x^* = x$ over $\Z_3$. For this, the parties will also be given shares of $r = \tilde{x}$ over $\Z_3$. Note that since $\hat{x}$ is given publicly, it can also be thought to be over $\Z_3$. Now, to evaluate $\prot_\Convert^{(2,3)}(\hat{x} \mid r)$, each party proceeds as follows:
+\[
+\share{x^*} = \share{\hat{x}} + \share{r} + (\hat{x} \odot \share{r}) \quad \bmod 3
+\]
+where $\odot$ denotes the Hammard (component-wise) product modulo 3. Here, addition is also done over $\Z_3$. \\
 
-\paragraph{$\Z_2$ to $\Z_3$ conversion protocol $\prot_{\Convert}^{(2,3)}$.}
-For the protocol $\prot_{\Convert}^{(3,2)}$, each $\party_i$ will hold additive shares over $\Z_2$ of a masked input $u' = u \oplus r_u$. The goal of the protocol is to output additive shares of $u$ over $\Z_3$. 
-
-Concretely, let $r_u \in \Z_2^l$ be a randomly chosen mask and let $p \in \Z_3^l$ such that $p = r_u$ (viewed over $\Z_3$). Let $(p^{(1)}, \dots, p^{(N)})$ be a sharing of $p$ (over $\Z_3$). Each party $\party_i$ is given as input, $u'$ and $p^{(i)}$. Now, $\party_i$ computes its share $v^{(i)}$ of $v = u$ (viewed over $\Z_3$) as follows:
-
-\begin{enumerate}
-    \item Let $u' = (u'_1, \dots, u'_l)$ where each $u'_j \in \Z_2$ and $p^{(i)} = (p^{(i)}_1, \dots, p^{(i)}_l)$ where each $p^{(i)}_j \in \Z_3$. 
-
-
-    \item $\partyi$ ($i \neq 1$) computes $v^{(i)}_j = p^{(i)}_j \boxplus w'_j \cdot p^{(i)}_j$ for each $j \in [l]$.
-
-    $\party_1$ computes $v^{(1)}_j = p^{(1)}_j \boxplus w'_j \cdot p^{(1)}_j \boxplus u'_j$ for each $j \in [l]$.
-
-    \item Each party $\party_i$ outputs $v^{(1)} = (v^{(i)}_1, \dots, v^{(i)}_l)$.
-\end{enumerate}
-
-\noindent We show in Lemma~\ref{lemma:convert-23} that the $v^{(i)}$ output by the parties form a sharing (over $\Z_3$) of $u$.
-
-\begin{lemma}
-Let $v^{(i)}$ denote the output of $\party_i$ in $\prot_{\Convert}^{(2,3)}$. Then $v = \bigboxplus v^{(i)} = u$.
-\label{lemma:convert-23}
-\end{lemma}
-\begin{proof}
-Let $r_u = (r_{(u,1)}, \dots, r_{(u,l)})$, $v = (v_1, \dots, v_l)$, and for each party $\party_i$, let $v^{(i)} = (v^{(i)}_1, \dots, v^{(i)}_l)$. Now, notice that, for each $j \in [l]$,
+\noindent To see why this works, suppose that $\hat{x} \in \Z_2^l$. Consider any position $j \in [l]$, and denote by using a subscript $j$, the $j^\thtext$ position in a vector. Note that now, the position $j$ of the output can be written as:
+\[
+    \share{x^*}_j = \share{\hat{x}}_j + \share{r}_j + (\hat{x}\share{r}_j\bmod 3) \quad \bmod 3
+\]
+Consider two cases:
 \begin{itemize}
-    \item If $u'_j = 0$, then $r_{(u,j)} = u_j$. Therefore,
-    \[
-     v_j = \bigboxplus_{i=1}^N v^{(i)}_j = \bigboxplus_{i=1}^N p^{(i)}_j = r_{(u,j)} = u_j.
-    \]
-    \item If $u'_j = 1$, then $u_j = 1 - r_{(u,j)}$. Therefore,
-    \[
-    v_j = \bigboxplus_{i=1}^N v^{(i)}_j = u'_j \boxplus \left(2\bigboxplus_{i=1}^N p^{(i)}_j \right) = 1 \boxplus (2 \cdot r_{(u,j)}).
-    \]
-    \noindent Now, when $r_{(u,j)} = 0$, we have $v_j = 1 = 1 - r_{(u,j)} = u_j$, and when $r_{(u,j)} = 1$, we have $v_j = 0 = 1 - r_{(u,j)} = u_j$.
+\item If $\hat{x}_j = 0$, then $\tilde{x}_j = x_j$. Therefore, $\sum_\parties \share{x^*}_j = 0 + \tilde{x}_j = x_j$.
+
+\item If $\hat{x}_j = 1$, then $x_j = 1 - \tilde{x}_j$. Therefore, $\sum_\parties \share{x^*}_j = 1 + 2\tilde{x}_j \bmod 3$. If $\tilde{x}_j = 0$, this evaluates to $1 = x_j$, while if $\tilde{x}_j = 1$, it evaluates to $0 = 1 - \tilde{x}_j = x_j$
 \end{itemize}
-Consequently, we have $v_j = u_j$ for all $j \in [l]$, i.e., $v = u$, which completes the proof.
-\end{proof}
+In other words, in all cases, each component of the sum ($\bmod~3$) of shares $\share{x^*}$ is the same as the corresponding component of $x$. Therefore, $\sum_\parties \share{x^*} (\bmod~3) = x$ will hold.
 
-\paragraph{$\Z_3$ to $\Z_2$ conversion protocol $\prot_{\Convert}^{(3,2)}$.}
-For the protocol $\prot_{\Convert}^{(3,2)}$, each $\party_i$ will hold additive shares over $\Z_3$ of a masked input $u' = u + r_u$. The goal of the protocol is to output additive shares of $v = (u \bmod 2)$ over $\Z_2$.
-\mahimna{todo}
 
+\paragraph{$\Z_3 \to \Z_2$ conversion protocol $\prot_{\Convert}^{(3,2)}$.}
+For the $\Z_3$ to $\Z_2$ conversion gate, given a masked input $\hat{x} \in \Z_3^l; \hat{x} = x + \tilde{x} \bmod 3$, the goal is to output shares of $x^*$ (over $\Z_2$) where $x^*  = x \bmod 2$. For this, each party is also given shares (over $\Z_2$) of two vectors: $u = \tilde{x} \bmod 2$ and $v = (\tilde{x} + \textbf{1} \bmod 3) \bmod 2$. Now, each party computes its share of $x^*$ as follows: For each position $j \in [l]$,
+\[
+\share{x^*}_j = 
+\begin{cases*}
+       1 - \share{u}_j - \share{v}_j  & \quad if $\hat{x}_j = 0$ \\
+       \share{v}_j & \quad if $\hat{x}_j = 1$ \\
+       \share{u}_j & \quad if $\hat{x}_j = 2$
+\end{cases*}
+\]
+To see why this works, consider three cases:
+\begin{itemize}
+\item If $\hat{x}_j = 0$, then $\sum_\parties \share{x^*}_j \bmod 2 = 1 - u_j - v_j$. This evaluates to $1$ only when $\tilde{x}_j = 2$, and is exactly the case when $x_j$ is also 1.
+
+\item $\hat{x}_j = 1$, then $\sum_\parties \share{x^*}_j \bmod 2 = v_j = (\tilde{x}_j + 1 \bmod 3) \bmod 2)$. This evaluates to $1$ only when $\tilde{x}_j = 0$, and is exactly the case when $x_j$ is also 1.
+
+\item $\hat{x}_j = 2$, then $\sum_\parties \share{x^*}_j \bmod 2 = u_j$. This evaluates to $1$ only when $\tilde{x}_j = 1$, and is exactly the case when $x_j$ is also 1.
+\end{itemize}
+Consequently, $\sum_\parties \share{x^*} \bmod 2 = x \bmod 2$ holds.
 
 \subsection{Distributed Evaluation in the Preprocessing Model}
-Equipped with our technical overview, we proceed to describe our distributed protocols in the preprocessing model. We focus primarily on the 2-party semi-honest setting but comment that our protocols can easily be generalized to $n$ parties. We use $\pzero$ and $\pone$ to denote the 2 parties.
+Equipped with our technical overview, we proceed to describe our distributed protocols in the preprocessing model. We focus primarily on the 2-party semi-honest setting but comment that our protocols can easily be generalized to $n$ parties. 
+%We use $\pzero$ and $\pone$ to denote the 2 parties.
 
 \subsubsection{2-party wPRF evaluation.}
 We start with a 2-party distributed protocol to evaluate our primary mod-2/mod-3 wPRF candidate from Construction~\ref{construction:23-central-wprf}. In this setting, the two parties hold additive shares of a key $\mat{K} \in \Z_2^{m \times n}$, and an input $x \in \Z_2^n$. The goal is to compute an additive sharing of the wPRF output $y = \LinMap_\mat{G}(\mat{K}x)$ where $\mat{G} \in \Z_3^{t \times m}$ is a publicly known matrix. 

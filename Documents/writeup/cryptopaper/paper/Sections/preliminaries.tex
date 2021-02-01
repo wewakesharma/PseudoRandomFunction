@@ -3,14 +3,16 @@
 \section{Preliminaries}
 \label{sec:preliminaries}
 
-We start with some basic notation. For a positive integer $k$, we use $[k]$ to denote the set $\{1,\dots, k\}$. $\Z_p$ denotes the ring of integers modulo $p$. 
+\paragraph{Notation.} We start with some basic notation.
+For a positive integer $k$, $[k]$ denotes the set $\{1,\dots, k\}$. $\Z_p$ denotes the ring of integers modulo $p$. We use bold uppercase letters (e.g., $\mat{A}, \mat{K}$) to denote matrices. We use $\textbf{0}^l$ and $\textbf{1}^l$ to denote the all zeros and the all ones vector respectively (of length $l$), and drop $l$ when sufficiently clear. For distributed protocols with $N$ parties, we use $\parties = \{\party_1, \dots, \party_N\}$ to denote the set of parties. For a value $x$ in group $\mathbb{G}$, we use $\share{x}$ to denote an additive sharing of $x$ (in $\mathbb{G}$) among the protocol parties. When $\mathbb{G}' =  \mathbb{G}^l$ is a product group (e.g., $\Z_p^l$), for $x \in \mathbb{G}'$, we may also say that $\share{x}$ is a sharing \textit{over} $\mathbb{G}$, similar to the standard practice of calling $x$ a vector over $\mathbb{G}$.
+
 
 
 
 
 % The operator $\oplus$ denotes addition modulo 2, and the operator $\boxplus$ denotes addition modulo 3. 
 
-We begin by defining some basic notations that we will use throughout this work. We use uppercase letters (e.g.,
-A, B) to denote matrices and bold letters to denote vectors \textbf{a} . As was specified in the Boneh et al work \cite{boneh2018-darkmatter}, the input variables to the PRF functions are the key ${K}$ which is of size $m \times n$ and each input vector $\textbf{i}$ of size $n$. 
-To save on bandwidth in the distributed implementation, the key was implemented as a Toeplitz matrix, requiring $m + n - 1$ bits.
-At the end of the algorithm, a randomization matrix $R$ is used which is of size $t \times m = 81 \times 256$, resulting in entropy of 128 bits (as $81 = 128 \times \log_2 3$).
+% We begin by defining some basic notations that we will use throughout this work. We use uppercase letters (e.g.,
+% A, B) to denote matrices and bold letters to denote vectors \textbf{a} . As was specified in the Boneh et al work \cite{boneh2018-darkmatter}, the input variables to the PRF functions are the key ${K}$ which is of size $m \times n$ and each input vector $\textbf{i}$ of size $n$. 
+% To save on bandwidth in the distributed implementation, the key was implemented as a Toeplitz matrix, requiring $m + n - 1$ bits.
+% At the end of the algorithm, a randomization matrix $R$ is used which is of size $t \times m = 81 \times 256$, resulting in entropy of 128 bits (as $81 = 128 \times \log_2 3$).

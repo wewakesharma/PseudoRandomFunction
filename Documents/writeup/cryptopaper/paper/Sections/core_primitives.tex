@@ -19,14 +19,14 @@ We make use of just four basic operations, or ``gates,'' which we detail below. 
     For a prime $p$, given a public matrix $\mat{A} \in \Z_p^{s \times l}$, the gate $\LMap^\mat{A}_p(\cdot)$ takes as input $x \in \Z_p^l$ and outputs $y = \mat{A}x \in \Z_p^s$.
 
     \item \textbf{Mod-$p$ Bilinear Gate.}
-    For a prime $p$, and positive integers $s$ and $l$, the gate $\BLMap_p^{s,l}(\cdot, \cdot)$ takes as input a matrix $\mat{A} \in \Z_p^{s \times l}$ and a vector $x \in \Z_p^l$ and outputs $y = \mat{A}x \in \Z_p^s$. When clear from context, we will drop the superscript and simply write $\BLMap_p(\mat{A}, x)$.
+    For a prime $p$, and positive integers $s$ and $l$, the gate $\BLMap_p^{s,l}(\cdot, \cdot)$ takes as input a matrix $\mat{K} \in \Z_p^{s \times l}$ and a vector $x \in \Z_p^l$ and outputs $y = \mat{K}x \in \Z_p^s$. When clear from context, we will drop the superscript and simply write $\BLMap_p(\mat{K}, x)$.
     
     \item \textbf{$\Z_2 \to \Z_3$ conversion.} For a positive integer $l$, the gate $\Convert^l_{23}(\cdot)$ takes as input a vector $x \in \Z_2^l$ and returns its equivalent representation $x^*$ in $\Z_3^l$. When clear from context, we will drop the superscript and simply write $\Convert_{23}(x)$.
 
     \item \textbf{$\Z_3 \to \Z_2$ conversion.} For a positive integer $l$, the gate $\Convert^l_{32}(\cdot)$ takes as input a vector $x \in \Z_3^l$ and computes its mapping $x^*$ in $\Z_2^l$. For this, each $\Z_3$ element in $x$ is computed modulo 2 to get the corresponding $\Z_2$ element in the output $x^*$. Specifically, each $0$ and $2$ are mapped to $0$ while each $1$ is mapped to $1$. When clear from context, we will drop the superscript and simply write $\Convert_{32}(x)$.
 \end{itemize}
 
-\noindent Note that the difference between the $\LMap$ and the $\BLMap$ gates is that for the distributed protocol, the matrix $\mat{A}$ will be publicly available to all parties for $\LMap$, while it will be secret shared for $\BLMap$. Also note that although the $\Convert_{23}$ gate is effectively a no-op in a centralized evaluation, in the distributed setting, the gate will be used to convert an additive sharing over $\Z_2$ to an additive sharing over $\Z_3$.
+\noindent Note that the difference between the $\LMap$ and the $\BLMap$ gates is seen in the context of their distributed protocols. For $\LMap$, the matrix $\mat{A}$ will be publicly available to all parties, while the input $x$ will be secret shared. On the other hand, for $\BLMap$, the both the key $\mat{K}$ and the input $x$ will be secret shared. Also note that although the $\Convert_{23}$ gate is effectively a no-op in a centralized evaluation, in the distributed setting, the gate will be used to convert an additive sharing over $\Z_2$ to an additive sharing over $\Z_3$.
 
 As described previously, for the linear mappings, we focus only on constructions that use mod-2 and mod-3 mappings. In Figure~\ref{fig:graphical_gates}, we provide a pictorial representation for each circuit gate. We will connect these pieces together to also provide clean visual representations for all our constructions. 
 
