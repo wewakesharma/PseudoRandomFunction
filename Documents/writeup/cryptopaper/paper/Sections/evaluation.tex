@@ -169,16 +169,19 @@ For the comparison with the DDH-based OPRF construction in~\cite{naor1999-oprf},
 	{
 		\centering
 		\resizebox{\textwidth}{!}{%
-			\begin{tabular}{|cc|c|c|c|c|c|c|c|}%9 columns
+			\begin{tabular}{|cc|c|c|c|c|c|c|}%8 columns
 				
 				\hline
-				\multirow{2}{*}{Protocol} & & \multicolumn{2}{c|}{Runtime} & \multirow{2}{*}{Preprocessing} & \multicolumn{2}{c|}{Communication(bits)}\\
-				& & Server & Client & &Server & Client\\
+				\multirow{2}{*}{Protocol} & & \multicolumn{3}{c|}{Runtime} & \multirow{2}{*}{Preprocessing} & \multicolumn{2}{c|}{Communication(bits)}\\
+				& & Server & Client & Parallel &  &Server & Client\\
 				\hline\hline
-				\multirow{2}{*}{23-OPRF} & Key Update & 0.65 & - & \multirow{2}{*}{1835} & \multirow{2}{*}{593} & \multirow{2}{*}{512}\\
-				& Evaluation & 9.45 & 9.13 & &&\\
+				\multirow{2}{*}{23-OPRF} & Key Update & 0.65 & - & \multirow{2}{*}{9.48} & \multirow{2}{*}{1835} & \multirow{2}{*}{593} & \multirow{2}{*}{512}\\
+				& Evaluation & 9.45 & 9.13 & & &&\\
 				\hline
-				DDH-based OPRF & & 57.38& 28.69 & - &256&256\\
+				\multirow{2}{*}{23-OPRF*} & Key Update & 3.43 & - & \multirow{2}{*}{4.84}& \multirow{2}{*}{768} & \multirow{2}{*}{512} & \multirow{2}{*}{256}\\
+				& Evaluation & 4.84 & 8.84 & & &&\\
+				\hline
+				DDH-based OPRF & & 57.38& 28.69 & & - &256&256\\
 				\hline
 		\end{tabular}}
 		\caption{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu$s). \yuval{What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\Z_3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }}

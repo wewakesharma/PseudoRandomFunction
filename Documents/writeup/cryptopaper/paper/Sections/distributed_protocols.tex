@@ -4,24 +4,25 @@
 \label{sec:distributed_protocols}
 We now describe efficient protocols to compute our candidate constructions in several interesting distributed settings.
 
+
 \subsection{Technical Overview}
 Recall that all our constructions can be succinctly represented using four basic gates. The main strategy now will be to evaluate each of these gates in a distributed manner. These gate evaluation subprotocols can then be easily composed to evaluate the  candidate constructions. 
 
+\yuval{Here and/or in the introduction, we should give credit to previous relevant works (Beaver, TinyTables, BGI19), say how our protocols can be viewed as following this previous framework, and how the details differ.
+}
+
 We begin with distributed protocols to evaluate each of the four gates. Abstractly, the goal of a gate protocol is to convert shares of the inputs to shares of the outputs (or shares of the masked output). To make our formalism cleaner, the gate protocols, by themselves, will involve no communication. Instead, they can additionally take in masked versions of the inputs, and possibly some additional correlated randomness. When composing gate protocols, whenever a masked input is needed, the parties will exchange their local shares to publicly reveal the masked value.
 
-\paragraph{Notation.}
-For a value $v$ in a group $\mathbb{G}$, we use $\tilde{v}$ to denote a random mask value sampled from the same group, and $\hat{v} = v + \tilde{v}$ (where + is the group operation for $\mathbb{G}$) to denote $v$ masked by $\tilde{v}$. We use the $+$ operator quite liberally and unless specified, it denotes the group operation (e.g., component-wise addition $\bmod~p$ for $\Z_p^l$) for the summands.
-
-For a value $v$, we use $\share{v}$ to denote an (additive) sharing of $v$ (in $\mathbb{G}$) among all protocol participants, and $\share{v}^{(i)}$ to denote the share of the $i^\thtext$ party. When clear from context (e.g., a local protocol for $\party_i$), we will often drop the superscript. 
-
+\paragraph{Protocol notation and considerations.}
 For a protocol $\prot$, we use the notation $\prot(a_1, \dots, a_k \mid b_1, \dots, b_l)$ to denote that the values $a_1, \dots, a_k$ are provided publicly to all parties in the protocol, while the values $b_1, \dots, b_l$ are secret shared among the parties.
 
-\paragraph{Local share operations.}
 Given public values $a_1, \dots, a_k$, it is straightforward for the protocol parties to compute a sharing $\share{f(a_1, \dots, a_k)}$ for a function $f$ (for example, $\party_1$ computes the function as its share, and all other parties set their share to $0$).
 
 \subsubsection{Distributed Computation of Circuit Gates}
 
-We provide detailed (local) protocols to compute each circuit gate in this section. The description of each gate protocol is also summarized in Table~\ref{table:gate_protocol_summary}.
+\yuval{In the following, I suggest to switch to a more structured format. For instance: an itemized list for each subprotocol, where the first item describes the functionality, the second describes the correlated randomness, and the third describes the actual protocol. It will also be good to have a table that summarizes the online and communication and correlated randomness (in bits) for each subprotocol. }
+
+We provide detailed (local) protocols to compute each circuit gate in this section. The description of inputs and outputs for each gate protocol is also summarized in Table~\ref{table:gate_protocol_summary}.
 
 
 \begin{table}[h]
@@ -33,9 +34,9 @@ We provide detailed (local) protocols to compute each circuit gate in this secti
 \hline
 Protocol & \makecell{Public \\ Inputs} & \makecell{Shared \\ Inputs} & \makecell{Output Shares \\ (over base group $\mathbb{G}$)} \\
 \hline
-$\prot_{\LMap}^{\mat{A},p}$ & $\mat{A}$ & $x$ & $y = \mat{A}x$\\
+$\prot_{\LMap}^{\mat{A},p}$ & $\mat{A}$ & $x$ & $y = \mat{A}x$ (over $\Z_p$)\\
 \hline
-$\prot_{\BLMap}^p$ & $\hat{\mat{K}}, \hat{x}$ & $\tilde{\mat{K}},\tilde{x}, \tilde{\mat{K}}\tilde{x} + \tilde{y}$ & $\hat{y} = \mat{K}x + \tilde{y}$\\
+$\prot_{\BLMap}^p$ & $\hat{\mat{K}}, \hat{x}$ & $\tilde{\mat{K}},\tilde{x}, \tilde{\mat{K}}\tilde{x} + \tilde{y}$ & $\hat{y} = \mat{K}x + \tilde{y}$ (over $\Z_p$)\\
 \hline
 $\prot_{\Convert}^{(2,3)}$ & $\hat{x}$ (over $\Z_2$) & $r = \tilde{x}$ (over $\Z_3$) & $x^* = x$ (over $\Z_3$) \\
 \hline
@@ -49,17 +50,19 @@ $\prot_{\Convert}^{(3,2)}$ & $\hat{x}$ (over $\Z_3$) & \makecell{$u = \tilde{x} 
 
 
 \paragraph{Linear gate protocol $\prot_\LMap^{\mat{A}, p}$.}
-The linear gate is the easiest to evaluate. Here, each party is provided with the matrix $\mat{A}$, and a share of the input $x$ (over $\Z_p$). The goal is to compute shares of the output $y = \mat{A}x$. For the protocol $\prot_\LMap^{\mat{A}, p}(\mat{A} \mid x)$, each party $\party_i$ computes its share $\share{y} = \mat{A}\share{x}$. Note that $\mat{A}x = \sum_{\parties}\mat{A}\share{x}$.
+The linear gate is the easiest to evaluate, and follows from the standard linear homomorphism of additive secret sharing. Here, each party is provided with the matrix $\mat{A}$, and a share of the input $x$ (over $\Z_p$). The goal is to compute shares of the output $y = \mat{A}x$. For the protocol $\prot_\LMap^{\mat{A}, p}(\mat{A} \mid x)$, each party $\party_i$ computes its output share as $\share{y} = \mat{A}\share{x}$. Note that $\mat{A}x = \sum_{\parties}\mat{A}\share{x}$.
 
 \mahimna{Is this sufficiently clear or should we use something like $\share{x}^{(i)}$ everywhere?}
+\yuval{I think it is better to have notation for the share of player $i$. Let's look at some MPC papers that use the square bracket notation and use a similar notation. }
 
 % $\share{y}^{(i)} = \mat{A}\share{x}^{(i)} \bmod p$. Note that $\mat{A}x = \sum_{\party_i \in \parties} \mathcal{A}\share{x}^{(i)}$.
 
-\paragraph{Bilinear gate protocol $\prot_\BLMap^p$.}
-For the bilinear gate, given shares of $\mat{K}$ and $x$ (over $\Z_p$), the goal is to compute shares of the masked value $\hat{y} = \mat{K}x + \tilde{y}$. In the protocol, the values $\hat{\mat{K}}, \hat{x}$ will be publicly provided to all parties. Further, each party will also be given shares of $\tilde{\mat{K}}, \tilde{x}$ and $\tilde{\mat{K}}\tilde{x} + \tilde{y}$. Now, the evaluate $\prot_\BLMap^p(\hat{\mat{K}},\hat{x}\mid \tilde{\mat{K}}, \tilde{x}, \tilde{\mat{K}}\tilde{x} + \tilde{y})$, each party $\party_i$ computes its share of $\hat{y}$ as:
+\paragraph{Bilinear gate protocol $\prot_\BLMap^p$.} \yuval{Say that this is a generalization of Beaver's multiplication triples  (cf.~\cite{Beaver,BGI19}).}
+For the bilinear gate, given shares of $\mat{K}$ and $x$ (over $\Z_p$), the goal is to compute shares of the masked value $\hat{y} = \mat{K}x + \tilde{y}$. In the protocol, the values $\hat{\mat{K}}, \hat{x}$ will be publicly provided to all parties. Further, each party will also be given shares of $\tilde{\mat{K}}, \tilde{x}$, and $\tilde{\mat{K}}\tilde{x} + \tilde{y}$. Now, for the protocol $\prot_\BLMap^p(\hat{\mat{K}},\hat{x}\mid \tilde{\mat{K}}, \tilde{x}, \tilde{\mat{K}}\tilde{x} + \tilde{y})$, each party $\party_i$ computes its share of $\hat{y}$ as:
 \[
     \share{\hat{y}} = \share{\hat{\mat{K}}\hat{x}} - \hat{\mat{K}}\share{\tilde{x}} - \share{\tilde{\mat{K}}}\hat{x} + \share{\tilde{\mat{K}}\tilde{x} + \tilde{y}}
 \]
+\mahimna{Suggestions are welcome on whether to scale $\share{\cdot}$ or not. For example, $\left\llbracket \hat{\mat{K}} \right\rrbracket, \left\llbracket \hat{x} \right\rrbracket$ vs $\llbracket \hat{\mat{K}} \rrbracket, \llbracket \hat{x} \rrbracket$. This is a macro (\textbackslash share) and is easy to change.} \yuval{Looks good to me.}
 
 \noindent Note that this works since:
 \begin{align*}
@@ -69,7 +72,7 @@ For the bilinear gate, given shares of $\mat{K}$ and $x$ (over $\Z_p$), the goal
 \end{align*}
 
 \paragraph{$\Z_2 \to \Z_3$ conversion protocol $\prot_\Convert^{(2,3)}$.}
-For the $\Z_2$ to $\Z_3$ conversion gate, given a masked input $\hat{x} = x \oplus \tilde{x}$ (i.e., over $\Z_2$) publicly, the goal is to output shares of $x^* = x$ over $\Z_3$. For this, the parties will also be given shares of $r = \tilde{x}$ over $\Z_3$. Note that since $\hat{x}$ is given publicly, it can also be thought to be over $\Z_3$. Now, to evaluate $\prot_\Convert^{(2,3)}(\hat{x} \mid r)$, each party proceeds as follows:
+For the $\Z_2$ to $\Z_3$ conversion gate, given a masked input $\hat{x} = x \oplus \tilde{x}$ (i.e., over $\Z_2$) publicly, the goal is to output shares of $x^* = x$ over $\Z_3$. For this, the parties will also be given shares of $r = \tilde{x}$ over $\Z_3$. Note that since $\hat{x}$ is given publicly, it can also be thought to be over $\Z_3$. Now, for the protocol $\prot_\Convert^{(2,3)}(\hat{x} \mid r)$, each party proceeds as follows:
 \[
 \share{x^*} = \share{\hat{x}} + \share{r} + (\hat{x} \odot \share{r}) \quad \bmod 3
 \]
@@ -89,7 +92,7 @@ In other words, in all cases, each component of the sum ($\bmod~3$) of shares $\
 
 
 \paragraph{$\Z_3 \to \Z_2$ conversion protocol $\prot_{\Convert}^{(3,2)}$.}
-For the $\Z_3$ to $\Z_2$ conversion gate, given a masked input $\hat{x} \in \Z_3^l; \hat{x} = x + \tilde{x} \bmod 3$, the goal is to output shares of $x^*$ (over $\Z_2$) where $x^*  = x \bmod 2$. For this, each party is also given shares (over $\Z_2$) of two vectors: $u = \tilde{x} \bmod 2$ and $v = (\tilde{x} + \textbf{1} \bmod 3) \bmod 2$. Now, each party computes its share of $x^*$ as follows: For each position $j \in [l]$,
+For the $\Z_3$ to $\Z_2$ conversion gate, given a masked input $\hat{x} \in \Z_3^l; \hat{x} = x + \tilde{x} \bmod 3$, the goal is to output shares of $x^*$ (over $\Z_2$) where $x^*  = x \bmod 2$. For this, each party is also given shares (over $\Z_2$) of two vectors: $u = \tilde{x} \bmod 2$ and $v = (\tilde{x} + \textbf{1} \bmod 3) \bmod 2$. Now,  Now, for the protocol $\prot_\Convert^{(3,2)}(\hat{x} \mid u, v)$, each party computes its share of $x^*$ as follows: For each position $j \in [l]$,
 \[
 \share{x^*}_j = 
 \begin{cases*}
@@ -108,17 +111,75 @@ To see why this works, consider three cases:
 \end{itemize}
 Consequently, $\sum_\parties \share{x^*} \bmod 2 = x \bmod 2$ holds.
 
+
+\subsubsection{Composing Gate Protocols}
+\mahimna{todo}
+
 \subsection{Distributed Evaluation in the Preprocessing Model}
-Equipped with our technical overview, we proceed to describe our distributed protocols in the preprocessing model. We focus primarily on the 2-party semi-honest setting but comment that our protocols can easily be generalized to $n$ parties. 
-%We use $\pzero$ and $\pone$ to denote the 2 parties.
+Equipped with our technical overview, we proceed to describe distributed protocols in the preprocessing model for our candidate constructions. 
 
-\subsubsection{2-party wPRF evaluation.}
-We start with a 2-party distributed protocol to evaluate our primary mod-2/mod-3 wPRF candidate from Construction~\ref{construction:23-central-wprf}. In this setting, the two parties hold additive shares of a key $\mat{K} \in \Z_2^{m \times n}$, and an input $x \in \Z_2^n$. The goal is to compute an additive sharing of the wPRF output $y = \LinMap_\mat{G}(\mat{K}x)$ where $\mat{G} \in \Z_3^{t \times m}$ is a publicly known matrix. 
+\subsubsection{\ttwPRF evaluation.}
+\mahimna{Since we are proposing several constructions, this kind of detailed protocol will get repetitive, especially for the distributed setting. I'm thinking, we could just point to the centralized construction to figure out what correlated randomness will be needed, and generalize the actual protocol construction. Perhaps, we can specify the full details for one protocol.} 
+\yuval{Yes, the previous section should provide a general scheme that can apply to any 2-3 primitive. But we need to distinguish between the following models: (1) shared inputs and shared output (2-party or $N$-party); (2) 2-party OPRF setting (each party holds an input, one party gets the output); (3) honest-majority 3PC setting. This section can summarize the total (online) communication costs of our protocols and compare them to the literature (TCC '18 paper and other relevant works). We can refer to the implementation section for computational cost benchmarks. }
 
-\mahimna{Work in progress}
+We start with an $N$-party (semi-honest) distributed protocol to evaluate our \ttwPRF candidate from Construction~\ref{construction:23-central-wprf}. In this setting, parties in $\parties = \{\party_1, \cdots, \party_N\}$ hold additive shares of a key $\mat{K} \in \Z_2^{m \times n}$, and an input $x \in \Z_2^n$. The goal is to compute an additive sharing of the wPRF output $y = \LMap^\mat{B}_3(\mat{K}x)$ where $\mat{B} \in \Z_3^{t \times m}$ is a publicly known matrix.
+
+\paragraph{Preprocessing.}
+Our protocol requires preprocessed randomness as follows. A dealer randomly samples masks $\tilde{\mat{K}}$ and $\tilde{x}$ for $\mat{K}$ and $x$ respectively. It also randomly samples $\tilde{w} \in \Z_2^m$ as mask for the intermediate output. Let $r \in \Z_3^m; r = \tilde{w}$ (viewed over $\Z_3$). Each party is now provided the shares $\share{\tilde{\mat{K}}}, \share{\tilde{x}}, \share{\tilde{\mat{K}}\tilde{x} + \tilde{w}}$, and $\share{r}$ as preprocessing.
+
+\paragraph{Protocol details.}
+The distributed protocol proceeds as follows:
+\begin{itemize}
+    \item Each party computes masks their key and input shares as 
+    \begin{align*}
+    \share{\hat{\mat{K}}} &= \share{\mat{K}} + \share{\tilde{\mat{K}}} \\
+    \share{\hat{x}} &= \share{x} + \share{\tilde{x}}
+    \end{align*}
+    using its given randomness. The shares are then exchanged to reconstruct $\mat{\hat{K}}$ and $\hat{x}$.
+
+    \item Each party locally runs $\prot_\BLMap^2(\hat{\mat{K}}, \hat{x} \mid \tilde{\mat{K}}, \tilde{x}, \tilde{\mat{K}}\tilde{x} + \tilde{w})$ to obtain its share (over $\Z_2$) of $\hat{w} = \mat{K}x + \tilde{w}$. The shares are then exchanged to reconstruct $\hat{w}$.
+
+    \item Each party locally runs $\prot_{\Convert}^{(2,3)}(\hat{w} \mid r)$ to obtain shares of $w^* = w$ (over $\Z_3$).
+
+    \item Finally, each party obtains its share of the final output $y$ by running $\prot_\LMap^{\mat{B}, 3}(\mat{B} \mid w^*)$.
+\end{itemize}
 
 
-\paragraph{$n$-party distributed evaluation.}
+
+\paragraph{Cost analysis.}
+
+
+
+
+
+
+
+% \subsubsection{2-party wPRF evaluation.}
+% We start with a 2-party distributed protocol to evaluate our \ttwPRF candidate from Construction~\ref{construction:23-central-wprf}. In this setting, the two parties hold additive shares of a key $\mat{K} \in \Z_2^{m \times n}$, and an input $x \in \Z_2^n$. The goal is to compute an additive sharing of the wPRF output $y = \LMap^\mat{B}_3(\mat{K}x)$ where $\mat{B} \in \Z_3^{t \times m}$ is a publicly known matrix.
+
+% \paragraph{Preprocessing.}
+% We assume that the protocol parties are provided with the following correlated randomness.
+
+% The protocol proceeds as follows:
+% \begin{itemize}
+%     \item Each party computes masks their key and input shares as 
+%     \begin{align*}
+%     \share{\hat{\mat{K}}} &= \share{\mat{K}} + \share{\tilde{\mat{K}}} \\
+%     \share{\hat{x}} &= \share{x} + \share{\tilde{x}}
+%     \end{align*}
+%     using their given randomness. Both parties exchange their shares simultaneously to reconstruct $\mat{\hat{K}}$ and $\hat{x}$.
+
+%     \item Next, both parties locally run $\prot_\BLMap^2(\hat{\mat{K}}, \hat{x} \mid \tilde{\mat{K}}, \tilde{x}, \tilde{\mat{K}}\tilde{x} + \tilde{w})$ to obtain shares (over $\Z_2$) of $\hat{w} = \mat{K}x + \tilde{w}$. Both parties exchange their shares simultaneously to reconstruct $\hat{w}$.
+
+%     \item Now, the parties run $\prot_{\Convert}^{(2,3)}(\hat{w} \mid r)$ to obtain shares of $w^*$ (over $\Z_3$).
+
+%     \item Finally, each party computes its share of the final output $y$ as $\share{y} = \prot_\LMap^{\mat{B}, 3}(\mat{B} \mid w^*)$. The parties output their shares.
+% \end{itemize}
+
+
+
+% \mahimna{Work in progress}
+
 
 \subsection{2-party Public Input Evaluation}
 

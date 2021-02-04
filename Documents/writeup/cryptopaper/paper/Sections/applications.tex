@@ -16,7 +16,6 @@
 \newcommand{\bmat}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\matA}{\bmat{A}}
 \newcommand{\matB}{\bmat{B}}
-\newcommand{\ttOWF}{$(2,3)$-OWF\xspace}
 
  \newtcolorbox{titlebox}[5]{
     enhanced,
@@ -104,7 +103,7 @@ $r = \sum_{i=1}^N [r]_i$.  We use $[r]_i$ to denote party $i$'s share of $r$,
 or simply $[r]$ when the context makes the party's index clear.
 
 We must also be able to create a sharing mod 3, of a secret shared value mod 2.
-Let $w'\in\Z_2$ be secret shared.  Then to establish shares of $r = w' \pmod
+Let $\tilde{w}\in\Z_2$ be secret shared.  Then to establish shares of $r = \tilde{w} \pmod
 3$, the first $N-1$ parties sample a share $[r]$ from their random tapes. The
 $N$-th party's share is chosen by the prover, so that the sum of the shares is
 $r$.  We refer to the last party's share as an \emph{auxiliary value}, since
@@ -116,10 +115,10 @@ tape, and for the $N$-th party the state is the seed value plus the list of
 auxiliary values, denoted $\aux$. 
 
 After pre-processing, the parties enter the \emph{online} phase of the protocol. 
-The prover computes $\hat{x}= x + x'$, where $x'$ is a random value, established during
-preprocessing so that each party has a share $[x']$. 
+The prover computes $\hat{x}= x + \tilde{x}$, where $\tilde{x}$ is a random value, established during
+preprocessing so that each party has a share $[\tilde{x}]$. 
 The parties can then compute the OWF using the homomorphic properties of the secret sharing, 
-and a share conversion gadget (to convert shares mod 2 to mod 3, used when computing $z$)
+and a share conversion gadget (to convert shares mod 2 to mod 3, used when computing~$z$)
 setup during preprocessing that we describe below. 
 During the online phase, parties broadcast values to all other parties and we write $\msgs_i$
 to denote the broadcast messages of party $i$. 
@@ -128,10 +127,10 @@ to denote the broadcast messages of party $i$.
 
 \paragraph{Preprocessing phase} Preprocessing establishes random seeds of all parties and shares of 
 \begin{enumerate}
-\item $x'$: a random vector in $\Z_2^{n}$,\algcomment{Sampled from random tapes}
-\item $w'$: a random vector in $\Z_2^{m}$, \algcomment{Sampled from random tapes}
-\item $r$: a sharing of $w' \mod 3$, shares in $\Z_3^m$,  \algcomment{Tapes + one $\aux$ value}
-\item $\overline{r}$: a sharing of $1-w' \mod 3$, shares in $\Z_3^m$. \algcomment{Computed from shares of $r$}
+\item $\tilde{x}$: a random vector in $\Z_2^{n}$,\algcomment{Sampled from random tapes}
+\item $\tilde{w}$: the vector $\matA \tilde{x}$ in $\Z_2^{m}$, 
+\item $r$: a sharing of $\tilde{w} \mod 3$, shares in $\Z_3^m$,  \algcomment{Tapes + one $\aux$ value}
+\item $\overline{r}$: a sharing of $1-\tilde{w} \mod 3$, shares in $\Z_3^m$. \algcomment{Computed from shares of $r$}
 \end{enumerate}
 The shares of $\overline{r}$ are computed from shares of $r$ as follows (all arithmetic in $\Z_3^m$): the first
 party computes $[\overline{r}] = 1 - [r]$, then the remaining parties compute
@@ -140,12 +139,13 @@ $[\overline{r}] = -[r]$.  Then observe that
  as required. 
 
 \paragraph{Online phase}
-The public input to the online phase is $\hat{x} = x + x'$. 
+The public input to the online phase is $\hat{x} = x + \tilde{x}$. 
 \begin{enumerate}
 
-\item The parties locally compute $[u] = \matA[x'] - [w']$ and broadcast it, 
-then sum the received values to get $u = \matA x' - w'$.  Then they locally compute
-$\hat{w} = \matA\hat{x} - u = \matA x + w'$, where $\hat{w} \in \Z_2^{m}$. Each party broadcasts $m$ bits in this step. 
+%\item The parties locally compute $[u] = \matA[\tilde{x}] - [\tilde{w}]$ and broadcast it, 
+%then sum the received values to get $u = \matA \tilde{x} - \tilde{w}$.  Then they locally compute
+%$\hat{w} = \matA\hat{x} - u = \matA x + \tilde{w}$, where $\hat{w} \in \Z_2^{m}$. Each party broadcasts $m$ bits in this step. 
+\item The parties locally compute $\hat{w} \in \Z_2^{m}$ as $\hat{w} = \matA\hat{x}$ (since both $\hat{x}$ and $\matA$ are public). 
 
 \item Let $z$ be a vector in $\Z_3^m$ and let $z_i$ denote the $i$-th component. Each party defines 
 \[
@@ -159,35 +159,33 @@ In this step each party broadcasts $t$ values in $\Z_3$.
 \end{enumerate}
 
 \paragraph{Correctness} The protocol correctly computes the \ttOWF.  The
-first step computes $w = \matA x$, while keeping it masked with a random $w'$,
-updating the public value $\hat{x} = x + x'$ with $\hat{w} = w + w'$.  The
-second step is where the bits of $w$ are cast from $\Z_2$ to $\Z_3$.  The
-parties have sharings of $w'$ and $1-w'$ mod 3. Now, the key observation is
-that when $\hat{w} = 0$, then $w$ and $w'$ are the same, and when $\hat{w} =
-1$, $w$ and $w'$ are different. So in the first case we set the shares of $ z =
-w \mod 3$ to the shares of $[w'] \mod 3$, and when $\hat{w} = 1$, we set the
-shares of $z$ to the complement of $w'$.
+first step computes $w = \matA x$, 
+updating the public value $\hat{x} = x + x'$ with $\hat{w} = w + \tilde{w}$.  The
+second step is where the bits of $w$ are cast from $\Z_2$ to $\Z_3$.  The 
+parties have sharings of $\tilde{w}$ and $1-\tilde{w}$ mod 3 (we focus on a single bit here, for simplicity). The key observation is
+that when $\hat{w} = 0$, then $w$ and $\tilde{w}$ are the same, and when $\hat{w} =
+1$, $w$ and $\tilde{w}$ are different. So in the first case we set the shares of $ z =
+w \mod 3$ to the shares of $[\tilde{w}] \mod 3$, and when $\hat{w} = 1$, we set the
+shares of $z$ to the complement of $\tilde{w}$.
 
 \paragraph{Communication Costs}
-Here we quantify the cost of communication for the $\aux$ values and the broadcast $\msgs$ of one party,
+Here we quantify the cost of communication for the MPC inputs, the $\aux$ values and the broadcast $\msgs$ of one party,
 as this will directly contribute to the signature size in the following section. 
 Let $\ell_3$ be the bitlength of an element in $\Z_3$; the direct encoding has
 $\ell_3 = 2$, but with compression we can reudce $\ell_3$ to as little as
-$\log_2(3) \approx 1.58$. \greg{TODO: crossref.  I'm assuming the details of
-this will be somewhere in the paper? I don't know them :)}   The size of the
+$\log_2(3) \approx 1.58$. \footnote{To compress a vector $v\in\Z_3^{n}$, convert it to the integer it represents: $V = \sum_{i=0}^n v_i^{i}$
+and output the binary representation of $V$. \greg{TODO: If this appears elsewhere in the paper, just xref to it} }   The size of the
 $\aux$ information is $m\ell_3$, the MPC input value has size $n$ bits, 
-and the broadcast values have size $m + t\ell_3$ bits (per party). 
+and the broadcast values have size $t\ell_3$ bits (per party). 
 The total in bits is thus 
 \begin{equation} \label{eqn:sizeMPC}
-|\textsf{MPC}(n,m,t)| = m(\ell_3 + 1) + n + t\ell_3 
+|\textsf{MPC}(n,m,t)| = m\ell_3 + n + t\ell_3\;.
 \end{equation}
-which is $2.58m + n + 1.58t$ when $\ell_3 = 1.58$. 
-For the parameters $(n,m,t) = (256, 256, 81)$ the total is 1045 bits for
-$(n,m,t) = (256, 256, 160)$ the total is 1170 bits, and for
-$(n,m,t)=(128, 400, 81)$ the total is 1288 bits.  This compares favorably to
-Picnic at the same security level, which communicates 1032 bits for the $\aux$
-and $\msgs$ when LowMC uses a full S-box layer, and 1200 bits when LowMC
-uses a partial S-box layer~\cite{TCHES:KalZav20}. 
+For the parameters 
+$(n,m,t)=(128, 453, 81)$ the total is 972 bits (L1 security)
+and when $(n,m,t) = 256, 906, 162)$ the total is 1943 bits (L5 security).  This compares favorably to
+Picnic at the same security level, which communicates 1161--1328 bits at L1
+and 2295--2536 bits at L5, depending on whether LowMC uses a full or partial S-box layer~\cite{TCHES:KalZav20}.
 
 \subsubsection{Signature Scheme Details}
 Given the MPC protocol above, we can compute the values $\hat{x}$, $\aux$ and
@@ -209,14 +207,13 @@ index of  an MPC instance for which the verifier will check the online phase,
 and $p_c$ is the index of the party that will remain unopened. 
 
 \paragraph{Key generation} The signer chooses a random $x \in \Z_2^n$ as a
-secret key, and a random seed $s_A \in \{0,1\}^{\secpar}$ such that $s_A$
-expands to a matrix $\matA \in \Z_2^{m\times n}$ that is full rank (using a suitable cryptographic
+secret key, and a random seed $s \in \{0,1\}^{\secpar}$ such that $s$
+expands to matrices $\matA \in \Z_2^{m\times n}$ and $\matB\in \Z_3^{m\times t}$ that is full rank (using a suitable cryptographic
 function, such as the SHAKE extendable output function~\cite{sp800-185}).  We
-use a unique $\matA$ per signer in order to avoid multi-target attacks against $F$.
-Compute $y = F(x)$ and set $(y, s_A)$ as the public key.  \greg{We could
-generate the public matrix $\matB$ from $s_A$ as well, or we could fix it once for
-all signers. Is there a security reason to go with per-signer $\matB$? Question for
-Itai.}
+use unique $\matA$ and $\matB$ per signer in order to avoid multi-target attacks against $F$.
+Compute $y = F(x)$ and set $(y, s)$ as the public key.
+We specify the scheme using random matrices, however, it could also be instantiated
+with circulant matrices, which may improve the performance of sign and verify operations.
 
 \paragraph{Signature generation and verification} Here we give an overview of
 signature generation, for details see \cref{fig:23-picnic}. The structure of
@@ -299,44 +296,37 @@ instances.
 By searching the parameter space for fixed $N$ and various options for $M,
 \tau$, we get a curve, and choose from the combinations in the ``sweet spot'',
 near the bend of the curve with moderate computation costs.  \cref{table:sig-sizes}
-gives some options. \greg{TODO: highlight one row as being the one we'd choose}
-
+gives some options. The row with is nearly the same as for Picnic, and we highlight the signature
+size of the \ttOWF. Signatures using the \ttOWF are five to fifteen percent shorter than Picnic using LowMC. 
 \begin{table}
 \begin{centering}
 \begin{tabular}{l|l|l}
 OWF Params      & KKW params        & Signature size (KB)\\
 $(n,m,t)$       & $(N, M, \tau)$    &   \\\hline
-$(128,400,81)$  & $(16, 150, 51)$   & 15.06 \\
-                & $(16, 168, 45)$   & 14.03 \\ 
-                & $(16, 218, 38)$   & 12.99 \\ 
-                & $(16, 250, 36)$   & 12.78 \\
-                & $(16, 303, 34)$   & 12.66 \\ 
-                & $(16, 352, 33)$   & 12.70 \\
+$(128,453,81)$  & $(16, 150, 51)$   & 13.30 \\
+                & $(16, 168, 45)$   & 12.48 \\ 
+                & $(16, 250, 36)$   & \textbf{11.54} \\
+                & $(16, 303, 34)$   & 11.49 \\
 Picnic3-L1      & $(16, 250, 36)$   & 12.60 \\ \hline
-$(128,400,81)$  & $(64, 149, 46)$   & 15.54 \\
-                & $(64, 209, 34)$   & 13.00 \\ 
-                & $(64, 246, 31)$   & 12.41 \\
-                & $(64, 343, 27)$   & 11.69 \\
-Picnic2-L1      & $(64, 343, 27)$   & 12.36 \\
+$(128,453,81)$  & $(64, 151, 45)$   & 13.59 \\
+                & $(64, 209, 34)$   & 11.70 \\ 
+                & $(64, 343, 27)$   & \textbf{10.66} \\
+                & $(64, 515, 24)$   & 10.35 \\
+Picnic2-L1      & $(64, 343, 27)$   & 12.36 \\ \hline \hline
+$(256,906,162)$ & $(16, 324, 92)$   & 50.19 \\ 
+                & $(16, 400, 79)$   & 47.08 \\ 
+                & $(16, 604, 68)$   & \textbf{45.82} \\ 
+Picnic3-L5      & $(16, 604, 68)$   & 48.72 \\ \hline
+$(256,906,162)$ & $(64, 322, 82)$   & 51.23 \\
+                & $(64, 518, 60)$   & 44.04 \\ 
+                & $(64, 604, 57)$   & \textbf{43.45} \\
+Picnic2-L5      & $(64, 604, 58)$   & 46.18 \\ \hline
 \end{tabular}
-\caption{ \label{table:sig-sizes}Signature sizes for Picnic using the \ttOWF, compared to Picnic using LowMC. }
+\caption{ \label{table:sig-sizes}Signature size estimates for Picnic using the \ttOWF, compared to Picnic using LowMC. 
+The first half of the table shows security level L1 with $N=16$ and $N=64$ parties, and the second
+half shows level L5.}
 \end{centering}
 \end{table}
-
-
-\paragraph{Random notes} \greg{These should be worked into the text as appropriate}
-\begin{itemize}
-\item OWF vs. PRF: for the OWF I don't think there is any performance advantage to
-using compressed matrices (circulant matrices). So better to use
-fully random ones. 
-
-\item The parameters above need review.  I'm pretty sure $(128, 400, 81)$ is supported
-by the analysis in Itai's document but the others may not be. 
-
-\item Optionally we may compare the NIST L5 level (AES-256 equivalent, i.e., 256-bit
-classical, 128-bit quantum secure), in case the security of the (2,3)-OWF
-scales better than LowMC. 
-\end{itemize}
 
 
 \begin{figure}[p]
@@ -356,7 +346,7 @@ scales better than LowMC.
         \com^{(k)}_{i} = \hash(\state^{(k)}_i) \text{ for all } i\in [N], \quad 
         h^{(k)} = \hash(\com^{(k)}_{1},\ldots,\com^{(k)}_{N}).
         \end{align*}						
-        \item Compute MPC input $\hat{x}^{(k)} = x + x'^{(k)}$ based on the secret key $x$ and the random values $x'^{(k)}$ defined by preprocessing.
+        \item Compute MPC input $\hat{x}^{(k)} = x + \tilde{x}^{(k)}$ based on the secret key $x$ and the random values $\tilde{x}^{(k)}$ defined by preprocessing.
         \item Simulate the online phase of the MPC protocol, producing $(\msgs^{(k)}_i)_{i \in [N]}$.			
         \item Commit to the online phase:
         $

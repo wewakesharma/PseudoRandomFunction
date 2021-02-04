@@ -13,7 +13,7 @@
 \hypersetup{linkcolor = {teal}, citecolor = {magenta}, urlcolor = {black}}
 
 \usepackage{tikz}
-\usetikzlibrary{shapes, positioning, patterns}
+\usetikzlibrary{shapes, positioning, patterns, math}
 
 \usepackage{stmaryrd}
 \usepackage{graphicx}
@@ -77,6 +77,7 @@
 %--------------------------------------------------------------%
 %-----------------------Specific Commands----------------------%
 %--------------------------------------------------------------%
+% MPC
 \newcommand{\pzero}{\textnormal{P}_0}
 \newcommand{\pone}{\textnormal{P}_1}
 \newcommand{\ptwo}{\textnormal{P}_2}
@@ -86,21 +87,22 @@
 
 \newcommand{\share}[1]{\left\llbracket #1 \right\rrbracket}
 
+
+% Primitives and Constructions
 \newcommand{\PRFfunc}{\mathsf{F}_\secparam}
 \newcommand{\OWFfunc}{\mathsf{F}_\secparam}
-\newcommand{\map}[1]{\textsf{map23}_{#1}}
-\newcommand{\Fconvert}{\mathcal{F}_{23}}
-\newcommand{\unmask}{\mathcal{F}_{\textnormal{unmask}}}
+% \newcommand{\map}[1]{\textsf{map23}_{#1}}
+
+\newcommand{\ttOWF}{$(2,3)$-OWF\xspace}
+\newcommand{\ttwPRF}{$(2,3)$-wPRF\xspace}
 
 \newcommand{\prot}{\boldsymbol{\pi}}
-\newcommand{\protunmask}{\prot_\textnormal{unmask}}
-
-\newcommand{\LinMap}{\textsf{LinMap}}
-\newcommand{\BiLinear}{\textsf{BiLinear}}
 \newcommand{\LMap}{\textsf{Lin}}
 \newcommand{\BLMap}{\textsf{BL}}
 \newcommand{\Convert}{\textsf{Convert}}
 
+\newcommand{\randval}[1]{\tilde{#1}}
+\newcommand{\masked}[1]{\hat{#1}}
 %--------------------------------------------------------------%
 
 
