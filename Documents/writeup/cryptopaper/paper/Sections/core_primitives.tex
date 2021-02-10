@@ -3,7 +3,7 @@
 \newpage
 
 \section{Candidate Constructions}
-In this section, we introduce our suite of candidate constructions for a number of cryptographic primitives: weak pseudo-random function families (wPRF), one-way functions (OWF), pseudo-random generators (PRG), and cryptographic commitment schemes. Our constructions are based on similar interplays between mod-2 and mod-3 linear mappings. 
+In this section, we introduce our suite of candidate constructions for a number of cryptographic primitives: weak pseudo-random function families (wPRF), one-way functions (OWF), pseudo-random generators (PRG), and cryptographic commitment schemes. Our constructions are all based on similar interplays between mod-2 and mod-3 linear mappings. 
 
 \subsection{Basic structure}
 Given the wide range of candidates we propose, we find it useful to have a clean way to describe the operations that are performed in our candidate constructions. For this, we take inspiration from the basic formalism of the function secret sharing (FSS) approach to MPC with preprocessing, first introduced by Boyle, Gilboa, and Ishai~\cite{boyle2019-fss-preprocess}. Abstractly, the key technique here is to represent an MPC functionality as a circuit, where each gate represents an operation to be performed in the distributed protocol. Inputs and outputs of each gate are secret shared and the gate operation is ``split'' using an FSS scheme~\cite{boyle2015-fss,boyle2016-fss-extension}. To evaluate the circuit in a distributed fashion, the dealer first shares a random mask for each input wire in the circuit, and possibly some more correlated randomness. Now, to compute a gate, the masked input is first revealed to all parties, who can then locally compute shares of the output wire or shares of the masked output.
@@ -12,7 +12,7 @@ While we find it useful to use the formalism from~\cite{boyle2019-fss-preprocess
 
 
 \paragraph{Circuit gates.}
-We make use of just four basic operations, or ``gates,'' which we detail below. All our constructions can be succinctly represented using just these gates. In Section~\ref{sec:distributed_protocols}, we will provide distributed protocols to compute them. To cleanly describe both our candidates constructions, and their distributed protocols, the gates we describe here depart from the formalism in~\cite{boyle2019-fss-preprocess} in that the input values of the circuit itself are not secret shared. The MPC protocols will instead take in secret shared inputs as necessary and evaluate the circuit in a distributed fashion.
+We make use of just four types of basic operations, or ``gates,'' which we detail below. All our constructions can be succinctly represented using just these gates. In Section~\ref{sec:distributed_protocols}, we will provide distributed protocols to compute them. To cleanly describe both our candidates constructions, and their distributed protocols, the gates we describe here depart from the formalism in~\cite{boyle2019-fss-preprocess} in that the input values of the circuit itself are not secret shared. The MPC protocols will instead take in secret shared inputs as necessary and evaluate the circuit in a distributed fashion. We denote by $\gateset$, the set comprising of these gates.
 
 \begin{itemize}
     \item \textbf{Mod-$p$ Public Linear Gate.}
@@ -26,7 +26,7 @@ We make use of just four basic operations, or ``gates,'' which we detail below. 
     \item \textbf{$\Z_3 \to \Z_2$ conversion.} For a positive integer $l$, the gate $\Convert^l_{(3,2)}(\cdot)$ takes as input a vector $x \in \Z_3^l$ and computes its mapping $x^*$ in $\Z_2^l$. For this, each $\Z_3$ element in $x$ is computed modulo 2 to get the corresponding $\Z_2$ element in the output $x^*$. Specifically, each $0$ and $2$ are mapped to $0$ while each $1$ is mapped to $1$. When clear from context, we will drop the superscript and simply write $\Convert_{(3,2)}(x)$.
 \end{itemize}
 
-\noindent Note that the difference between the $\LMap$ and the $\BLMap$ gates is seen in the context of their distributed protocols. For $\LMap$, the matrix $\mat{A}$ will be publicly available to all parties, while the input $x$ will be secret shared. On the other hand, for $\BLMap$, both the key $\mat{K}$ and the input $x$ will be secret shared. We call this gate \textit{bilinear} because it is linear in both of its inputs. Also note that although the $\Convert_{(2,3)}$ gate is effectively a no-op in a centralized evaluation, in the distributed setting, the gate will be used to convert an additive sharing over $\Z_2$ to an additive sharing over $\Z_3$.
+\noindent Note that the difference between the $\LMap$ and the $\BLMap$ gates is seen in the context of their distributed protocols. For $\LMap$, the matrix $\mat{A}$ will be publicly available to all parties, while the input $x$ will be secret shared. On the other hand, for $\BLMap$, both the key $\mat{K}$ and the input $x$ will be secret shared. We call this gate \textit{bilinear} because its output is linear in both of its inputs. Also note that although the $\Convert_{(2,3)}$ gate is effectively a no-op in a centralized evaluation, in the distributed setting, the gate will be used to convert an additive sharing over $\Z_2$ to an additive sharing over $\Z_3$.
 
 As described previously, for the (bi)linear mappings, we focus only on constructions that use mod-2 and mod-3 mappings. In Figure~\ref{fig:graphical_gates}, we provide a pictorial representation for each circuit gate. We will connect these pieces together to also provide clean visual representations for all our constructions. 
 
@@ -34,17 +34,15 @@ As described previously, for the (bi)linear mappings, we focus only on construct
 
 
 \paragraph{Construction styles.}
-The candidate constructions we introduce follow one of two broad styles, which we detail below.
+The candidate constructions we introduce follow one of two broad styles which we detail below.
 
 \begin{itemize}
     \item \textbf{$(p,q)$-constructions.}
-    For distinct primes $p, q$, the $(p,q)$-constructions have the following structure: On an input $x$ over $\Z_p$, first a linear $\bmod p$ mapping is applied, followed by a linear $\bmod q$ mapping. Note that after the $\bmod p$ mapping, the input is first reinterpreted as a vector over $q$. For unkeyed primitives (e.g., OWF), both mappings are public, while for keyed primitives (e.g., wPRF), the key is used for the first linear mapping. The construction is parameterized by positive integers $n, m, t$ (functions of the security parameter $\secparam$) denoting the length of the input vector (over $\Z_p$), the length of the intermediate vector, and the length of the output vector (over $\Z_q$) respectively. The two linear mappings can be represented by matrices $\mat{A} \in \Z_p^{m \times n}$ and $\mat{B} \in \Z_q^{t \times m}$. For keyed primitives, the key $\mat{K} \in \Z_p^{m \times n}$ will be used instead of $\mat{A}$.
+    For distinct primes $p, q$, the $(p,q)$-constructions have the following structure: On an input $x$ over $\Z_p$, first a linear $\bmod~p$ mapping is applied, followed by a linear $\bmod~q$ mapping. Note that after the $\bmod~p$ mapping, the input is first reinterpreted as a vector over $\Z_q$. For unkeyed primitives (e.g., OWF), both mappings are public, while for keyed primitives (e.g., wPRF), the key is used for the first linear mapping. The construction is parameterized by positive integers $n, m, t$ (functions of the security parameter $\secparam$) denoting the length of the input vector (over $\Z_p$), the length of the intermediate vector, and the length of the output vector (over $\Z_q$) respectively. The two linear mappings can be represented by matrices $\mat{A} \in \Z_p^{m \times n}$ and $\mat{B} \in \Z_q^{t \times m}$. For keyed primitives, the key $\mat{K} \in \Z_p^{m \times n}$ will be used instead of $\mat{A}$.
 
 
     In this paper, we will analyze this style of constructions for $(p,q) = (2,3)$ and $(3,2)$. 
     %As a shorthand, we will denote these by 23-constructions and 32-constructions (e.g., 23-wPRF).
-
-
     \item \textbf{LPN-style-constructions.} \mahimna{todo}
 
     \item \mahimna{Also add any other constructions.}
@@ -52,6 +50,25 @@ The candidate constructions we introduce follow one of two broad styles, which w
 
 
 \input{Figures/23-constructions}
+
+\paragraph{Circuit description of constructions.}
+We can represent our constructions by circuits consisting of the gates described previously. This approach is similar to that of~\cite{boyle2019-fss-preprocess}. We formally define computation circuit representations for our constructions in Definition~\ref{def:computation_circuit}.
+
+\begin{definition}[Computation circuit]
+
+A computation circuit $C$ with input space $\Gin = \prod \Gin_i$ and output space $\Gout = \prod \Gout_i$ is a (labeled) directed acyclic graph $(\mathcal{V},\mathcal{E})$ where $\mathcal{V}$ denotes the set of vertices and $\mathcal{E}$ denotes the set of edges according to the following:
+\begin{itemize}
+
+\item Each source vertex corresponds to exactly one $\Gin_i$ and vice versa. The label for the vertex is the identity function on the corresponding $\Gin_i$. Each sink vertex corresponds to exactly one $\Gout_i$ and vice versa. The label for the vertex is the identity function on the corresponding $\Gout_i$. Each non-source $V \in \mathcal{V}$ is labeled with a gate $\mathcal{G}_V \in \gateset$ that computes the function $\mathcal{G}_V: \mathbb{G}^{\textsf{in}}_V \to \mathbb{G}^{\textsf{out}}_V$. 
+
+\item For an edge $(V_a, V_b)$, let $\Gout_{V_a} = \prod \Gout_{V_a,i}$ and $\Gin_{V_b} = \prod \Gin_{V_b, i}$. Then, there exists indices $j$ and $k$ such that $\Gout_{V_a,j} = \Gin_{V_b,k}$. Further, for each input $\Gin_{V_b,i}$ for $V_b$, there is some edge $(V_c, V_b)$ that satisfies the above.
+
+\item The evaluation of the gate for vertex $V$ on input $x \in \Gin_V$ is defined as $y = \mathcal{G}_V(x)$. The evaluation of the circuit $C$, denoted by $\textsf{Eval}_C(x)$, where $x \in \Gin$ is the value $y \in \Gout$, that is obtained by recursively evaluating each gate function in the circuit.
+\end{itemize}
+
+Let $\mathsf{F} = \{\mathsf{F}_\secparam\}_{\secparam \in \N}$ denote a family of functions $\mathsf{F}_\secparam:\mathcal{X}_\secparam \to \mathcal{Y}_\secparam$. We say that $\{C_\secparam\}_{\secparam \in \N}$ is a family of computation circuits for $\mathsf{F}$ if all $C_\secparam$ have the same topological structure, and for all $\secparam \in \N$, $\mathsf{F}_\secparam(x) = \textsf{Eval}_C(x)$ for all $x \in \mathcal{X}_\secparam$.
+\label{def:computation_circuit}
+\end{definition}
 
 \newpage
 

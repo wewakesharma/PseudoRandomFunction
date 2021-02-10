@@ -26,48 +26,123 @@ We implemented our 2-party 23-wPRF (Construction~\ref{construction:23-central-wp
 \label{subsec:implementation_opt}
 We start with a centralized implementation of the 23-wPRF. We find optimizations that provide 5x better performance over a na\"ive implementation, which we detail below. Later, in Table~\ref{table:optimization_benchmarks}, we compare the performance gain from these optimizations.
 
-\subsection{Representing $Z_2$ vector - bit packing}
+\paragraph{Bit packing for $\Z_2$ vectors.} 
+Instead of representing each element in a $\Z_2$ vector separately, we pack several elements into a machine word and operate on them together in an SIMD manner. For our architecture with 64-bit machine words, we can pack a vector in $\Z_2^{256}$ (e.g., the input $x$) into 4 words. Since the key $\mat{K}$ is circulant and can be represented with $n=256$ bits, it can also be represented by 4 words. This results in a theoretical $\times64$ maximum speedup in run-time for operations involving $\mat{K}$ and $x$. 
 
-The dark matter function manipulates elements of $Z_2$ and $Z_3$. However, machine words can hold up to 64 bits and we use this to represent many elements in just a few machine words, using bit slicing. Namely, we used each machine word as a vector of 64 bits and applied operations to this bit-vector in a SIMD manner.
-Since in our implementation each key $\textbf{K}$  is of size $m \times n = 256 \times 256$ and each input is a vector of size $n = 256$, this results in packing each key into $\dfrac {256}{64} = 4$ words and each input vector into 4 words. This may result in time saving of up to $\times 64$ of the run-time.
+\paragraph{Bit slicing for $\Z_3$ vectors.}
+We represent each element in $\Z_3$ using the two bits from its binary representation. For $z \in \Z_3$, the two bits are the least significant bit (LSB) $l_z = z \bmod 2$, and the most significant bit (MSB) $h_z$ which is $1$ if $z=2$ and $0$ otherwise. $\Z_3$ vectors are now also represented by two binary vectors, one containing the MSBs, and one containing the LSBs. Operations involving a $\Z_3$ vector are done on these binary vectors instead. In Table~\ref{table:z3_operations}, we specify how we perform common operations on $\Z_3$ elements using our bit slicing approach. We also take advantage of the bit packing optimization when operating on the binary vectors.
 
-\subsection{Representing $Z_3$ vector - bit slicing}
-
-The last part of the dark matter function takes an intermediate vector viewed as a vector of $Z_3$ elements, which is then multiplied 
-by a matrix $R$ in $Z_3$ to produce the output vector in $Z_3$. We tried different methods for implementing this matrix-vector multiplication over $Z_3$.:	
-
-Bit slicing is implemented  by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. The operations over this $Z_3$ vector - addition, subtraction, multiplication and MUX  - were implemented in a bitwise manner as shown in table \ref{tab:multicol}. We took advantage of the fact that when representing each vector as MSB and LSB, negation (which is the same as multiplying by two) is the same as swapping the most and least significant bits. 
 
 \begin{table}[ht]
-	\caption{Operations in $Z_3$. input:   ${l_1}, {m_1}$ - LSB and MSB  of first trinary number, 
-		${l_2}, {m_2}$ - LSB and MSB  of second trinary number,  ${s}$ - selection bit for MUX}
-	\begin{center}
-		\begin{tabular}{|c|l|}
-			\hline
-			\textbf{Operations} & \textbf{Methods}\\
-			\hline
-			\multirow{3}{*}{Addition} & ${t} := ({l_1 \wedge m_2}) \oplus ({l_2 \wedge m_1})$\\
-			& $m_{\mathrm{out}} := ( l_1 \wedge  l_2 ) \oplus  t $ \\
-			& $l_{\mathrm{out}} :=m_1 \wedge m_2 ) \oplus t $ \\
-			\hline
-			\multirow{3}{*}{Subtraction} & ${t} := ({l_1} \wedge {l_2}) \oplus ({m_2} \wedge {m_1})$;\\
-			& $m_{\mathrm{out}} := (l_1 \wedge m_2 ) \oplus t$;\\
-			& $l_{\mathrm{out}} := (m_1 \wedge l_2 ) \oplus t$; \\
-			\hline
-			\multirow{3}{*}{Multiplication} & $m_{\mathrm{out}}:= (l_1 \vee m_2) \wedge   (m_1 \vee l_2)$; \\
-			& $l_{\mathrm{out}} := (l_1 \vee l_2) \wedge     (m_1 \vee m_2)$;\\
-			\hline
-			\multirow{3}{*}{MUX} & $m_{\mathrm{out}} :=( m_2 \vee s) \wedge (m_1 \vee (\bar{s}) )$; \\
-			& $l_{\mathrm{out}}[i] :=( l_2 \vee s) \wedge (l_1 \vee (\bar{s}) )$; \\
-			\hline
-			
-		\end{tabular}
-	\end{center}
-	\label{tab:multicol}
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Operation} & \textbf{Result MSB} &\textbf{Result LSB}\\
+        \hline\hline
+        $z_1 + z_2 \bmod 3$ & $(l_1 \vee l_2) \oplus (l_1 \vee h_2) \oplus (l_2 \vee h_1)$  & $(h_1 \vee h_2) \oplus (l_1 \vee h_2) \oplus (l_2 \vee h_1)$\\
+        $-z_1 \bmod 3$ & $l_1$ & $h_1$ \\
+        $z_1z_2 \bmod 3$ & $(l_1 \wedge l_2) \oplus (h_1 \wedge h_2)$ & $(l_1 \wedge h_2) \oplus (h_1 \wedge l_2)$\\
+        $\textrm{MUX}(s;z_1,z_2)$ & $(h_2 \wedge s) \vee (h_1 \wedge \neg s)$ & $(l_2 \wedge s) \vee (l_1 \wedge \neg s)$\\
+        \hline
+    \end{tabular}
+\end{center}
+\caption{Operations in $\Z_3$. $z_1$ and $z_2$ are elements in $\Z_3$ with (MSB, LSB) = $(h_1,l_1)$ and $(h_2, l_2)$ respectively. For a bit $s$, the operation $\textrm{MUX}(s;z_1, z_2)$ outputs $z_1$ when $s=0$ and $z_2$ when $s=1$.}
+\label{table:z3_operations}
+\mahimna{I'm debating whether we need to have this table at all. Once we specify that we split $\Z_3$ elements into 2 bits, for any $\Z_3$ operation, the corresponding operation on the bits can easily be computed using a truth table.}
 \end{table}
+
+
+\paragraph{Lookup table for matrix multiplication.} Recall that the \ttwPRF evaluation contains a mod-3 linear map using a public matrix $\mat{B} \in \Z_3^{81\times256}$. Specifically, it computes the matrix-vector product $\mat{B}w$ where $w \in \Z_3^{256}$. Since $\mat{B}$ is known prior to evaluation, we can use a lookup table to speedup the multiplication by $\mat{B}$. The same preprocessing can also by reused for multiple evaluations of the wPRF.
+
+For this, we partition $\mat{B}$, which has $m=256$ columns, into $16$ slices of $16$ columns each. These matrices, denoted by $\mat{B}_1,\dots, \mat{B}_{16}$, are all in $\Z_3^{81 \times 16}$. Now, for each $\mat{B}_i$, we will effectively build a lookup table for its multiplication with any $\Z_3$ vector of length $16$. A point to note here is that since we  represent $\Z_3$ vectors by two binary vectors (from the bit slicing optimization), it is sufficient to preprocess multiplications (modulo 3) for binary vectors of length $16$. To multiply $\mat{B}_{i}$ by a vector in $\Z_3^{16}$, we can first multiply it separately by the corresponding MSB and LSB vectors, and then subtract the former from the later modulo 3. This works since for $z_1, z_2 \in \Z_3$ the multiplication $z_1z_2 \bmod 3$ can be given by $z_1(2\cdot h_2 + l_2) \bmod 3 = z_1l_2 - z_1h_2 \bmod 3$ where $h_2, l_2$ are the MSB and LSB of $z_2$ respectively. Now, to multiply $\mat{B}$ by $v \in \Z_3^{256}$, we first evaluate all multiplications of the form $\mat{B}_iv_i$ where $v_i$ is the $\Z_3^{16}$ vector denoting the $i^\thtext$ slice of $v$ if it was split into 16-element chunks. Then, multiplication by $\mat{B}$ is given by $\mat{B}v = \sum_{i \in [16]} \mat{B}_i v_i \mod 3$.
+
+
+In general, a $\mat{B} \in \Z_3^{t \times m}$ can be partitioned into $m/c$ partitions with $c$ columns each (assume $c$ divides $m$ for simplicity), and would require a total multiplication lookup table size of $(m/c) \cdot 2^c \cdot t$ $\Z_3$ elements. Multiplying $\mat{B}$ by $v \in \Z_3^{m}$ requires $2(m/c)$ lookup table accesses (one each for MSB and LSB of $v$ per partition of $\mat{B}$) and an addition of $(m/c - 1)$ $\Z_3^{t}$ vectors.
+
+
+For our parameters, this results in a table size of roughly $135$MB with proper $\Z_3$ packing. We chose $c = 16$ as a compromise between the size of the lookup table and increased computational efficiency.
+
+
+
+
+
+
+
+
+
+
+
+
+% \subsection{Representing $Z_2$ vector - bit packing}
+
+% The dark matter function manipulates elements of $Z_2$ and $Z_3$. However, machine words can hold up to 64 bits and we use this to represent many elements in just a few machine words, using bit slicing. Namely, we used each machine word as a vector of 64 bits and applied operations to this bit-vector in a SIMD manner.
+% Since in our implementation each key $\textbf{K}$  is of size $m \times n = 256 \times 256$ and each input is a vector of size $n = 256$, this results in packing each key into $\dfrac {256}{64} = 4$ words and each input vector into 4 words. This may result in time saving of up to $\times 64$ of the run-time.
+
+% \subsection{Representing $Z_3$ vector - bit slicing}
+
+% The last part of the dark matter function takes an intermediate vector viewed as a vector of $Z_3$ elements, which is then multiplied 
+% by a matrix $R$ in $Z_3$ to produce the output vector in $Z_3$. We tried different methods for implementing this matrix-vector multiplication over $Z_3$.:	
+
+% Bit slicing is implemented  by representing a vector over $Z_3$  as two binary vectors - one LSB's and one MSB's. The operations over this $Z_3$ vector - addition, subtraction, multiplication and MUX  - were implemented in a bitwise manner as shown in table \ref{tab:multicol}. We took advantage of the fact that when representing each vector as MSB and LSB, negation (which is the same as multiplying by two) is the same as swapping the most and least significant bits. 
+
+% \begin{table}[ht]
+% 	\caption{Operations in $Z_3$. input:   ${l_1}, {m_1}$ - LSB and MSB  of first trinary number, 
+% 		${l_2}, {m_2}$ - LSB and MSB  of second trinary number,  ${s}$ - selection bit for MUX}
+% 	\begin{center}
+% 		\begin{tabular}{|c|l|}
+% 			\hline
+% 			\textbf{Operations} & \textbf{Methods}\\
+% 			\hline
+% 			\multirow{3}{*}{Addition} & ${t} := ({l_1 \wedge m_2}) \oplus ({l_2 \wedge m_1})$\\
+% 			& $m_{\mathrm{out}} := ( l_1 \wedge  l_2 ) \oplus  t $ \\
+% 			& $l_{\mathrm{out}} :=m_1 \wedge m_2 ) \oplus t $ \\
+% 			\hline
+% 			\multirow{3}{*}{Subtraction} & ${t} := ({l_1} \wedge {l_2}) \oplus ({m_2} \wedge {m_1})$;\\
+% 			& $m_{\mathrm{out}} := (l_1 \wedge m_2 ) \oplus t$;\\
+% 			& $l_{\mathrm{out}} := (m_1 \wedge l_2 ) \oplus t$; \\
+% 			\hline
+% 			\multirow{3}{*}{Multiplication} & $m_{\mathrm{out}}:= (l_1 \vee m_2) \wedge   (m_1 \vee l_2)$; \\
+% 			& $l_{\mathrm{out}} := (l_1 \vee l_2) \wedge     (m_1 \vee m_2)$;\\
+% 			\hline
+% 			\multirow{3}{*}{MUX} & $m_{\mathrm{out}} :=( m_2 \vee s) \wedge (m_1 \vee (\bar{s}) )$; \\
+% 			& $l_{\mathrm{out}}[i] :=( l_2 \vee s) \wedge (l_1 \vee (\bar{s}) )$; \\
+% 			\hline
+			
+% 		\end{tabular}
+% 	\end{center}
+% 	\label{tab:multicol}
+% \end{table}
+
+% \begin{table}[ht]
+%     \caption{Operations in $Z_3$. input:   ${l_1}, {m_1}$ - LSB and MSB  of first trinary number, ${l_2}, {m_2}$ - LSB and MSB  of second trinary number,  ${s}$ - selection bit for MUX}
+%     \begin{center}
+%         \begin{tabular}{|c|l|}
+%             \hline
+%             \textbf{Operations} & \textbf{Methods}\\
+%             \hline
+%             \multirow{3}{*}{Addition} & ${t} := ({l_1 \BitOr m_2}) \oplus ({l_2 \BitOr m_1})$\\
+%             & $m_{\mathrm{out}} := ( l_1 \BitOr  l_2 ) \oplus  t $ \\
+%             & $l_{\mathrm{out}} :=(m_1 \BitOr m_2 ) \oplus t $ \\
+%             \hline
+%             \multirow{3}{*}{Subtraction} & ${t} := ({l_1} \BitOr {l_2}) \oplus ({m_2} \BitOr {m_1})$;\\
+%             & $m_{\mathrm{out}} := (l_1 \BitOr m_2 ) \oplus t$;\\
+%             & $l_{\mathrm{out}} := (m_1 \BitOr l_2 ) \oplus t$; \\
+%             \hline
+%             \multirow{3}{*}{Multiplication} & $m_{\mathrm{out}}:= (l_1 \BitAnd m_2) \oplus   (m_1 \BitAnd l_2)$; \\
+%             & $l_{\mathrm{out}} := (l_1 \BitAnd l_2) \oplus   (m_1 \BitAnd m_2)$;\\
+%             \hline
+%             \multirow{3}{*}{MUX} & $m_{\mathrm{out}} :=( m_2 \BitAnd s) \BitOr (m_1 \BitAnd (\bar{s}) )$; \\
+%             & $l_{\mathrm{out}} :=( l_2 \BitAnd s) \BitOr (l_1 \BitAnd (\bar{s}) )$; \\
+%             \hline              
+%         \end{tabular}
+%     \end{center}
+%     \label{tab:multicol}
+% \end{table}
+
 
 %Lookup table Implemetation
 \paragraph{Lookup table for matrix multiplication.}
+\mahimna{I added sufficient details from this into the earlier paragraph. If that looks good, then we can remove this}
 Even with bitslicing, implementing the matrix-vector multiplication column by column via the opertions from Table~1 is still rather slow.
 To get better performence, we capitalized on the fact that the random matrix $R$ is fixed, and we can therefore set up $R$-dependent tables and use table lookups in the implementation of the multiply-by-$R$ operation.
 
@@ -105,9 +180,7 @@ This implementation would have only 26 lookup operations instead of 32 in the al
 \paragraph{Experimental setup}
 We ran all our experiments on a t2.medium AWS EC2 instance with 4GiB RAM (architecture: x86-64 Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz) running on Ubuntu 18.04. The performance benchmarks and timing results we provide are averaged over 1000 runs. For the distributed construction benchmarks, both parties were run on the same instance. We separately report the computational runtime for the parties, and provide an estimate of the communication costs. 
 
-Communication vs. Computation: from the table we can estimate the break even point for each protocol. Note that synchronization is needed between the parties, though, so the assumption this is independent is an estimate. For the  wPRF protocol \ref{newProtocol} presented in this paper, the break even point is achieved  at a network speed 63 Mbps, in which case the overall communication and computation times will be the same. For the oPRF protocol, the break even point will be achieved with a network of speed 146 Mbps. 
-From here we see that for the oPRF protocol, for an existing 25 Mbps connection, communication will dominate the total run-time, while for a high speed network of 1 Gbps, the computation time will dominate the overall run-time.
-
+\textbf{Communication vs. Computation:} The proposed OPRF hits communication bottleneck for low bandwidth network since number of bits exchanged is almost two times as that in DDH-based OPRF\cite{LibSodium}. Further calculation shows that the minimal network speed in which computation dominates communication is 7.86 Mbps. For network speed greater than 7.86Mbps, the proposed OPRF outperforms the DDH-based OPRF.
 \yuval{Communication costs in bits can be computed analytically. Maybe talk about estimated breakeven points: (1) minimal network speed in which computation dominates communication, and (2) minimal network speed where we estimate our OPRF to be faster than the DDH-based alternative.  }
 
 \paragraph{Optimization results.}
@@ -172,19 +245,19 @@ For the comparison with the DDH-based OPRF construction in~\cite{naor1999-oprf},
 			\begin{tabular}{|cc|c|c|c|c|c|c|}%8 columns
 				
 				\hline
-				\multirow{2}{*}{Protocol} & & \multicolumn{3}{c|}{Runtime} & \multirow{2}{*}{Preprocessing} & \multicolumn{2}{c|}{Communication(bits)}\\
+				\multirow{2}{*}{Protocol} & & \multicolumn{3}{c|}{Runtime($\mu$ sec)} & \multirow{2}{*}{Preprocessing} & \multicolumn{2}{c|}{Communication(bits)}\\
 				& & Server & Client & Parallel &  &Server & Client\\
 				\hline\hline
 				\multirow{2}{*}{23-OPRF} & Key Update & 0.65 & - & \multirow{2}{*}{9.48} & \multirow{2}{*}{1835} & \multirow{2}{*}{593} & \multirow{2}{*}{512}\\
 				& Evaluation & 9.45 & 9.13 & & &&\\
 				\hline
-				\multirow{2}{*}{23-OPRF*} & Key Update & 3.43 & - & \multirow{2}{*}{4.84}& \multirow{2}{*}{768} & \multirow{2}{*}{512} & \multirow{2}{*}{256}\\
+				\multirow{2}{*}{23-OPRF*} & Key Update & 3.16 & - & \multirow{2}{*}{-}& \multirow{2}{*}{768} & \multirow{2}{*}{512} & \multirow{2}{*}{256}\\
 				& Evaluation & 4.84 & 8.84 & & &&\\
 				\hline
 				DDH-based OPRF & & 57.38& 28.69 & & - &256&256\\
 				\hline
 		\end{tabular}}
-		\caption{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu$s). \yuval{What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\Z_3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }}
+		\caption{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu$s). Server and client can run in parallel after exchange of bits at the end of each phase. Parallel column reports timing in such scenario. \yuval{What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\Z_3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }}
 		\label{table:oprf_comparison}
 	}
 	\mahimna{Include more comparisons as necessary}

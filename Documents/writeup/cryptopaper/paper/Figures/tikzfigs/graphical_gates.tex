@@ -46,13 +46,13 @@
     \end{scope} 
 
     \begin{scope}[shift={(-7,-6)}]
-       \node [draw=none,regular polygon, regular polygon sides=4, scale=2, fill=blue!15] {};
+       \node [draw=none,regular polygon, regular polygon sides=4, scale=2, twostyle] {};
        \node[shift={(1,0)}] {$p=2$};
-       \node [draw=none,regular polygon, regular polygon sides=4, scale=2, pattern=north west lines, pattern color=orange!70, shift={(1.5,0)}] {};
+       \node [draw=none,regular polygon, regular polygon sides=4, scale=2, threestyle, shift={(1.5,0)}] {};
         \node[shift={(4,0)}] {$p=3$};
     \end{scope}
 \end{tikzpicture}
 
-\caption{Pictorial representations of the circuit gates. For the linear and bilinear gates, expanding means that the output vector is larger than the input vector, while contracting means that the output vector is smaller than the input vector. Additionally, for $p=2$, the gates are shaded in violet, and for $p=3$, the gates contain diagonal orange lines.}
+\caption{Pictorial representations of the circuit gates. For the linear and bilinear gates, expanding means that the length of the output vector is greater than or equal to the length of the input vector, while contracting means that the output vector is smaller than the input vector. Additionally, for $p=2$, the gates are shaded in violet, and for $p=3$, the gates contain diagonal orange lines. \mahimna{We use $n=m$ for many constructions. Should we call that length preserving (although the general construction has $m \geq n$) or should be rename expanding to something like non-contracting?}}
 \label{fig:graphical_gates}
 \end{figure}

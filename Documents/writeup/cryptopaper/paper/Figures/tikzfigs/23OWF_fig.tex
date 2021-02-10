@@ -3,7 +3,7 @@
 \scalebox{0.8}{
 \begin{tikzpicture}
     \begin{scope}
-     \node [draw,trapezium,minimum height=1.48cm,trapezium left angle=75,trapezium right angle=75, rotate=90,fill=blue!15] {\rotatebox{-90}{$\mat{A}$}};
+     \node [draw,trapezium,minimum height=1.48cm,trapezium left angle=75,trapezium right angle=75, rotate=90,twostyle] {\rotatebox{-90}{$\mat{A}$}};
     \node[shift={(-1,0)}] {$x$};
     \end{scope}
     \begin{scope}[shift={(0.95,0)}]
@@ -14,7 +14,7 @@
     }
     \end{scope}
     \begin{scope}[shift={(1.85,0)}]
-    \node [draw,trapezium,minimum height=1.48cm,trapezium left angle=75,trapezium right angle=75, rotate=-90,pattern=north west lines, pattern color=orange!70] {\rotatebox{90}{$\mat{B}$}};
+    \node [draw,trapezium,minimum height=1.48cm,trapezium left angle=75,trapezium right angle=75, rotate=-90,threestyle] {\rotatebox{90}{$\mat{B}$}};
     \draw (0.75,0) node[right] {$y$};
     \end{scope}
 \end{tikzpicture}

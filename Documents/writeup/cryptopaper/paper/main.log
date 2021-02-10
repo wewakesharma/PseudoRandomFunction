@@ -1,9 +1,8 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  4 FEB 2021 12:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  8 FEB 2021 14:27
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**main.tex
+**main
 (./main.tex
 LaTeX2e <2018-12-01>
 (/usr/local/texlive/2019/texmf-dist/tex/latex/base/article.cls
@@ -1393,20 +1392,20 @@ File: english.lbx 2018/11/02 v3.12 biblatex localization (PK/MW)
 (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1481,24 +1480,14 @@ Package biblatex Info: Data encoding 'utf8' specified.
 \openout3 = `main-blx.bib'.
 
 Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'main.bbl' not found.
 
-
-Package biblatex Warning: File 'main.bbl' is wrong format version - expected 3.
-0.
-
-Package biblatex Info: ... file 'main.bbl' found.
-(./main.bbl
-
-Package biblatex Warning: BibTeX reported the following issues
-(biblatex)                with 'picnic-spec':
-(biblatex)                - Invalid format of field 'month'.
-
-)
-Package biblatex Info: Reference section=0 on input line 17.
-Package biblatex Info: Reference segment=0 on input line 17.
+No file main.bbl.
+Package biblatex Info: Reference section=0 on input line 16.
+Package biblatex Info: Reference segment=0 on input line 16.
 \AtBeginShipoutBox=\box100
-Package hyperref Info: Link coloring ON on input line 17.
- (/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
+Package hyperref Info: Link coloring ON on input line 16.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
 (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -1506,9 +1495,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count457
 )
-LaTeX Info: Redefining \ref on input line 17.
-LaTeX Info: Redefining \pageref on input line 17.
-LaTeX Info: Redefining \nameref on input line 17.
+LaTeX Info: Redefining \ref on input line 16.
+LaTeX Info: Redefining \pageref on input line 16.
+LaTeX Info: Redefining \nameref on input line 16.
 
 (./main.out) (./main.out)
 \@outlinefile=\write7
@@ -1516,17 +1505,17 @@ LaTeX Info: Redefining \nameref on input line 17.
 
  ABD: EveryShipout initializing macros
 \c@lstlisting=\count458
-LaTeX Font Info:    Try loading font information for U+msa on input line 24.
+LaTeX Font Info:    Try loading font information for U+msa on input line 23.
 
 (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 24.
+LaTeX Font Info:    Try loading font information for U+msb on input line 23.
 
 (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+stmry on input line 24.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 23.
 
 (/usr/local/texlive/2019/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
 (./Sections/all.tex (./Sections/introduction.tex) (./Sections/preliminaries.tex
@@ -1534,11 +1523,27 @@ LaTeX Font Info:    Try loading font information for U+stmry on input line 24.
 
 {/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
+LaTeX Warning: Citation 'boyle2019-fss-preprocess' on page 2 undefined on input
+ line 9.
+
+
 LaTeX Warning: Citation 'boyle2015-fss' on page 2 undefined on input line 9.
 
 
 LaTeX Warning: Citation 'boyle2016-fss-extension' on page 2 undefined on input 
 line 9.
+
+
+LaTeX Warning: Citation 'boyle2019-fss-preprocess' on page 2 undefined on input
+ line 11.
+
+
+LaTeX Warning: Citation 'boyle2019-fss-preprocess' on page 2 undefined on input
+ line 11.
+
+
+LaTeX Warning: Citation 'boyle2019-fss-preprocess' on page 2 undefined on input
+ line 15.
 
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 18.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
@@ -1548,53 +1553,61 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 18.
  [2]
 (./Figures/tikzfigs/graphical_gates.tex) [3] (./Figures/23-constructions.tex
+
+LaTeX Warning: Citation 'boneh2018-darkmatter' on page 4 undefined on input lin
+e 36.
+
 (./Figures/tikzfigs/23wPRF_fig.tex) (./Figures/tikzfigs/23OWF_fig.tex)
 Overfull \hbox (3.31082pt too wide) in paragraph at lines 36--37
 [] 
  []
 
-) [4]) (./Sections/cryptanalysis.tex) (./Sections/distributed_protocols.tex
-[5]
+)
+
+LaTeX Warning: Citation 'boyle2019-fss-preprocess' on page 4 undefined on input
+ line 55.
+
+
+Overfull \hbox (9.59952pt too wide) in paragraph at lines 55--56
+\OT1/cmr/m/n/10.95 ing of the gates de-scribed pre-vi-ously. This ap-proach is 
+sim-i-lar to that of [[]].
+ []
+
+[4] [5]) (./Sections/cryptanalysis.tex) (./Sections/distributed_protocols.tex
+[6]
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' undefined
-(Font)              using `U/stmry/m/n' instead on input line 17.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: Citation 'Beaver' on page 6 undefined on input line 60.
-
-
-LaTeX Warning: Citation 'BGI19' on page 6 undefined on input line 60.
-
-[6]
-LaTeX Font Info:    Try loading font information for OMS+cmss on input line 65.
-
-LaTeX Font Info:    No file OMScmss.fd. on input line 65.
-
-
-LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
-(Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbackslash' on input line 65.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 78--80
-
- []
+(Font)              using `U/stmry/m/n' instead on input line 16.
 
 [7]
 
+LaTeX Warning: Citation 'boyle2019-fss-preprocess' on page 8 undefined on input
+ line 65.
+
+
+LaTeX Warning: Citation 'beaver1991-triples' on page 8 undefined on input line 
+65.
+
+[8] [9] [10]
+
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 121.
+(hyperref)                removing `math shift' on input line 201.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 121.
+(hyperref)                removing `math shift' on input line 201.
 
-[8]) (./Sections/evaluation.tex [9]
 
-LaTeX Warning: Reference `to-add' on page 10 undefined on input line 23.
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 201.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 201.
+
+[11] [12]) (./Sections/evaluation.tex [13]
+
+LaTeX Warning: Reference `to-add' on page 14 undefined on input line 23.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
@@ -1620,49 +1633,83 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 34.
 
-[10] [11]
-
-LaTeX Warning: Reference `newProtocol' on page 12 undefined on input line 108.
-
-
-LaTeX Warning: Reference `newProtocol' on page 12 undefined on input line 137.
-
-[12] [13]) (./Sections/applications.tex
-
-LaTeX Warning: Citation 'STOC:IKOS07' on page 14 undefined on input line 56.
-
-
-LaTeX Warning: Citation 'CCS:CDGORR17' on page 14 undefined on input line 61.
-
-
-LaTeX Warning: Citation 'CCS:KatKolWan18' on page 14 undefined on input line 63
-.
-
-
-LaTeX Warning: Citation 'EC:ARSTZ15' on page 14 undefined on input line 66.
-
 [14] [15]
 
-LaTeX Warning: Citation 'TCHES:KalZav20' on page 16 undefined on input line 188
-.
+LaTeX Warning: Citation 'LibSodium' on page 16 undefined on input line 108.
+
+
+LaTeX Warning: Citation 'boneh2018-darkmatter' on page 16 undefined on input li
+ne 135.
+
+
+LaTeX Warning: Reference `newProtocol' on page 16 undefined on input line 135.
+
+
+LaTeX Warning: Citation 'boneh2018-darkmatter' on page 16 undefined on input li
+ne 146.
 
 [16]
 
-LaTeX Warning: Citation 'EC:DinNad19' on page 17 undefined on input line 256.
+LaTeX Warning: Citation 'naor1999-oprf' on page 17 undefined on input line 164.
 
-[17]
+
+
+LaTeX Warning: Citation 'LibSodium' on page 17 undefined on input line 164.
+
+[17]) (./Sections/applications.tex
+
+LaTeX Warning: Citation 'STOC:IKOS07' on page 18 undefined on input line 56.
+
+
+LaTeX Warning: Citation 'CCS:CDGORR17' on page 18 undefined on input line 61.
+
+
+LaTeX Warning: Citation 'CCS:KatKolWan18' on page 18 undefined on input line 63
+.
+
+
+LaTeX Warning: Citation 'EC:ARSTZ15' on page 18 undefined on input line 66.
+
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 79.
+
+LaTeX Font Info:    No file OMScmss.fd. on input line 79.
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbullet' on input line 79.
+
+[18] [19]
+
+LaTeX Warning: Citation 'TCHES:KalZav20' on page 20 undefined on input line 188
+.
+
+
+LaTeX Warning: Citation 'sp800-185' on page 20 undefined on input line 212.
+
+[20]
+
+LaTeX Warning: Citation 'EC:DinNad19' on page 21 undefined on input line 256.
+
+
+LaTeX Warning: Citation 'picnic-spec' on page 21 undefined on input line 258.
+
+[21]
 Overfull \hbox (46.97836pt too wide) in paragraph at lines 333--391
 [][]
  []
 
-)) [18] [19] [20]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 26.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 26.
+))
+
+LaTeX Warning: Empty bibliography on input line 15.
+
+[22] [23]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 25.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 25.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 26.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 26.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 25.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 25.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: B419245BB528E7FA5F4541110478BFC5;1786.
+(rerunfilecheck)             Checksum: 33773C7F0E6C57349618E9D5AFA029B2;1786.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -1680,18 +1727,17 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45384 strings out of 492616
- 922564 string characters out of 6129482
- 1373685 words of memory out of 5000000
- 48519 multiletter control sequences out of 15000+600000
- 552743 words of font info for 101 fonts, out of 8000000 for 9000
+ 45362 strings out of 492616
+ 921717 string characters out of 6129482
+ 1373339 words of memory out of 5000000
+ 48500 multiletter control sequences out of 15000+600000
+ 552274 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 65i,19n,101p,1151b,1492s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,19n,101p,1147b,1488s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></
 usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></us
-r/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></us
 r/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr
 /local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></
 usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
@@ -1702,28 +1748,28 @@ cal/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loca
 l/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/
 texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/
 texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/te
-xlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texl
-ive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive
-/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/20
-19/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2019/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2019/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2019/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2019/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2019/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2019/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/font
-s/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2019/texmf-dist/fonts
-/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2019/texmf-dist/f
-onts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2019/texmf-di
-st/fonts/type1/public/stmaryrd/stmary10.pfb>
-Output written on main.pdf (20 pages, 424379 bytes).
+xlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texl
+ive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texliv
+e/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2
+019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2019
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2019/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2019/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2019/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2019/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2019/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2019/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2019/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/
+type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2019/texmf-dist/fo
+nts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2019/texmf-dis
+t/fonts/type1/public/stmaryrd/stmary10.pfb>
+Output written on main.pdf (23 pages, 418775 bytes).
 PDF statistics:
- 506 PDF objects out of 1000 (max. 8388607)
- 414 compressed objects within 5 object streams
- 118 named destinations out of 1000 (max. 500000)
+ 501 PDF objects out of 1000 (max. 8388607)
+ 407 compressed objects within 5 object streams
+ 119 named destinations out of 1000 (max. 500000)
  361 words of extra memory for PDF output out of 10000 (max. 10000000)
 

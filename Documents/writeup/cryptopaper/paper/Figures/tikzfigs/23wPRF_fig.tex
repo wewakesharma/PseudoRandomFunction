@@ -3,7 +3,7 @@
 \scalebox{0.8}{
 \begin{tikzpicture}
     \begin{scope}
-        \draw[fill=blue!15] (-0.74,0.65) -- (0.74,1.05) -- (0.74,-1.05) -- (-0.74,-0.65) -- (-0.74,-0.55) -- (0.5,-0.55) -- (0.5,0.55) -- (-0.74,0.55) -- cycle;
+        \draw[twostyle] (-0.74,0.65) -- (0.74,1.05) -- (0.74,-1.05) -- (-0.74,-0.65) -- (-0.74,-0.55) -- (0.5,-0.55) -- (0.5,0.55) -- (-0.74,0.55) -- cycle;
          \draw (-0.8,0.65) node[left] {$\mat{K}$};
          \draw (-0.8,-0.65) node[left] {$x$};
     \end{scope}
@@ -15,7 +15,7 @@
     }
     \end{scope}
     \begin{scope}[shift={(1.85,0)}]
-    \node [draw,trapezium,minimum height=1.48cm,trapezium left angle=75,trapezium right angle=75, rotate=-90,pattern=north west lines, pattern color=orange!70] {\rotatebox{90}{$\mat{B}$}};
+    \node [draw,trapezium,minimum height=1.48cm,trapezium left angle=75,trapezium right angle=75, rotate=-90,threestyle] {\rotatebox{90}{$\mat{B}$}};
     \draw (0.75,0) node[right] {$y$};
     \end{scope}
 \end{tikzpicture}
