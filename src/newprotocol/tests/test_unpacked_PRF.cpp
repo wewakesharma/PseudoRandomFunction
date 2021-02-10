@@ -22,7 +22,7 @@ int main()  {
     nRuns=1000;
 
     PRF_unpacked_driver(nRuns); //driver program does the preprocessing and called unpacked function
-    display_time_unpacked(nRuns);
     return 0;
+
 }
 #endif

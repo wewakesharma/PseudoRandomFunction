@@ -771,6 +771,33 @@ tests/test_unpacked_PRF.cpp.s:
 	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.s
 .PHONY : tests/test_unpacked_PRF.cpp.s
 
+tests/test_unpacked_phase1.o: tests/test_unpacked_phase1.cpp.o
+
+.PHONY : tests/test_unpacked_phase1.o
+
+# target to build an object file
+tests/test_unpacked_phase1.cpp.o:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_unpacked_phase1.cpp.o
+.PHONY : tests/test_unpacked_phase1.cpp.o
+
+tests/test_unpacked_phase1.i: tests/test_unpacked_phase1.cpp.i
+
+.PHONY : tests/test_unpacked_phase1.i
+
+# target to preprocess a source file
+tests/test_unpacked_phase1.cpp.i:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_unpacked_phase1.cpp.i
+.PHONY : tests/test_unpacked_phase1.cpp.i
+
+tests/test_unpacked_phase1.s: tests/test_unpacked_phase1.cpp.s
+
+.PHONY : tests/test_unpacked_phase1.s
+
+# target to generate assembly for a file
+tests/test_unpacked_phase1.cpp.s:
+	$(MAKE) -f CMakeFiles/newprotocol.dir/build.make CMakeFiles/newprotocol.dir/tests/test_unpacked_phase1.cpp.s
+.PHONY : tests/test_unpacked_phase1.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -852,6 +879,9 @@ help:
 	@echo "... tests/test_unpacked_PRF.o"
 	@echo "... tests/test_unpacked_PRF.i"
 	@echo "... tests/test_unpacked_PRF.s"
+	@echo "... tests/test_unpacked_phase1.o"
+	@echo "... tests/test_unpacked_phase1.i"
+	@echo "... tests/test_unpacked_phase1.s"
 .PHONY : help
 
 

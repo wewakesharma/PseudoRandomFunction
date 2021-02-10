@@ -201,6 +201,9 @@
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_unpacked_PRF.cpp">
 			<Option target="newprotocol"/>
 		</Unit>
+		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/tests/test_unpacked_phase1.cpp">
+			<Option target="newprotocol"/>
+		</Unit>
 		<Unit filename="/Users/vivek/Documents/PseudoRandomFunction/src/newprotocol/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

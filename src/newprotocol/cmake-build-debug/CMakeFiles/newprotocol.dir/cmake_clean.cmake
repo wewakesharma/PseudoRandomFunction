@@ -23,6 +23,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/newprotocol.dir/tests/test_packed_PRF_central_lookup.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_unit_newprotocol.cpp.o"
   "CMakeFiles/newprotocol.dir/tests/test_unpacked_PRF.cpp.o"
+  "CMakeFiles/newprotocol.dir/tests/test_unpacked_phase1.cpp.o"
   "newprotocol"
   "newprotocol.pdb"
 )
