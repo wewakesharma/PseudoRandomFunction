@@ -203,6 +203,7 @@ Equipped with our technical overview, it is simple to construct distributed prot
 \end{table}
 
 \subsubsection{$2$-Party Protocol for \ttwPRF.}
+\label{subsec:2pc-wprf}
 We detail a $2$-party semi-honest protocol for evaluating our \ttwPRF candidate (Construction~\ref{construction:23-central-wprf}). In this setting, two parties, denoted by $\party_1$ and $\party_2$ hold additive shares of a key $\mat{K} \in \Z_2^{m \times n}$, and an input $x \in \Z_2^n$. The goal is to compute an additive sharing of the wPRF output $y = \LMap^\mat{B}_3(\mat{K}x)$ where $\mat{B} \in \Z_3^{t \times m}$ is a publicly known matrix.
 
 

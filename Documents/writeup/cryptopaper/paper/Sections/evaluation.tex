@@ -37,7 +37,7 @@ We represent each element in $\Z_3$ using the two bits from its binary represent
 \begin{center}
     \begin{tabular}{|c|c|c|}
         \hline
-        \textbf{Operation} & \textbf{Result MSB} &\textbf{Result LSB}\\
+        Operation & Result MSB & Result LSB\\
         \hline\hline
         $z_1 + z_2 \bmod 3$ & $(l_1 \vee l_2) \oplus (l_1 \vee h_2) \oplus (l_2 \vee h_1)$  & $(h_1 \vee h_2) \oplus (l_1 \vee h_2) \oplus (l_2 \vee h_1)$\\
         $-z_1 \bmod 3$ & $l_1$ & $h_1$ \\
@@ -54,7 +54,7 @@ We represent each element in $\Z_3$ using the two bits from its binary represent
 
 \paragraph{Lookup table for matrix multiplication.} Recall that the \ttwPRF evaluation contains a mod-3 linear map using a public matrix $\mat{B} \in \Z_3^{81\times256}$. Specifically, it computes the matrix-vector product $\mat{B}w$ where $w \in \Z_3^{256}$. Since $\mat{B}$ is known prior to evaluation, we can use a lookup table to speedup the multiplication by $\mat{B}$. The same preprocessing can also by reused for multiple evaluations of the wPRF.
 
-For this, we partition $\mat{B}$, which has $m=256$ columns, into $16$ slices of $16$ columns each. These matrices, denoted by $\mat{B}_1,\dots, \mat{B}_{16}$, are all in $\Z_3^{81 \times 16}$. Now, for each $\mat{B}_i$, we will effectively build a lookup table for its multiplication with any $\Z_3$ vector of length $16$. A point to note here is that since we  represent $\Z_3$ vectors by two binary vectors (from the bit slicing optimization), it is sufficient to preprocess multiplications (modulo 3) for binary vectors of length $16$. To multiply $\mat{B}_{i}$ by a vector in $\Z_3^{16}$, we can first multiply it separately by the corresponding MSB and LSB vectors, and then subtract the former from the later modulo 3. This works since for $z_1, z_2 \in \Z_3$ the multiplication $z_1z_2 \bmod 3$ can be given by $z_1(2\cdot h_2 + l_2) \bmod 3 = z_1l_2 - z_1h_2 \bmod 3$ where $h_2, l_2$ are the MSB and LSB of $z_2$ respectively. Now, to multiply $\mat{B}$ by $v \in \Z_3^{256}$, we first evaluate all multiplications of the form $\mat{B}_iv_i$ where $v_i$ is the $\Z_3^{16}$ vector denoting the $i^\thtext$ slice of $v$ if it was split into 16-element chunks. Then, multiplication by $\mat{B}$ is given by $\mat{B}v = \sum_{i \in [16]} \mat{B}_i v_i \mod 3$.
+For this, we partition $\mat{B}$, which has $m=256$ columns, into $16$ slices of $16$ columns each. These matrices, denoted by $\mat{B}_1,\dots, \mat{B}_{16}$, are all in $\Z_3^{81 \times 16}$. Now, for each $\mat{B}_i$, we will effectively build a lookup table for its multiplication with any $\Z_3$ vector of length $16$. A point to note here is that since we  represent $\Z_3$ vectors by two binary vectors (from the bit slicing optimization), it is sufficient to preprocess multiplications (modulo 3) for binary vectors of length $16$. To multiply $\mat{B}_{i}$ by a vector in $\Z_3^{16}$, we can first multiply it separately by the corresponding MSB and LSB vectors, and then subtract the former from the latter modulo 3. This works since for $z_1, z_2 \in \Z_3$ the multiplication $z_1z_2 \bmod 3$ can be given by $z_1(2\cdot h_2 + l_2) \bmod 3 = z_1l_2 - z_1h_2 \bmod 3$ where $h_2, l_2$ are the MSB and LSB of $z_2$ respectively. Now, to multiply $\mat{B}$ by $v \in \Z_3^{256}$, we first evaluate all multiplications of the form $\mat{B}_iv_i$ where $v_i$ is the $\Z_3^{16}$ vector denoting the $i^\thtext$ slice of $v$ if it was split into 16-element chunks. Then, multiplication by $\mat{B}$ is given by $\mat{B}v = \sum_{i \in [16]} \mat{B}_i v_i \mod 3$.
 
 
 In general, a $\mat{B} \in \Z_3^{t \times m}$ can be partitioned into $m/c$ partitions with $c$ columns each (assume $c$ divides $m$ for simplicity), and would require a total multiplication lookup table size of $(m/c) \cdot 2^c \cdot t$ $\Z_3$ elements. Multiplying $\mat{B}$ by $v \in \Z_3^{m}$ requires $2(m/c)$ lookup table accesses (one each for MSB and LSB of $v$ per partition of $\mat{B}$) and an addition of $(m/c - 1)$ $\Z_3^{t}$ vectors.
@@ -141,126 +141,136 @@ For our parameters, this results in a table size of roughly $135$MB with proper 
 
 
 %Lookup table Implemetation
-\paragraph{Lookup table for matrix multiplication.}
-\mahimna{I added sufficient details from this into the earlier paragraph. If that looks good, then we can remove this}
-Even with bitslicing, implementing the matrix-vector multiplication column by column via the opertions from Table~1 is still rather slow.
-To get better performence, we capitalized on the fact that the random matrix $R$ is fixed, and we can therefore set up $R$-dependent tables and use table lookups in the implementation of the multiply-by-$R$ operation.
+% \paragraph{Lookup table for matrix multiplication.}
+% \mahimna{I added sufficient details from this into the earlier paragraph. If that looks good, then we can remove this}
+% Even with bitslicing, implementing the matrix-vector multiplication column by column via the opertions from Table~1 is still rather slow.
+% To get better performence, we capitalized on the fact that the random matrix $R$ is fixed, and we can therefore set up $R$-dependent tables and use table lookups in the implementation of the multiply-by-$R$ operation.
 
-Specifically, we partition the matrix $R$ (which has $m=256$ columns) into sixteen slices of 16 columns each, denoted $R_1,\ldots,R_{16}$.
-For each of these small matrices $R_i$, we then build a table with $2^{16}$ entries, holding the result of multiplying $R_i$ by every vector from $\{0,1\}^{16}$.
-Namely, let $R_{i,0},R_{i,1},\ldots,R_{i,15}$ be the sixteen columns of the matrix $R_i$.
-The table for $R_i$ is then defined as follows: For each index $0\le j < 2^{16}$, let $\vec{J}=(j_0,j_1,\ldots,j_{15})$ be the 0-1 vector holding the bits in the binary representation of~$j$, then we have
-\[
-T_i[j] = R_i \times \vec{J} = \sum_{k=0}^{15} R_{i,k} \cdot j_k ~~\bmod 3.
-\]
-Recalling that $R$ is $Z_3$ matrix of dimension $81\times 256$, every entry in each table~$T_i$ therefore holds an 81-vector over $Z_3$.
-Specifically, it holds a packed-$Z_3$ element with four words (two for the MSBs and two for the LSBs of this 81-element vector).
+% Specifically, we partition the matrix $R$ (which has $m=256$ columns) into sixteen slices of 16 columns each, denoted $R_1,\ldots,R_{16}$.
+% For each of these small matrices $R_i$, we then build a table with $2^{16}$ entries, holding the result of multiplying $R_i$ by every vector from $\{0,1\}^{16}$.
+% Namely, let $R_{i,0},R_{i,1},\ldots,R_{i,15}$ be the sixteen columns of the matrix $R_i$.
+% The table for $R_i$ is then defined as follows: For each index $0\le j < 2^{16}$, let $\vec{J}=(j_0,j_1,\ldots,j_{15})$ be the 0-1 vector holding the bits in the binary representation of~$j$, then we have
+% \[
+% T_i[j] = R_i \times \vec{J} = \sum_{k=0}^{15} R_{i,k} \cdot j_k ~~\bmod 3.
+% \]
+% Recalling that $R$ is $Z_3$ matrix of dimension $81\times 256$, every entry in each table~$T_i$ therefore holds an 81-vector over $Z_3$.
+% Specifically, it holds a packed-$Z_3$ element with four words (two for the MSBs and two for the LSBs of this 81-element vector).
 
-Note, however, that $T_i$ can only be used directly to multiply $R_i$ by \emph{0-1 vectors}.
-To use $T_i$ when multiplying $R_i$ by a $\{0,1,2\}$ vector, multiply $R_i$ separately by the MBSs and the LSBs of that vector, and then subtract one from the other using the operations from Table~1.
-To multiply a dimension-256 $\{0,1,2\}$ vector by the matrix $R$, we partition it into sixteen vectors of dimension 16, use the approach above to multiply each one of them by the corresponding $R_i$, then use the operations from Table~1 to add them all together.
-Hence we have
+% Note, however, that $T_i$ can only be used directly to multiply $R_i$ by \emph{0-1 vectors}.
+% To use $T_i$ when multiplying $R_i$ by a $\{0,1,2\}$ vector, multiply $R_i$ separately by the MBSs and the LSBs of that vector, and then subtract one from the other using the operations from Table~1.
+% To multiply a dimension-256 $\{0,1,2\}$ vector by the matrix $R$, we partition it into sixteen vectors of dimension 16, use the approach above to multiply each one of them by the corresponding $R_i$, then use the operations from Table~1 to add them all together.
+% Hence we have
 
-\begin{tabbing}
-	\underline{Multiply-by-$R$(input: $\vec{V}\in\{0,1,2\}^{256}$:}\\
-	~~1. $Acc := 0$\\
-	~~2. For \=$i=0,\ldots,15$\\
-	~~3. \> Let $\vec{M}_i,\vec{L}_i\in\{0,1\}^{16}$ be the MSB, LSB vectors (resp.) of $\vec{V}_i=\vec{V}[16i,\ldots,16i+15]$\\
-	~~4. \> Set the indexes $m:=\sum_{k=0}^{15}2^i\cdot\vec{M}[i]$
-	and $\ell:=\sum_{k=0}^{15}2^i\cdot\vec{L}[i]$\\
-	~~5. \> $Acc := Acc + T_i[\ell] - T_i[\ell] \bmod 3$\\
-	~~6. Output $Acc$
-\end{tabbing}
+% \begin{tabbing}
+% 	\underline{Multiply-by-$R$(input: $\vec{V}\in\{0,1,2\}^{256}$:}\\
+% 	~~1. $Acc := 0$\\
+% 	~~2. For \=$i=0,\ldots,15$\\
+% 	~~3. \> Let $\vec{M}_i,\vec{L}_i\in\{0,1\}^{16}$ be the MSB, LSB vectors (resp.) of $\vec{V}_i=\vec{V}[16i,\ldots,16i+15]$\\
+% 	~~4. \> Set the indexes $m:=\sum_{k=0}^{15}2^i\cdot\vec{M}[i]$
+% 	and $\ell:=\sum_{k=0}^{15}2^i\cdot\vec{L}[i]$\\
+% 	~~5. \> $Acc := Acc + T_i[\ell] - T_i[\ell] \bmod 3$\\
+% 	~~6. Output $Acc$
+% \end{tabbing}
 
-We note that a slightly faster implementation could be obtained by braking the matrix into (say) 26 slices of upto 10 columns each, and directly identify each 10-vector over $\{0,1,2\}$ with an index $i<3^{10}=59049$.
-This implementation would have only 26 lookup operations instead of 32 in the algorithm above, so we expect it to be about 20\% faster. On the other hand it would have almost twice the table size of the implementation from above.
+% We note that a slightly faster implementation could be obtained by braking the matrix into (say) 26 slices of upto 10 columns each, and directly identify each 10-vector over $\{0,1,2\}$ with an index $i<3^{10}=59049$.
+% This implementation would have only 26 lookup operations instead of 32 in the algorithm above, so we expect it to be about 20\% faster. On the other hand it would have almost twice the table size of the implementation from above.
 
+
+
+%--------------------------------------%
 
 \subsection{Performance Benchmarks}
-\paragraph{Experimental setup}
-We ran all our experiments on a t2.medium AWS EC2 instance with 4GiB RAM (architecture: x86-64 Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz) running on Ubuntu 18.04. The performance benchmarks and timing results we provide are averaged over 1000 runs. For the distributed construction benchmarks, both parties were run on the same instance. We separately report the computational runtime for the parties, and provide an estimate of the communication costs. 
+\paragraph{Experimental setup.}
+We ran all our experiments on a t2.medium AWS EC2 instance with 4GiB RAM (architecture: x86-64 Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz) running on Ubuntu 18.04. The performance benchmarks and timing results we provide are averaged over 1000 runs. For the distributed construction benchmarks, both parties were run on the same instance. We separately report the computational runtime for the parties, and analytically compute the communication costs. 
 
-\textbf{Communication vs. Computation:} The proposed OPRF hits communication bottleneck for low bandwidth network since number of bits exchanged is almost two times as that in DDH-based OPRF\cite{LibSodium}. Further calculation shows that the minimal network speed in which computation dominates communication is 7.86 Mbps. For network speed greater than 7.86Mbps, the proposed OPRF outperforms the DDH-based OPRF.
-\yuval{Communication costs in bits can be computed analytically. Maybe talk about estimated breakeven points: (1) minimal network speed in which computation dominates communication, and (2) minimal network speed where we estimate our OPRF to be faster than the DDH-based alternative.  }
 
 \paragraph{Optimization results.}
-We start with benchmarks for the different optimization techniques detailed in Section~\ref{subsec:implementation_opt}. Table~\ref{table:optimization_benchmarks} contains timing results for our centralized implementation of the 23-wPRF construction using these optimizations.
+We start with benchmarks for the different optimization techniques detailed in Section~\ref{subsec:implementation_opt}. Table~\ref{table:optimization_benchmarks} contains timing results for our centralized implementation of the \ttwPRF construction with parameters $n=m=256$ and $t=81$ using these optimizations. The table also reports results for a baseline implementation which uses the naive $\Theta(nm)$ algorithm for multiplication between a $m \times n$ matrix and a $n$ length vector. We find that our best implementation is 25x faster than the baseline implementation.
 
-\begin{table}[h]
+\begin{table}[t]
 	{
 		\centering
 		\begin{tabular}{|c|c|c|c|c|}
 			
 			\hline
-			\multicolumn{3}{|c|}{Optimization} &  \multirow{2}{*}{Runtime($\mu$ sec)} & \multirow{2}{*}{Evaluations / sec} \\
+			\multicolumn{3}{|c|}{Optimization} &  \multirow{2}{*}{Runtime ($\mu$s)} & \multirow{2}{*}{Evaluations / sec} \\
 			Packing & Bit Slicing & Lookup Table &  & \\
 			\hline\hline
+			\multicolumn{3}{|c|}{Baseline implementation} & 156.41 & 6K\\
 			\checkmark & & & 26.84 & 37K\\
 			\checkmark & \checkmark & & 18.5 & 65K \\
 			\checkmark & \checkmark & \checkmark & 6.08 & 165K \\
 			\hline
 		\end{tabular}
-		\caption{Centralized 23-wPRF benchmarks using different optimization techniques. Packing was done into 64-bit sized words (for both $\Z_2$ and $\Z_3$ vectors). For the lookup table optimization, an $(m=256)$-column matrix was partitioned into 16 slices of 16 columns each. A lookup table containing $81 \times 2^{20}$ elements in $\Z_3$\yuval{Specify units in Runtime column. Memory Usage column: not sure what this means, and in any case the first two rows seem too small to be meaningful (e.g., the amount of memory used by the program for maintaining variables may be bigger). I suggest removing this column, and instead specifying the lookup table size in the caption. Alternatively, we can keep this column and change the title to ``lookup table size'', keeping the first two rows empty. Regarding this size, what does $2^{20}$ count? Bits? Machine words? $\Z_3$ elements? }}
+		\caption{Centralized 23-wPRF benchmarks for a baseline implementation and for different optimization techniques. Packing was done into 64-bit sized words (for both $\Z_2$ and $\Z_3$ vectors). For the lookup table optimization, a table with $81 \times 2^{20}$ $\Z_3$ elements, or roughly of size $135$MB, was preprocessed. Runtimes are all given in microseconds ($\mu$s).
+		% \yuval{Specify units in Runtime column. Memory Usage column: not sure what this means, and in any case the first two rows seem too small to be meaningful (e.g., the amount of memory used by the program for maintaining variables may be bigger). I suggest removing this column, and instead specifying the lookup table size in the caption. Alternatively, we can keep this column and change the title to ``lookup table size'', keeping the first two rows empty. Regarding this size, what does $2^{20}$ count? Bits? Machine words? $\Z_3$ elements?}
+		}
 		\label{table:optimization_benchmarks}
 	}
-	\mahimna{It would be nice to get benchmarks for performance gain using each optimization independently. If possible, it might also be nice to get the numbers for different sized lookup tables. We could also estimate this analytically.}
 \end{table}
 
-\paragraph{Distributed wPRF evaluation.}
-We consider two 2-party weak PRF protocols. The first protocol is described in \cite{boneh2018-darkmatter} and the second one is our construction as described in \ref{newProtocol}. Since the goal of the implementation was timing the local {\em online}run-time, the implementation used a trusted party to generate the pre-processed variables.
 
-\begin{table}[htbp]
-	%[h]
-	\begin{center}
-		%\begin{minipage}{10cm}
-		\begin{tabular}{|c|c|c|c|}
-			\hline
-			\textbf{Protocol} & \textbf{Eval/sec} & \textbf{Runtime($\mu$ sec)} \\
-			\hline
-			\hline
-			\textbf{Fully Distributed wPRF~\cite{boneh2018-darkmatter}} & 36K & 28.02  \\
-			\hline
-			\textbf{Fully Distributed wPRF} &  82K &  12.12\\
-			\hline
-			
-		\end{tabular}
+\paragraph{Distributed wPRF evaluation.}
+We also implement the 2-party semi-honest distributed protocol detailed in Section~\ref{subsec:2pc-wprf} for evaluating the \ttwPRF construction and report timings for our implementation. Further, since this candidate was first proposed in~\cite{boneh2018-darkmatter}, we also implement their protocol as a comparison point. For both protocols, we use the parameters $n=m=256$, $t=81$ for the PRF and use the same optimizations (from Section~\ref{subsec:implementation_opt}). We use a trusted party to generate the preprocessed randomness. We provide a comparison in Table~\ref{table:distributed_wprf}.
+
+
+% We consider two 2-party weak PRF protocols. The first protocol is described in \cite{boneh2018-darkmatter} and the second one is our construction as described in \ref{newProtocol}. Since the goal of the implementation was timing the local {\em online}run-time, the implementation used a trusted party 
+
+\begin{table}[t]
+{
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	Protocol & Runtime ($\mu$s) & Evaluations / sec & \makecell{Preprocessing \\ (bits)} & \makecell{Communication \\ (bits)} \\
+	\hline
+	\hline
+	\makecell{\ttwPRF Protocol \\~\cite{boneh2018-darkmatter}} & 28.02 & 36K & 3533 & 2612 \\
+	\hline
+	\makecell{\ttwPRF Protocol \\ (Section~\ref{subsec:2pc-wprf})} & 12.12 & 82K & 2348 & 1536 \\
+	\hline	
+\end{tabular}
 		
-		\vspace{-1mm}
-		\caption{Optimized protocols runtime. These protocols utilize both the bit-packing and lookup table optimization}
-		\label{RuntimeTable}
-		%\end{minipage}
-	\end{center}
-	\vspace{-5mm}
+\caption{Comparison of 2-party semi-honest protocols for distributed evaluation of the \ttwPRF candidate (Construction~\ref{construction:23-central-wprf}) in the preprocessing model. The parameters $n=m=256$ and $t=81$ were used for the wPRF. The runtime reported is the maximum between the two parties.}
+\mahimna{The preprocessing costs do not take into account optimizations (e.g., using a PRG seed). Should we report the na\"{i}ve cost here or the optimized cost? Using a PRG, the total preprocessing (with $\Z_3$ compression) is 918 bits.}
+\mahimna{If we are comparing only the TCC18 protocol with ours does it even make sense to have a table? Should we just provide the comparison in text?}
+\label{table:distributed_wprf}
+}
 \end{table}
 
 \paragraph{OPRF evaluation.}
-In Table~\ref{table:oprf_comparison}, we provide performance benchmarks for our 23-OPRF construction while also comparing it with other constructions. For our timing results, we report both the server and client runtimes (averages over 1000 runs). For each construction, we also include the size of the preprocessed correlated randomness, and the online communication cost. All constructions are parameterized appropriately to provide 128-bit security.
+In Table~\ref{table:oprf_comparison}, we provide performance benchmarks for both our oblivious protocols (see Section~\ref{subsec:oprf_protocol}) for the \ttwPRF construction. We also compare our results to a DDH-based OPRF~\cite{ddh-oprf}. For our timing results, we report both the server and client runtimes (averages over 1000 runs). For each construction, we also include the size of the preprocessed correlated randomness, and the online communication cost. All constructions are parameterized appropriately to provide 128-bit security.
 
-For the comparison with the DDH-based OPRF construction in~\cite{naor1999-oprf}, we use the libsodium library~\cite{LibSodium} for the elliptic curve scalar multiplication operation. We use the Curve25519 elliptic curve, which has a 256-bit key size, and provides 128 bits of security. \yuval{I actually think that the Naor-Pinkas-Reingold99 paper cited in the TCC '18 paper refers to a different notion of distributing a PRF, namely where the PRF key is distributed between two or more servers and the input is public. Let's try to figure out the source of the simple DDH-based OPRF protocol. Can ask Stas/Hugo if needed.}
+For our constructions, we report separately, the timings for refreshing the key and evaluating the input. For the comparison with the DDH-based OPRF construction in~\cite{ddh-oprf}, we use the libsodium library~\cite{LibSodium} for the elliptic curve scalar multiplication operation. We use the Curve25519 elliptic curve, which has a 256-bit key size, and provides 128 bits of security. 
+% \yuval{I actually think that the Naor-Pinkas-Reingold99 paper cited in the TCC '18 paper refers to a different notion of distributing a PRF, namely where the PRF key is distributed between two or more servers and the input is public. Let's try to figure out the source of the simple DDH-based OPRF protocol. Can ask Stas/Hugo if needed.}
+
+We point out that both of our OPRF protocols are much faster than the DDH-based OPRF although they require higher communication as well as preprocessing. To better represent the tradeoffs, we compute the minimum network speed for which the total time for one evaluation of our protocol is smaller than that for the DDH-based OPRF. We compare only the online costs for the evaluation. Analytically, we can compute that our two protocols are faster than the DDH-based OPRF protocol when the network speed is greater than $\approx 5.7$Mbps and $\approx 1.85$Mbps respectively. While these numbers only present a simplified picture, we note that they should depict the overall tradeoffs for our OPRF protocols.
+
+% \yuval{Communication costs in bits can be computed analytically. Maybe talk about estimated breakeven points: (1) minimal network speed in which computation dominates communication, and (2) minimal network speed where we estimate our OPRF to be faster than the DDH-based alternative.  }
 
 \begin{table}[h]
-	{
-		\centering
-		\resizebox{\textwidth}{!}{%
-			\begin{tabular}{|cc|c|c|c|c|c|c|}%8 columns
-				
-				\hline
-				\multirow{2}{*}{Protocol} & & \multicolumn{3}{c|}{Runtime($\mu$ sec)} & \multirow{2}{*}{Preprocessing} & \multicolumn{2}{c|}{Communication(bits)}\\
-				& & Server & Client & Parallel &  &Server & Client\\
-				\hline\hline
-				\multirow{2}{*}{23-OPRF} & Key Update & 0.65 & - & \multirow{2}{*}{9.48} & \multirow{2}{*}{1835} & \multirow{2}{*}{593} & \multirow{2}{*}{512}\\
-				& Evaluation & 9.45 & 9.13 & & &&\\
-				\hline
-				\multirow{2}{*}{23-OPRF*} & Key Update & 3.16 & - & \multirow{2}{*}{-}& \multirow{2}{*}{768} & \multirow{2}{*}{512} & \multirow{2}{*}{256}\\
-				& Evaluation & 4.84 & 8.84 & & &&\\
-				\hline
-				DDH-based OPRF & & 57.38& 28.69 & & - &256&256\\
-				\hline
-		\end{tabular}}
-		\caption{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu$s). Server and client can run in parallel after exchange of bits at the end of each phase. Parallel column reports timing in such scenario. \yuval{What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\Z_3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }}
-		\label{table:oprf_comparison}
+{
+\centering
+\resizebox{\textwidth}{!}{%
+	\begin{tabular}{|cc|c|c|c|c|c|c|}%8 columns	
+		\hline
+		\multirow{2}{*}{Protocol} & & \multicolumn{2}{c|}{Runtime ($\mu$s)} & \multirow{2}{*}{Preprocessing (bits)} & \multicolumn{2}{c|}{Communication (bits)}\\
+		& & Client & Server & & Client & Server\\
+		\hline\hline
+		\multirow{2}{*}{OPRF Protocol 1} & Key Update & - & 0.65 & 256 & - & 256 \\
+		& Evaluation & 8.54 & 9.45 & 2092 & 512 & 385 \\
+		\hline
+		\multirow{2}{*}{OPRF Protocol 2} & Key Update & - & 3.16 & 256 & - & 256\\
+		& Evaluation & 7.91 & 8.21 & 1836 & 256 & 385 \\
+		\hline
+		\multicolumn{2}{|c|}{DDH-based OPRF~\cite{ddh-oprf}} & 57.38 & 28.69 & - & 256 & 256\\
+		\hline
+	\end{tabular}}
+	\caption{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu$s). 
+	% \yuval{What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\Z_3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }
 	}
-	\mahimna{Include more comparisons as necessary}
+	\label{table:oprf_comparison}
+}
+\mahimna{ToDo: better naming for the protocols.}
 \end{table}
 
 

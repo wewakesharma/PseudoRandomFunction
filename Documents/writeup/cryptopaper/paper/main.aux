@@ -48,8 +48,8 @@
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {3}Candidate Constructions}{2}{section.3}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Basic structure}{2}{subsection.3.1}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Circuit gates.}{2}{section*.2}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Pictorial representations of the circuit gates. For the linear and bilinear gates, expanding means that the output vector is larger than the input vector, while contracting means that the output vector is smaller than the input vector. Additionally, for $p=2$, the gates are shaded in violet, and for $p=3$, the gates contain diagonal orange lines.}}{3}{figure.1}\protected@file@percent }
-\newlabel{fig:graphical_gates}{{1}{3}{Pictorial representations of the circuit gates. For the linear and bilinear gates, expanding means that the output vector is larger than the input vector, while contracting means that the output vector is smaller than the input vector. Additionally, for $p=2$, the gates are shaded in violet, and for $p=3$, the gates contain diagonal orange lines}{figure.1}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Pictorial representations of the circuit gates. For the linear and bilinear gates, expanding means that the length of the output vector is greater than or equal to the length of the input vector, while contracting means that the output vector is smaller than the input vector. Additionally, for $p=2$, the gates are shaded in violet, and for $p=3$, the gates contain diagonal orange lines. \textsf  {\color  {blue}{[Mahimna: {We use $n=m$ for many constructions. Should we call that length preserving (although the general construction has $m \geq n$) or should be rename expanding to something like non-contracting?}]}}}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:graphical_gates}{{1}{3}{Pictorial representations of the circuit gates. For the linear and bilinear gates, expanding means that the length of the output vector is greater than or equal to the length of the input vector, while contracting means that the output vector is smaller than the input vector. Additionally, for $p=2$, the gates are shaded in violet, and for $p=3$, the gates contain diagonal orange lines. \mahimna {We use $n=m$ for many constructions. Should we call that length preserving (although the general construction has $m \geq n$) or should be rename expanding to something like non-contracting?}}{figure.1}{}}
 \newlabel{fig:graphical_gates@cref}{{[figure][1][]1}{[1][3][]3}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Construction styles.}{3}{section*.3}\protected@file@percent }
 \citation{boneh2018-darkmatter}
@@ -64,7 +64,7 @@
 \@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces $(2,3)$-constructions}}{4}{figure.2}\protected@file@percent }
 \newlabel{fig:primary-constructions}{{2}{4}{$(2,3)$-constructions}{figure.2}{}}
 \newlabel{fig:primary-constructions@cref}{{[figure][2][]2}{[1][4][]4}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Circuit description of constructions.}{4}{section*.4}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Circuit description of constructions.}{5}{section*.4}\protected@file@percent }
 \newlabel{def:computation_circuit}{{3.3}{5}{Computation circuit}{theorem.3.3}{}}
 \newlabel{def:computation_circuit@cref}{{[definition][3][3]3.3}{[1][5][]5}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4}Cryptanalysis}{6}{section.4}\protected@file@percent }
@@ -75,9 +75,10 @@
 \newlabel{sec:distributed_protocols}{{5}{7}{Distributed Protocols}{section.5}{}}
 \newlabel{sec:distributed_protocols@cref}{{[section][5][]5}{[1][7][]7}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Technical Overview}{7}{subsection.5.1}\protected@file@percent }
+\newlabel{subsec:protocol_overview}{{5.1}{7}{Technical Overview}{subsection.5.1}{}}
+\newlabel{subsec:protocol_overview@cref}{{[subsection][1][5]5.1}{[1][7][]7}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Protocol notation and considerations.}{7}{section*.5}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Distributed Computation of Circuit Gates}{7}{subsubsection.5.1.1}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Linear gate protocol $\boldsymbol  {\pi }_\textsf  {Lin}^{\MakeUppercase  {\mathbf  {A}}, p}$.}{7}{section*.6}\protected@file@percent }
 \citation{boyle2019-fss-preprocess}
 \abx@aux@segm{0}{0}{boyle2019-fss-preprocess}
 \citation{beaver1991-triples}
@@ -86,35 +87,45 @@
 \@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Summary of the circuit gate protocols}}{8}{table.1}\protected@file@percent }
 \newlabel{table:gate_protocol_summary}{{1}{8}{Summary of the circuit gate protocols}{table.1}{}}
 \newlabel{table:gate_protocol_summary@cref}{{[table][1][]1}{[1][7][]8}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Linear gate protocol $\boldsymbol  {\pi }_\textsf  {Lin}^{\MakeUppercase  {\mathbf  {A}}, p}$.}{8}{section*.6}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Bilinear gate protocol $\boldsymbol  {\pi }_\textsf  {BL}^p$.}{8}{section*.7}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{$\mathbb  {Z}_2 \to \mathbb  {Z}_3$ conversion protocol $\boldsymbol  {\pi }_\textsf  {Convert}^{(2,3)}$.}{9}{section*.8}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{$\mathbb  {Z}_3 \to \mathbb  {Z}_2$ conversion protocol $\boldsymbol  {\pi }_\textsf  {Convert}^{(3,2)}$.}{9}{section*.9}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{$\mathbb  {Z}_3 \to \mathbb  {Z}_2$ conversion protocol $\boldsymbol  {\pi }_\textsf  {Convert}^{(3,2)}$.}{10}{section*.9}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}Composing Gate Protocols}{10}{subsubsection.5.1.2}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Communication cost.}{11}{section*.10}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Correlated randomness.}{11}{section*.11}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Distributed Evaluation in the Preprocessing Model}{11}{subsection.5.2}\protected@file@percent }
 \@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Preprocessing and communication cost for fully distributed evaluation of each of our candidate constructions. \textsf  {\color  {blue}{[Mahimna: {to be filled. I think here, we should report the final numbers after compression. We should also decide whether to report the concrete numbers, numbers as functions of $n,m,t$ or both. We can also report numbers for other constructions in literature here}]}}}}{12}{table.2}\protected@file@percent }
 \newlabel{table:construction_costs}{{2}{12}{Preprocessing and communication cost for fully distributed evaluation of each of our candidate constructions. \mahimna {to be filled. I think here, we should report the final numbers after compression. We should also decide whether to report the concrete numbers, numbers as functions of $n,m,t$ or both. We can also report numbers for other constructions in literature here}}{table.2}{}}
-\newlabel{table:construction_costs@cref}{{[table][2][]2}{[1][11][]12}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}$2$-Party Protocol for $(2,3)$-wPRF\xspace  .}{12}{subsection.5.3}\protected@file@percent }
+\newlabel{table:construction_costs@cref}{{[table][2][]2}{[1][12][]12}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Distributed Evaluation in the Preprocessing Model}{12}{subsection.5.2}\protected@file@percent }
+\newlabel{subsec:distributed_protocol}{{5.2}{12}{Distributed Evaluation in the Preprocessing Model}{subsection.5.2}{}}
+\newlabel{subsec:distributed_protocol@cref}{{[subsection][2][5]5.2}{[1][11][]12}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}$2$-Party Protocol for $(2,3)$-wPRF\xspace  .}{12}{subsubsection.5.2.1}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Preprocessing.}{12}{section*.12}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Protocol details.}{12}{section*.13}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Cost analysis.}{13}{section*.14}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}2-party Public Input Evaluation}{13}{subsection.5.4}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}3-party Distributed Evaluation}{13}{subsection.5.5}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Oblivious PRF Evaluation}{13}{subsection.5.6}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {6}Implementation and Evaluation}{14}{section.6}\protected@file@percent }
-\newlabel{sec:implementation_and_eval}{{6}{14}{Implementation and Evaluation}{section.6}{}}
-\newlabel{sec:implementation_and_eval@cref}{{[section][6][]6}{[1][14][]14}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Optimizations}{14}{subsection.6.1}\protected@file@percent }
-\newlabel{subsec:implementation_opt}{{6.1}{14}{Optimizations}{subsection.6.1}{}}
-\newlabel{subsec:implementation_opt@cref}{{[subsection][1][6]6.1}{[1][14][]14}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Representing $Z_2$ vector - bit packing}{14}{subsection.6.2}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Representing $Z_3$ vector - bit slicing}{14}{subsection.6.3}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Lookup table for matrix multiplication.}{14}{section*.15}\protected@file@percent }
-\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Operations in $Z_3$. input: ${l_1}, {m_1}$ - LSB and MSB of first trinary number, ${l_2}, {m_2}$ - LSB and MSB of second trinary number, ${s}$ - selection bit for MUX}}{15}{table.3}\protected@file@percent }
-\newlabel{tab:multicol}{{3}{15}{Operations in $Z_3$. input: ${l_1}, {m_1}$ - LSB and MSB of first trinary number, ${l_2}, {m_2}$ - LSB and MSB of second trinary number, ${s}$ - selection bit for MUX}{table.3}{}}
-\newlabel{tab:multicol@cref}{{[table][3][]3}{[1][14][]15}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Public input setting.}{13}{section*.15}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}3-party Distributed Evaluation}{13}{subsection.5.3}\protected@file@percent }
+\newlabel{subsec:3party_protocol}{{5.3}{13}{3-party Distributed Evaluation}{subsection.5.3}{}}
+\newlabel{subsec:3party_protocol@cref}{{[subsection][3][5]5.3}{[1][13][]13}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Oblivious PRF Evaluation in the Preprocessing Model}{13}{subsection.5.4}\protected@file@percent }
+\newlabel{subsec:oprf_protocol}{{5.4}{13}{Oblivious PRF Evaluation in the Preprocessing Model}{subsection.5.4}{}}
+\newlabel{subsec:oprf_protocol@cref}{{[subsection][4][5]5.4}{[1][13][]13}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Oblivious PRF Protocol 1.}{13}{section*.16}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Oblivious PRF Protocol 2.}{14}{section*.17}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {6}Implementation and Evaluation}{16}{section.6}\protected@file@percent }
+\newlabel{sec:implementation_and_eval}{{6}{16}{Implementation and Evaluation}{section.6}{}}
+\newlabel{sec:implementation_and_eval@cref}{{[section][6][]6}{[1][16][]16}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Optimizations}{16}{subsection.6.1}\protected@file@percent }
+\newlabel{subsec:implementation_opt}{{6.1}{16}{Optimizations}{subsection.6.1}{}}
+\newlabel{subsec:implementation_opt@cref}{{[subsection][1][6]6.1}{[1][16][]16}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Bit packing for $\mathbb  {Z}_2$ vectors.}{16}{section*.18}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Bit slicing for $\mathbb  {Z}_3$ vectors.}{16}{section*.19}\protected@file@percent }
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Operations in $\mathbb  {Z}_3$. $z_1$ and $z_2$ are elements in $\mathbb  {Z}_3$ with (MSB, LSB) = $(h_1,l_1)$ and $(h_2, l_2)$ respectively. For a bit $s$, the operation $\textrm  {MUX}(s;z_1, z_2)$ outputs $z_1$ when $s=0$ and $z_2$ when $s=1$.}}{16}{table.3}\protected@file@percent }
+\newlabel{table:z3_operations}{{3}{16}{Operations in $\Z _3$. $z_1$ and $z_2$ are elements in $\Z _3$ with (MSB, LSB) = $(h_1,l_1)$ and $(h_2, l_2)$ respectively. For a bit $s$, the operation $\textrm {MUX}(s;z_1, z_2)$ outputs $z_1$ when $s=0$ and $z_2$ when $s=1$}{table.3}{}}
+\newlabel{table:z3_operations@cref}{{[table][3][]3}{[1][16][]16}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Lookup table for matrix multiplication.}{17}{section*.20}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Lookup table for matrix multiplication.}{17}{section*.21}\protected@file@percent }
 \citation{LibSodium}
 \abx@aux@cite{LibSodium}
 \abx@aux@segm{0}{0}{LibSodium}
@@ -122,25 +133,22 @@
 \abx@aux@segm{0}{0}{boneh2018-darkmatter}
 \citation{boneh2018-darkmatter}
 \abx@aux@segm{0}{0}{boneh2018-darkmatter}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Performance Benchmarks}{16}{subsection.6.4}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Experimental setup}{16}{section*.16}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Optimization results.}{16}{section*.17}\protected@file@percent }
-\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Centralized 23-wPRF benchmarks using different optimization techniques. Packing was done into 64-bit sized words (for both $\mathbb  {Z}_2$ and $\mathbb  {Z}_3$ vectors). For the lookup table optimization, an $(m=256)$-column matrix was partitioned into 16 slices of 16 columns each. A lookup table containing $81 \times 2^{20}$ elements in $\mathbb  {Z}_3$\textsf  {\color  {red}{[Yuval: {Specify units in Runtime column. Memory Usage column: not sure what this means, and in any case the first two rows seem too small to be meaningful (e.g., the amount of memory used by the program for maintaining variables may be bigger). I suggest removing this column, and instead specifying the lookup table size in the caption. Alternatively, we can keep this column and change the title to ``lookup table size'', keeping the first two rows empty. Regarding this size, what does $2^{20}$ count? Bits? Machine words? $\mathbb  {Z}_3$ elements? }]}}}}{16}{table.4}\protected@file@percent }
-\newlabel{table:optimization_benchmarks}{{4}{16}{Centralized 23-wPRF benchmarks using different optimization techniques. Packing was done into 64-bit sized words (for both $\Z _2$ and $\Z _3$ vectors). For the lookup table optimization, an $(m=256)$-column matrix was partitioned into 16 slices of 16 columns each. A lookup table containing $81 \times 2^{20}$ elements in $\Z _3$\yuval {Specify units in Runtime column. Memory Usage column: not sure what this means, and in any case the first two rows seem too small to be meaningful (e.g., the amount of memory used by the program for maintaining variables may be bigger). I suggest removing this column, and instead specifying the lookup table size in the caption. Alternatively, we can keep this column and change the title to ``lookup table size'', keeping the first two rows empty. Regarding this size, what does $2^{20}$ count? Bits? Machine words? $\Z _3$ elements? }}{table.4}{}}
-\newlabel{table:optimization_benchmarks@cref}{{[table][4][]4}{[1][16][]16}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Distributed wPRF evaluation.}{16}{section*.18}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Performance Benchmarks}{18}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Experimental setup}{18}{section*.22}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Optimization results.}{18}{section*.23}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Distributed wPRF evaluation.}{18}{section*.24}\protected@file@percent }
 \citation{naor1999-oprf}
 \abx@aux@cite{naor1999-oprf}
 \abx@aux@segm{0}{0}{naor1999-oprf}
 \citation{LibSodium}
 \abx@aux@segm{0}{0}{LibSodium}
-\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Optimized protocols runtime. These protocols utilize both the bit-packing and lookup table optimization}}{17}{table.5}\protected@file@percent }
-\newlabel{RuntimeTable}{{5}{17}{Optimized protocols runtime. These protocols utilize both the bit-packing and lookup table optimization}{table.5}{}}
-\newlabel{RuntimeTable@cref}{{[table][5][]5}{[1][16][]17}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{OPRF evaluation.}{17}{section*.19}\protected@file@percent }
-\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu $s). Server and client can run in parallel after exchange of bits at the end of each phase. Parallel column reports timing in such scenario. \textsf  {\color  {red}{[Yuval: {What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\mathbb  {Z}_3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }]}}}}{17}{table.6}\protected@file@percent }
-\newlabel{table:oprf_comparison}{{6}{17}{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu $s). Server and client can run in parallel after exchange of bits at the end of each phase. Parallel column reports timing in such scenario. \yuval {What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\Z _3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }}{table.6}{}}
-\newlabel{table:oprf_comparison@cref}{{[table][6][]6}{[1][17][]17}}
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Centralized 23-wPRF benchmarks using different optimization techniques. Packing was done into 64-bit sized words (for both $\mathbb  {Z}_2$ and $\mathbb  {Z}_3$ vectors). For the lookup table optimization, an $(m=256)$-column matrix was partitioned into 16 slices of 16 columns each. A lookup table containing $81 \times 2^{20}$ elements in $\mathbb  {Z}_3$\textsf  {\color  {red}{[Yuval: {Specify units in Runtime column. Memory Usage column: not sure what this means, and in any case the first two rows seem too small to be meaningful (e.g., the amount of memory used by the program for maintaining variables may be bigger). I suggest removing this column, and instead specifying the lookup table size in the caption. Alternatively, we can keep this column and change the title to ``lookup table size'', keeping the first two rows empty. Regarding this size, what does $2^{20}$ count? Bits? Machine words? $\mathbb  {Z}_3$ elements? }]}}}}{19}{table.4}\protected@file@percent }
+\newlabel{table:optimization_benchmarks}{{4}{19}{Centralized 23-wPRF benchmarks using different optimization techniques. Packing was done into 64-bit sized words (for both $\Z _2$ and $\Z _3$ vectors). For the lookup table optimization, an $(m=256)$-column matrix was partitioned into 16 slices of 16 columns each. A lookup table containing $81 \times 2^{20}$ elements in $\Z _3$\yuval {Specify units in Runtime column. Memory Usage column: not sure what this means, and in any case the first two rows seem too small to be meaningful (e.g., the amount of memory used by the program for maintaining variables may be bigger). I suggest removing this column, and instead specifying the lookup table size in the caption. Alternatively, we can keep this column and change the title to ``lookup table size'', keeping the first two rows empty. Regarding this size, what does $2^{20}$ count? Bits? Machine words? $\Z _3$ elements? }}{table.4}{}}
+\newlabel{table:optimization_benchmarks@cref}{{[table][4][]4}{[1][18][]19}}
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Optimized protocols runtime. These protocols utilize both the bit-packing and lookup table optimization}}{19}{table.5}\protected@file@percent }
+\newlabel{RuntimeTable}{{5}{19}{Optimized protocols runtime. These protocols utilize both the bit-packing and lookup table optimization}{table.5}{}}
+\newlabel{RuntimeTable@cref}{{[table][5][]5}{[1][18][]19}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{OPRF evaluation.}{19}{section*.25}\protected@file@percent }
 \citation{STOC:IKOS07}
 \abx@aux@cite{STOC:IKOS07}
 \abx@aux@segm{0}{0}{STOC:IKOS07}
@@ -153,43 +161,46 @@
 \citation{EC:ARSTZ15}
 \abx@aux@cite{EC:ARSTZ15}
 \abx@aux@segm{0}{0}{EC:ARSTZ15}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {7}Applications}{18}{section.7}\protected@file@percent }
-\newlabel{sec:applications}{{7}{18}{Applications}{section.7}{}}
-\newlabel{sec:applications@cref}{{[section][7][]7}{[1][18][]18}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}A Signature Scheme}{18}{subsection.7.1}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{$(2,3)$-OWF\xspace  Description}{18}{section*.20}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{An $N$-party protocol}{18}{section*.21}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.1.1}MPC protocol details}{19}{subsubsection.7.1.1}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Preprocessing phase}{19}{section*.22}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Online phase}{19}{section*.23}\protected@file@percent }
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu $s). Server and client can run in parallel after exchange of bits at the end of each phase. Parallel column reports timing in such scenario. \textsf  {\color  {red}{[Yuval: {What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\mathbb  {Z}_3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }]}}}}{20}{table.6}\protected@file@percent }
+\newlabel{table:oprf_comparison}{{6}{20}{Comparison of protocols for (semi-honest) OPRF evaluation in the preprocessing model. Runtimes are given in microseconds ($\mu $s). Server and client can run in parallel after exchange of bits at the end of each phase. Parallel column reports timing in such scenario. \yuval {What does ``parallel'' mean? Should be explained in the caption. Our output size has roughly 128 bits (81 is the number of $\Z _3$ elements), but it is actually meaningless because the output size can be easily extended or decreased. So let's drop this column. For preprocessing and communication, I suggest using concrete numbers as opposed to general expressions that refer to different values of $n$. }}{table.6}{}}
+\newlabel{table:oprf_comparison@cref}{{[table][6][]6}{[1][19][]20}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {7}Applications}{20}{section.7}\protected@file@percent }
+\newlabel{sec:applications}{{7}{20}{Applications}{section.7}{}}
+\newlabel{sec:applications@cref}{{[section][7][]7}{[1][20][]20}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}A Signature Scheme}{20}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{$(2,3)$-OWF\xspace  Description}{21}{section*.26}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{An $N$-party protocol}{21}{section*.27}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.1.1}MPC protocol details}{21}{subsubsection.7.1.1}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Preprocessing phase}{21}{section*.28}\protected@file@percent }
 \citation{TCHES:KalZav20}
 \abx@aux@cite{TCHES:KalZav20}
 \abx@aux@segm{0}{0}{TCHES:KalZav20}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Online phase}{22}{section*.29}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Correctness}{22}{section*.30}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Communication Costs}{22}{section*.31}\protected@file@percent }
+\newlabel{eqn:sizeMPC}{{1}{22}{Communication Costs}{equation.7.1}{}}
+\newlabel{eqn:sizeMPC@cref}{{[equation][1][]1}{[1][22][]22}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.1.2}Signature Scheme Details}{22}{subsubsection.7.1.2}\protected@file@percent }
 \citation{sp800-185}
 \abx@aux@cite{sp800-185}
 \abx@aux@segm{0}{0}{sp800-185}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Correctness}{20}{section*.24}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Communication Costs}{20}{section*.25}\protected@file@percent }
-\newlabel{eqn:sizeMPC}{{1}{20}{Communication Costs}{equation.7.1}{}}
-\newlabel{eqn:sizeMPC@cref}{{[equation][1][]1}{[1][20][]20}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.1.2}Signature Scheme Details}{20}{subsubsection.7.1.2}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Parameters}{20}{section*.26}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Key generation}{20}{section*.27}\protected@file@percent }
 \citation{EC:DinNad19}
 \abx@aux@cite{EC:DinNad19}
 \abx@aux@segm{0}{0}{EC:DinNad19}
 \citation{picnic-spec}
 \abx@aux@cite{picnic-spec}
 \abx@aux@segm{0}{0}{picnic-spec}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Signature generation and verification}{21}{section*.28}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Optimizations and simplifications}{21}{section*.29}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Parameter selection and signature size}{21}{section*.30}\protected@file@percent }
-\newlabel{eqn:soundness}{{7.1.2}{21}{Parameter selection and signature size}{section*.30}{}}
-\newlabel{eqn:soundness@cref}{{[subsubsection][2][7,1]7.1.2}{[1][21][]21}}
-\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces  Signature size estimates for Picnic using the $(2,3)$-OWF\xspace  , compared to Picnic using LowMC. The first half of the table shows security level L1 with $N=16$ and $N=64$ parties, and the second half shows level L5.}}{22}{table.7}\protected@file@percent }
-\newlabel{table:sig-sizes}{{7}{22}{Signature size estimates for Picnic using the \ttOWF , compared to Picnic using LowMC. The first half of the table shows security level L1 with $N=16$ and $N=64$ parties, and the second half shows level L5}{table.7}{}}
-\newlabel{table:sig-sizes@cref}{{[table][7][]7}{[1][22][]22}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Distributed Picnic}{22}{subsection.7.2}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Picnic-like signature scheme using the $(2,3)$-OWF\xspace  and the KKW proof sytem.}}{23}{figure.3}\protected@file@percent }
-\newlabel{fig:23-picnic}{{3}{23}{Picnic-like signature scheme using the \ttOWF and the KKW proof sytem}{figure.3}{}}
-\newlabel{fig:23-picnic@cref}{{[figure][3][]3}{[1][22][]23}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Parameters}{23}{section*.32}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Key generation}{23}{section*.33}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Signature generation and verification}{23}{section*.34}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Optimizations and simplifications}{23}{section*.35}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Parameter selection and signature size}{24}{section*.36}\protected@file@percent }
+\newlabel{eqn:soundness}{{7.1.2}{24}{Parameter selection and signature size}{section*.36}{}}
+\newlabel{eqn:soundness@cref}{{[subsubsection][2][7,1]7.1.2}{[1][24][]24}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Distributed Picnic}{24}{subsection.7.2}\protected@file@percent }
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces  Signature size estimates for Picnic using the $(2,3)$-OWF\xspace  , compared to Picnic using LowMC. The first half of the table shows security level L1 with $N=16$ and $N=64$ parties, and the second half shows level L5.}}{25}{table.7}\protected@file@percent }
+\newlabel{table:sig-sizes}{{7}{25}{Signature size estimates for Picnic using the \ttOWF , compared to Picnic using LowMC. The first half of the table shows security level L1 with $N=16$ and $N=64$ parties, and the second half shows level L5}{table.7}{}}
+\newlabel{table:sig-sizes@cref}{{[table][7][]7}{[1][24][]25}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Picnic-like signature scheme using the $(2,3)$-OWF\xspace  and the KKW proof sytem.}}{26}{figure.3}\protected@file@percent }
+\newlabel{fig:23-picnic}{{3}{26}{Picnic-like signature scheme using the \ttOWF and the KKW proof sytem}{figure.3}{}}
+\newlabel{fig:23-picnic@cref}{{[figure][3][]3}{[1][24][]26}}
