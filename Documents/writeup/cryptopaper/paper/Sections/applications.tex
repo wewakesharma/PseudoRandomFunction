@@ -47,64 +47,176 @@
 
 \section{Applications}
 \label{sec:applications}
+\greg{Should the OPRF material be in the applications section? Seems like it fits here, and without it there is only one application.} 
+\subsection{Signatures with the \ttOWF}
+Here we describe a signature scheme using the \ttOWF.  
+Our presentation is tailored to the \ttOWF, but we note that this approach is
+general.  All of the candidate primitives in this paper would be a suitable
+choice of $\sfF$ (note that they are all OWFs when the input is chosen at
+random) and we evaluated them all before settling on \ttOWF, which gives the
+shortest signatures.
 
-\subsection{A Signature Scheme}
-Here we describe a signature scheme using the \ttOWF.  Abstractly, a
-signature scheme can be built from any OWF that has an MPC protocol to
-evaluatue it, by setting the public key to $y = F(x)$ for a random secret $x$,
-and then proving knowledge of $x$, using a proof system based on the
-MPC-in-the-head paradigm~\cite{STOC:IKOS07}.  In addition to assuming the OWF is
-secure, the only other assumption require is a secure hash function. As 
-no additional number theoretic assumptions are required, these type of signatures are
-often proposed as secure post-quantum schemes. 
+Abstractly, a signature scheme can be built from any one-way function $\sfF$
+that has an MPC protocol to evaluate it, by setting the public key to $y =
+\sfF(x)$ for a random secret $x$, and then proving knowledge of $x$, using a
+proof system based on the MPC-in-the-head paradigm~\cite{STOC:IKOS07}.  In
+addition to assuming the OWF is secure, the only other assumption required is a
+secure hash function. As no additional number-theoretic assumptions are
+required, these type of signatures are often proposed as secure post-quantum
+schemes. 
 
 Concretely, our design follows the Picnic signature scheme~\cite{CCS:CDGORR17},
 specifically the variant instantiated with the KKW proof
 system~\cite{CCS:KatKolWan18} (named Picnic2 and Picnic3).  We chose to use the
 KKW, rather than ZKB++ proof system since our MPC protocol to evaluate the
 \ttOWF is most efficient with a pre-processing phase, and KKW generally
-produces shorter signatures.  We replace the OWF in Picnic, the LowMC block cipher~\cite{EC:ARSTZ15}, 
+produces shorter signatures.  We replace the LowMC block cipher~\cite{EC:ARSTZ15} in Picnic 
 with the \ttOWF, and make the corresponding changes to the MPC protocol. 
 
-\greg{Need some motivation here for why this is interesting. Rough ideas: 
-\begin{itemize}
-\item No existing
-signature scheme based on the \ttOWF or similar assumption.  
-\item Alternative
-structure of the \ttOWF may be easier to analyze than LowMC, which follows a
-more traditional block cipher design.  
-\item The \ttOWF is conceptually much simpler
-requires far less precomputed constants, and has a simpler implementation. 
-\item Potential advantages in implementation performance
-\end{itemize} }
+This is the first signature scheme based on the hardness of inverting the
+\ttOWF (or similar function), a function with a simple mathematical
+description, making it an accesible target for cryptanalysis, especially when
+compared to block ciphers.  Arguably, the simplicity of the OWF can lead to
+simpler implementations: the MPC protocol is simpler, and no large precomputed
+constants are required. 
 
-\paragraph{\ttOWF Description}
-Recall that the \ttOWF is defined as $y = F(x)$ where $x \in \Z_2^{n}$ and $y\in \Z_3^{t}$, and is computed as follows: 
+Our presentation is somewhat brief here, as many details are identical to Picnic, 
+and the \ttOWF MPC has been described in \cref{sec:distributed_protocols}. \cref{appendix:picnic}
+includes additional details. 
+
+\paragraph{Parameters.} Let $\secpar$ be a security parameter.  The
+\ttOWF parameters are denoted $(n, m, t)$.  The KKW parameters $(N, M,
+\tau)$ denote the number of parties $N$, the total number of MPC instances $M$,
+and the number $\tau$ of MPC instances where the verifier checks the online
+phase of simulation.  The scheme also requires a cryptographic hash function. 
+
+\paragraph{Key generation.}
+The signer chooses a random $x \in \Z_2^n$ as 
+secret key, and a random seed $s \in \{0,1\}^{\secpar}$ such that $s$
+expands to matrices $\matA \in \Z_2^{m\times n}$ and $\matB\in \Z_3^{m\times t}$ that is full rank (using a suitable cryptographic
+function, such as the SHAKE extendable output function~\cite{sp800-185}).
+Compute $y = \sfF(x)$ and set $(y, s)$ as the public key.
+Recall that the \ttOWF is defined as $y = \sfF(x)$ where $x \in \Z_2^{n}$ and $y\in \Z_3^{t}$, and is computed as follows: 
 \begin{enumerate}
-\item Compute $w = \matA x \in \Z_2^{m}$, where $\matA$ is a public, randomly chosen matrix of full rank in $\Z_2^{m\times n}$
-\item Let $z\in\Z_3^{m}$ be $w$, where entries are intepreted as values mod 3
-\item Compute and output $y = \matB z$, where $\matB \in \Z_3^{m\times t}$ is public and randomly chosen as $\matA$ was. 
+\item Compute $w = \matA x \in \Z_2^{m}$.
+\item Let $z\in\Z_3^{m}$ be $w$, where entries are intepreted as values mod 3.
+\item Compute and output $y = \matB z$.
 \end{enumerate}
+We use unique $\matA$ and $\matB$ per signer in order to avoid multi-target attacks against $\sfF$.
+We specify the scheme using random matrices, however, it could also be instantiated
+with circulant matrices, which may improve the performance of sign and verify operations.
+
+\paragraph{MPC protocol.}
+By combining the protocols for the gates 
+$\prot_{\Add}^{3}$,
+$\prot_{\LMap}^{\mat{A},2}$,
+$\prot_{\LMap}^{\mat{B},3}$, and
+$\prot_{\Convert}^{(2,3)}$
+described in \cref{sec:distributed_protocols} we have an $N$-party protocol for
+the \ttOWF. The most challenging and costly step (in terms of communication) is
+the conversion gate, all other operations are done locally by the parties.  In
+\cref{appendix:picnic} we describe this protocol in full detail.  Given the MPC
+protocol, we neatly drop it into the KKW proof system used in Picnic.  
+
+\paragraph{Sign and verify.} 
+The signature generation and verification algorithms for the
+\ttOWF  signature scheme are given in \cref{fig:23-picnic} (of \cref{appendix:picnic}).
+Here we give an overview. The structure of
+the signature scheme follows a three-move $\Sigma$-protocol. In the commit phase, the
+prover simulates the preprocessing phase for all $M$ MPC instances, and commits
+to the output (the seeds and auxiliary values).  She then simulates the online
+phase for all $M$ instances and commits to the inputs, and broadcast messages.
+Then a challenge is computed by hashing all commitments, together with the
+message to be signed.  The challenge selects $\tau$ of the $M$ MPC instances.
+The verifier will check the simulation of the online phase for these instances,
+by re-computing all values as the prover did for $N-1$ of the parties, and for
+remaining unopened party, the prover will provide the missing broadcast messages
+and commitments so that the verifier may complete the simulation and recompute all
+commitments. 
+For the $M-\tau$ instances not chosen by the challege, the verifier will check
+the preprocessing phase only -- here the prover provides the random seeds of
+all $N$ parties and the verifier can recompute the prover's commitment to the
+preprocessing, in particular the verifier checks that the auxiliary values are
+correct.
+\greg{paragraph above could be shorter if we're low on space}
+
+\newcommand{\textunderbrace}[2]{{%
+  \underbrace{#1}_{\text{#2}}
+}}
+
+\paragraph{Parameter selection and signature size.}
+In \cref{appendix:picnic} we give the formula for estimating signatures sizes.
+The impact of OWF choice is limited to one term, which is the sum of
+the sizes of the MPC inputs, broadcast messages, and auxiliary values produced
+by preprocessing.  Selecting the KKW parameters $(M, N, \tau)$ once the MPC costs
+are known follows the approach in Picnic: a range of options are possible, and
+we try to select parameters that balance speed (number of MPC exections and number of 
+parties) and size.  Since the MPC costs of the \ttOWF are very close to those
+of LowMC, the options follow a similar curve. 
+
+\cref{table:sig-sizes} gives some options with $N=16, 64$ parties,
+providing 128 and 256 bits of security. For each category, we highlight the row
+of \ttOWF parameters that are a direct comparison to Picnic.  Signatures using
+the \ttOWF are slightly shorter (five to fifteen percent) than Picnic using
+LowMC. 
 
 
-\paragraph{An $N$-party protocol}
+\begin{table}
+\begin{centering}
+\begin{tabular}{l|l|l}
+OWF Params      & KKW params        & Sig. size (KB)\\
+$(n,m,t)$       & $(N, M, \tau)$    &   \\\hline
+$(128,453,81)$  & $(16, 150, 51)$   & 13.30 \\
+                & $(16, 168, 45)$   & 12.48 \\ 
+                & $(16, 250, 36)$   & \textbf{11.54} \\
+                & $(16, 303, 34)$   & 11.49 \\  
+Picnic3-L1      & $(16, 250, 36)$   & 12.60 \\ \hline
+$(128,453,81)$  & $(64, 151, 45)$   & 13.59 \\
+                & $(64, 209, 34)$   & 11.70 \\ 
+                & $(64, 343, 27)$   & \textbf{10.66} \\
+                & $(64, 515, 24)$   & 10.35 \\ 
+Picnic2-L1      & $(64, 343, 27)$   & 12.36 \\ \hline \hline
+$(256,906,162)$ & $(16, 324, 92)$   & 50.19 \\ 
+                & $(16, 400, 79)$   & 47.08 \\ 
+                & $(16, 604, 68)$   & \textbf{45.82} \\ 
+Picnic3-L5      & $(16, 604, 68)$   & 48.72 \\ \hline
+$(256,906,162)$ & $(64, 322, 82)$   & 51.23 \\
+                & $(64, 518, 60)$   & 44.04 \\ 
+                & $(64, 604, 57)$   & \textbf{43.45} \\ 
+Picnic2-L5      & $(64, 604, 58)$   & 46.18 \\ \hline
+\end{tabular}
+\caption{ \label{table:sig-sizes}Signature size estimates for Picnic using the
+\ttOWF, compared to Picnic using LowMC.  The first half of the table shows
+security level L1 (128 bits) with $N=16$ and $N=64$ parties, and the second
+half shows level L5 (256 bits).}
+\end{centering}
+\end{table}
+
+
+\subsection{Picnic Appendix (To be moved)}
+\label{appendix:picnic}
+In this section we provide additional details on how to construct a signature scheme from our
+new primitives, in particular the \ttOWF.
+
+
+\paragraph{An $N$-party protocol.}
 There will be $N$ parties for our MPC protocol, each holding a secret share of
-$x$, who jointly compute $y = F(x)$.  The protocol is $N$-private, meaning that
-up to $N-1$ parties may be malicious, and the secret input remains private.
-Put another way, given the views of $N-1$ parties we can simulate the remaining
+$x$, who jointly compute $y = \sfF(x)$.  The protocol tolerates up to  $N-1$ 
+corruptions: given the views of $N-1$ parties we can simulate the remaining
 party's view, to prove that the $N-1$ parties have no information about the
 remaining party's share. 
 
 The preprocessing phase is similar to that in Picnic.  Each party has a random
 tape that they can use to sample a secret sharing of a uniformly random value
 (e.g.,  a scalar, vector, or a matrix with terms in $\Z_2$ or $\Z_3$).  Each
-party samples their share $[r]$ and the shared value is implicitly defined as
-$r = \sum_{i=1}^N [r]_i$.  We use $[r]_i$ to denote party $i$'s share of $r$,
-or simply $[r]$ when the context makes the party's index clear.
+party samples their share $\share{r}$ and the shared value is implicitly defined as
+$r = \sum_{i=1}^N \share{r}^{(i)}$.  
+%We use $\share{r}^{(i)}$ to denote party $i$'s share of $r$,
+%or simply $\share{r}$ when the context makes the party's index clear.
 
 We must also be able to create a sharing mod 3, of a secret shared value mod 2.
 Let $\tilde{w}\in\Z_2$ be secret shared.  Then to establish shares of $r = \tilde{w} \pmod
-3$, the first $N-1$ parties sample a share $[r]$ from their random tapes. The
+3$, the first $N-1$ parties sample a share $\share{r}$ from their random tapes. The
 $N$-th party's share is chosen by the prover, so that the sum of the shares is
 $r$.  We refer to the last party's share as an \emph{auxiliary value}, since
 it's provided by the prover as part of pre-processing.  For efficiency, the random
@@ -116,49 +228,45 @@ auxiliary values, denoted $\aux$.
 
 After pre-processing, the parties enter the \emph{online} phase of the protocol. 
 The prover computes $\hat{x}= x + \tilde{x}$, where $\tilde{x}$ is a random value, established during
-preprocessing so that each party has a share $[\tilde{x}]$. 
+preprocessing so that each party has a share $\share{\tilde{x}}$. 
 The parties can then compute the OWF using the homomorphic properties of the secret sharing, 
-and a share conversion gadget (to convert shares mod 2 to mod 3, used when computing~$z$)
+and the share conversion gate (to convert shares mod 2 to mod 3, used when computing~$z$)
 setup during preprocessing that we describe below. 
 During the online phase, parties broadcast values to all other parties and we write $\msgs_i$
 to denote the broadcast messages of party $i$. 
 
-\subsubsection{MPC protocol details}
 
-\paragraph{Preprocessing phase} Preprocessing establishes random seeds of all parties and shares of 
+\paragraph{Preprocessing phase.} Preprocessing establishes random seeds of all parties and shares of 
 \begin{enumerate}
 \item $\tilde{x}$: a random vector in $\Z_2^{n}$,\algcomment{Sampled from random tapes}
 \item $\tilde{w}$: the vector $\matA \tilde{x}$ in $\Z_2^{m}$, 
 \item $r$: a sharing of $\tilde{w} \mod 3$, shares in $\Z_3^m$,  \algcomment{Tapes + one $\aux$ value}
-\item $\overline{r}$: a sharing of $1-\tilde{w} \mod 3$, shares in $\Z_3^m$. \algcomment{Computed from shares of $r$}
+\item $\overline{r}$: a sharing of $1-\tilde{w} \mod 3$, shares in $\Z_3^m$. \algcomment{Computed from $\share{r}$}
 \end{enumerate}
 The shares of $\overline{r}$ are computed from shares of $r$ as follows (all arithmetic in $\Z_3^m$): the first
-party computes $[\overline{r}] = 1 - [r]$, then the remaining parties compute
-$[\overline{r}] = -[r]$.  Then observe that 
-\[\sum_{i=1}^N [\overline{r}]_i = 1-[r]_1 - \ldots - [r]_N = 1 - \sum_{i=1}^{N}[r]_i = 1-r \]
+party computes $\share{\overline{r}} = 1 - \share{r}$, then the remaining parties compute
+$\share{\overline{r}} = - \share{r}$.  Then observe that 
+\[\sum_{i=1}^N \share{\overline{r}}^{(i)} = 1 - \share{r}^{(1)} - \ldots - \share{r}^{(N)} = 1 - \sum_{i=1}^{N} \share{r}^{(i)} = 1-r \]
  as required. 
 
-\paragraph{Online phase}
+\paragraph{Online phase.}
 The public input to the online phase is $\hat{x} = x + \tilde{x}$. 
 \begin{enumerate}
 
-%\item The parties locally compute $[u] = \matA[\tilde{x}] - [\tilde{w}]$ and broadcast it, 
-%then sum the received values to get $u = \matA \tilde{x} - \tilde{w}$.  Then they locally compute
-%$\hat{w} = \matA\hat{x} - u = \matA x + \tilde{w}$, where $\hat{w} \in \Z_2^{m}$. Each party broadcasts $m$ bits in this step. 
 \item The parties locally compute $\hat{w} \in \Z_2^{m}$ as $\hat{w} = \matA\hat{x}$ (since both $\hat{x}$ and $\matA$ are public). 
 
 \item Let $z$ be a vector in $\Z_3^m$ and let $z_i$ denote the $i$-th component. Each party defines 
 \[
-    [z_i]  = \begin{cases}
-                [r_i]  & \text{if $\hat{w}_i = 0$} \algcomment{\text{Note that $[r_i] = [w_i']$}}\\
-                [\overline{r}_i]  & \text{if $\hat{w}_i = 1$} \algcomment{\text{Note that $[\overline{r}_i] = [1- w_i']$}}\\
+    \share{z_i}  = \begin{cases}
+                \share{r_i}  & \text{if $\hat{w}_i = 0$} \algcomment{\text{Note that $\share{r_i} = \share{w_i'}$}}\\
+                \share{\overline{r}_i}  & \text{if $\hat{w}_i = 1$} \algcomment{\text{Note that $\share{\overline{r}_i} = \share{1- w_i'}$}}\\
             \end{cases}
 \]
-then localy computes $[y] = \matB[z]$. All parties broadcast $[y]$ and reconstruct the output $y\in\Z_{3}^t$. 
+then localy computes $\share{y} = \matB\share{z}$. All parties broadcast $\share{y}$ and reconstruct the output $y\in\Z_{3}^t$. 
 In this step each party broadcasts $t$ values in $\Z_3$.
 \end{enumerate}
 
-\paragraph{Correctness} The protocol correctly computes the \ttOWF.  The
+\paragraph{Correctness.} The protocol correctly computes the \ttOWF.  The
 first step computes $w = \matA x$, 
 updating the public value $\hat{x} = x + x'$ with $\hat{w} = w + \tilde{w}$.  The
 second step is where the bits of $w$ are cast from $\Z_2$ to $\Z_3$.  The 
@@ -168,13 +276,13 @@ that when $\hat{w} = 0$, then $w$ and $\tilde{w}$ are the same, and when $\hat{w
 w \mod 3$ to the shares of $[\tilde{w}] \mod 3$, and when $\hat{w} = 1$, we set the
 shares of $z$ to the complement of $\tilde{w}$.
 
-\paragraph{Communication Costs}
+\paragraph{Communication costs.}
 Here we quantify the cost of communication for the MPC inputs, the $\aux$ values and the broadcast $\msgs$ of one party,
 as this will directly contribute to the signature size in the following section. 
 Let $\ell_3$ be the bitlength of an element in $\Z_3$; the direct encoding has
 $\ell_3 = 2$, but with compression we can reudce $\ell_3$ to as little as
 $\log_2(3) \approx 1.58$. \footnote{To compress a vector $v\in\Z_3^{n}$, convert it to the integer it represents: $V = \sum_{i=0}^n v_i^{i}$
-and output the binary representation of $V$. \greg{TODO: If this appears elsewhere in the paper, just xref to it} }   The size of the
+and output the binary representation of $V$. }   The size of the
 $\aux$ information is $m\ell_3$, the MPC input value has size $n$ bits, 
 and the broadcast values have size $t\ell_3$ bits (per party). 
 The total in bits is thus 
@@ -182,22 +290,18 @@ The total in bits is thus
 |\textsf{MPC}(n,m,t)| = m\ell_3 + n + t\ell_3\;.
 \end{equation}
 For the parameters 
-$(n,m,t)=(128, 453, 81)$ the total is 972 bits (L1 security)
-and when $(n,m,t) = 256, 906, 162)$ the total is 1943 bits (L5 security).  This compares favorably to
+$(n,m,t)=(128, 453, 81)$ the total is 972 bits (L1 security: 128-bit classical, 64-bit quantum)
+and when $(n,m,t) = (256, 906, 162)$ the total is 1943 bits (L5 security: 256-bit classical, 128-bit quantum).  This compares favorably to
 Picnic at the same security level, which communicates 1161--1328 bits at L1
 and 2295--2536 bits at L5, depending on whether LowMC uses a full or partial S-box layer~\cite{TCHES:KalZav20}.
 
-\subsubsection{Signature Scheme Details}
+\paragraph{Signature scheme}
 Given the MPC protocol above, we can compute the values $\hat{x}$, $\aux$ and
 $\msgs$ for the \ttOWF and neatly drop it into the KKW proof system used in
 Picnic.  The signature generation and verification algorithms for the
 \ttOWF  signature scheme are given in \cref{fig:23-picnic}.
 
-\paragraph{Parameters} Let $\secpar$ be a security parameter.  The
-\ttOWF parameters are denoted $(n, m, t)$.  The KKW parameters $(N, M,
-\tau)$ denote the number of parties $N$, the total number of MPC instances $M$,
-and the number $\tau$ of MPC instances where the verifier checks the online
-phase of simulation. 
+
 We use a cryptographic hash function $\hash: \{0,1\}^*\to \{0,1\}^{2\secpar}$
 for computing commitments, and the function $\Expand$ takes as input a random $2\secpar$-bit string
 and derives a challenge having the form $(\CCC, \PPP)$ where $\CCC$ is a subset of $[M]$
@@ -206,35 +310,8 @@ The challenge $(\CCC, \PPP)$ defines $\tau$ pairs $(c,p_c)$ where $c$ is the
 index of  an MPC instance for which the verifier will check the online phase,
 and $p_c$ is the index of the party that will remain unopened. 
 
-\paragraph{Key generation} The signer chooses a random $x \in \Z_2^n$ as a
-secret key, and a random seed $s \in \{0,1\}^{\secpar}$ such that $s$
-expands to matrices $\matA \in \Z_2^{m\times n}$ and $\matB\in \Z_3^{m\times t}$ that is full rank (using a suitable cryptographic
-function, such as the SHAKE extendable output function~\cite{sp800-185}).  We
-use unique $\matA$ and $\matB$ per signer in order to avoid multi-target attacks against $F$.
-Compute $y = F(x)$ and set $(y, s)$ as the public key.
-We specify the scheme using random matrices, however, it could also be instantiated
-with circulant matrices, which may improve the performance of sign and verify operations.
 
-\paragraph{Signature generation and verification} Here we give an overview of
-signature generation, for details see \cref{fig:23-picnic}. The structure of
-the signature follows a three-move $\Sigma$-protocol. In the commit phase, the
-prover simulates the preprocessing phase for all $M$ MPC instances, and commits
-to the output (the seeds and auxiliary values).  She then simulates the online
-phase for all $M$ instances and commits to the inputs, and broadcast messages.
-Then a challenge is computed by hashing all commitments, together with the
-message to be signed.  The challenge selects $\tau$ of the $M$ MPC instances.
-The verifier will check the simulation of the online phase for these instances,
-by re-computing all values as the prover did for $N-1$ of the parties, and for
-remaining unopened party, the prover will provide $\msgs$ and a commitment to
-the seed so that the verifier may complete the simulation and recompute all
-commitments. 
-For the $M-\tau$ instances not chosen by the challege, the verifier will check
-the preprocessing phase only -- here the prover provides the random seeds of
-all $N$ parties and the verifier can recompute the prover's commitment to the
-preprocessing, in particular the verifier checks that the auxiliary values are
-correct.
-
-\paragraph{Optimizations and simplifications}
+\paragraph{Optimizations and simplifications.}
 For ease of presentation, \cref{fig:23-picnic} omits some optimizations that
 are essential for efficiency, but are not unique to the $(2,3)$-signature schemes, 
 they are exactly as in Picnic. All random seeds in a signature are derived from
@@ -251,17 +328,13 @@ the $h'^{(k)}$ as the leaves of a Merkle tree,  so that the prover can provide
 the missing commitments by sending only $\tau\log_2(M/\tau)$ $2\secpar$-bit
 digests. 
 
-Finally, we omit a random salt, included in each signature, as well as counter
+Finally, \cref{fig:23-picnic} omits a random salt, included in each signature, as well as counter
 inputs to the hash functions to prevent multi-target
 attacks~\cite{EC:DinNad19}. Also, hashing the public key when computing the
 challenge, and prefixing the inputs to $\hash$ in each use for domain
 separation should also be done, as in~\cite{picnic-spec}. 
 
-\newcommand{\textunderbrace}[2]{{%
-  \underbrace{#1}_{\text{#2}}
-}}
-
-\paragraph{Parameter selection and signature size}
+\paragraph{Signature size}
 The size of the signature in bits is:
 \begin{align*}
 \textunderbrace{\secpar\tau\log_2\left(\frac{M}{\tau}\right)}{initial seeds} + 
@@ -282,58 +355,16 @@ $(N, M, \tau)$ must be chosen so that the soundness error,
     \epsilon(N,M,\tau) = \max_{M-\tau \le k \le M} \left\lbrace  \frac{\binom{k}{M-\tau} }{\binom{M}{M-\tau} N^{k-M+\tau} } \right\rbrace\,.
 \end{equation*}
 is less than $2^{-\secpar}$.
-There are two time/size tradeoffs, both exponential (i.e., a small decrease in
-size costs a large increase in time).  The first is increasing $N$, which
-reduces $\tau$ slightly, but requires a large amount of computation to
-implement the MPC simulation for all parties (in particular the hashing
-required to derive seeds, compute commitments and compute random tapes is the
-most expensive, and independent of the OWF).  So we fix $N = 16$. 
-Next we can reduce $\tau$, but only by increasing $M$ significantly,
-intuitively, when there are fewer only instances checked by the verifier, we
-need greater assurance in each one, and so we must audit more preprocessing
-instances. 
-
 By searching the parameter space for fixed $N$ and various options for $M,
 \tau$, we get a curve, and choose from the combinations in the ``sweet spot'',
-near the bend of the curve with moderate computation costs.  \cref{table:sig-sizes}
-gives some options. The row with is nearly the same as for Picnic, and we highlight the signature
-size of the \ttOWF. Signatures using the \ttOWF are five to fifteen percent shorter than Picnic using LowMC. 
-\begin{table}
-\begin{centering}
-\begin{tabular}{l|l|l}
-OWF Params      & KKW params        & Signature size (KB)\\
-$(n,m,t)$       & $(N, M, \tau)$    &   \\\hline
-$(128,453,81)$  & $(16, 150, 51)$   & 13.30 \\
-                & $(16, 168, 45)$   & 12.48 \\ 
-                & $(16, 250, 36)$   & \textbf{11.54} \\
-                & $(16, 303, 34)$   & 11.49 \\
-Picnic3-L1      & $(16, 250, 36)$   & 12.60 \\ \hline
-$(128,453,81)$  & $(64, 151, 45)$   & 13.59 \\
-                & $(64, 209, 34)$   & 11.70 \\ 
-                & $(64, 343, 27)$   & \textbf{10.66} \\
-                & $(64, 515, 24)$   & 10.35 \\
-Picnic2-L1      & $(64, 343, 27)$   & 12.36 \\ \hline \hline
-$(256,906,162)$ & $(16, 324, 92)$   & 50.19 \\ 
-                & $(16, 400, 79)$   & 47.08 \\ 
-                & $(16, 604, 68)$   & \textbf{45.82} \\ 
-Picnic3-L5      & $(16, 604, 68)$   & 48.72 \\ \hline
-$(256,906,162)$ & $(64, 322, 82)$   & 51.23 \\
-                & $(64, 518, 60)$   & 44.04 \\ 
-                & $(64, 604, 57)$   & \textbf{43.45} \\
-Picnic2-L5      & $(64, 604, 58)$   & 46.18 \\ \hline
-\end{tabular}
-\caption{ \label{table:sig-sizes}Signature size estimates for Picnic using the \ttOWF, compared to Picnic using LowMC. 
-The first half of the table shows security level L1 with $N=16$ and $N=64$ parties, and the second
-half shows level L5.}
-\end{centering}
-\end{table}
-
+near the bend of the curve with moderate computation costs. This part of the curve is
+similar as in Picnic, and we present some options from it in \cref{table:picnic}.
 
 \begin{figure}[p]
  \begin{minipage}[t]{1.1\textwidth}
  \begin{protocolbox}{\ttOWF Signatures}
  \begin{description}
-    \item[Inputs] Both signer and verifier have $F$, $y = F(x)$, the
+    \item[Inputs] Both signer and verifier have $\sfF$, $y = \sfF(x)$, the
         message to be signed $\Msg$, and the signer has the secret key $x$.  The
             parameters of the protocol $(M, N, \tau)$ are described in the text.
     \item[Commit] For each MPC instance $k\in[M]$, the signer does the following.
@@ -391,6 +422,3 @@ half shows level L5.}
 	\caption{\label{fig:23-picnic}Picnic-like signature scheme using the \ttOWF and the KKW proof sytem.} 
 \end{figure}
 
-
-\subsection{Distributed Picnic}
-\greg{Still no good ideas on how to do this}

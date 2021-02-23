@@ -4,13 +4,22 @@
 %-----------------------Common Packages------------------------%
 %--------------------------------------------------------------%
 \usepackage[dvipsnames]{xcolor}
-\usepackage{amsfonts,amssymb,amsmath,amsthm}
+\usepackage{amsfonts,amssymb,amsmath}
 \usepackage{mathtools}
 \usepackage{enumitem}
+\usepackage{caption}
+\iffull
 \usepackage[style=alphabetic,backend=bibtex,maxnames=4,minnames=3,maxbibnames=99]{biblatex}
+\else
+\usepackage[style=numeric-comp,backend=bibtex]{biblatex}
+\fi
+
 \usepackage[pdfauthor={},pdfpagelabels=true,linktocpage=true,hidelinks,linktoc=all,colorlinks]{hyperref}
 \usepackage[nameinlink,capitalize]{cleveref}
+
+\iffull
 \hypersetup{linkcolor = {teal}, citecolor = {magenta}, urlcolor = {black}}
+\fi
 
 \usepackage{tikz}
 \usetikzlibrary{shapes, positioning, patterns, math}
@@ -58,7 +67,9 @@
 \newcommand{\keyspace}{\mathcal{K}}
 \newcommand{\inspace}{\mathcal{X}}
 \newcommand{\outspace}{\mathcal{Y}}
+\newcommand{\advA}{\mathcal{A}}
 \newcommand{\getsr}{\xleftarrow{\$}}
+\newcommand{\Funcs}{\mathsf{Funcs}}
 % \newcommand{\getsr}{{\:{\leftarrow{\hspace*{-3pt}\raisebox{.75pt}{$\scriptscriptstyle\$$}}}\:}}
 
 %-------General notation---------
@@ -95,14 +106,15 @@
 \newcommand{\OWFfunc}{\mathsf{F}_\secparam}
 % \newcommand{\map}[1]{\textsf{map23}_{#1}}
 
-\newcommand{\ttOWF}{$(2,3)$-OWF\xspace}
-\newcommand{\ttwPRF}{$(2,3)$-wPRF\xspace}
+\newcommand{\ttOWF}{$(2,3)$\textnormal{-OWF}\xspace}
+\newcommand{\ttwPRF}{$(2,3)$\textnormal{-wPRF}\xspace}
 
 \newcommand{\prot}{\boldsymbol{\pi}}
-\newcommand{\LMap}{\textsf{Lin}}
-\newcommand{\BLMap}{\textsf{BL}}
-\newcommand{\Convert}{\textsf{Convert}}
-\newcommand{\gateset}{\textsf{Gates}}
+\newcommand{\LMap}{\textnormal{\textsf{Lin}}}
+\newcommand{\Add}{\textnormal{\textsf{Add}}}
+\newcommand{\BLMap}{\textnormal{\textsf{BL}}}
+\newcommand{\Convert}{\textnormal{\textsf{Convert}}}
+\newcommand{\gateset}{\textnormal{\textsf{Gates}}}
 
 \newcommand{\randval}[1]{\tilde{#1}}
 \newcommand{\masked}[1]{\hat{#1}}
@@ -126,10 +138,13 @@
     \newcommand{\greg}[1]{\textsf{\color{ForestGreen}{[Greg: {#1}]}}}
 \else
     \newcommand{\mahimna}[1]{}
+    \newcommand{\yuval}[1]{}
     \newcommand{\greg}[1]{}
 \fi
 
 % Environments
+\iffull
+\usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -143,12 +158,19 @@
 \newtheorem{functionality}[theorem]{Functionality}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
+\else
+\newtheorem{construction}[theorem]{Construction}
+\fi
+
+
 
 
 
 % Boxes
 \newcommand{\boxsize}{0.95}
 \newcommand{\protbox}[2]{\noindent\fbox{\small\hbox{\quad\begin{minipage}{\boxsize\columnwidth}\begin{center}{\bf #1}\end{center}#2\end{minipage}\quad}}}
+
+\newcommand{\lncsresize}[1]{\iffull#1\else\resizebox{\textwidth}{!}{#1}}
 
 % Operators
 % \DeclareMathOperator*\bigboxplus{\ensuremath{\boxplus}}
@@ -166,7 +188,20 @@
 
 \newcommand{\dash}{\textnormal{-}}
 
+\newcommand{\fig}{\iffull Figure\else Fig.\fi}
 
 % TikZ Styles
 \tikzset{twostyle/.style={fill=blue!15}}
 \tikzset{threestyle/.style={pattern=north west lines, pattern color=orange}}
+
+% Sections
+\iffull \else 
+\setcounter{secnumdepth}{3}
+\makeatletter
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{0mm}{-0.5\baselineskip}{0.5\baselineskip}{\normalfont\normalsize\bfseries}}
+\makeatother
+
+\setitemize{label=$\bullet$}
+\patchcmd{\paragraph}{\itshape}{\bfseries\boldmath}{}{}
+\captionsetup[table]{skip=5pt}
+\fi

@@ -4,16 +4,41 @@
 \label{sec:preliminaries}
 
 \paragraph{Notation.} We start with some basic notation.
-For a positive integer $k$, $[k]$ denotes the set $\{1,\dots, k\}$. $\Z_p$ denotes the ring of integers modulo $p$. We use bold uppercase letters (e.g., $\mat{A}, \mat{K}$) to denote matrices. We use $\textbf{0}^l$ and $\textbf{1}^l$ to denote the all zeros and the all ones vector respectively (of length $l$), and drop $l$ when sufficiently clear. For a vector $x$, by $x \bmod p$, we mean that each element in $x$ is taken modulo $p$. We use $x \getsr \mathcal{X}$ to denote sampling uniformly at random from domain $\mathcal{X}$.
+For a positive integer $k$, $[k]$ denotes the set $\{1,\dots, k\}$. $\Z_p$ denotes the ring of integers modulo $p$. We use bold uppercase letters (e.g., $\mat{A}, \mat{K}$) to denote matrices. We use $\textbf{0}^l$ and $\textbf{1}^l$ to denote the all zeros and the all ones vector respectively (of length $l$), and drop $l$ when sufficiently clear. For a vector $x$, by $x \bmod p$, we mean that each element in $x$ is taken modulo $p$. We use $x \getsr \mathcal{X}$ to denote sampling uniformly at random from domain $\mathcal{X}$. Let $\Funcs[\inspace, \outspace]$ be the set of all functions from $\inspace$ to $\outspace$.
 
 For distributed protocols with $N$ parties, we use $\parties = \{\party_1, \dots, \party_N\}$ to denote the set of parties. For a value $x$ in group $\mathbb{G}$, we use $\share{x}$ to denote an additive sharing of $x$ (in $\mathbb{G}$) among the protocol parties, and $\share{x}^{(i)}$ to denote the share of the $i^\thtext$ party. When clear from context (e.g., a local protocol for $\party_i$), we will often drop the superscript. When $\mathbb{G}' =  \mathbb{G}^l$ is a product group (e.g., $\Z_p^l$), for $x \in \mathbb{G}'$, we may also say that $\share{x}$ is a sharing \textit{over} $\mathbb{G}$, similar to the standard practice of calling $x$ a vector over $\mathbb{G}$.
 
 For a value $v$ in a group $\mathbb{G}$, we use $\randval{v}$ to denote a random mask value sampled from the same group, and $\masked{v} = v + \randval{v}$ (where + is the group operation for $\mathbb{G}$) to denote $v$ masked by $\randval{v}$. We use the $+$ operator quite liberally and unless specified, it denotes the group operation (e.g., component-wise addition $\bmod~p$ for $\Z_p^l$) for the summands.
 
 
+\subsection{Primitives}
+
+We briefly recall the standard definitions for the symmetric primitives we consider.
+
+\begin{definition}[Pseudorandom Function]
+Let $\keyspace = \{\keyspace_\secparam\}_{\secparam \in \N}$, $\inspace = \{\inspace_\secparam\}_{\secparam \in \N}$, and $\outspace = \{\outspace_\secparam\}_{\secparam \in \N}$ be ensembles of finite sets indexed by a security parameter $\secparam$. Consider an efficiently computable function family $\{\mathsf{F}_\secparam\}_{\secparam \in \N}$ where each function is given by $\mathsf{F}_\secparam: \keyspace_\secparam \times \inspace_\secparam \to \outspace_\secparam$.
+We say that $\{\mathsf{F}_\secparam\}_{\secparam \in \N}$ is an $(l, t, \varepsilon)$-weak pseudorandom function if for all adversaries $\advA$ running in time at most $t(\secparam)$, the following holds: taking $f_\secparam \getsr \Funcs[\inspace_\secparam, \outspace_\secparam]$, $k \getsr \keyspace_\lambda$, and $x_1, \dots, x_l \getsr \inspace_\secparam$, we have that:
+\[
+    \left|\Pr\left[ \advA\left(1^\secparam, {\{ x_i, \mathsf{F}_\secparam(k,x_i)\}}_{i \in [l]} \right)\right]
+    - \Pr\left[ \advA\left(1^\secparam, {\{ x_i, f_\secparam(x_i)\}}_{i \in [l]}\right)\right] \right| \leq \varepsilon(\secparam).
+\]
+When clear, we will usually drop the subscript $\secparam$ from $\mathcal{F}_\secparam$.
+\end{definition}
 
 
+\begin{definition}[One-way Function]
+Let $\inspace = \{\inspace_\secparam\}_{\secparam \in \N}$, and $\outspace = \{\outspace_\secparam\}_{\secparam \in \N}$ be ensembles of finite sets indexed by a security parameter $\secparam$. Consider an efficiently computable function family $\{\mathsf{F}_\secparam\}_{\secparam \in \N}$ where each function is given by $\mathsf{F}_\secparam: \inspace_\secparam \to \outspace_\secparam$.
+We say that $\{\mathsf{F}_\secparam\}_{\secparam \in \N}$ is a $(t, \varepsilon)$-one-way function if for infinitely many $\secparam \in \N$ and all adversaries $\advA$ running in time at most $t(\secparam)$, the following holds:
+\[
+    \Pr\left[x \getsr \inspace; y \gets \mathsf{F}_\secparam(x) : \mathsf{F}_\secparam(\advA(1^{\abs{x}}, y)) = y \right] \leq \varepsilon(\secparam)
+\]
+When clear, we will usually drop the subscript $\secparam$ from $\mathcal{F}_\secparam$.
+\end{definition}
 
+\begin{definition}[Pseudorandom Generator]
+
+
+\end{definition}
 
 % The operator $\oplus$ denotes addition modulo 2, and the operator $\boxplus$ denotes addition modulo 3. 
 

@@ -1,16 +1,16 @@
 %!TEX root = ../main.tex
 
-\begin{figure}[h]
+\begin{figure}[t!]
 
 \protbox{$(2,3)$-constructions}{
 
 \textbf{Parameters.} Let $\secparam$ be the security parameter and define parameters $n, m, t$ as functions of $\secparam$ such that $m \geq n, m \geq t$.
 
 \textbf{Public values.}
-Let $\mat{A} \in \Z_2^{m \times n}$ and $\mat{B} \in \Z_3^{t \times m}$ be fixed public matrices chosen uniformly at random.
+Let $\mat{A} \in \Z_2^{m \times n}$ and $\mat{B} \in \Z_3^{t \times m}$ be fixed public matrices chosen uniformly at random. The matrices can also be chosen to be full-rank circulant matrices.
 
 \begin{construction}[Mod-2/Mod-3 wPRF Candidate~\cite{boneh2018-darkmatter}]
-The wPRF candidate is a family of functions $\PRFfunc : \Z_2^{m \times n} \times \Z_2^n \to \Z_3^t$ with key-space $\keyspace_\secparam = \Z_2^{m \times n}$, input space $\inspace_\secparam = \Z_2^n$ and output space $\outspace_\secparam = \Z_3^t$. For a key $\mat{K} \in \keyspace_\secparam$, we define $\sfF_{\mat{K}}(x) = \PRFfunc(\mat{K}, x)$ as follows:
+The \ttwPRF candidate is a family of functions $\PRFfunc : \Z_2^{m \times n} \times \Z_2^n \to \Z_3^t$ with key-space $\keyspace_\secparam = \Z_2^{m \times n}$, input space $\inspace_\secparam = \Z_2^n$ and output space $\outspace_\secparam = \Z_3^t$. For a key $\mat{K} \in \keyspace_\secparam$, we define $\sfF_{\mat{K}}(x) = \PRFfunc(\mat{K}, x)$ as follows:
 
 \begin{enumerate}[topsep=0pt]
     \item On input $x \in \Z_2^n$, first compute $w = \BLMap_2(\mat{K}, x) = \mat{K}x$.
@@ -23,7 +23,7 @@ The wPRF candidate is a family of functions $\PRFfunc : \Z_2^{m \times n} \times
 
 
 \begin{construction}[Mod-2/Mod-3 OWF Candidate]
-The OWF candidate is a function $\OWFfunc : \Z_2^n \to \Z_3^t$ with input space $\inspace_\secparam = \Z_2^n$ and output space $\outspace_\secparam = \Z_3^t$. We define $\sfF(x) = \OWFfunc(x)$ as follows:
+The \ttOWF candidate is a function $\OWFfunc : \Z_2^n \to \Z_3^t$ with input space $\inspace_\secparam = \Z_2^n$ and output space $\outspace_\secparam = \Z_3^t$. We define $\sfF(x) = \OWFfunc(x)$ as follows:
 
 \begin{enumerate}[topsep=0pt]
     \item On input $x \in \Z_2^n$, first compute $w = \LMap^{\mat{A}}_2(x) = \mat{A}x$.
@@ -37,3 +37,4 @@ The OWF candidate is a function $\OWFfunc : \Z_2^n \to \Z_3^t$ with input space 
 \caption{$(2,3)$-constructions}
 \label{fig:primary-constructions}
 \end{figure}
+

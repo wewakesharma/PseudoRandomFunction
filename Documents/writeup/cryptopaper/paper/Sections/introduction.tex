@@ -2,3 +2,62 @@
 
 \section{Introduction}
 \label{sec:introduction}
+
+\greg{Does anyone know why the PDF doesn't have the index on the left hand side with links to all of the sections?}
+
+\greg{To me, one of the nice things about these primitives is how elegant and
+simple they are.  (e.g., I showed the (2,3)-OWF to a colleague and his reaction
+was, wow this is so simple, just two matrix multiplies, can it really be a
+OWF?) Esp.  when we compare the (2,3)-OWF to a (MPC-friendly) block cipher. But
+the simplicity doesn't really come across in the description of Section 3,
+maybe the introduction is a good place to make the point (and give a
+description of the (2,3)-OWF as an example).  }
+
+\medskip
+
+%-------------------------------------------%
+Symmetric-key primitives like pseudo-random functions (PRFs)~\cite{goldreich1984-prf}, pseudo-random generators (PRGs)~\cite{?}, and one-way-functions (OWFs)~\cite{?} are deployed in innumerable settings, and are arguably some of the most fundamental building blocks of modern cryptography. While traditional usecases primarily considered settings where the function evaluation was done by a single party, recent applications (e.g., cryptocurrencies \mahimna{cite more here}) have required evaluation in a distributed fashion to avoid single points of failure. This necessitates the study of distributed evaluation (e.g., in multi-party-computation or MPC) of symmetric-key constructions. 
+
+Towards this, a long line of work~\cite{?} has made substantial progress on efficient MPC protocols for distributing the computation of constructions like \mahimna{AES, SHA-256 etc}~\cite{?} which are widely used in practice. Unfortunately, the constructions themselves were not designed with distributed evaluation in mind, and are often clunky to optimize for. More recent work~\cite{grassi2016-mpcfriendly, boneh2018-darkmatter} therefore has proposed to start from scratch by designing \textit{MPC-friendly} constructions from the ground up. So far, the primary focus has been on MPC-friendly PRFs. In this work, we continue this line of research by proposing a new suite of \textit{simple} MPC-friendly candidate constructions for a number of symmetric primitives: (weak)PRFs, OWFs, and PRGs. We focus mainly on the semi-honest setting in the preprocessing model, but also show how our protocols can be adapted for malicious security or evaluation without preprocessing. Our constructions are designed with the following goals in mind:
+
+\begin{itemize}[itemsep=1ex]
+    \item \textit{High nonlinearity but low nonlinear depth}.
+    MPC protocols commonly follow one of two broad styles; the first is based on garbled circuits~\cite{?} while the second is based on secret-sharing~\cite{?}. Garbled circuit based protocols usually have better round complexity (independent of circuit depth) while secret-sharing based protocols have much smaller communication complexity (especially in the preprocessing model). The round complexity of the latter scales with \textit{nonlinear depth} since linear functions can be computing non-interactively given a linear secret-sharing scheme. Unfortunately, constructions like AES have a high nonlinear depth, which bottlenecks their distributed evaluation.
+
+    \hspace*{1em} In this paper, we strive to find the best of both worlds. The first design goal for our constructions therefore, is to achieve high nonlinearity for the overall computation while maintaining a low nonlinear \textit{depth}. Intuitively, this will enable us to achieve low round complexity (using a secret-sharing based approach) without the communication overhead of garbled circuits.
+
+    \item \textit{Small nonlinear size}.
+    While our first design goal focused on reducing the number of (sequential) nonlinear gates, we would also like to reduce the communication complexity for evaluating the nonlinear gates. Our second design goal therefore, is to incorporate ``simple'' nonlinear gates that can be evaluated with low communication overhead. 
+
+    \hspace*{1em} Simplicity also has several independently valuable consequences. A simple design is almost always easier to implement and prone to fewer errors and attacks. This is particularly valuable since a substantial amount of work~\cite{?} has previously gone into implementations that resist timing and cache side-channels. Simpler constructions are also easier to reason about and cryptanalyze which builds confidence in their security.
+
+    \item \textit{\textnormal{OT} and \textnormal{VOLE} friendliness}.
+    MPC protocols in the preprocessing model can take advantage of structured randomness that is independent of the protocol inputs and can be generated in the \textit{offline} phase. This randomness is usually assumed to be given to the protocol parties by a trusted dealer. Several MPC protocols~\cite{?} have used a varying types correlated randomness to increase efficiency in the input-dependent \textit{online} phase.
+
+    \hspace*{1em} Our final goal is to design candidates that take advantage of two special types of correlations: Obvious transfer (OT) correlations, and (vector) oblivious linear evaluation (OLE/VOLE) correlations. A major selling point for these correlations over other types is their ease of generation even without a trusted dealer. Recent work~\cite{?} for instance, has shown how pseudorandom correlation generators (PCGs) can be used to generate millions of OT and VOLE correlations with little to no communication. Furthermore, it is not necessary to store all of these correlations; they can stored in a compressed form, and expanded only when needed~\cite{?}.
+
+    \hspace*{1em} This means that although our protocols are in the preprocessing model, the correlations we require can be efficiently generated and compressed without a trusted dealer. Furthermore, since we also aim for small nonlinear sized constructions, the upshot of our design is that distributed protocols will be efficient even in an online-only setting. 
+\end{itemize}
+
+The main technique by which we achieve all three of our design goals is to consider alternating linear functions over different (prime) moduli. The only nonlinear part of the constructions will now be to switch between the different moduli, which leads to a very small round complexity. Furthermore, Boneh et al.~\cite{boneh2018-darkmatter} showed that linear functions over one moduli cannot be well approximated by low degree polynomials over a different moduli. Consequently, even a simple design that alternates between different moduli can result in a highly non-linear overall computation. In other words, this approach provides high algebraic degree with low nonlinear depth. 
+
+As the simplest possible instance of this approach, we consider alternating linear functions over $\Z_2$ and $\Z_3$. Boneh et al. found that linear functions over $\Z_2$ are highly nonlinear over $\Z_3$ while linear functions over $\Z_3$ are highly nonlinear over $\Z_2$. Furthermore, using small moduli allows for efficient designs for ``switching'' between the moduli. In fact, we show how conversions between the moduli are “small” nonlinear gates and can be implemented efficiently from OT and VOLE correlations.
+
+% All the candidates we propose are based on similar interplays between linear mappings in $\Z_2$ and $\Z_3$.
+\mahimna{write something about complexity theory implications}
+
+\subsection{Our contributions}
+
+
+\paragraph{New $(2,3)$ candidate constructions.}
+
+\paragraph{Cryptanalysis and implications on parameter choices.}
+
+
+\paragraph{Distributed protocols and optimized implementations.}
+
+
+\paragraph{Applications.}
+
+
+\newpage

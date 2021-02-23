@@ -1,0 +1,37 @@
+%!TEX root = ../main.tex
+
+\begin{figure}[p]
+\protbox{LPN-style-constructions}{
+
+\textbf{Parameters.} Let $\secparam$ be the security parameter and define parameters $n, m, t$ as functions of $\secparam$.
+
+\textbf{Public values.}
+Let $\mat{A} \in \Z_2^{m \times n}$ and $\mat{B} \in \Z_2^{t \times m}$ be fixed public matrices chosen uniformly at random. Alternatively, the matrices can also be chosen to be full-rank circulant matrices.
+
+\begin{construction}[LPN-wPRF Candidate~\cite{boneh2018-darkmatter}]
+The \textnormal{LPN-wPRF} candidate is a family of functions $\PRFfunc : \Z_2^{m \times n} \times \Z_2^n \to \Z_2^t$ with key-space $\keyspace_\secparam = \Z_2^{m \times n}$, input space $\inspace_\secparam = \Z_2^n$ and output space $\outspace_\secparam = \Z_2^t$. For a key $\mat{K} \in \keyspace_\secparam$, we define $\sfF_{\mat{K}}(x) = \PRFfunc(\mat{K}, x)$ as follows:
+
+\begin{enumerate}[topsep=0pt]
+    \item On input $x \in \Z_2^n$, first compute $u = \BLMap_2(\mat{K}, x) = \mat{K}x$.
+    \item Let $\mat{K}^* = \Convert_{(2,3)}(\mat{K})$ and $x^* = \Convert_{(2,3)}(x)$. Compute $v = \Convert_{(3,2)}(\BLMap_3(\mat{K}^*, x^*)) = \mat{K}^* x^* \bmod 2$. That is, compute $v = (\mat{K}x \bmod 3) \bmod 2$ where both $\mat{K}$ and $x$ are first reinterpreted over $\Z_3$.
+    \item Compute $w = u \xor v$ and output $y = \LMap_2^{\mat{B}}(w)$.
+\end{enumerate}
+\label{construction:23-central-wprf}
+\end{construction}
+\begin{center} \input{Figures/tikzfigs/lpnwPRF_fig} \end{center}
+
+\begin{construction}[LPN-PRG Candidate]
+The \textnormal{LPN-PRG} is a length-doubling PRG candidate defined as the function $\mathsf{F}_\secparam : \Z_2^n \to \Z_2^{2n}$ with input space $\inspace_\secparam = \Z_2^n$ and output space $\outspace_\secparam = \Z_2^{2n}$. For this construction, we consider the parameters $n,m,t$ with $m \geq n, t$ and $t = 2n$. We define $\mathsf{F}(x) = \mathsf{F}_\secparam$ as follows:
+    \begin{enumerate}
+       \item On input $x \in \Z_2^n$, first compute $u = \LMap_2(\mat{A}, x) = \mat{A}x$.
+    \item Let $x^* = \Convert_{(2,3)}(x)$. Compute $v = \Convert_{(3,2)}(\LMap^{\mat{A}}_3(x^*)) =  (\mat{A} x^*) \bmod 2$. That is, compute $(\mat{A}x \bmod 3) \bmod 2$ where both $\mat{A}$ and $x$ are first reinterpreted over $\Z_3$.
+    \item Compute $w = u \xor v$ and output $y = \LMap_2^{\mat{B}}(w)$.
+    \end{enumerate}
+\end{construction}
+\begin{center} \input{Figures/tikzfigs/lpnPRG_fig} \end{center}
+
+}
+\caption{LPN-style-constructions}
+\label{fig:lpn-constructions}
+\end{figure}
+

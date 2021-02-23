@@ -1,13 +1,19 @@
 \newif \ifcomments \commentstrue
 \newif \iffull \fulltrue
 
-\fulltrue   % Only full version for now
+\fullfalse
 
+\iffull
 \documentclass[11pt]{article}
-\usepackage[utf8]{inputenc}
 \usepackage[letterpaper,margin=1in,bmargin=1.5in]{geometry}
-\usepackage{setspace}
+\else
+% lncs version
+\pagestyle{plain}
+\documentclass[runningheads]{llncs}
+\fi
 
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
 \input{preamble}
 \bibliography{references.bib,cryptobib/abbrev3,cryptobib/crypto}
 
@@ -16,6 +22,7 @@
 \begin{document}
 %\title{Crypto Dark Matter++}
 \title{MPC-Friendly Symmetric Cryptography from Alternating Moduli: \\Cryptanalysis,  Protocols, and Applications }
+\titlerunning{MPC-Friendly Symmetric Cryptography from Alternating Moduli}
 \author{}
 \date{}
 

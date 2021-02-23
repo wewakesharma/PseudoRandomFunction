@@ -1,26 +1,9 @@
 %!TEX root = ../main.tex
 
-\iffalse
-\section{Experiments and Evaluation}
-
-\paragraph{Experimental setup.}
-
-\paragraph{Optimizations.}
-e.g., preprocessing table, bit packing etc.
-
-\paragraph{Core primitive benchmarks.}
-
-\paragraph{Centralized vs distributed benchmarks.}
-
-\paragraph{Comparison to existing approaches.}
-
-\fi
-
-
 \newpage
 \section{Implementation and Evaluation}
 \label{sec:implementation_and_eval}
-We implemented our 2-party 23-wPRF (Construction~\ref{construction:23-central-wprf}) and 23-OPRF (Construction~\ref{construction:23-owf})  in C++. For the constructions, we used the parameters $n = m = 256$ and $t = 81$. In other words, the implemented 23-constructions use a circulant matrix in $\Z_2^{256 \times 256}$ as the key, take as input a vector in $\Z_2^{256}$ and output a vector in $\Z_3^{81}$. The correlated randomness was implemented as if provided by a trusted third party.  See Section~\ref{to-add} for concretely efficient protocols for securely generating the correlated randomness, which we did not implement but give efficiency estimates based on prior works.  \yuval{Add pointer when section is written.}
+We implemented our 2-party 23-wPRF (Construction~\ref{construction:23-central-wprf}) and 23-OPRF (Construction~\ref{construction:23-owf}) in C++. For the constructions, we used the parameters $n = m = 256$ and $t = 81$. In other words, the implemented 23-constructions use a circulant matrix in $\Z_2^{256 \times 256}$ as the key, take as input a vector in $\Z_2^{256}$ and output a vector in $\Z_3^{81}$. The correlated randomness was implemented as if provided by a trusted third party.  See Section~\ref{subsec:preprocessing} for concretely efficient protocols for securely generating the correlated randomness, which we did not implement but give efficiency estimates based on prior works. 
 
 \subsection{Optimizations}
 \label{subsec:implementation_opt}
@@ -55,7 +38,9 @@ We represent each element in $\Z_3$ using the two bits from its binary represent
 \paragraph{Lookup table for matrix multiplication.} Recall that the \ttwPRF evaluation contains a mod-3 linear map using a public matrix $\mat{B} \in \Z_3^{81\times256}$. Specifically, it computes the matrix-vector product $\mat{B}w$ where $w \in \Z_3^{256}$. Since $\mat{B}$ is known prior to evaluation, we can use a lookup table to speedup the multiplication by $\mat{B}$. The same preprocessing can also by reused for multiple evaluations of the wPRF.
 
 For this, we partition $\mat{B}$, which has $m=256$ columns, into $16$ slices of $16$ columns each. These matrices, denoted by $\mat{B}_1,\dots, \mat{B}_{16}$, are all in $\Z_3^{81 \times 16}$. Now, for each $\mat{B}_i$, we will effectively build a lookup table for its multiplication with any $\Z_3$ vector of length $16$. A point to note here is that since we  represent $\Z_3$ vectors by two binary vectors (from the bit slicing optimization), it is sufficient to preprocess multiplications (modulo 3) for binary vectors of length $16$. To multiply $\mat{B}_{i}$ by a vector in $\Z_3^{16}$, we can first multiply it separately by the corresponding MSB and LSB vectors, and then subtract the former from the latter modulo 3. This works since for $z_1, z_2 \in \Z_3$ the multiplication $z_1z_2 \bmod 3$ can be given by $z_1(2\cdot h_2 + l_2) \bmod 3 = z_1l_2 - z_1h_2 \bmod 3$ where $h_2, l_2$ are the MSB and LSB of $z_2$ respectively. Now, to multiply $\mat{B}$ by $v \in \Z_3^{256}$, we first evaluate all multiplications of the form $\mat{B}_iv_i$ where $v_i$ is the $\Z_3^{16}$ vector denoting the $i^\thtext$ slice of $v$ if it was split into 16-element chunks. Then, multiplication by $\mat{B}$ is given by $\mat{B}v = \sum_{i \in [16]} \mat{B}_i v_i \mod 3$.
-
+\greg{Is this the ``method of four Russians''?\url{https://github.com/malb/m4ri}, \url{https://bitbucket.org/malb/m4ri/wiki/Further\%20Reading} }
+\greg{$w$ is secret, so the access pattern of the $\mat{B}_i$ should be independent of $w$. Is this the case? If not there is a 
+cache timing side-channel. The timing variation may be observable over the network (e.g., to the other party in the OPRF evaluation).  }
 
 In general, a $\mat{B} \in \Z_3^{t \times m}$ can be partitioned into $m/c$ partitions with $c$ columns each (assume $c$ divides $m$ for simplicity), and would require a total multiplication lookup table size of $(m/c) \cdot 2^c \cdot t$ $\Z_3$ elements. Multiplying $\mat{B}$ by $v \in \Z_3^{m}$ requires $2(m/c)$ lookup table accesses (one each for MSB and LSB of $v$ per partition of $\mat{B}$) and an addition of $(m/c - 1)$ $\Z_3^{t}$ vectors.
 
@@ -221,7 +206,7 @@ We also implement the 2-party semi-honest distributed protocol detailed in Secti
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 	\hline
-	Protocol & Runtime ($\mu$s) & Evaluations / sec & \makecell{Preprocessing \\ (bits)} & \makecell{Communication \\ (bits)} \\
+	Protocol & Runtime ($\mu$s) & Evaluations / sec & \makecell{Preprocessing \\ (bits)} & \makecell{Comm. \\ (bits)} \\
 	\hline
 	\hline
 	\makecell{\ttwPRF Protocol \\~\cite{boneh2018-darkmatter}} & 28.02 & 36K & 3533 & 2612 \\
@@ -243,7 +228,8 @@ In Table~\ref{table:oprf_comparison}, we provide performance benchmarks for both
 For our constructions, we report separately, the timings for refreshing the key and evaluating the input. For the comparison with the DDH-based OPRF construction in~\cite{ddh-oprf}, we use the libsodium library~\cite{LibSodium} for the elliptic curve scalar multiplication operation. We use the Curve25519 elliptic curve, which has a 256-bit key size, and provides 128 bits of security. 
 % \yuval{I actually think that the Naor-Pinkas-Reingold99 paper cited in the TCC '18 paper refers to a different notion of distributing a PRF, namely where the PRF key is distributed between two or more servers and the input is public. Let's try to figure out the source of the simple DDH-based OPRF protocol. Can ask Stas/Hugo if needed.}
 
-We point out that both of our OPRF protocols are much faster than the DDH-based OPRF although they require higher communication as well as preprocessing. To better represent the tradeoffs, we compute the minimum network speed for which the total time for one evaluation of our protocol is smaller than that for the DDH-based OPRF. We compare only the online costs for the evaluation. Analytically, we can compute that our two protocols are faster than the DDH-based OPRF protocol when the network speed is greater than $\approx 5.7$Mbps and $\approx 1.85$Mbps respectively. While these numbers only present a simplified picture, we note that they should depict the overall tradeoffs for our OPRF protocols.
+We point out that both of our OPRF protocols are much faster than the DDH-based OPRF although they require higher communication as well as preprocessing. To better represent the tradeoffs, we compute the minimum network speed for which the total time for one evaluation of our protocol is smaller than that for the DDH-based OPRF. We compare only the online costs for the evaluation. Analytically, we can compute that our two protocols are faster than the DDH-based OPRF protocol when the network speed is greater than $\approx 5.7$Mbps and $\approx 1.85$Mbps respectively. On a 50Mbps network, The communication of OPRF Protocol 1 outpaces its respective computation. The same happens with OPRF protocol 2 on an 40 Mbps network. While these numbers only present a simplified picture, we note that they should depict the overall tradeoffs for our OPRF protocols.
+
 
 % \yuval{Communication costs in bits can be computed analytically. Maybe talk about estimated breakeven points: (1) minimal network speed in which computation dominates communication, and (2) minimal network speed where we estimate our OPRF to be faster than the DDH-based alternative.  }
 
@@ -272,6 +258,21 @@ We point out that both of our OPRF protocols are much faster than the DDH-based 
 }
 \mahimna{ToDo: better naming for the protocols.}
 \end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
